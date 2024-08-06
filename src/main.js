@@ -51,7 +51,7 @@ import Tooltip from "primevue/tooltip";
 import TreeTable from "primevue/treetable";
 import Badge from "primevue/badge";
 import Skeleton from "primevue/skeleton";
-
+import "./assets/tailwind.css";
 const app = createApp(App);
 app.use(router);
 app.use(ToastService);
