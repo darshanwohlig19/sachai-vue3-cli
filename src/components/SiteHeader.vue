@@ -37,22 +37,7 @@
         <!-- Desktop Menu -->
         <div class="hidden md:flex gap-20">
           <div><a href="/">Home</a></div>
-          <div class="dropdown">
-            <button class="dropbtn" @click="toggleDropdown">
-              Category
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" v-if="isDropdownOpen">
-              <a
-                v-for="heading in categories"
-                :key="heading._id"
-                :href="`/categories/${heading._id}?category=${heading.name}`"
-                class="nav-top"
-              >
-                {{ heading.name }}
-              </a>
-            </div>
-          </div>
+
           <div><a href="">Astrology</a></div>
           <div><a href="/Login">Login</a></div>
         </div>
@@ -86,12 +71,21 @@
       <div class="mb-5"><a href="/Login">Login</a></div>
     </div>
   </section>
+  <div
+    class="text-[45px] font-bold mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
+  >
+    Categories
+  </div>
+  <Catagory />
 </template>
 
 <script>
 import axios from "axios";
-
+import Catagory from "@/components/Catagory.vue";
 export default {
+  components: {
+    Catagory,
+  },
   data() {
     return {
       isMenuOpen: false,
