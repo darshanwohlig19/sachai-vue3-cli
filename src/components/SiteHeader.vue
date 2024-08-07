@@ -1,15 +1,46 @@
 <template>
-  <section>
-    <div
-      class="flex justify-between mt-10 mb-10 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
+  <ThemeSwitcher />
+  <div class="card">
+    <Carousel
+      :value="products"
+      :numVisible="1"
+      :numScroll="1"
+      :responsiveOptions="responsiveOptions"
+      class="carousel"
+      showIndicators
     >
-      <div class="flex justify-between w-[30%] items-center">
-        <div>
+      <template #item="slotProps">
+        <div class="relative rounded-[20px] m-2 h-[363px] overflow-hidden">
           <img
-            src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
-            alt="Sachai Logo"
-            width="100px"
+            :src="
+              'https://primefaces.org/cdn/primevue/images/product/' +
+              slotProps.data.image
+            "
+            :alt="slotProps.data.name"
+            class="w-full h-full object-fill rounded-[20px]"
           />
+
+          <Tag
+            :value="slotProps.data.inventoryStatus"
+            :severity="getSeverity(slotProps.data.inventoryStatus)"
+            class="absolute top-4 left-4"
+          />
+          <div
+            class="absolute top-2 right-4 p-2 text-black w-[8%] flex justify-around"
+          >
+            <div>
+              <i
+                class="pi pi-share-alt text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
+              ></i>
+            </div>
+            <div>
+              <i
+                class="pi pi-bookmark text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
+              ></i>
+            </div>
+          </div>
+          <div
+            class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
         </div>
         <div
           class="hidden sm:block border border-solid border-black h-[20px]"
@@ -63,9 +94,33 @@
             :href="`/categories/${heading._id}?category=${heading.name}`"
             class="nav-top"
           >
-            {{ heading.name }}
-          </a>
+            <div class="text-lg">HELLO GUYS WELCOME BACK</div>
+            <div class="text-lg">HELLO GUYS WELCOME BACK</div>
+          </div>
         </div>
+
+      </template>
+    </Carousel>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from "vue";
+import { ProductService } from "../../src/assets/service/ProductService";
+
+onMounted(() => {
+  ProductService.getProductsSmall().then(
+    (data) => (products.value = data.slice(0, 9))
+  );
+});
+
+const products = ref([]);
+const responsiveOptions = ref([
+  {
+    breakpoint: "1400px",
+    numVisible: 2,
+    numScroll: 1,
+
       </div>
       <div class="mb-5"><a href="">Astrology</a></div>
       <div class="mb-5"><a href="/Login">Login</a></div>
@@ -92,87 +147,58 @@ export default {
       isDropdownOpen: false,
       categories: [],
     };
+
   },
-  mounted() {
-    this.fetchCategories();
+  {
+    breakpoint: "1199px",
+    numVisible: 3,
+    numScroll: 1,
   },
-  methods: {
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-    },
-    toggleDropdown() {
-      this.isDropdownOpen = !this.isDropdownOpen;
-    },
-    async fetchCategories() {
-      try {
-        const languageId = "6421a32aa020a23deacecf92";
-        const response = await axios.post(
-          "https://dev-api.askus.news/category/getAllCat",
-          { langauge: languageId }
-        );
-        this.categories = response.data;
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    },
+  {
+    breakpoint: "767px",
+    numVisible: 2,
+    numScroll: 1,
   },
+  {
+    breakpoint: "575px",
+    numVisible: 1,
+    numScroll: 1,
+  },
+]);
+
+const getSeverity = (status) => {
+  switch (status) {
+    case "INSTOCK":
+      return "success";
+
+    case "LOWSTOCK":
+      return "warn";
+
+    case "OUTOFSTOCK":
+      return "danger";
+
+    default:
+      return null;
+  }
 };
 </script>
 
-<style>
-.hamburger-btn {
-  font-size: 1.5em;
-  background: none;
-  border: none;
-  color: #333;
-  cursor: pointer;
+<style scoped>
+.carousel .p-carousel-indicators {
+  bottom: 10px; /* Adjust the position of the indicators */
+  display: flex;
+  justify-content: center;
 }
 
-.mobile-menu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease;
+.carousel .p-carousel-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: #000; /* Set the background color of the indicators */
+  border-radius: 50%; /* Make the indicators round */
+  margin: 0 4px;
 }
 
-.mobile-menu.show {
-  max-height: 500px;
-  padding: 1em;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0.9, 0.9, 0.9, 0.4);
-  z-index: 2;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 6px 16px;
-  text-decoration: none;
-  display: block;
-  border-bottom: 2px solid #f1f0f0;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.nav-top {
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .dropdown-content {
-    display: block;
-    position: static;
-    box-shadow: none;
-  }
+.carousel .p-carousel-indicator.p-highlight {
+  background-color: #fff; /* Highlighted indicator color */
 }
 </style>
