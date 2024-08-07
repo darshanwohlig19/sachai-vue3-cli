@@ -7,9 +7,10 @@
       :numScroll="1"
       :responsiveOptions="responsiveOptions"
       class="carousel"
+      showIndicators
     >
       <template #item="slotProps">
-        <div class="relative rounded m-2 h-[363px] overflow-hidden">
+        <div class="relative rounded-[20px] m-2 h-[363px] overflow-hidden">
           <img
             :src="
               'https://primefaces.org/cdn/primevue/images/product/' +
@@ -101,7 +102,21 @@ const getSeverity = (status) => {
 </script>
 
 <style scoped>
-.carousel .p-carousel-item {
-  height: 363px; /* Fixed height for carousel items */
+.carousel .p-carousel-indicators {
+  bottom: 10px; /* Adjust the position of the indicators */
+  display: flex;
+  justify-content: center;
+}
+
+.carousel .p-carousel-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: #000; /* Set the background color of the indicators */
+  border-radius: 50%; /* Make the indicators round */
+  margin: 0 4px;
+}
+
+.carousel .p-carousel-indicator.p-highlight {
+  background-color: #fff; /* Highlighted indicator color */
 }
 </style>
