@@ -3,9 +3,9 @@
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <SiteHeader />
     <Trending />
-
     <Latest />
     <BrowseByTopics />
+    <Footer1 />
   </div>
 </template>
 
@@ -16,6 +16,8 @@ import SiteHeader from "@/components/SiteHeader.vue";
 import Latest from "@/components/Latest.vue";
 import Trending from "@/components/Trending.vue";
 import BrowseByTopics from "@/components/BrowseByTopics.vue";
+import Footer1 from "@/components/Footer.vue";
+
 export default {
   name: "HomeView",
   components: {
@@ -24,6 +26,7 @@ export default {
     Latest,
     Trending,
     BrowseByTopics,
+    Footer1,
   },
 };
 </script>
