@@ -19,6 +19,7 @@
             :alt="slotProps.data.name"
             class="w-full h-full object-fill rounded-[20px]"
           />
+
           <Tag
             :value="slotProps.data.inventoryStatus"
             :severity="getSeverity(slotProps.data.inventoryStatus)"
@@ -40,11 +41,64 @@
           </div>
           <div
             class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
+        </div>
+        <div
+          class="hidden sm:block border border-solid border-black h-[20px]"
+        ></div>
+        <div class="hidden justify-between gap-4 md:flex">
+          <div>
+            <img
+              src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab783_app-store.svg"
+              alt="App Store"
+              width="100px"
+              height="100px"
+            />
+          </div>
+          <div>
+            <img
+              src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab783_app-store.svg"
+              alt="App Store"
+              width="100px"
+              height="100px"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-20">
+          <div><a href="/">Home</a></div>
+
+          <div><a href="">Astrology</a></div>
+          <div><a href="/Login">Login</a></div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden flex items-end justify-end">
+          <button @click="toggleMenu" class="hamburger-btn">&#9776;</button>
+        </div>
+      </div>
+    </div>
+
+    <div :class="['mobile-menu', { show: isMenuOpen }]">
+      <div class="mb-5"><a href="/">Home</a></div>
+      <div class="dropdown mb-5">
+        <button class="dropbtn" @click="toggleDropdown">
+          Category
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" v-if="isDropdownOpen">
+          <a
+            v-for="heading in categories"
+            :key="heading._id"
+            :href="`/categories/${heading._id}?category=${heading.name}`"
+            class="nav-top"
           >
             <div class="text-lg">HELLO GUYS WELCOME BACK</div>
             <div class="text-lg">HELLO GUYS WELCOME BACK</div>
           </div>
         </div>
+
       </template>
     </Carousel>
   </div>
@@ -66,6 +120,34 @@ const responsiveOptions = ref([
     breakpoint: "1400px",
     numVisible: 2,
     numScroll: 1,
+
+      </div>
+      <div class="mb-5"><a href="">Astrology</a></div>
+      <div class="mb-5"><a href="/Login">Login</a></div>
+    </div>
+  </section>
+  <div
+    class="text-[45px] font-bold mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
+  >
+    Categories
+  </div>
+  <Catagory />
+</template>
+
+<script>
+import axios from "axios";
+import Catagory from "@/components/Catagory.vue";
+export default {
+  components: {
+    Catagory,
+  },
+  data() {
+    return {
+      isMenuOpen: false,
+      isDropdownOpen: false,
+      categories: [],
+    };
+
   },
   {
     breakpoint: "1199px",
