@@ -2,8 +2,9 @@
   <div class="home">
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <SiteHeader />
-    <Latest />
     <Trending />
+
+    <Latest />
     <BrowseByTopics />
   </div>
 </template>
