@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.h111{
-    color:1E0627;
-    font-size: 45px;
-    font-weight: 600;
+.h111 {
+  color: 1e627;
+  font-size: 45px;
+  font-weight: 600;
+}
+.see {
+  color: #FF0053;
+  font-size: 20px;
 }
