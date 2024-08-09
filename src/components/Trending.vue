@@ -1,72 +1,76 @@
 <template>
-  <ThemeSwitcher />
-  <div
-    class="text-[45px] mt-4 font-bold mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
-  >
-    Trending Headlines
-  </div>
-  <div class="card">
-    <Carousel
-      v-for="blog in slicedData"
-      :key="blog._id"
-      :value="products"
-      :numVisible="1"
-      :numScroll="1"
-      :responsiveOptions="responsiveOptions"
-      class="carousel"
-      showIndicators
+  <div v-if="blogs.length > 0">
+    <div
+      class="text-[45px] mt-4 font-bold mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
     >
-      <template #item="slotProps">
-        <div class="relative rounded-[20px] m-2 h-[363px] overflow-hiddenn">
-          <img
-            :src="blog.imgixUrlHighRes"
-            :alt="slotProps.data.name"
-            class="w-[100%] h-full object-fit rounded-[20px]"
-          />
-          <Tag
-            :value="slotProps.data.inventoryStatus"
-            :severity="getSeverity(slotProps.data.inventoryStatus)"
-            class="absolute top-4 left-4"
-          />
-          <div
-            class="absolute top-2 right-4 p-2 text-black w-[10%] flex justify-around"
-          >
-            <div>
-              <i
-                class="pi pi-share-alt text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
-              ></i>
-            </div>
-            <div>
-              <i
-                class="pi pi-bookmark text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
-              ></i>
-            </div>
-          </div>
-          <div
-            class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
-          >
-            <div class="gap-1 text-white text-xs">
-              <div class="leading-3 w-[60%]">
-                <a
-                  :href="`${SACHAI_NEWS_URL}${blog._id}`"
-                  style="line-height: 1.2"
-                  class="hover:text-current text-[20px]"
-                >
-                  {{ blog.headline }}
-                </a>
+      Trending Headlines
+    </div>
+    <div class="card">
+      <Carousel
+        :value="blogs"
+        :numVisible="1"
+        :numScroll="1"
+        :responsiveOptions="responsiveOptions"
+        class="carousel mt-4"
+        showIndicators
+        circular
+      >
+        <template #item="slotProps">
+          <div class="relative rounded-[20px] m-2 h-[363px] overflow-hidden">
+            <img
+              :src="slotProps.data.imgixUrlHighRes"
+              :alt="slotProps.data.name"
+              class="w-[100%] h-full object-cover rounded-[20px]"
+            />
+            <Tag
+              :value="slotProps.data.inventoryStatus"
+              :severity="getSeverity(slotProps.data.inventoryStatus)"
+              class="absolute top-4 left-4"
+            />
+            <div
+              class="absolute top-2 right-4 p-2 text-black w-[8%] flex justify-around"
+            >
+              <div>
+                <i
+                  class="pi pi-share-alt text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
+                ></i>
               </div>
-              <div class="flex w-[20%] mt-3 mb-1 justify-between">
-                <div class="text-[16px]">{{ blog.source }}</div>
-                <div class="text-[16px]">|</div>
-                <div class="text-[16px]">
-                  {{ formatPublishTime(blog.publishTime) }}
+              <div>
+                <i
+                  class="pi pi-bookmark text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
+                ></i>
+              </div>
+            </div>
+            <div
+              class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
+            >
+              <div class="gap-1 text-white text-xs ml-4 mb-4">
+                <div class="leading-3 w-[60%]">
+                  <a
+                    :href="`${SACHAI_NEWS_URL}${slotProps.data._id}`"
+                    style="line-height: 1.2"
+                    class="hover:text-current text-[20px]"
+                  >
+                    {{ slotProps.data.headline }}
+                  </a>
+                </div>
+                <div class="flex w-[20%] mt-3 mb-1 justify-between">
+                  <div class="text-[16px]">{{ slotProps.data.source }}</div>
+                  <div class="text-[16px]">|</div>
+                  <div class="text-[16px]">
+                    {{ formatPublishTime(slotProps.data.publishTime) }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </template>
-    </Carousel>
+        </template>
+      </Carousel>
+    </div>
+  </div>
+  <div v-else>
+    <p>Loading...</p>
+    <!-- Or show a placeholder if no data is available -->
   </div>
 </template>
 
@@ -166,7 +170,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .carousel .p-carousel-indicators {
   bottom: 10px; /* Adjust the position of the indicators */
