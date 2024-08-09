@@ -25,8 +25,8 @@
           </div>
           <div>
             <img
-              src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab783_app-store.svg"
-              alt="App Store"
+              src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab784_google-play.svg"
+              alt="Play Store"
               width="100px"
               height="100px"
             />
