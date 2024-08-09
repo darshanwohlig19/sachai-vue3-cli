@@ -4,7 +4,7 @@
     <div
       class="news-section-categories mt-12 flex justify-between items-center"
     >
-      <div class="text-2xl font-bold">Breaking News</div>
+      <div class="h111">Breaking News</div>
       <div class="see-all-style"><a href="#">See all &nbsp;→</a></div>
     </div>
     <div class="flex flex-wrap justify-center gap-4 sm:justify-between mt-6">

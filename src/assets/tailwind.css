@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.h111{
+    color:1E0627;
+    font-size: 45px;
+    font-weight: 600;
+}

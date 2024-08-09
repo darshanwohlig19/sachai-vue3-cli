@@ -3,6 +3,7 @@
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <SiteHeader />
     <Trending />
+    <Featured />
     <Latest />
     <BrowseByTopics />
     <Footer1 />
@@ -17,6 +18,7 @@ import Latest from "@/components/Latest.vue";
 import Trending from "@/components/Trending.vue";
 import BrowseByTopics from "@/components/BrowseByTopics.vue";
 import Footer1 from "@/components/Footer.vue";
+import Featured from "@/components/Featured.vue";
 
 export default {
   name: "HomeView",
@@ -27,6 +29,7 @@ export default {
     Trending,
     BrowseByTopics,
     Footer1,
+    Featured,
   },
 };
 </script>

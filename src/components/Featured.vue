@@ -1,7 +1,7 @@
 <template>
   <div v-if="blogs.length > 0">
     <div class="h111 mt-4 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]">
-      Trending Headlines
+      Featured News
     </div>
     <div class="card">
       <Carousel
@@ -14,51 +14,44 @@
         circular
       >
         <template #item="slotProps">
-          <div class="relative rounded-[20px] m-2 h-[363px] overflow-hidden">
-            <img
-              :src="slotProps.data.imgixUrlHighRes"
-              :alt="slotProps.data.name"
-              class="w-[100%] h-full object-cover rounded-[20px]"
-            />
-            <Tag
-              :value="slotProps.data.inventoryStatus"
-              :severity="getSeverity(slotProps.data.inventoryStatus)"
-              class="absolute top-4 left-4"
-            />
-            <div
-              class="absolute top-2 right-4 p-2 text-black w-[8%] flex justify-around"
-            >
-              <div>
-                <i
-                  class="pi pi-share-alt text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
-                ></i>
-              </div>
-              <div>
-                <i
-                  class="pi pi-bookmark text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
-                ></i>
-              </div>
+          <div class="flex justify-between w-[100%] mr-[30px] ml-[30px]">
+            <div class="w-[48%]">
+              <img
+                class="h-[396px] w-[100%] rounded-[20px]"
+                :src="slotProps.data.imgixUrlHighRes"
+                :alt="slotProps.data.name"
+              />
             </div>
-            <div
-              class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
-            >
-              <div class="gap-1 text-white text-xs ml-4 mb-4">
-                <div class="leading-3 w-[60%]">
-                  <a
-                    :href="`${SACHAI_NEWS_URL}${slotProps.data._id}`"
-                    style="line-height: 1.2"
-                    class="hover:text-current text-[20px]"
-                  >
-                    {{ slotProps.data.headline }}
-                  </a>
+            <div class="w-[48%]">
+              <div class="flex justify-between w-[90%]">
+                <div class="flex justify-between w-[40%]">
+                  <div>{{ slotProps.data.source }}</div>
+                  <div>|</div>
+                  <div>{{ formatPublishTime(slotProps.data.publishTime) }}</div>
                 </div>
-                <div class="flex w-[20%] mt-3 mb-1 justify-between">
-                  <div class="text-[16px]">{{ slotProps.data.source }}</div>
-                  <div class="text-[16px]">|</div>
-                  <div class="text-[16px]">
-                    {{ formatPublishTime(slotProps.data.publishTime) }}
+                <div class="flex justify-between w-[8%]">
+                  <div>
+                    <i
+                      class="pi pi-share-alt text-black rounded-[50%] text-[19px]"
+                    ></i>
+                  </div>
+                  <div>
+                    <i
+                      class="pi pi-bookmark text-black rounded-[50%] text-[19px]"
+                    ></i>
                   </div>
                 </div>
+              </div>
+              <div class="text-[35px] w-[90%] mt-4" style="line-height: 1.1">
+                {{ slotProps.data.headline }}
+              </div>
+              <div class="text-[16px] w-[90%] mt-4">
+                {{ slotProps.data.summary }}
+              </div>
+              <div class="flex justify-between w-[27%] mt-5">
+                <div>Politics</div>
+                <div>|</div>
+                <div>{{ formatPublishTime(slotProps.data.publishTime) }}</div>
               </div>
             </div>
           </div>

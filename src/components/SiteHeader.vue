@@ -67,9 +67,7 @@
       <div class="mb-5"><a href="/Login">Login</a></div>
     </div>
   </section>
-  <div
-    class="text-[45px] font-bold mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
-  >
+  <div class="h111 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]">
     Categories
   </div>
   <Catagory />
