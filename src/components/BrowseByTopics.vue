@@ -1,10 +1,10 @@
 <template>
-  <Catagory />
+  <Catagory @categorySelected="handleCategorySelection" />
   <div class="ml-[20px] mr-[20px] sm:mr-[60px] sm:ml-[60px]">
     <div
       class="news-section-categories mt-12 flex justify-between items-center"
     >
-      <div class="h111">Breaking News</div>
+      <div class="h111 capitalize">{{ selectedCategoryName }}</div>
       <div class="see"><a href="#">See all &nbsp;→</a></div>
     </div>
     <div class="flex flex-wrap justify-center gap-4 sm:justify-between mt-6">
@@ -14,7 +14,7 @@
         class="sm:w-[32%] lg:w-[32%] bg-white flex flex-col sm:flex-row rounded-lg overflow-hidden"
       >
         <div class="w-full sm:w-[40%]">
-          <a :href="`${SACHAI_NEWS_URL}${item._id}`">
+          <a :href="SACHAI_NEWS_URL + item._id">
             <img
               class="w-full h-40 sm:h-full object-cover"
               :src="item.imgixUrlHighRes"
@@ -29,23 +29,20 @@
           </div>
           <div class="text-sm mb-2">
             <a
-              :href="`${SACHAI_NEWS_URL}${item._id}`"
+              :href="SACHAI_NEWS_URL + item._id"
               class="hover:text-current font-semibold"
             >
               {{ item.headline }}
             </a>
           </div>
           <div class="text-xs mb-2">
-            <a
-              :href="`${SACHAI_NEWS_URL}${item._id}`"
-              class="hover:text-current"
-            >
+            <a :href="SACHAI_NEWS_URL + item._id" class="hover:text-current">
               {{ truncateText(item.summary, 100) }}
             </a>
           </div>
           <div class="text-xs text-gray-500 flex items-center">
-            <span class="text-red-500 mr-1">Politics</span>
-            <span>| 4 min read</span>
+            <span class="text-red-500 mr-1">{{ item.category }}</span>
+            <span>| {{ calculateReadTime(item.content) }} min read</span>
           </div>
         </div>
       </div>
@@ -57,37 +54,26 @@
 import moment from "moment";
 import axios from "axios";
 import Catagory from "./Catagory.vue";
+
 export default {
   components: {
     Catagory,
   },
   data() {
     return {
-      languageId: "6421a32aa020a23deacecf92",
-      categories: [],
-      navcategories: [],
-      navcategories3: [],
       latestNews: [],
       SACHAI_NEWS_URL: "https://news.sachai.io/news/",
-      screenWidth: window.innerWidth, // Track screen width
+      screenWidth: window.innerWidth,
+      selectedCategoryName: "Breaking News", // Default heading
+      defaultCategoryId: "breaking-news-id", // Replace with actual ID for "Breaking News"
     };
   },
   async created() {
-    try {
-      const blogs = await axios.post(
-        "https://dev-api.askus.news/news/getAllBlogsForWeb",
-        {
-          language: this.languageId,
-          page: 1,
-        }
-      );
-
-      this.latestNews = blogs.data.slice(0, 6);
-    } catch (error) {
-      console.error(error);
-    }
+    // Simulate the category selection event for the default category
+    this.handleCategorySelection(this.defaultCategoryId, "Breaking News");
   },
   mounted() {
+    this.updateScreenWidth();
     window.addEventListener("resize", this.updateScreenWidth);
   },
   beforeUnmount() {
@@ -95,20 +81,39 @@ export default {
   },
   computed: {
     displayedNews() {
-      // Display only 2 items if screen width is less than 640px
-      if (this.screenWidth < 640) {
-        return this.latestNews.slice(0, 2);
-      }
-      // Otherwise, display all 6 items
-      return this.latestNews;
+      return this.screenWidth < 640
+        ? this.latestNews.slice(0, 2)
+        : this.latestNews;
     },
   },
   methods: {
-    truncateText(text, maxLength) {
-      if (text.length > maxLength) {
-        return text.slice(0, maxLength) + "...";
+    async fetchNewsForCategory(
+      categoryId = this.defaultCategoryId,
+      categoryName = "Breaking News"
+    ) {
+      this.selectedCategoryName = categoryName; // Update the heading
+
+      console.log("Fetching news for category:", categoryId);
+
+      try {
+        const response = await axios.post(
+          "https://dev-api.askus.news/news/getCategoryWiseNewsForWeb",
+          {
+            categoryId,
+          }
+        );
+        this.latestNews = response.data.slice(0, 6);
+      } catch (error) {
+        console.error(error);
       }
-      return text;
+    },
+    handleCategorySelection(categoryId, categoryName) {
+      this.fetchNewsForCategory(categoryId, categoryName);
+    },
+    truncateText(text, maxLength) {
+      return text && text.length > maxLength
+        ? text.slice(0, maxLength) + "..."
+        : text;
     },
     formatDate(date) {
       return moment(date).fromNow();
@@ -116,35 +121,19 @@ export default {
     updateScreenWidth() {
       this.screenWidth = window.innerWidth;
     },
+    calculateReadTime(content) {
+      if (!content || typeof content !== "string") {
+        return "0"; // Return 0 if content is undefined or not a string
+      }
+
+      const wordsPerMinute = 200; // Average reading speed
+      const words = content.split(" ").length;
+      return Math.ceil(words / wordsPerMinute);
+    },
   },
 };
 </script>
 
 <style scoped>
-.see-all-style {
-  color: #ff0053;
-  text-decoration: none;
-}
-.chip-button {
-  background-color: #f0f0f0;
-  border: 1px solid #676767;
-  border-radius: 16px;
-  padding: 8px 16px;
-  font-size: 14px;
-  color: #676767;
-  cursor: pointer;
-  outline: none;
-  transition: background-color 0.3s;
-  text-transform: capitalize;
-}
-.chip-button:hover {
-  background-color: #e0e0e0;
-}
-.chip-button:active {
-  background-color: #d0d0d0;
-}
-.news-section-categories {
-  flex-direction: row;
-  margin-top: 50px;
-}
+/* Your existing styles for the news component */
 </style>

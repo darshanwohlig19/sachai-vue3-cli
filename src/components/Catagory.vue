@@ -2,24 +2,24 @@
   <div class="ml-[20px] mr-[20px] sm:mr-[60px] sm:ml-[60px]">
     <div class="flex flex-wrap justify-center sm:justify-start gap-2 mt-4">
       <div v-for="item in navcategories3" :key="item._id" class="mt-2">
-        <a
-          :href="`/categories/${item._id}?category=${item.name}`"
-          class="nav-top"
-          style="text-align: center"
+        <button
+          class="chip-button"
+          @click="selectCategory(item._id, item.name)"
         >
-          <button class="chip-button">{{ item.name }}</button>
-        </a>
+          {{ item.name }}
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
 import axios from "axios";
 
 const languageId = ref("6421a32aa020a23deacecf92");
 const navcategories3 = ref([]);
+const emit = defineEmits(["categorySelected"]);
 
 const fetchCategories = async () => {
   try {
@@ -36,10 +36,15 @@ const fetchCategories = async () => {
   }
 };
 
+const selectCategory = (categoryId, name) => {
+  emit("categorySelected", categoryId, name);
+};
+
 onMounted(() => {
   fetchCategories();
 });
 </script>
+
 <style scoped>
 .see-all-style {
   color: #ff0053;
