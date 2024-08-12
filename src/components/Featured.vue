@@ -15,7 +15,7 @@
       >
         <template #item="slotProps">
           <div
-            class="flex justify-between flex-wrap w-[100%] mr-[30px] ml-[30px]"
+            class="flex justify-between flex-wrap w-[100%] h-auto mr-[30px] ml-[30px]"
           >
             <div class="sm:w-[48%] w-[100%]">
               <img
@@ -24,14 +24,14 @@
                 :alt="slotProps.data.name"
               />
             </div>
-            <div class="w-[48%]">
-              <div class="flex justify-between w-[90%]">
+            <div class="sm:w-[100%] md:w-[48%]">
+              <div class="flex justify-between w-[90%] mt-4 sm:mt-0">
                 <div class="flex flex-row gap-3 font-lato">
                   <div>{{ slotProps.data.source }}</div>
                   <div>|</div>
                   <div>{{ formatPublishTime(slotProps.data.publishTime) }}</div>
                 </div>
-                <div class="flex justify-between w-[8%]">
+                <div class="flex flex-row gap-2 justify-between">
                   <div>
                     <i
                       class="mdi mdi-share-variant text-black rounded-[50%] text-[19px]"
@@ -45,15 +45,15 @@
                 </div>
               </div>
               <div
-                class="text-[38px] w-[90%] mt-4 fontCustom"
+                class="sm:text-[38px] text-[30px] w-[90%] sm:mt-4 mt-2 fontCustom"
                 style="line-height: 1.1"
               >
                 {{ slotProps.data.headline }}
               </div>
-              <div class="text-[16px] font-lato w-[90%] mt-4">
+              <div class="text-[16px] font-lato w-[90%] sm:mt-4 mt-2">
                 {{ slotProps.data.summary }}
               </div>
-              <div class="flex flex-row gap-3 mt-5">
+              <div class="flex flex-row gap-3 sm:mt-4 mt-2">
                 <div>Politics</div>
                 <div>|</div>
                 <div>{{ formatPublishTime(slotProps.data.publishTime) }}</div>
