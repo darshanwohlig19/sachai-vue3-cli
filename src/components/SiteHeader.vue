@@ -1,7 +1,7 @@
 <template>
   <section>
     <div
-      class="flex justify-between mt-10 mb-10 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
+      class="flex justify-between mt-10 mb-10 mr-[20px] ml-[20px] sm:mr-[60px] sm:ml-[60px]"
     >
       <div class="flex justify-between w-[30%] items-center">
         <div>
@@ -67,7 +67,9 @@
       <div class="mb-5"><a href="/Login">Login</a></div>
     </div>
   </section>
-  <div class="h111 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]">
+  <div
+    class="text-[45px] font-bold font-lato mt-4 mr-[20px] ml-[20px] sm:mr-[60px] sm:ml-[60px]"
+  >
     Categories
   </div>
   <Catagory />

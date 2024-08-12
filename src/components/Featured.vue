@@ -1,6 +1,8 @@
 <template>
   <div v-if="blogs.length > 0">
-    <div class="h111 mt-4 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]">
+    <div
+      class="text-[45px] font-bold font-lato mt-4 mr-[20px] ml-[20px] sm:mr-[60px] sm:ml-[60px]"
+    >
       Featured
     </div>
     <div class="card">
