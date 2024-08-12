@@ -1,4 +1,7 @@
 <template>
+  <div class="h111 mt-8 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]">
+    Browse by Topic
+  </div>
   <Catagory @categorySelected="handleCategorySelection" />
   <div class="ml-[20px] mr-[20px] sm:mr-[60px] sm:ml-[60px]">
     <div
