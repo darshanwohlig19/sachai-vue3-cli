@@ -44,7 +44,7 @@
               class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
             >
               <div class="gap-1 text-white text-xs ml-4 mb-4">
-                <div class="leading-3 w-[60%]">
+                <div class="leading-3 sm:w-[100%] md:w-[60%]">
                   <a
                     :href="`${SACHAI_NEWS_URL}${slotProps.data._id}`"
                     style="line-height: 1.2"
