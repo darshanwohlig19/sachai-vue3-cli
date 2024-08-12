@@ -51,9 +51,9 @@ onMounted(() => {
   text-decoration: none;
 }
 .chip-button {
-  background-color: #fff;
+  background-color: #f1f1f1;
   border: 1px solid #676767;
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 8px 16px;
   font-size: 14px;
   color: #676767;
@@ -63,10 +63,10 @@ onMounted(() => {
   text-transform: capitalize;
 }
 .chip-button:hover {
-  background-color: #e0e0e0;
+  background-color: #f1f1f1;
 }
 .chip-button:active {
-  background-color: #d0d0d0;
+  background-color: #f1f1f1;
 }
 .news-section-categories {
   flex-direction: row;

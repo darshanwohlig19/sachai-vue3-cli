@@ -26,16 +26,17 @@
               class="absolute top-4 left-4"
             />
             <div
-              class="absolute top-2 right-4 p-2 text-black w-[8%] flex justify-around"
+              class="absolute top-2 right-4 p-2 text-black flex flex-row gap-3 justify-around"
             >
               <div>
                 <i
-                  class="pi pi-share-alt text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
+                  class="mdi mdi-share-variant text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center icon-black"
+                  style="color: black"
                 ></i>
               </div>
               <div>
                 <i
-                  class="pi pi-bookmark text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
+                  class="mdi mdi-bookmark-outline text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
                 ></i>
               </div>
             </div>
@@ -52,7 +53,7 @@
                     {{ slotProps.data.headline }}
                   </a>
                 </div>
-                <div class="flex w-[20%] mt-3 mb-1 justify-between">
+                <div class="flex flex-row gap-3 mt-3 mb-1">
                   <div class="text-[16px]">{{ slotProps.data.source }}</div>
                   <div class="text-[16px]">|</div>
                   <div class="text-[16px]">

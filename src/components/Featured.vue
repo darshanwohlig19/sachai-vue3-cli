@@ -1,7 +1,7 @@
 <template>
   <div v-if="blogs.length > 0">
     <div class="h111 mt-4 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]">
-      Featured News
+      Featured
     </div>
     <div class="card">
       <Carousel
@@ -14,17 +14,19 @@
         circular
       >
         <template #item="slotProps">
-          <div class="flex justify-between w-[100%] mr-[30px] ml-[30px]">
-            <div class="w-[48%]">
+          <div
+            class="flex justify-between flex-wrap w-[100%] mr-[30px] ml-[30px]"
+          >
+            <div class="sm:w-[48%] w-[100%]">
               <img
-                class="h-[396px] w-[100%] rounded-[20px]"
+                class="h-[396px] w-[100%] rounded-[20px] object-cover"
                 :src="slotProps.data.imgixUrlHighRes"
                 :alt="slotProps.data.name"
               />
             </div>
             <div class="w-[48%]">
               <div class="flex justify-between w-[90%]">
-                <div class="flex justify-between w-[40%]">
+                <div class="flex flex-row gap-3 font-lato">
                   <div>{{ slotProps.data.source }}</div>
                   <div>|</div>
                   <div>{{ formatPublishTime(slotProps.data.publishTime) }}</div>
@@ -32,23 +34,26 @@
                 <div class="flex justify-between w-[8%]">
                   <div>
                     <i
-                      class="pi pi-share-alt text-black rounded-[50%] text-[19px]"
+                      class="mdi mdi-share-variant text-black rounded-[50%] text-[19px]"
                     ></i>
                   </div>
                   <div>
                     <i
-                      class="pi pi-bookmark text-black rounded-[50%] text-[19px]"
+                      class="mdi mdi-bookmark-outline text-black rounded-[50%] text-[21px]"
                     ></i>
                   </div>
                 </div>
               </div>
-              <div class="text-[35px] w-[90%] mt-4" style="line-height: 1.1">
+              <div
+                class="text-[38px] w-[90%] mt-4 fontCustom"
+                style="line-height: 1.1"
+              >
                 {{ slotProps.data.headline }}
               </div>
-              <div class="text-[16px] w-[90%] mt-4">
+              <div class="text-[16px] font-lato w-[90%] mt-4">
                 {{ slotProps.data.summary }}
               </div>
-              <div class="flex justify-between w-[27%] mt-5">
+              <div class="flex flex-row gap-3 mt-5">
                 <div>Politics</div>
                 <div>|</div>
                 <div>{{ formatPublishTime(slotProps.data.publishTime) }}</div>
@@ -178,5 +183,8 @@ export default {
 
 .carousel .p-carousel-indicator.p-highlight {
   background-color: #fff; /* Highlighted indicator color */
+}
+.fontCustom {
+  font-family: "source-serif-pro-semibold";
 }
 </style>

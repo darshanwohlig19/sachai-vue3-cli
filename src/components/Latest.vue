@@ -24,19 +24,19 @@
               <div>| {{ formatPublishTime(blog.publishTime) }}</div>
             </div>
             <div class="flex gap-1">
-              <span class="material-symbols-outlined text-md">share</span>
-              <span class="material-symbols-outlined text-md">bookmark</span>
+              <span class="mdi mdi-share-variant text-[19px]"></span>
+              <span class="mdi mdi-bookmark-outline text-[21px]"></span>
             </div>
           </div>
-          <div class="p-2 text-md font-semibold">
+          <div class="pl-2 pr-2 text-[18px] font-semibold">
             <a
               :href="`${SACHAI_NEWS_URL}${blog._id}`"
-              class="hover:text-current"
+              class="hover:text-current fontCustom"
             >
               {{ blog.headline }}
             </a>
           </div>
-          <div class="p-2 mt-4 text-base">
+          <div class="pl-2 pr-2 mt-2 text-base">
             <a
               :href="`${SACHAI_NEWS_URL}${blog._id}`"
               class="hover:text-current"
@@ -44,7 +44,7 @@
               {{ truncateText(blog.summary, 100) }}
             </a>
           </div>
-          <div class="p-2 mt-4 mb-3 text-sm flex gap-1">
+          <div class="p-2 mt-2 mb-2 text-sm flex gap-1">
             <span class="text-red-500">Politics</span>
             <span>| 4 min read</span>
           </div>
@@ -112,3 +112,8 @@ export default {
   },
 };
 </script>
+<style>
+.fontCustom {
+  font-family: "source-serif-pro-semibold";
+}
+</style>
