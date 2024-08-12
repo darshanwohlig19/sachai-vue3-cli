@@ -11,38 +11,46 @@
       <div
         v-for="item in displayedNews"
         :key="item._id"
-        class="sm:w-[32%] lg:w-[32%] bg-white flex flex-col sm:flex-row rounded-lg overflow-hidden"
+        class="bg-white flex flex-col w-[418px] h-auto sm:h-[100px] sm:flex-row rounded-lg overflow-hidden"
       >
         <div class="w-full sm:w-[40%]">
           <a :href="SACHAI_NEWS_URL + item._id">
             <img
-              class="w-full h-40 sm:h-full object-cover"
+              class="w-[100%] h-[100%] sm:h-full object-cover"
               :src="item.imgixUrlHighRes"
               alt=""
             />
           </a>
         </div>
-        <div class="w-full sm:w-[60%] p-4 flex flex-col justify-between">
-          <div class="text-gray-400 text-xs flex gap-1 mb-2">
+        <div
+          class="w-full sm:w-[60%] pt-3 pl-3 pr-3 flex flex-col justify-between"
+        >
+          <div class="text-gray-400 text-[10px] flex gap-1">
             <div>{{ item.source }}</div>
             <div>| {{ formatDate(item.publishTime) }}</div>
           </div>
-          <div class="text-sm mb-2">
-            <a
-              :href="SACHAI_NEWS_URL + item._id"
-              class="hover:text-current font-semibold"
-            >
+          <div
+            class="text=[13.7px] truncate-lines-3 mt-1"
+            style="line-height: 1.1"
+          >
+            <a class="text-[13.7px]" :href="SACHAI_NEWS_URL + item._id">
               {{ item.headline }}
             </a>
           </div>
-          <div class="text-xs mb-2">
-            <a :href="SACHAI_NEWS_URL + item._id" class="hover:text-current">
+          <div class="text-[12.6px] mt-2">
+            <a
+              style="color: #2a2a2a"
+              :href="SACHAI_NEWS_URL + item._id"
+              class="text-[12.6px]"
+            >
               {{ truncateText(item.summary, 100) }}
             </a>
           </div>
-          <div class="text-xs text-gray-500 flex items-center">
-            <span class="text-red-500 mr-1">{{ item.category }}</span>
-            <span>| {{ calculateReadTime(item.content) }} min read</span>
+          <div class="text-[10px] text-gray-500 flex items-center mt-2 mb-3">
+            <span class="text-red-500 text-[10px] mr-1">Politics</span>
+            <span class="text-[10px]"
+              >| {{ calculateReadTime(item.content) }} min read</span
+            >
           </div>
         </div>
       </div>
@@ -135,5 +143,13 @@ export default {
 </script>
 
 <style scoped>
-/* Your existing styles for the news component */
+.truncate-lines-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3; /* Adjust this based on your font size and line height */
+  max-height: 3.9em; /* Adjust this based on your line-height */
+}
 </style>
