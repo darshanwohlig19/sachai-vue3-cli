@@ -14,12 +14,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineEmits } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import axios from "axios";
 
 const languageId = ref("6421a32aa020a23deacecf92");
 const navcategories3 = ref([]);
-const emit = defineEmits(["categorySelected"]);
+const router = useRouter();
 
 const fetchCategories = async () => {
   try {
@@ -36,8 +37,8 @@ const fetchCategories = async () => {
   }
 };
 
-const selectCategory = (categoryId, name) => {
-  emit("categorySelected", categoryId, name);
+const selectCategory = (categoryId) => {
+  router.push({ name: "Category", params: { slugOrId: categoryId } });
 };
 
 onMounted(() => {
