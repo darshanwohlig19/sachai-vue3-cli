@@ -11,7 +11,7 @@
         :numVisible="1"
         :numScroll="1"
         :responsiveOptions="responsiveOptions"
-        class="carousel mt-4"
+        class="carousel mt-4 custom-carousal"
         showIndicators
         circular
       >
@@ -171,22 +171,20 @@ export default {
   },
 };
 </script>
-<style scoped>
-.carousel .p-carousel-indicators {
-  bottom: 10px; /* Adjust the position of the indicators */
-  display: flex;
-  justify-content: center;
+<style>
+.custom-carousal {
+  position: relative !important;
 }
-
-.carousel .p-carousel-indicator {
-  width: 10px;
-  height: 10px;
-  background-color: #000; /* Set the background color of the indicators */
-  border-radius: 50%; /* Make the indicators round */
-  margin: 0 4px;
+.custom-carousal .p-highlight {
+  background-color: red !important;
 }
-
-.carousel .p-carousel-indicator.p-highlight {
-  background-color: #fff; /* Highlighted indicator color */
+.custom-carousal .p-carousel-indicator {
+  color: green;
+  background-color: white;
+  position: relative !important;
+  bottom: 25px;
+}
+.p-carousel-content {
+  position: relative;
 }
 </style>
