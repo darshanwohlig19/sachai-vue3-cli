@@ -4,7 +4,10 @@
   >
     Browse By Topic
   </div>
-  <Catagory @categorySelected="handleCategorySelection" />
+  <Catagory
+    @categorySelected="handleCategorySelection"
+    :defaultCategoryId="defaultCategoryId"
+  />
   <div class="ml-[20px] mr-[20px] sm:mr-[60px] sm:ml-[60px]">
     <div
       class="news-section-categories mt-12 flex justify-between items-center"
@@ -74,11 +77,11 @@ export default {
   },
   data() {
     return {
+      defaultCategoryId: null, // Will be set in `created` or `mounted` lifecycle hook
       latestNews: [],
       SACHAI_NEWS_URL: "https://news.sachai.io/news/",
       screenWidth: window.innerWidth,
-      selectedCategoryName: "Breaking News", // Default heading
-      defaultCategoryId: "breaking-news-id", // Replace with actual ID for "Breaking News"
+      selectedCategoryName: "Breaking-News", // Default heading
     };
   },
   async created() {
@@ -121,6 +124,7 @@ export default {
       }
     },
     handleCategorySelection(categoryId, categoryName) {
+      // Fetch news for selected category
       this.fetchNewsForCategory(categoryId, categoryName);
     },
     truncateText(text, maxLength) {
