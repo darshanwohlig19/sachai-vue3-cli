@@ -77,16 +77,25 @@ export default {
   },
   data() {
     return {
-      defaultCategoryId: null, // Will be set in `created` or `mounted` lifecycle hook
+      defaultCategoryId: localStorage.getItem("selectedCategoryId") || null,
       latestNews: [],
       SACHAI_NEWS_URL: "https://news.sachai.io/news/",
       screenWidth: window.innerWidth,
-      selectedCategoryName: "Breaking-News", // Default heading
+      selectedCategoryName: "Breaking News", // Default heading
     };
   },
   async created() {
-    // Simulate the category selection event for the default category
-    this.handleCategorySelection(this.defaultCategoryId, "Breaking News");
+    const storedCategoryId = localStorage.getItem("selectedCategoryId");
+    if (storedCategoryId) {
+      // Fetch news for the stored category
+      this.handleCategorySelection(
+        storedCategoryId,
+        localStorage.getItem("selectedCategoryName") || "Breaking News"
+      );
+    } else {
+      // Simulate the category selection event for the default category
+      this.handleCategorySelection(this.defaultCategoryId, "Breaking News");
+    }
   },
   mounted() {
     this.updateScreenWidth();
@@ -124,8 +133,9 @@ export default {
       }
     },
     handleCategorySelection(categoryId, categoryName) {
-      // Fetch news for selected category
       this.fetchNewsForCategory(categoryId, categoryName);
+      localStorage.setItem("selectedCategoryId", categoryId);
+      localStorage.setItem("selectedCategoryName", categoryName);
     },
     truncateText(text, maxLength) {
       return text && text.length > maxLength
@@ -150,15 +160,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.truncate-lines-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3; /* Adjust this based on your font size and line height */
-  max-height: 3.9em; /* Adjust this based on your line-height */
-}
-</style>
