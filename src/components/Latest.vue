@@ -2,11 +2,7 @@
   <section>
     <div class="mt-20 mr-[60px] ml-[60px]">
       <div class="flex justify-between w-full items-center mb-5">
-        <div
-          class="text-[45px] font-bold font-lato mt-4 mt-4 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
-        >
-          Latest News
-        </div>
+        <div class="text-[45px] font-bold font-lato mt-4 mt-4">Latest News</div>
         <div class="see">See all &nbsp;→</div>
       </div>
       <div class="flex flex-wrap gap-4 justify-between">

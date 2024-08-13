@@ -1,9 +1,7 @@
 <template>
   <section>
-    <div
-      class="flex justify-between mt-10 mb-10 mr-[20px] ml-[20px] sm:mr-[60px] sm:ml-[60px]"
-    >
-      <div class="flex justify-between w-[30%] items-center">
+    <div class="flex justify-between mt-10 mb-10 mx-[20px] sm:mx-[60px]">
+      <div class="flex items-center w-[30%] justify-between">
         <div>
           <img
             src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
@@ -14,7 +12,7 @@
         <div
           class="hidden sm:block border border-solid border-black h-[20px]"
         ></div>
-        <div class="hidden justify-between gap-4 md:flex">
+        <div class="hidden md:flex gap-4">
           <div>
             <img
               src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab783_app-store.svg"
@@ -33,11 +31,11 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-between items-center">
+      <div class="flex items-center">
         <!-- Desktop Menu -->
         <div class="hidden md:flex gap-20">
           <div><a href="/">Home</a></div>
-          <div><a href="">Astrology</a></div>
+          <div><a href="#">Astrology</a></div>
           <div><a href="/Login">Login</a></div>
         </div>
         <!-- Mobile Menu -->
@@ -63,50 +61,86 @@
           </a>
         </div>
       </div>
-      <div class="mb-5"><a href="">Astrology</a></div>
+      <div class="mb-5"><a href="#">Astrology</a></div>
       <div class="mb-5"><a href="/Login">Login</a></div>
     </div>
   </section>
-  <div
-    class="text-[45px] font-bold font-lato mt-4 mr-[20px] ml-[20px] sm:mr-[60px] sm:ml-[60px]"
-  >
+  <div class="text-[45px] font-bold font-lato mt-4 mx-[20px] sm:mx-[60px]">
     Categories
   </div>
-  <Catagory />
+  <div
+    class="flex flex-wrap justify-center sm:justify-start gap-2 mt-4 mx-[20px] sm:mx-[60px]"
+  >
+    <div v-for="item in categories" :key="item._id" class="mt-2">
+      <button :class="['chip-button']" @click="selectCategory(item._id)">
+        {{ item.name }}
+      </button>
+    </div>
+  </div>
 </template>
+
 <script>
 import axios from "axios";
-import Catagory from "@/components/Catagory.vue";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+
 export default {
-  components: { Catagory },
-  data() {
-    return { isMenuOpen: false, isDropdownOpen: false, categories: [] };
-  },
-  mounted() {
-    this.fetchCategories();
-  },
-  methods: {
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-    },
-    toggleDropdown() {
-      this.isDropdownOpen = !this.isDropdownOpen;
-    },
-    async fetchCategories() {
+  setup() {
+    const router = useRouter();
+    const isMenuOpen = ref(false);
+    const isDropdownOpen = ref(false);
+    const categories = ref([]);
+    const activeCategoryId = ref(null);
+
+    const toggleMenu = () => {
+      isMenuOpen.value = !isMenuOpen.value;
+    };
+
+    const toggleDropdown = () => {
+      isDropdownOpen.value = !isDropdownOpen.value;
+    };
+
+    const fetchCategories = async () => {
       try {
         const languageId = "6421a32aa020a23deacecf92";
         const response = await axios.post(
           "https://dev-api.askus.news/category/getAllCat",
           { langauge: languageId }
         );
-        this.categories = response.data;
+        categories.value = response.data;
+
+        // Set default category as the first one
+        if (categories.value.length > 0) {
+          activeCategoryId.value = categories.value[0]._id;
+        }
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
-    },
+    };
+
+    const selectCategory = (categoryId) => {
+      activeCategoryId.value = categoryId;
+      router.push({ name: "Category", params: { slugOrId: categoryId } });
+    };
+
+    const isActiveCategory = (categoryId) =>
+      categoryId === activeCategoryId.value;
+
+    fetchCategories();
+
+    return {
+      isMenuOpen,
+      isDropdownOpen,
+      categories,
+      toggleMenu,
+      toggleDropdown,
+      selectCategory,
+      isActiveCategory,
+    };
   },
 };
 </script>
+
 <style>
 .hamburger-btn {
   font-size: 1.5em;
@@ -154,5 +188,32 @@ export default {
     position: static;
     box-shadow: none;
   }
+}
+
+.chip-button {
+  background-color: #f1f1f1;
+  border: 1px solid #676767;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #676767;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s;
+  text-transform: capitalize;
+}
+.chip-button:hover {
+  background-color: #e1e1e1;
+}
+.chip-button:active {
+  background-color: #d1d1d1;
+}
+.chip-button.active {
+  color: #ff0000; /* Red color for active category */
+  border-color: #ff0000; /* Optional: Red border for active category */
+}
+.news-section-categories {
+  flex-direction: row;
+  margin-top: 50px;
 }
 </style>

@@ -4,12 +4,15 @@
   >
     Browse By Topic
   </div>
-  <Catagory @categorySelected="handleCategorySelection" />
+  <Catagory
+    @categorySelected="handleCategorySelection"
+    :defaultCategoryId="defaultCategoryId"
+  />
   <div class="ml-[20px] mr-[20px] sm:mr-[60px] sm:ml-[60px]">
     <div
       class="news-section-categories mt-12 flex justify-between items-center"
     >
-      <div class="h111 capitalize">{{ selectedCategoryName }}</div>
+      <div class="text-[24px] bold capitalize">{{ selectedCategoryName }}</div>
       <div class="see"><a href="#">See all &nbsp;→</a></div>
     </div>
     <div class="flex flex-wrap justify-center gap-4 sm:justify-between mt-6">
@@ -74,16 +77,25 @@ export default {
   },
   data() {
     return {
+      defaultCategoryId: localStorage.getItem("selectedCategoryId") || null,
       latestNews: [],
       SACHAI_NEWS_URL: "https://news.sachai.io/news/",
       screenWidth: window.innerWidth,
       selectedCategoryName: "Breaking News", // Default heading
-      defaultCategoryId: "breaking-news-id", // Replace with actual ID for "Breaking News"
     };
   },
   async created() {
-    // Simulate the category selection event for the default category
-    this.handleCategorySelection(this.defaultCategoryId, "Breaking News");
+    const storedCategoryId = localStorage.getItem("selectedCategoryId");
+    if (storedCategoryId) {
+      // Fetch news for the stored category
+      this.handleCategorySelection(
+        storedCategoryId,
+        localStorage.getItem("selectedCategoryName") || "Breaking News"
+      );
+    } else {
+      // Simulate the category selection event for the default category
+      this.handleCategorySelection(this.defaultCategoryId, "Breaking News");
+    }
   },
   mounted() {
     this.updateScreenWidth();
@@ -122,6 +134,8 @@ export default {
     },
     handleCategorySelection(categoryId, categoryName) {
       this.fetchNewsForCategory(categoryId, categoryName);
+      localStorage.setItem("selectedCategoryId", categoryId);
+      localStorage.setItem("selectedCategoryName", categoryName);
     },
     truncateText(text, maxLength) {
       return text && text.length > maxLength
@@ -146,15 +160,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.truncate-lines-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3; /* Adjust this based on your font size and line height */
-  max-height: 3.9em; /* Adjust this based on your line-height */
-}
-</style>
