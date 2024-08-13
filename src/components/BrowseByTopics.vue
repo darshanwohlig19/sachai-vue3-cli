@@ -9,7 +9,7 @@
     <div
       class="news-section-categories mt-12 flex justify-between items-center"
     >
-      <div class="h111 capitalize">{{ selectedCategoryName }}</div>
+      <div class="text-[24px] bold capitalize">{{ selectedCategoryName }}</div>
       <div class="see"><a href="#">See all &nbsp;→</a></div>
     </div>
     <div class="flex flex-wrap justify-center gap-4 sm:justify-between mt-6">
