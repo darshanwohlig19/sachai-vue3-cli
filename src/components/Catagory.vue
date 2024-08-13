@@ -15,11 +15,7 @@
 </template>
 
 <script setup>
-
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { ref, onMounted, defineEmits, defineProps } from "vue";
-
 import axios from "axios";
 
 const props = defineProps({
@@ -31,9 +27,6 @@ const props = defineProps({
 
 const languageId = ref("6421a32aa020a23deacecf92");
 const navcategories3 = ref([]);
-
-const router = useRouter();
-
 const selectedCategoryId = ref(props.defaultCategoryId); // Use default category ID from props
 const emit = defineEmits(["categorySelected"]);
 
@@ -61,14 +54,9 @@ const fetchCategories = async () => {
   }
 };
 
-
-const selectCategory = (categoryId) => {
-  router.push({ name: "Category", params: { slugOrId: categoryId } });
-
 const selectCategory = (categoryId, name) => {
   selectedCategoryId.value = categoryId; // Set the selected category
   emit("categorySelected", categoryId, name);
-
 };
 
 onMounted(() => {
