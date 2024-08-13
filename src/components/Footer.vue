@@ -1,7 +1,7 @@
 <template>
   <div class="ml-[60px] mr-[0px]">
-    <div class="w-[100%] mt-4 flex flex-row justify-between">
-      <div class="w-[45%]">
+    <div class="w-[100%] mt-4 flex flex-column sm:flex-row justify-between">
+      <div class="w-[100%] sm:w-[45%]">
         <div>
           <a
             href="https://sachai.io/"
@@ -14,7 +14,7 @@
               class="h-[80px] w-auto"
           /></a>
         </div>
-        <div class="text-[24px] mt-5">Pagess</div>
+        <div class="text-[24px] mt-5">Pages</div>
         <div class="flex flex-row justify-between gap-0 mt-4 text-[22px]">
           <div>Home</div>
           <div>Category</div>
@@ -23,8 +23,8 @@
           <div>About Us</div>
         </div>
       </div>
-      <div class="w-[40%] flex justify-around">
-        <div class="w-[40%]">
+      <div class="w-[100%] sm:w-[40%] block sm:flex justify-around">
+        <div class="w-[100%] sm:w-[40%]">
           <div class="text-[24px] bold text-center mt-8">Get our app</div>
           <div class="mt-5 flex flex-col items-center">
             <a
@@ -49,16 +49,16 @@
             /></a>
           </div>
         </div>
-        <div class="w-[20%] text-[24px] bold text-center mt-8">
+        <div class="w-[100%] sm:w-[20%] text-[24px] bold text-center mt-8">
           Follow Us
 
           <div class="mt-5">
             <a href="">
-              <i class="fa-brands fa-linkedin"></i>
+              <i class="mdi mdi-instagram"></i>
             </a>
             &nbsp; &nbsp;
             <a href="">
-              <i class="fa-brands fa-instagram"></i>
+              <i class="mdi mdi-linkedin"></i>
             </a>
           </div>
         </div>
