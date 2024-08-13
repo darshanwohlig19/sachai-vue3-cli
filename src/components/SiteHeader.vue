@@ -72,13 +72,19 @@
   >
     Categories
   </div>
-  <Catagory />
+  <div
+    class="flex flex-wrap justify-center sm:justify-start gap-2 mt-4 mr-[20px] ml-[20px] sm:mr-[60px] sm:ml-[60px]"
+  >
+    <div v-for="item in categories" :key="item._id" class="mt-2">
+      <button class="chip-button">
+        {{ item.name }}
+      </button>
+    </div>
+  </div>
 </template>
 <script>
 import axios from "axios";
-import Catagory from "@/components/Catagory.vue";
 export default {
-  components: { Catagory },
   data() {
     return { isMenuOpen: false, isDropdownOpen: false, categories: [] };
   },
@@ -154,5 +160,32 @@ export default {
     position: static;
     box-shadow: none;
   }
+}
+
+.chip-button {
+  background-color: #f1f1f1;
+  border: 1px solid #676767;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #676767;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s;
+  text-transform: capitalize;
+}
+.chip-button:hover {
+  background-color: #f1f1f1;
+}
+.chip-button:active {
+  background-color: #f1f1f1;
+}
+.chip-button.active {
+  color: #ff0000; /* Red color for active category */
+  border-color: #ff0000; /* Optional: Red border for active category */
+}
+.news-section-categories {
+  flex-direction: row;
+  margin-top: 50px;
 }
 </style>
