@@ -16,7 +16,7 @@
         </div>
         <div class="text-[24px] mt-5">Pages</div>
         <div class="flex flex-row justify-between gap-0 mt-4 text-[22px]">
-          <div>Home</div>
+          <a href="/">Home</a>
           <div>Category</div>
           <div>Astrology</div>
           <div>Login</div>

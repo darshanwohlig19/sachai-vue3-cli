@@ -139,7 +139,7 @@ export default {
             page: 1,
           }
         );
-        this.blogs = response.data;
+        this.blogs = response.data.slice(0, 5);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       }
@@ -177,12 +177,15 @@ export default {
 }
 .custom-carousal .p-highlight {
   background-color: red !important;
+  width: 25px !important;
 }
 .custom-carousal .p-carousel-indicator {
   color: green;
   background-color: white;
   position: relative !important;
   bottom: 25px;
+  width: 10px;
+  border-radius: 10px;
 }
 .p-carousel-content {
   position: relative;
