@@ -1,8 +1,8 @@
 <template>
-  <div class="ml-[60px] mr-[0px]">
+  <div class="mx-[20px] lg:mx-[60px]">
     <div class="w-[100%] mt-4 flex flex-column sm:flex-row justify-between">
       <div class="w-[100%] sm:w-[45%]">
-        <div>
+        <div class="flex justify-center md:justify-start sm:justify-center">
           <a
             href="https://sachai.io/"
             aria-current="page"
@@ -20,7 +20,6 @@
           <div>Category</div>
           <div>Astrology</div>
           <div>Login</div>
-          <div>About Us</div>
         </div>
       </div>
       <div class="w-[100%] sm:w-[40%] block sm:flex justify-around">
