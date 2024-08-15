@@ -169,13 +169,13 @@
     <div class="flex flex-col lg:flex-row gap-5 mt-10">
       <div class="w-[100%] lg:w-[70%] flex flex-col gap-5">
         <div
-          v-for="(item, index) in news1"
+          v-for="(item, index) in paginatedNews"
           :key="index"
           class="w-full h-[50%] bg-white h-[200px] flex rounded-lg"
         >
           <div class="w-full h-[50%] bg-white h-[200px] flex rounded-lg">
             <div class="w-[40%] h-[212px] items-center p-2">
-              <a href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}">
+              <a :href="`${SACHAI_NEWS_URL}${item._id}`">
                 <img
                   class="w-full h-full rounded-md object-cover"
                   :src="item.imgixUrlHighRes || fallbackImage"
@@ -210,7 +210,7 @@
                 class="text-[12px] lg:text-[24px] fontCustom leading-1 bold mr-1 mt-2"
               >
                 <a
-                  href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
+                  :href="`${SACHAI_NEWS_URL}${item._id}`"
                   class="hover:text-current"
                 >
                   {{ truncateText(item?.headline || "No Headline", 80) }}
@@ -220,7 +220,7 @@
                 class="text-[10px] lg:text-[16px] font-lato leading-1 font-[16px] mr-1 mt-1 mb-3"
               >
                 <a
-                  href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
+                  :href="`${SACHAI_NEWS_URL}${item._id}`"
                   class="hover:text-current"
                 >
                   {{ truncateText(item?.summary || "No summary", 140) }}
@@ -234,6 +234,14 @@
             </div>
           </div>
         </div>
+
+        <Paginator
+          :rows="rowsPerPage"
+          :totalRecords="totalRecords"
+          :page="currentPage"
+          :rowsPerPageOptions="[5, 10, 20]"
+          @page="onPageChange"
+        />
       </div>
       <div class="w-[100%] lg:w-[30%]">
         <HotTopics />
@@ -244,19 +252,25 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import moment from "moment";
 import SiteHeader from "@/components/SiteHeader.vue";
 import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
+import Paginator from "primevue/paginator";
 
+// Refs for storing news and pagination state
 const news = ref([]);
 const news1 = ref([]);
+const currentPage = ref(0);
+const rowsPerPage = ref(5);
 
 const route = useRoute();
 const categoryId = route.params.slugOrId;
+
+// Fetching news based on category ID
 const fetchNews = async () => {
   try {
     const response = await axios.post(
@@ -266,15 +280,33 @@ const fetchNews = async () => {
       }
     );
     news.value = response.data.slice(0, 3);
-    news1.value = response.data.slice(4, length - 1);
+    news1.value = response.data.slice(4, response.data.length - 1);
   } catch (error) {
     console.error("Error fetching news:", error);
   }
 };
+
+// Truncate text helper function
 const truncateText = (text, length) => {
   return text.length > length ? text.slice(0, length) + "..." : text;
 };
 
+// Computed property for paginated news
+const paginatedNews = computed(() => {
+  const start = currentPage.value * rowsPerPage.value;
+  return news1.value.slice(start, start + rowsPerPage.value);
+});
+
+// Computed property for total number of records
+const totalRecords = computed(() => news1.value.length);
+
+// Method to handle page change
+const onPageChange = (event) => {
+  currentPage.value = event.page;
+  rowsPerPage.value = event.rows;
+};
+
+// Fetch news when the component is mounted
 onMounted(() => {
   if (categoryId) {
     fetchNews();
