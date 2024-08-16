@@ -5,10 +5,27 @@ import "primevue/resources/primevue.min.css"; //core CSS
 import "primeicons/primeicons.css"; //icons
 import "primeflex/primeflex.css";
 import { createApp } from "vue";
+import { initializeApp } from "firebase/app";
+
+// import { getAnalytics } from "firebase/analytics";
+const firebaseConfig = {
+  apiKey: "AIzaSyAcWQSaRneItFPc16VsuZjo3yNH76Nupho",
+  authDomain: "sachai-news.firebaseapp.com",
+  projectId: "sachai-news",
+  storageBucket: "sachai-news.appspot.com",
+  messagingSenderId: "58802201073",
+  appId: "1:58802201073:web:574371ad909f4ae883e450",
+  measurementId: "G-QE1SMMDC01",
+};
+
+initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 import App from "./App.vue";
 import router from "./router";
 import Button from "primevue/button";
 import TabView from "primevue/tabview";
+import Password from "primevue/password";
+
 import TabPanel from "primevue/tabpanel";
 import InputText from "primevue/inputtext";
 import BadgeDirective from "primevue/badgedirective";
@@ -98,6 +115,7 @@ app.component("Chip", Chip);
 app.component("ProgressSpinner", ProgressSpinner);
 app.component("PanelMenu", PanelMenu);
 app.component("Badge", Badge);
+app.component("Password", Password);
 app.component("Skeleton", Skeleton);
 app.directive("badge", BadgeDirective);
 app.directive("tooltip", Tooltip);
