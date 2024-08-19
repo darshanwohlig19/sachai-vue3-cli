@@ -2,22 +2,53 @@
   <div class="flex justify-center items-center p-[100px]">
     <div class="w-[910px] h-[512px] flex bg-white rounded-[20px]">
       <div class="w-[50%] p-[5%]">
-        <div class="flex justify-center">
+        <div class="flex justify-center mt-5">
           <img
             src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
             class="w-[128px] h-[33px] object-cover"
           />
         </div>
-        <div class="mt-10">
-          <div>Hello !</div>
-          <div class="mt-2">Login to your account</div>
-          <div class="flex flex-row gap-4 mt-3">
-            <Button icon="pi pi-google" @click="loginWithGoogle" />
-            <Button icon="pi pi-apple" @click="signInWithApple" />
-            <Button icon="pi pi-phone" />
+        <div class="mt-20">
+          <div class="text-[32px] font-lato">Hello !</div>
+          <div class="mt-2 text-[18px] font-lato">Login to your account</div>
+          <div class="flex flex-row gap-4 mt-6 w-[100%]">
+            <div
+              class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+            >
+              <img
+                src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
+                class="text-[34px]"
+                @click="loginWithGoogle"
+              />
+            </div>
+            <div
+              class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+            >
+              <img
+                src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
+                class="text-[34px]"
+                @click="signInWithApple"
+              />
+            </div>
+            <div
+              class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+            >
+              <img
+                src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
+                class="text-[34px]"
+                @click="togglePhoneVerification"
+              />
+            </div>
           </div>
-          <div id="recaptcha-container"></div>
-          <div class="mt-4">
+          <div class="text-center mt-10 text-[18px] text-[#FF0053]">
+            Continue without login
+          </div>
+          <div
+            id="recaptcha-container"
+            v-if="showPhoneVerification"
+            class="mt-4"
+          ></div>
+          <div v-if="showPhoneVerification" class="mt-4">
             <input
               v-model="phoneNumber"
               type="text"
@@ -45,22 +76,26 @@
           </div>
         </div>
       </div>
-      <div class="w-[50%]">2</div>
-      <div id="recaptcha-container" class="justify-center flex"></div>
+      <div class="w-[50%]">
+        <img
+          src="https://ik.imagekit.io/553gmaygy/17.png?updatedAt=1724067776564"
+          class="h-[100%] w-[100%] rounded-r-[20px]"
+          alt=""
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { auth } from "@/firebaseConfig"; // Ensure this path is correct
+import { auth } from "@/firebaseConfig";
 import {
   signInWithPopup,
   OAuthProvider,
   RecaptchaVerifier,
   signInWithPhoneNumber,
-  getAuth,
 } from "firebase/auth";
 
 export default {
@@ -69,7 +104,25 @@ export default {
     const phoneNumber = ref("");
     const verificationCode = ref("");
     const showPhoneVerification = ref(false);
-    const recaptchaVerifier = ref(null); // Use reactive state
+    const recaptchaVerifier = ref(null);
+
+    // Initialize reCAPTCHA verifier
+    onMounted(() => {
+      recaptchaVerifier.value = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: (response) => {
+            console.log("ReCAPTCHA solved:", response);
+            showPhoneVerification.value = true;
+          },
+          "expired-callback": () => {
+            console.log("ReCAPTCHA expired.");
+          },
+        }
+      );
+    });
 
     const loginWithGoogle = async () => {
       try {
@@ -95,51 +148,25 @@ export default {
       }
     };
 
-    const sendVerificationCode = async () => {
-      //   const initiatePhoneLogin = () => {
-      var appVerifier;
-      const auth = getAuth();
-      if (!showPhoneVerification.value) {
-        appVerifier = window.recaptchaVerifier = new RecaptchaVerifier(
-          auth,
-          "recaptcha-container",
-          {
-            size: "invisible",
-            callback: (response) => {
-              console.log(response);
-              showPhoneVerification.value = true;
-              // reCAPTCHA solved, allow signInWithPhoneNumber.
-              // onSignInSubmit();
-            },
-          }
-        );
-      }
-      signInWithPhoneNumber(auth, phoneNumber.value, appVerifier).then(
-        (confirmationResult) => {
-          console.log("NUMBER: " + phoneNumber.value);
+    const togglePhoneVerification = () => {
+      showPhoneVerification.value = true;
+    };
 
-          // SMS sent. Prompt user to type the code from the message, then sign the
-          // user in with confirmationResult.confirm(code).
-          window.confirmationResult = confirmationResult;
-          // ...
-        }
-      );
-      //     .catch((error) => {
-      //       console.log(error);
-      //     });
-      if (!recaptchaVerifier.value) {
-        console.error("ReCAPTCHA verifier is not initialized.");
-        return;
-      }
+    const sendVerificationCode = async () => {
       try {
-        // const appVerifier = recaptchaVerifier.value;
-        // const confirmationResult = await signInWithPhoneNumber(
-        //   auth,
-        //   phoneNumber.value,
-        //   appVerifier
-        // );
-        // window.confirmationResult = confirmationResult; // Store confirmationResult for later use
-        // console.log("Verification code sent to:", phoneNumber.value);
+        if (!recaptchaVerifier.value) {
+          console.error("ReCAPTCHA verifier is not initialized.");
+          return;
+        }
+
+        const confirmationResult = await signInWithPhoneNumber(
+          auth,
+          phoneNumber.value,
+          recaptchaVerifier.value
+        );
+
+        console.log("Verification code sent to:", phoneNumber.value);
+        window.confirmationResult = confirmationResult; // Store confirmationResult for later use
       } catch (error) {
         console.error("Failed to send verification code:", error);
       }
@@ -160,11 +187,11 @@ export default {
       phoneNumber,
       verificationCode,
       showPhoneVerification,
-      //   initiatePhoneLogin,
       sendVerificationCode,
       verifyCode,
       loginWithGoogle,
       signInWithApple,
+      togglePhoneVerification,
     };
   },
 };
