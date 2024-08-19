@@ -147,10 +147,18 @@ export default {
 
     const verifyCode = async () => {
       try {
+        // Ensure the confirmationResult is available
         const confirmationResult = window.confirmationResult;
+        if (!confirmationResult) {
+          throw new Error("No confirmation result found.");
+        }
+
+        // Confirm the verification code
         const result = await confirmationResult.confirm(verificationCode.value);
+
+        // Successful verification
         console.log("User Info:", result.user);
-        router.push("/");
+        router.push("/"); // Redirect to the home page
       } catch (error) {
         console.error("Verification failed:", error);
       }
