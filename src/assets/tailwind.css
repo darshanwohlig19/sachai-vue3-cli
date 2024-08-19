@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+
+.see {
+  color: #ff0053;
+  font-size: 20px;
+}
+@font-face {
+  font-family: "source-serif-pro-bold";
+  src: url("@/assets/fonts/source-serif-pro.bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "source-serif-pro-regular";
+  src: url("@/assets/fonts/source-serif-pro.regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "source-serif-pro-semibold";
+  src: url("@/assets/fonts/source-serif-pro.semibold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@media (max-width: 600px) {
+ .h111 {
+  color: #1e0627;
+  font-size: 24px;
+  font-weight: 600;
+}
+}

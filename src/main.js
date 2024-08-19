@@ -5,10 +5,22 @@ import "primevue/resources/primevue.min.css"; //core CSS
 import "primeicons/primeicons.css"; //icons
 import "primeflex/primeflex.css";
 import { createApp } from "vue";
+import { auth } from "@/firebaseConfig";
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    console.log("User is logged in:", user);
+  } else {
+    console.log("User is logged out");
+  }
+});
+// import { getAnalytics } from "firebase/analytics";
+// const analytics = getAnalytics(app);
 import App from "./App.vue";
 import router from "./router";
 import Button from "primevue/button";
 import TabView from "primevue/tabview";
+import Password from "primevue/password";
+
 import TabPanel from "primevue/tabpanel";
 import InputText from "primevue/inputtext";
 import BadgeDirective from "primevue/badgedirective";
@@ -51,6 +63,8 @@ import Tooltip from "primevue/tooltip";
 import TreeTable from "primevue/treetable";
 import Badge from "primevue/badge";
 import Skeleton from "primevue/skeleton";
+import "./assets/tailwind.css";
+import "@mdi/font/css/materialdesignicons.css";
 
 const app = createApp(App);
 app.use(router);
@@ -96,6 +110,7 @@ app.component("Chip", Chip);
 app.component("ProgressSpinner", ProgressSpinner);
 app.component("PanelMenu", PanelMenu);
 app.component("Badge", Badge);
+app.component("Password", Password);
 app.component("Skeleton", Skeleton);
 app.directive("badge", BadgeDirective);
 app.directive("tooltip", Tooltip);
