@@ -2,19 +2,46 @@
   <div class="flex justify-center items-center p-[100px]">
     <div class="w-[910px] h-[512px] flex bg-white rounded-[20px]">
       <div class="w-[50%] p-[5%]">
-        <div class="flex justify-center">
+        <div class="flex justify-center mt-5">
           <img
             src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
             class="w-[128px] h-[33px] object-cover"
           />
         </div>
-        <div class="mt-10">
-          <div>Hello !</div>
-          <div class="mt-2">Login to your account</div>
-          <div class="flex flex-row gap-4 mt-3">
-            <Button icon="pi pi-google" @click="loginWithGoogle" />
-            <Button icon="pi pi-apple" @click="signInWithApple" />
-            <Button icon="pi pi-phone" @click="togglePhoneVerification" />
+        <div class="mt-20">
+          <div class="text-[32px] font-lato">Hello !</div>
+          <div class="mt-2 text-[18px] font-lato">Login to your account</div>
+          <div class="flex flex-row gap-4 mt-6 w-[100%]">
+            <div
+              class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+            >
+              <img
+                src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
+                class="text-[34px]"
+                @click="loginWithGoogle"
+              />
+            </div>
+            <div
+              class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+            >
+              <img
+                src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
+                class="text-[34px]"
+                @click="signInWithApple"
+              />
+            </div>
+            <div
+              class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+            >
+              <img
+                src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
+                class="text-[34px]"
+                @click="togglePhoneVerification"
+              />
+            </div>
+          </div>
+          <div class="text-center mt-10 text-[18px] text-[#FF0053]">
+            Continue without login
           </div>
           <div
             id="recaptcha-container"
@@ -49,7 +76,13 @@
           </div>
         </div>
       </div>
-      <div class="w-[50%]">2</div>
+      <div class="w-[50%]">
+        <img
+          src="https://ik.imagekit.io/553gmaygy/17.png?updatedAt=1724067776564"
+          class="h-[100%] w-[100%] rounded-r-[20px]"
+          alt=""
+        />
+      </div>
     </div>
   </div>
 </template>
