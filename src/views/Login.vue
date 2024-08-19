@@ -14,11 +14,11 @@
           <div class="flex flex-row gap-4 mt-6 w-[100%]">
             <div
               class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+              @click="loginWithGoogle"
             >
               <img
                 src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
                 class="text-[34px]"
-                @click="loginWithGoogle"
               />
             </div>
             <div
@@ -87,7 +87,7 @@
   </div>
 </template>
 
-<script>
+<!-- <script>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { auth } from "@/firebaseConfig";
@@ -178,6 +178,119 @@ export default {
         const result = await confirmationResult.confirm(verificationCode.value);
         console.log("User Info:", result.user);
         router.push("/");
+      } catch (error) {
+        console.error("Verification failed:", error);
+      }
+    };
+
+    return {
+      phoneNumber,
+      verificationCode,
+      showPhoneVerification,
+      sendVerificationCode,
+      verifyCode,
+      loginWithGoogle,
+      signInWithApple,
+      togglePhoneVerification,
+    };
+  },
+};
+</script> -->
+<script>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { auth } from "@/firebaseConfig";
+import {
+  signInWithPopup,
+  OAuthProvider,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+} from "firebase/auth";
+
+export default {
+  setup() {
+    const router = useRouter();
+    const phoneNumber = ref("");
+    const verificationCode = ref("");
+    const showPhoneVerification = ref(false);
+    const recaptchaVerifier = ref(null);
+
+    // Initialize reCAPTCHA verifier
+    onMounted(() => {
+      recaptchaVerifier.value = new RecaptchaVerifier(
+        "recaptcha-container", // Changed order of parameters
+        {
+          size: "invisible",
+          callback: (response) => {
+            console.log("ReCAPTCHA solved:", response);
+            showPhoneVerification.value = true;
+          },
+          "expired-callback": () => {
+            console.log("ReCAPTCHA expired.");
+          },
+        },
+        auth // auth should be the third parameter
+      );
+    });
+
+    const loginWithGoogle = async () => {
+      try {
+        const googleProvider = new OAuthProvider("google.com");
+        googleProvider.addScope("email");
+        const result = await signInWithPopup(auth, googleProvider);
+        console.log("User Info:", result.user);
+        router.push("/").then(() => {
+          window.location.reload(); // Force reload
+        });
+      } catch (error) {
+        console.error("Google login failed:", error);
+      }
+    };
+
+    const signInWithApple = async () => {
+      try {
+        const appleProvider = new OAuthProvider("apple.com");
+        appleProvider.addScope("email");
+        const result = await signInWithPopup(auth, appleProvider);
+        console.log("Apple User Info:", result.user);
+        router.push("/").then(() => {
+          window.location.reload(); // Force reload
+        });
+      } catch (error) {
+        console.error("Apple login failed:", error);
+      }
+    };
+
+    const togglePhoneVerification = () => {
+      showPhoneVerification.value = true;
+    };
+
+    const sendVerificationCode = async () => {
+      try {
+        if (!recaptchaVerifier.value) {
+          console.error("ReCAPTCHA verifier is not initialized.");
+          return;
+        }
+
+        const confirmationResult = await signInWithPhoneNumber(
+          auth,
+          phoneNumber.value,
+          recaptchaVerifier.value
+        );
+
+        console.log("Verification code sent to:", phoneNumber.value);
+        window.confirmationResult = confirmationResult; // Store confirmationResult for later use
+      } catch (error) {
+        console.error("Failed to send verification code:", error);
+      }
+    };
+
+    const verifyCode = async () => {
+      try {
+        const confirmationResult = window.confirmationResult;
+        const result = await confirmationResult.confirm(verificationCode.value);
+        console.log("User Info:", result.user);
+        router.push("/"); // Ensure this triggers navigation
       } catch (error) {
         console.error("Verification failed:", error);
       }
