@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, RecaptchaVerifier } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBbC6Q-gPdFtYk6jmQ0ju_U9OfvtBIc7Zs",
-  authDomain: "Sachai-Web.firebaseapp.com",
+  authDomain: "askus-4055a.firebaseapp.com",
   projectId: "askus-4055a",
   storageBucket: "askus-4055a.appspot.com",
   messagingSenderId: "920776112657",
@@ -14,4 +14,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-export { auth, provider };
+export { auth, provider, RecaptchaVerifier };
