@@ -5,20 +5,15 @@ import "primevue/resources/primevue.min.css"; //core CSS
 import "primeicons/primeicons.css"; //icons
 import "primeflex/primeflex.css";
 import { createApp } from "vue";
-import { initializeApp } from "firebase/app";
-
+import { auth } from "@/firebaseConfig";
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    console.log("User is logged in:", user);
+  } else {
+    console.log("User is logged out");
+  }
+});
 // import { getAnalytics } from "firebase/analytics";
-const firebaseConfig = {
-  apiKey: "AIzaSyAcWQSaRneItFPc16VsuZjo3yNH76Nupho",
-  authDomain: "sachai-news.firebaseapp.com",
-  projectId: "sachai-news",
-  storageBucket: "sachai-news.appspot.com",
-  messagingSenderId: "58802201073",
-  appId: "1:58802201073:web:574371ad909f4ae883e450",
-  measurementId: "G-QE1SMMDC01",
-};
-
-initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 import App from "./App.vue";
 import router from "./router";
