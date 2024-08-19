@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="flex justify-between mt-10 mb-10 mx-[20px] sm:mx-[60px]">
+    <div class="flex justify-between mt-10 mb-10">
       <div class="flex items-center w-[30%] justify-between">
         <div>
           <img
@@ -33,10 +33,19 @@
       </div>
       <div class="flex items-center">
         <!-- Desktop Menu -->
-        <div class="hidden md:flex gap-20">
+        <div class="hidden md:flex gap-10 items-center">
+          <div>
+            <input
+              type="text"
+              id="fname"
+              name="fname"
+              placeholder="Search"
+              class="pl-3 py-2 rounded-[100px] w-full"
+            />
+          </div>
           <div><a href="/">Home</a></div>
+          <div><a href="/Login">Bookmark</a></div>
           <div><a href="#">Astrology</a></div>
-          <div><a href="/Login">Login</a></div>
         </div>
         <!-- Mobile Menu -->
         <div class="md:hidden flex items-end justify-end">

@@ -1,10 +1,6 @@
 <template>
-  <div class="text-[45px] font-bold font-lato mt-4 mx-[20px] sm:mx-[60px]">
-    Categories
-  </div>
-  <div
-    class="flex flex-wrap justify-center sm:justify-start gap-2 mt-4 mx-[20px] sm:mx-[60px]"
-  >
+  <div class="text-[45px] font-bold font-lato mt-4">Categories</div>
+  <div class="flex flex-wrap justify-center sm:justify-start gap-2 mt-4">
     <div v-for="item in categories" :key="item._id" class="mt-2">
       <button class="chip-button" @click="selectCategory(item._id)">
         {{ item.name }}

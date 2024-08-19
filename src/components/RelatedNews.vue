@@ -1,15 +1,17 @@
 <template>
   <section>
     <div class="mt-5">
-      <div class="flex justify-between items-center w-full mb-5">
-        <div class="text-[45px] font-bold font-lato mt-4 mt-4">Latest News</div>
+      <div class="flex justify-between w-full items-center mb-5">
+        <div class="text-[45px] font-bold font-lato mt-4 mt-4">
+          Related News
+        </div>
         <div class="see">See all &nbsp;→</div>
       </div>
       <div class="flex flex-wrap gap-4 justify-center lg:justify-normal">
         <div
           v-for="blog in slicedData"
           :key="blog._id"
-          class="w-[307px] p-2 bg-white rounded-md flex flex-col"
+          class="w-[307px] p-2 bg-white rounded-md flex flex-col justify-between"
         >
           <a :href="`${SACHAI_NEWS_URL}${blog._id}`" class="block">
             <img

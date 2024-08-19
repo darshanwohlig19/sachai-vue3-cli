@@ -1,5 +1,5 @@
 <template>
-  <div class="ml-[60px] mr-[0px]">
+  <div class="">
     <div class="w-[100%] mt-4 flex flex-column sm:flex-row justify-between">
       <div class="w-[100%] sm:w-[45%]">
         <div>

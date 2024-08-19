@@ -1,184 +1,60 @@
 <template>
-  <SiteHeader />
-  <div class="mx-[20px] lg:mx-[60px]">
-    <div class="flex flex-col lg:flex-row justify-between gap-5">
-      <div class="w-[100%] lg:w-[50%]">
-        <img
-          :src="news[0]?.imgixUrlHighRes || fallbackImage"
-          alt="news Img"
-          class="w-full h-[290px] object-cover rounded-[20px]"
-        />
-        <div class="flex justify-between items-center font-lato mt-1">
-          <div class="flex gap-2 text-[#676767] text-[8px] lg:text-[16px] m-2">
-            <div>{{ news[0]?.source || "No source" }}</div>
-            <div>|</div>
-            <div>
-              {{ moment(news[0]?.publishTime || new Date()).fromNow() }}
-            </div>
-          </div>
-          <div class="flex flex-row gap-3 items-center">
-            <div class="flex justify-between gap-2 text-[8px] lg:text-[16px]">
-              <div class="text-[#FF0053]">Politics</div>
+  <div class="mx-[20px] sm:mx-[60px]">
+    <SiteHeader />
+    <div class="">
+      <div class="flex flex-col lg:flex-row justify-between gap-5">
+        <div class="w-[100%] lg:w-[50%]">
+          <img
+            :src="news[0]?.imgixUrlHighRes || fallbackImage"
+            alt="news Img"
+            class="w-full h-[290px] object-cover rounded-[20px]"
+          />
+          <div class="flex justify-between items-center font-lato mt-1">
+            <div
+              class="flex gap-2 text-[#676767] text-[8px] lg:text-[16px] m-2"
+            >
+              <div>{{ news[0]?.source || "No source" }}</div>
               <div>|</div>
-              <div>4 min read</div>
-            </div>
-            <div class="flex gap-1 justify-evenly">
-              <span
-                class="material-symbols-outlined text-[14px] lg:text-[19px] cursor-pointer"
-              >
-                share
-              </span>
-              <span
-                class="material-symbols-outlined text-[14px] lg:text-[19px] cursor-pointer"
-              >
-                bookmark
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
-          class="text-[14px] lg:text-[32px] semi-bold fontCustom leading-1 mt-2 mb-2"
-        >
-          {{ news[0]?.headline || "No Headline" }}
-        </div>
-        <div class="text-[10px] lg:text-[16px]">
-          {{ truncateText(news[0]?.summary || "No summary", 170) }}
-        </div>
-      </div>
-      <div class="w-[100%] lg:w-[50%] flex flex-col justify-between gap-4">
-        <div class="w-full h-[50%] bg-white h-[200px] flex rounded-lg">
-          <div class="w-[40%] p-2">
-            <a href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}">
-              <img
-                class="w-full h-full rounded-md object-cover"
-                :src="news[1]?.imgixUrlHighRes || fallbackImage"
-                alt=""
-              />
-            </a>
-          </div>
-          <div class="w-[60%] ml-2 mt-2 mr-2 flex flex-col justify-between">
-            <div class="flex justify-between items-center mt-1">
-              <div class="flex gap-1 text-gray-400 medium">
-                <div class="text-[8px] lg:text-[14px] font-lato">
-                  {{ news[1]?.source || "No source" }}
-                </div>
-                <div class="text-[8px] lg:text-[14px]">
-                  | {{ moment(news[1]?.publishTime || new Date()).fromNow() }}
-                </div>
+              <div>
+                {{ moment(news[0]?.publishTime || new Date()).fromNow() }}
               </div>
-              <div class="flex gap-1">
+            </div>
+            <div class="flex flex-row gap-3 items-center">
+              <div class="flex justify-between gap-2 text-[8px] lg:text-[16px]">
+                <div class="text-[#FF0053]">Politics</div>
+                <div>|</div>
+                <div>4 min read</div>
+              </div>
+              <div class="flex gap-1 justify-evenly">
                 <span
-                  class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
+                  class="material-symbols-outlined text-[14px] lg:text-[19px] cursor-pointer"
                 >
                   share
                 </span>
                 <span
-                  class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
+                  class="material-symbols-outlined text-[14px] lg:text-[19px] cursor-pointer"
                 >
                   bookmark
                 </span>
               </div>
             </div>
-            <div
-              class="text-[12px] lg:text-[24px] fontCustom leading-1 bold mr-1"
-            >
-              <a
-                href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
-                class="hover:text-current"
-              >
-                {{ news[1]?.headline || "No Headline" }}
-              </a>
-            </div>
-            <div
-              class="text-[10px] lg:text-[16px] font-lato leading-1 font-[16px] mr-1 mb-2"
-            >
-              <a
-                href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
-                class="hover:text-current"
-              >
-                {{ truncateText(news[1]?.summary || "No summary", 90) }}
-              </a>
-            </div>
-            <div class="mb-3 text-[8px] lg:text-[14px] flex gap-1">
-              <span class="text-red-500">Politics</span>
-              <span>| 4 min read</span>
-            </div>
+          </div>
+          <div
+            class="text-[14px] lg:text-[32px] semi-bold fontCustom leading-1 mt-2 mb-2"
+          >
+            {{ news[0]?.headline || "No Headline" }}
+          </div>
+          <div class="text-[10px] lg:text-[16px]">
+            {{ truncateText(news[0]?.summary || "No summary", 170) }}
           </div>
         </div>
-        <div class="w-full h-[50%] bg-white h-[200px] flex rounded-lg">
-          <div class="w-[40%] p-2">
-            <a href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}">
-              <img
-                class="w-full h-full rounded-md object-cover"
-                :src="news[2]?.imgixUrlHighRes || fallbackImage"
-                alt=""
-              />
-            </a>
-          </div>
-          <div class="w-[60%] ml-2 mt-2 mr-2 flex flex-col justify-between">
-            <div class="flex justify-between items-center mt-1">
-              <div class="flex gap-1 text-gray-400 medium">
-                <div class="text-[8px] lg:text-[14px] font-lato">
-                  {{ news[2]?.source || "No source" }}
-                </div>
-                <div class="text-[8px] lg:text-[14px]">
-                  | {{ moment(news[2]?.publishTime || new Date()).fromNow() }}
-                </div>
-              </div>
-              <div class="flex gap-1">
-                <span
-                  class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
-                >
-                  share
-                </span>
-                <span
-                  class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
-                >
-                  bookmark
-                </span>
-              </div>
-            </div>
-            <div
-              class="text-[12px] lg:text-[24px] fontCustom leading-1 bold mr-1"
-            >
-              <a
-                href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
-                class="hover:text-current"
-              >
-                {{ news[2]?.headline || "No Headline" }}
-              </a>
-            </div>
-            <div
-              class="text-[10px] lg:text-[16px] font-lato leading-1 font-[16px] mr-1 mb-2"
-            >
-              <a
-                href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
-                class="hover:text-current"
-              >
-                {{ truncateText(news[2]?.summary || "No summary", 90) }}
-              </a>
-            </div>
-            <div class="mb-3 text-[8px] lg:text-[14px] flex gap-1">
-              <span class="text-red-500">Politics</span>
-              <span>| 4 min read</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="flex flex-col lg:flex-row gap-5 mt-10">
-      <div class="w-[100%] lg:w-[70%] flex flex-col gap-5">
-        <div
-          v-for="(item, index) in paginatedNews"
-          :key="index"
-          class="w-full h-[50%] bg-white h-[200px] flex rounded-lg"
-        >
-          <div class="w-full h-[50%] bg-white h-[200px] flex rounded-lg">
-            <div class="w-[40%] h-[212px] items-center p-2">
-              <a :href="`${SACHAI_NEWS_URL}${item._id}`">
+        <div class="w-[100%] lg:w-[50%] flex flex-col justify-between gap-4">
+          <div class="w-full h-[50%] bg-white flex rounded-lg">
+            <div class="w-[40%] p-2">
+              <a href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}">
                 <img
-                  class="w-full h-full rounded-md object-cover"
-                  :src="item.imgixUrlHighRes || fallbackImage"
+                  class="w-full h-full rounded-lg object-cover"
+                  :src="news[1]?.imgixUrlHighRes || fallbackImage"
                   alt=""
                 />
               </a>
@@ -186,11 +62,74 @@
             <div class="w-[60%] ml-2 mt-2 mr-2 flex flex-col justify-between">
               <div class="flex justify-between items-center mt-1">
                 <div class="flex gap-1 text-gray-400 medium">
-                  <div class="text-[8px] lg:text-[14px] font-lato">
-                    {{ item?.source || "No source" }}
+                  <div
+                    class="text-[8px] sm:text-[10px] md:text-[12px] lg:text-[14px] font-lato"
+                  >
+                    {{ news[1]?.source || "No source" }}
                   </div>
-                  <div class="text-[8px] lg:text-[14px]">
-                    | {{ moment(item?.publishTime || new Date()).fromNow() }}
+                  <div
+                    class="text-[8px] sm:text-[10px] md:text-[12px] lg:text-[14px] font-lato"
+                  >
+                    | {{ moment(news[1]?.publishTime || new Date()).fromNow() }}
+                  </div>
+                </div>
+                <div class="flex gap-1">
+                  <span
+                    class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
+                  >
+                    share
+                  </span>
+                  <span
+                    class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
+                  >
+                    bookmark
+                  </span>
+                </div>
+              </div>
+              <div class="fontCustom leading-1 bold mr-1">
+                <a
+                  href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
+                  class="hover:text-current text-[12px] sm:text-[16px] md:text-[20px] lg:text-[24px]"
+                >
+                  {{ news[1]?.headline || "No Headline" }}
+                </a>
+              </div>
+              <div class="font-lato leading-1 mr-1 mb-2">
+                <a
+                  href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
+                  class="hover:text-current text-[9px] sm:text-[12px] md:text-[14px] lg:text-[16px]"
+                >
+                  {{ truncateText(news[1]?.summary || "No summary", 90) }}
+                </a>
+              </div>
+              <div class="mb-3 text-[8px] lg:text-[14px] flex gap-1">
+                <span class="text-red-500">Politics</span>
+                <span>| 4 min read</span>
+              </div>
+            </div>
+          </div>
+          <div class="w-full h-[50%] bg-white h-[200px] flex rounded-lg">
+            <div class="w-[40%] p-2">
+              <a href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}">
+                <img
+                  class="w-full h-full rounded-lg object-cover"
+                  :src="news[2]?.imgixUrlHighRes || fallbackImage"
+                  alt=""
+                />
+              </a>
+            </div>
+            <div class="w-[60%] ml-2 mt-2 mr-2 flex flex-col justify-between">
+              <div class="flex justify-between items-center mt-1">
+                <div class="flex gap-1 text-gray-400 medium">
+                  <div
+                    class="text-[8px] sm:text-[10px] md:text-[12px] lg:text-[14px] font-lato"
+                  >
+                    {{ news[2]?.source || "No source" }}
+                  </div>
+                  <div
+                    class="text-[8px] sm:text-[10px] md:text-[12px] lg:text-[14px] font-lato"
+                  >
+                    | {{ moment(news[2]?.publishTime || new Date()).fromNow() }}
                   </div>
                 </div>
                 <div class="flex gap-1">
@@ -207,48 +146,121 @@
                 </div>
               </div>
               <div
-                class="text-[12px] lg:text-[24px] fontCustom leading-1 bold mr-1 mt-2"
+                class="text-[12px] lg:text-[24px] fontCustom leading-1 bold mr-1"
               >
                 <a
-                  :href="`${SACHAI_NEWS_URL}${item._id}`"
-                  class="hover:text-current"
+                  href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
+                  class="hover:text-current text-[12px] sm:text-[16px] md:text-[20px] lg:text-[24px]"
                 >
-                  {{ truncateText(item?.headline || "No Headline", 80) }}
+                  {{ news[2]?.headline || "No Headline" }}
                 </a>
               </div>
-              <div
-                class="text-[10px] lg:text-[16px] font-lato leading-1 font-[16px] mr-1 mt-1 mb-3"
-              >
+              <div class="font-lato leading-1 mr-1 mb-2">
                 <a
-                  :href="`${SACHAI_NEWS_URL}${item._id}`"
-                  class="hover:text-current"
+                  href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
+                  class="hover:text-current text-[9px] sm:text-[12px] md:text-[14px] lg:text-[16px]"
                 >
-                  {{ truncateText(item?.summary || "No summary", 140) }}
+                  {{ truncateText(news[2]?.summary || "No summary", 90) }}
                 </a>
               </div>
-              <div class="text-[8px] lg:text-[14px] flex gap-3">
+              <div class="mb-3 text-[8px] lg:text-[14px] flex gap-1">
                 <span class="text-red-500">Politics</span>
-                <span>|</span>
-                <span> 4 min read</span>
+                <span>| 4 min read</span>
               </div>
             </div>
           </div>
         </div>
-
-        <Paginator
-          :rows="rowsPerPage"
-          :totalRecords="totalRecords"
-          :page="currentPage"
-          :rowsPerPageOptions="[5, 10, 20]"
-          @page="onPageChange"
-        />
       </div>
-      <div class="w-[100%] lg:w-[30%]">
-        <HotTopics />
+      <div class="text-4xl font-bold mt-10">Breaking News</div>
+      <div class="flex flex-col lg:flex-row gap-5 mt-10">
+        <div class="w-[100%] lg:w-[70%] flex flex-col gap-5">
+          <div
+            v-for="(item, index) in paginatedNews"
+            :key="index"
+            class="w-full bg-white h-full flex rounded-lg"
+          >
+            <div class="w-full bg-white flex rounded-lg">
+              <div class="w-[40%] p-2">
+                <a href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}">
+                  <img
+                    class="w-full h-full rounded-lg object-cover"
+                    :src="item?.imgixUrlHighRes || fallbackImage"
+                    alt=""
+                  />
+                </a>
+              </div>
+              <div class="w-[60%] ml-2 mt-2 mr-2 flex flex-col justify-between">
+                <div class="flex justify-between items-center mt-1">
+                  <div class="flex gap-1 text-gray-400">
+                    <div
+                      class="text-[8px] sm:text-[10px] md:text-[12px] lg:text-[14px] font-lato"
+                    >
+                      {{ news[1]?.source || "No source" }}
+                    </div>
+                    <div
+                      class="text-[8px] sm:text-[10px] md:text-[12px] lg:text-[14px] font-lato"
+                    >
+                      |
+                      {{ moment(news[1]?.publishTime || new Date()).fromNow() }}
+                    </div>
+                  </div>
+                  <div class="flex gap-1">
+                    <span
+                      class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
+                    >
+                      share
+                    </span>
+                    <span
+                      class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
+                    >
+                      bookmark
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="text-[12px] sm:text-[16px] md:text-[20px] lg:text-[24px] fontCustom leading-1 bold mr-1"
+                >
+                  <a
+                    href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
+                    class="hover:text-current"
+                  >
+                    {{ news[1]?.headline || "No Headline" }}
+                  </a>
+                </div>
+                <div class="font-lato mr-1 mb-2">
+                  <a
+                    href="{`${SACHAI_NEWS_URL}${data1[1]._id}`}"
+                    class="hover:text-current text-[9px] sm:text-[12px] md:text-[14px] lg:text-[16px]"
+                  >
+                    {{ truncateText(news[1]?.summary || "No summary", 90) }}
+                  </a>
+                </div>
+                <div
+                  class="text-[8px] sm:text-[10px] md:text-[12px] lg:text-[14px] flex gap-1 mb-3"
+                >
+                  <span class="text-red-500">Politics</span>
+                  <span>| 4 min read</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Paginator
+            class=""
+            :rows="rowsPerPage"
+            :totalRecords="totalRecords"
+            :page="currentPage"
+            @page="onPageChange"
+          />
+        </div>
+
+        <div class="w-[100%] lg:w-[30%] flex flex-col gap-5">
+          <div><HotTopics /></div>
+          <div><FeaturedNews /></div>
+        </div>
       </div>
     </div>
+    <RelatedNews />
   </div>
-  <Footer />
 </template>
 
 <script setup>
@@ -257,8 +269,10 @@ import { useRoute } from "vue-router";
 import axios from "axios";
 import moment from "moment";
 import SiteHeader from "@/components/SiteHeader.vue";
-import Footer from "@/components/Footer.vue";
+
 import HotTopics from "@/components/HotTopics.vue";
+import FeaturedNews from "@/components/FeaturedNews.vue";
+import RelatedNews from "@/components/RelatedNews.vue";
 import Paginator from "primevue/paginator";
 
 // Refs for storing news and pagination state
@@ -317,5 +331,8 @@ onMounted(() => {
 <style>
 .fontCustom {
   font-family: "source-serif-pro-semibold";
+}
+.p-paginator.p-component {
+  background-color: transparent;
 }
 </style>

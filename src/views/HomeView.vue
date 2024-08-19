@@ -1,6 +1,5 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="home mx-[20px] sm:mx-[60px]">
     <SiteHeader />
     <CategoryChips
       :categories="categories"
@@ -16,7 +15,6 @@
 </template>
 
 <script>
-import HelloWorld from "@/components/HelloWorld.vue";
 import SiteHeader from "@/components/SiteHeader.vue";
 import Latest from "@/components/Latest.vue";
 import Trending from "@/components/Trending.vue";
@@ -31,7 +29,6 @@ import CategoryChips from "@/components/CategoryChips.vue";
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
     SiteHeader,
     Latest,
     Trending,

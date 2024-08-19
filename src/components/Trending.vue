@@ -1,10 +1,6 @@
 <template>
   <div v-if="blogs.length > 0">
-    <div
-      class="text-[45px] font-bold font-lato mt-4 mr-[20px] ml-[20px] sm:mr-[60px] sm:ml-[60px]"
-    >
-      Trending Headlines
-    </div>
+    <div class="text-[45px] font-bold font-lato mt-4">Trending Headlines</div>
     <div class="card">
       <Carousel
         :value="blogs"
@@ -189,5 +185,11 @@ export default {
 }
 .p-carousel-content {
   position: relative;
+}
+button.p-carousel-prev.p-link {
+  display: none !important;
+}
+button.p-carousel-next.p-link {
+  display: none !important;
 }
 </style>

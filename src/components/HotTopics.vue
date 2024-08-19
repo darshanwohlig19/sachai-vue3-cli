@@ -64,7 +64,7 @@ export default {
             page: 1,
           }
         );
-        this.hot = response.data.slice(0, 5);
+        this.hot = response.data.slice(0, 6);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       }

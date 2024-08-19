@@ -1,14 +1,10 @@
 <template>
-  <div
-    class="text-[45px] font-bold font-lato mt-4 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
-  >
-    Browse By Topic
-  </div>
+  <div class="text-[45px] font-bold font-lato mt-4">Browse By Topic</div>
   <Catagory
     @categorySelected="handleCategorySelection"
     :defaultCategoryId="defaultCategoryId"
   />
-  <div class="ml-[20px] mr-[20px] sm:mr-[60px] sm:ml-[60px]">
+  <div class="">
     <div
       class="news-section-categories mt-12 flex justify-between items-center"
     >

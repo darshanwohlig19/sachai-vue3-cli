@@ -1,10 +1,6 @@
 <template>
   <div v-if="blogs.length > 0">
-    <div
-      class="text-[45px] font-bold font-lato mt-4 mr-[20px] ml-[20px] sm:mr-[60px] sm:ml-[60px]"
-    >
-      Featured
-    </div>
+    <div class="text-[45px] font-bold font-lato mt-4">Featured</div>
     <div class="card">
       <Carousel
         :value="blogs"
