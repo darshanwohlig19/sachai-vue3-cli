@@ -23,58 +23,59 @@
             </div>
             <div
               class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+              @click="signInWithApple"
             >
               <img
                 src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
                 class="text-[34px] cursor-pointer"
-                @click="signInWithApple"
               />
             </div>
             <div
               class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+              @click="togglePhoneVerification"
             >
               <img
                 src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
                 class="text-[34px] cursor-pointer"
-                @click="togglePhoneVerification"
               />
             </div>
           </div>
+
+          <!-- Phone Number UI -->
+          <div v-if="showPhoneVerification" class="mt-10">
+            <div id="recaptcha-container" class="mt-4"></div>
+            <div class="mt-4">
+              <input
+                v-model="phoneNumber"
+                type="text"
+                placeholder="Enter your phone number"
+                class="border p-2 mt-2 w-full"
+              />
+              <button
+                @click="sendVerificationCode"
+                class="bg-blue-500 text-white p-2 rounded mt-2 w-full"
+              >
+                Send Verification Code
+              </button>
+              <input
+                v-model="verificationCode"
+                type="text"
+                placeholder="Enter verification code"
+                class="border p-2 mt-2 w-full"
+              />
+              <button
+                @click="verifyCode"
+                class="bg-blue-500 text-white p-2 rounded mt-2 w-full"
+              >
+                Verify Code
+              </button>
+            </div>
+          </div>
+
           <div
             class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
           >
             Continue without login
-          </div>
-          <div
-            id="recaptcha-container"
-            v-if="showPhoneVerification"
-            class="mt-4"
-          ></div>
-          <div v-if="showPhoneVerification" class="mt-4">
-            <input
-              v-model="phoneNumber"
-              type="text"
-              placeholder="Enter your phone number"
-              class="border p-2 mt-2"
-            />
-            <button
-              @click="sendVerificationCode"
-              class="bg-blue-500 text-white p-2 rounded mt-2"
-            >
-              Send Verification Code
-            </button>
-            <input
-              v-model="verificationCode"
-              type="text"
-              placeholder="Enter verification code"
-              class="border p-2 mt-2"
-            />
-            <button
-              @click="verifyCode"
-              class="bg-blue-500 text-white p-2 rounded mt-2"
-            >
-              Verify Code
-            </button>
           </div>
         </div>
       </div>
@@ -220,7 +221,7 @@ export default {
     // Initialize reCAPTCHA verifier
     onMounted(() => {
       recaptchaVerifier.value = new RecaptchaVerifier(
-        "recaptcha-container", // Changed order of parameters
+        "recaptcha-container",
         {
           size: "invisible",
           callback: (response) => {
@@ -231,7 +232,7 @@ export default {
             console.log("ReCAPTCHA expired.");
           },
         },
-        auth // auth should be the third parameter
+        auth
       );
     });
 
@@ -242,7 +243,7 @@ export default {
         const result = await signInWithPopup(auth, googleProvider);
         console.log("User Info:", result.user);
         router.push("/").then(() => {
-          window.location.reload(); // Force reload
+          window.location.reload();
         });
       } catch (error) {
         console.error("Google login failed:", error);
@@ -256,7 +257,7 @@ export default {
         const result = await signInWithPopup(auth, appleProvider);
         console.log("Apple User Info:", result.user);
         router.push("/").then(() => {
-          window.location.reload(); // Force reload
+          window.location.reload();
         });
       } catch (error) {
         console.error("Apple login failed:", error);
@@ -281,7 +282,7 @@ export default {
         );
 
         console.log("Verification code sent to:", phoneNumber.value);
-        window.confirmationResult = confirmationResult; // Store confirmationResult for later use
+        window.confirmationResult = confirmationResult;
       } catch (error) {
         console.error("Failed to send verification code:", error);
       }
@@ -292,7 +293,7 @@ export default {
         const confirmationResult = window.confirmationResult;
         const result = await confirmationResult.confirm(verificationCode.value);
         console.log("User Info:", result.user);
-        router.push("/"); // Ensure this triggers navigation
+        router.push("/");
       } catch (error) {
         console.error("Verification failed:", error);
       }
