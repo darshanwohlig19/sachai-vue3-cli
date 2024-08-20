@@ -63,7 +63,10 @@
                 class="border p-2 mt-2 w-full"
               />
               <button
-                @click="handleSendVerificationCode"
+                @click="
+                  handleSendVerificationCode;
+                  sendVerificationCode;
+                "
                 class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
               >
                 Send Verification Code
@@ -168,7 +171,6 @@ export default {
     };
 
     const handleSendVerificationCode = () => {
-      sendVerificationCode();
       verificationCodeTab.value = true;
     };
 
