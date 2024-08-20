@@ -9,17 +9,16 @@
           />
         </div>
         <div class="mt-20">
+          <!-- Conditionally render based on showPhoneVerification -->
           <div v-if="!showPhoneVerification">
             <div class="text-[32px] font-lato">Hello !</div>
             <div class="mt-2 text-[18px] font-lato">Login to your account</div>
 
+            <!-- Login Options -->
             <div class="flex flex-row gap-4 mt-6 w-[100%]">
               <div
                 class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
-                @click="
-                  initializeRecaptcha;
-                  loginWithGoogle;
-                "
+                @click="loginWithGoogle"
               >
                 <img
                   src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
@@ -28,10 +27,7 @@
               </div>
               <div
                 class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
-                @click="
-                  initializeRecaptcha;
-                  signInWithApple;
-                "
+                @click="signInWithApple"
               >
                 <img
                   src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
@@ -40,10 +36,7 @@
               </div>
               <div
                 class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
-                @click="
-                  initializeRecaptcha;
-                  togglePhoneVerification;
-                "
+                @click="togglePhoneVerification"
               >
                 <img
                   src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
@@ -59,38 +52,36 @@
             </div>
           </div>
 
+          <!-- Phone Number Verification UI -->
           <div v-else>
             <div id="recaptcha-container" class="mt-4"></div>
-            <div>Phone Verification</div>
-            <div class="mt-4">
-              <div v-if="!verificationCodeTab">
-                <input
-                  v-model="phoneNumber"
-                  type="text"
-                  placeholder="Enter your phone number"
-                  class="border p-2 mt-2 w-full"
-                />
-                <button
-                  @click="sendVerificationCode"
-                  class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
-                >
-                  Send Verification Code
-                </button>
-              </div>
-              <div v-if="verificationCodeTab">
-                <input
-                  v-model="verificationCode"
-                  type="text"
-                  placeholder="Enter verification code"
-                  class="border p-2 mt-2 w-full"
-                />
-                <button
-                  @click="verifyCode"
-                  class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
-                >
-                  Verify Code
-                </button>
-              </div>
+            <div v-if="!verificationCodeTab">
+              <input
+                v-model="phoneNumber"
+                type="text"
+                placeholder="Enter your phone number"
+                class="border p-2 mt-2 w-full"
+              />
+              <button
+                @click="handleSendVerificationCode"
+                class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
+              >
+                Send Verification Code
+              </button>
+            </div>
+            <div v-else>
+              <input
+                v-model="verificationCode"
+                type="text"
+                placeholder="Enter verification code"
+                class="border p-2 mt-2 w-full"
+              />
+              <button
+                @click="verifyCode"
+                class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
+              >
+                Verify Code
+              </button>
             </div>
           </div>
         </div>
@@ -107,7 +98,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { auth } from "@/firebaseConfig";
 import {
@@ -126,24 +117,23 @@ export default {
     const recaptchaVerifier = ref(null);
     const verificationCodeTab = ref(false);
 
-    const initializeRecaptcha = () => {
-      if (!recaptchaVerifier.value) {
-        recaptchaVerifier.value = new RecaptchaVerifier(
-          "recaptcha-container",
-          {
-            size: "invisible",
-            callback: (response) => {
-              console.log("ReCAPTCHA solved:", response);
-              showPhoneVerification.value = true;
-            },
-            "expired-callback": () => {
-              console.log("ReCAPTCHA expired.");
-            },
+    // Initialize reCAPTCHA verifier
+    onMounted(() => {
+      recaptchaVerifier.value = new RecaptchaVerifier(
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: (response) => {
+            console.log("ReCAPTCHA solved:", response);
+            showPhoneVerification.value = true;
           },
-          auth
-        );
-      }
-    };
+          "expired-callback": () => {
+            console.log("ReCAPTCHA expired.");
+          },
+        },
+        auth
+      );
+    });
 
     const loginWithGoogle = async () => {
       try {
@@ -177,12 +167,19 @@ export default {
       showPhoneVerification.value = true;
     };
 
+    const handleSendVerificationCode = () => {
+      sendVerificationCode();
+      verificationCodeTab.value = true;
+    };
+
     const sendVerificationCode = async () => {
       try {
         if (!recaptchaVerifier.value) {
           console.error("ReCAPTCHA verifier is not initialized.");
           return;
         }
+
+        console.log("Sending OTP to:", phoneNumber.value);
 
         const confirmationResult = await signInWithPhoneNumber(
           auth,
@@ -192,9 +189,9 @@ export default {
 
         console.log("Verification code sent to:", phoneNumber.value);
         window.confirmationResult = confirmationResult;
-        verificationCodeTab.value = true; // Show OTP input after sending the code
       } catch (error) {
-        console.error("Failed to send verification code:", error);
+        console.error("Failed to send verification code:", error.message);
+        alert(`Error: ${error.message}`); // Alert the user if there's an issue
       }
     };
 
@@ -218,8 +215,8 @@ export default {
       loginWithGoogle,
       signInWithApple,
       togglePhoneVerification,
-      initializeRecaptcha,
       verificationCodeTab,
+      handleSendVerificationCode,
     };
   },
 };
