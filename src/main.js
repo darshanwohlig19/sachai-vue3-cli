@@ -63,6 +63,7 @@ import Tooltip from "primevue/tooltip";
 import TreeTable from "primevue/treetable";
 import Badge from "primevue/badge";
 import Skeleton from "primevue/skeleton";
+import InputOtp from "primevue/inputotp";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
 
@@ -81,6 +82,7 @@ app.component("Column", Column);
 app.component("ColumnGroup", ColumnGroup);
 app.component("InputSwitch", InputSwitch);
 app.component("Row", Row);
+app.component("InputOtp", InputOtp);
 app.component("Divider", Divider);
 app.component("AccordionTab", AccordionTab);
 app.component("Sidebar", Sidebar);

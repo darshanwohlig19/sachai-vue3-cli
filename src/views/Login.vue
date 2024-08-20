@@ -71,15 +71,18 @@
               </button>
             </div>
             <div v-else>
-              <input
-                v-model="verificationCode"
-                type="text"
-                placeholder="Enter verification code"
-                class="border p-2 mt-2 w-full"
-              />
+              <div class="card flex justify-center">
+                <div class="">
+                  <InputOtp
+                    v-model="verificationCode"
+                    class="p-2 mt-2 w-full h-[50%]"
+                    mask
+                  />
+                </div>
+              </div>
               <button
                 @click="verifyCode"
-                class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
+                class="bg-[#1E0627] text-white p-2 rounded mt-5 w-full h-[50%]"
               >
                 Verify Code
               </button>
@@ -232,3 +235,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.p-inputtext,
+.p-inputotp-input {
+  background: red !important;
+}
+</style>
