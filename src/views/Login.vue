@@ -11,38 +11,43 @@
         <div class="mt-20">
           <div class="text-[32px] font-lato">Hello !</div>
           <div class="mt-2 text-[18px] font-lato">Login to your account</div>
-          <div class="flex flex-row gap-4 mt-6 w-[100%]">
-            <div
-              class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
-              @click="loginWithGoogle"
-            >
-              <img
-                src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
-                class="text-[34px] cursor-pointer"
-              />
-            </div>
-            <div
-              class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
-              @click="signInWithApple"
-            >
-              <img
-                src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
-                class="text-[34px] cursor-pointer"
-              />
-            </div>
-            <div
-              class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
-              @click="togglePhoneVerification"
-            >
-              <img
-                src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
-                class="text-[34px] cursor-pointer"
-              />
+
+          <!-- Conditionally Render UI based on showPhoneVerification -->
+          <div v-if="!showPhoneVerification">
+            <!-- Login Options -->
+            <div class="flex flex-row gap-4 mt-6 w-[100%]">
+              <div
+                class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+                @click="loginWithGoogle"
+              >
+                <img
+                  src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
+                  class="text-[34px] cursor-pointer"
+                />
+              </div>
+              <div
+                class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+                @click="signInWithApple"
+              >
+                <img
+                  src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
+                  class="text-[34px] cursor-pointer"
+                />
+              </div>
+              <div
+                class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center"
+                @click="togglePhoneVerification"
+              >
+                <img
+                  src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
+                  class="text-[34px] cursor-pointer"
+                />
+              </div>
             </div>
           </div>
 
-          <!-- Phone Number UI -->
-          <div v-if="showPhoneVerification" class="mt-10">
+          <!-- Phone Number Verification UI -->
+          <div v-else class="mt-10">
             <div id="recaptcha-container" class="mt-4"></div>
             <div class="mt-4">
               <input
