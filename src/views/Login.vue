@@ -55,39 +55,33 @@
           <!-- Phone Number Verification UI -->
           <div v-else>
             <div id="recaptcha-container" class="mt-4"></div>
-            <div>Phone Verification</div>
-            <div class="mt-4">
-              <div v-if="!verificationCodeTab">
-                <input
-                  v-model="phoneNumber"
-                  type="text"
-                  placeholder="Enter your phone number"
-                  class="border p-2 mt-2 w-full"
-                />
-                <button
-                  @click="
-                    sendVerificationCode;
-                    showVerificationCode;
-                  "
-                  class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
-                >
-                  Send Verification Code
-                </button>
-              </div>
-              <div v-if="verificationCodeTab">
-                <input
-                  v-model="verificationCode"
-                  type="text"
-                  placeholder="Enter verification code"
-                  class="border p-2 mt-2 w-full"
-                />
-                <button
-                  @click="verifyCode"
-                  class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
-                >
-                  Verify Code
-                </button>
-              </div>
+            <div v-if="!verificationCodeTab">
+              <input
+                v-model="phoneNumber"
+                type="text"
+                placeholder="Enter your phone number"
+                class="border p-2 mt-2 w-full"
+              />
+              <button
+                @click="handleSendVerificationCode"
+                class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
+              >
+                Send Verification Code
+              </button>
+            </div>
+            <div v-else>
+              <input
+                v-model="verificationCode"
+                type="text"
+                placeholder="Enter verification code"
+                class="border p-2 mt-2 w-full"
+              />
+              <button
+                @click="verifyCode"
+                class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
+              >
+                Verify Code
+              </button>
             </div>
           </div>
         </div>
@@ -122,6 +116,7 @@ export default {
     const showPhoneVerification = ref(false);
     const recaptchaVerifier = ref(null);
     const verificationCodeTab = ref(false);
+
     // Initialize reCAPTCHA verifier
     onMounted(() => {
       recaptchaVerifier.value = new RecaptchaVerifier(
@@ -171,7 +166,9 @@ export default {
     const togglePhoneVerification = () => {
       showPhoneVerification.value = true;
     };
-    const showVerificationCode = () => {
+
+    const handleSendVerificationCode = () => {
+      sendVerificationCode();
       verificationCodeTab.value = true;
     };
 
@@ -215,8 +212,8 @@ export default {
       loginWithGoogle,
       signInWithApple,
       togglePhoneVerification,
-      showVerificationCode,
       verificationCodeTab,
+      handleSendVerificationCode,
     };
   },
 };
