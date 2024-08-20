@@ -18,7 +18,7 @@
             >
               <img
                 src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
-                class="text-[34px]"
+                class="text-[34px] cursor-pointer"
               />
             </div>
             <div
@@ -26,7 +26,7 @@
             >
               <img
                 src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
-                class="text-[34px]"
+                class="text-[34px] cursor-pointer"
                 @click="signInWithApple"
               />
             </div>
@@ -35,12 +35,14 @@
             >
               <img
                 src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
-                class="text-[34px]"
+                class="text-[34px] cursor-pointer"
                 @click="togglePhoneVerification"
               />
             </div>
           </div>
-          <div class="text-center mt-10 text-[18px] text-[#FF0053]">
+          <div
+            class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
+          >
             Continue without login
           </div>
           <div
