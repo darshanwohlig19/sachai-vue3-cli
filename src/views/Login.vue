@@ -116,22 +116,33 @@ export default {
     const phoneNumber = ref("");
     const verificationCode = ref("");
     const showPhoneVerification = ref(false);
-    const appVerifier = ref(null);
+    // var recaptchaVerifier = ref(null);
+    var appVerifier = ref(null);
     const verificationCodeTab = ref(false);
 
     // Initialize reCAPTCHA verifier
-    onMounted(() => {
-      appVerifier.value = new RecaptchaVerifier(
-        "recaptcha-container", // This should be the ID of your reCAPTCHA container
+    onMounted(() => {});
+
+    const captcha = async () => {
+      console.log("ReCAPTCHA solved:");
+      const auth = getAuth();
+      //   if (showPhoneVerification.value) {
+      appVerifier = window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
         {
           size: "invisible",
           callback: (response) => {
-            console.log("ReCAPTCHA solved:", response);
+            console.log(response);
+            showPhoneVerification.value = true;
+            // reCAPTCHA solved, allow signInWithPhoneNumber.
+            // onSignInSubmit();
           },
-        },
-        getAuth()
+        }
       );
-    });
+      sendVerificationCode();
+      //   }
+    };
 
     const loginWithGoogle = async () => {
       try {
@@ -162,7 +173,8 @@ export default {
     };
 
     const togglePhoneVerification = () => {
-      showPhoneVerification.value = true;
+      captcha();
+      //   showPhoneVerification.value = true;
     };
 
     const handleSendVerificationCode = () => {
@@ -172,17 +184,19 @@ export default {
 
     const sendVerificationCode = async () => {
       try {
-        if (!appVerifier.value) {
-          console.error("ReCAPTCHA verifier is not initialized.");
-          return;
-        }
+        // if (!recaptchaVerifier.value) {
+        //   console.error("ReCAPTCHA verifier is not initialized.");
+        //   return;
+        // }
 
         console.log("Sending OTP to:", phoneNumber.value);
+
         const confirmationResult = await signInWithPhoneNumber(
           auth,
           phoneNumber.value,
-          appVerifier.value
+          appVerifier
         );
+
         console.log("Verification code sent to:", phoneNumber.value);
         window.confirmationResult = confirmationResult;
       } catch (error) {
@@ -213,6 +227,7 @@ export default {
       togglePhoneVerification,
       verificationCodeTab,
       handleSendVerificationCode,
+      captcha,
     };
   },
 };
