@@ -201,7 +201,7 @@ export default {
         window.confirmationResult = confirmationResult;
       } catch (error) {
         console.error("Failed to send verification code:", error.message);
-        alert(`Error: ${error.message}`); // Alert the user if there's an issue
+        console.log(`Error: ${error.message}`); // Alert the user if there's an issue
       }
     };
 
