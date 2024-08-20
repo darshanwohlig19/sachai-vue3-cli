@@ -9,11 +9,11 @@
           />
         </div>
         <div class="mt-20">
-          <div class="text-[32px] font-lato">Hello !</div>
-          <div class="mt-2 text-[18px] font-lato">Login to your account</div>
-
-          <!-- Conditionally Render UI based on showPhoneVerification -->
+          <!-- Conditionally render based on showPhoneVerification -->
           <div v-if="!showPhoneVerification">
+            <div class="text-[32px] font-lato">Hello !</div>
+            <div class="mt-2 text-[18px] font-lato">Login to your account</div>
+
             <!-- Login Options -->
             <div class="flex flex-row gap-4 mt-6 w-[100%]">
               <div
@@ -44,10 +44,16 @@
                 />
               </div>
             </div>
+
+            <div
+              class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
+            >
+              Continue without login
+            </div>
           </div>
 
           <!-- Phone Number Verification UI -->
-          <div v-else class="mt-10">
+          <div v-else>
             <div id="recaptcha-container" class="mt-4"></div>
             <div class="mt-4">
               <input
@@ -76,12 +82,6 @@
               </button>
             </div>
           </div>
-
-          <div
-            class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
-          >
-            Continue without login
-          </div>
         </div>
       </div>
       <div class="w-[50%]">
@@ -95,115 +95,6 @@
   </div>
 </template>
 
-<!-- <script>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { auth } from "@/firebaseConfig";
-import {
-  signInWithPopup,
-  OAuthProvider,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-} from "firebase/auth";
-
-export default {
-  setup() {
-    const router = useRouter();
-    const phoneNumber = ref("");
-    const verificationCode = ref("");
-    const showPhoneVerification = ref(false);
-    const recaptchaVerifier = ref(null);
-
-    // Initialize reCAPTCHA verifier
-    onMounted(() => {
-      recaptchaVerifier.value = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: (response) => {
-            console.log("ReCAPTCHA solved:", response);
-            showPhoneVerification.value = true;
-          },
-          "expired-callback": () => {
-            console.log("ReCAPTCHA expired.");
-          },
-        }
-      );
-    });
-
-    const loginWithGoogle = async () => {
-      try {
-        const googleProvider = new OAuthProvider("google.com");
-        googleProvider.addScope("email");
-        const result = await signInWithPopup(auth, googleProvider);
-        console.log("User Info:", result.user);
-        router.push("/");
-      } catch (error) {
-        console.error("Google login failed:", error);
-      }
-    };
-
-    const signInWithApple = async () => {
-      try {
-        const appleProvider = new OAuthProvider("apple.com");
-        appleProvider.addScope("email");
-        const result = await signInWithPopup(auth, appleProvider);
-        console.log("Apple User Info:", result.user);
-        router.push("/");
-      } catch (error) {
-        console.error("Apple login failed:", error);
-      }
-    };
-
-    const togglePhoneVerification = () => {
-      showPhoneVerification.value = true;
-    };
-
-    const sendVerificationCode = async () => {
-      try {
-        if (!recaptchaVerifier.value) {
-          console.error("ReCAPTCHA verifier is not initialized.");
-          return;
-        }
-
-        const confirmationResult = await signInWithPhoneNumber(
-          auth,
-          phoneNumber.value,
-          recaptchaVerifier.value
-        );
-
-        console.log("Verification code sent to:", phoneNumber.value);
-        window.confirmationResult = confirmationResult; // Store confirmationResult for later use
-      } catch (error) {
-        console.error("Failed to send verification code:", error);
-      }
-    };
-
-    const verifyCode = async () => {
-      try {
-        const confirmationResult = window.confirmationResult;
-        const result = await confirmationResult.confirm(verificationCode.value);
-        console.log("User Info:", result.user);
-        router.push("/");
-      } catch (error) {
-        console.error("Verification failed:", error);
-      }
-    };
-
-    return {
-      phoneNumber,
-      verificationCode,
-      showPhoneVerification,
-      sendVerificationCode,
-      verifyCode,
-      loginWithGoogle,
-      signInWithApple,
-      togglePhoneVerification,
-    };
-  },
-};
-</script> -->
 <script>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
