@@ -116,32 +116,22 @@ export default {
     const phoneNumber = ref("");
     const verificationCode = ref("");
     const showPhoneVerification = ref(false);
-    // var recaptchaVerifier = ref(null);
-    var appVerifier = ref(null);
+    const appVerifier = ref(null);
     const verificationCodeTab = ref(false);
 
     // Initialize reCAPTCHA verifier
-    onMounted(() => {});
-
-    const captcha = async () => {
-      console.log("ReCAPTCHA solved:");
-      const auth = getAuth();
-      //   if (showPhoneVerification.value) {
-      appVerifier = window.recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
+    onMounted(() => {
+      appVerifier.value = new RecaptchaVerifier(
+        "recaptcha-container", // This should be the ID of your reCAPTCHA container
         {
           size: "invisible",
           callback: (response) => {
-            console.log(response);
-            showPhoneVerification.value = true;
-            // reCAPTCHA solved, allow signInWithPhoneNumber.
-            // onSignInSubmit();
+            console.log("ReCAPTCHA solved:", response);
           },
-        }
+        },
+        getAuth()
       );
-      //   }
-    };
+    });
 
     const loginWithGoogle = async () => {
       try {
@@ -182,20 +172,17 @@ export default {
 
     const sendVerificationCode = async () => {
       try {
-        // if (!recaptchaVerifier.value) {
-        //   console.error("ReCAPTCHA verifier is not initialized.");
-        //   return;
-        // }
-        await captcha();
+        if (!appVerifier.value) {
+          console.error("ReCAPTCHA verifier is not initialized.");
+          return;
+        }
 
         console.log("Sending OTP to:", phoneNumber.value);
-        console.log("1");
         const confirmationResult = await signInWithPhoneNumber(
           auth,
           phoneNumber.value,
-          appVerifier
+          appVerifier.value
         );
-        console.log("2");
         console.log("Verification code sent to:", phoneNumber.value);
         window.confirmationResult = confirmationResult;
       } catch (error) {
@@ -226,7 +213,6 @@ export default {
       togglePhoneVerification,
       verificationCodeTab,
       handleSendVerificationCode,
-      captcha,
     };
   },
 };
