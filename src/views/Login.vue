@@ -179,6 +179,8 @@ export default {
           return;
         }
 
+        console.log("Sending OTP to:", phoneNumber.value);
+
         const confirmationResult = await signInWithPhoneNumber(
           auth,
           phoneNumber.value,
@@ -188,7 +190,8 @@ export default {
         console.log("Verification code sent to:", phoneNumber.value);
         window.confirmationResult = confirmationResult;
       } catch (error) {
-        console.error("Failed to send verification code:", error);
+        console.error("Failed to send verification code:", error.message);
+        alert(`Error: ${error.message}`); // Alert the user if there's an issue
       }
     };
 
