@@ -91,153 +91,246 @@
         </div>
       </div>
       <div class="w-[50%]">
-        <img
-          src="https://ik.imagekit.io/553gmaygy/17.png?updatedAt=1724067776564"
-          class="h-[100%] w-[100%] rounded-r-[20px]"
-          alt=""
-        />
+        <Carousel
+          :value="products"
+          :numVisible="1"
+          :numScroll="1"
+          class="carousel mt-4 custom-carousal"
+          showIndicators
+          circular
+          :responsiveOptions="responsiveOptions"
+        >
+          <template #item="slotProps">
+            <div>
+              <div class="mb-4">
+                <div class="relative mx-auto">
+                  <img
+                    :src="slotProps.data.image"
+                    :alt="slotProps.data.name"
+                    class="w-full rounded"
+                  />
+                  <Tag
+                    :value="slotProps.data.inventoryStatus"
+                    :severity="getSeverity(slotProps.data.inventoryStatus)"
+                    class="absolute none"
+                    style="left: 5px; top: 5px; display: none"
+                  />
+                </div>
+              </div>
+            </div>
+          </template>
+        </Carousel>
       </div>
     </div>
   </div>
 </template>
-
-<script>
+<script setup>
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { auth } from "@/firebaseConfig";
-import {
-  signInWithPopup,
-  OAuthProvider,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  getAuth,
-} from "firebase/auth";
+import { ProductService } from "../assets/service/ProductService";
 
-export default {
-  setup() {
-    const router = useRouter();
-    const phoneNumber = ref("");
-    const verificationCode = ref("");
-    const showPhoneVerification = ref(false);
-    // var recaptchaVerifier = ref(null);
-    var appVerifier = ref(null);
-    const verificationCodeTab = ref(false);
+onMounted(() => {
+  ProductService.getProductsSmall().then(
+    (data) => (products.value = data.slice(0, 9))
+  );
+});
 
-    // Initialize reCAPTCHA verifier
-    onMounted(() => {});
-
-    const captcha = async () => {
-      console.log("ReCAPTCHA solved:");
-      const auth = getAuth();
-      //   if (showPhoneVerification.value) {
-      appVerifier = window.recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: (response) => {
-            console.log(response);
-            showPhoneVerification.value = true;
-            // reCAPTCHA solved, allow signInWithPhoneNumber.
-            // onSignInSubmit();
-          },
-        }
-      );
-      sendVerificationCode();
-      //   }
-    };
-
-    const loginWithGoogle = async () => {
-      try {
-        const googleProvider = new OAuthProvider("google.com");
-        googleProvider.addScope("email");
-        const result = await signInWithPopup(auth, googleProvider);
-        console.log("User Info:", result.user);
-        router.push("/").then(() => {
-          window.location.reload();
-        });
-      } catch (error) {
-        console.error("Google login failed:", error);
-      }
-    };
-
-    const signInWithApple = async () => {
-      try {
-        const appleProvider = new OAuthProvider("apple.com");
-        appleProvider.addScope("email");
-        const result = await signInWithPopup(auth, appleProvider);
-        console.log("Apple User Info:", result.user);
-        router.push("/").then(() => {
-          window.location.reload();
-        });
-      } catch (error) {
-        console.error("Apple login failed:", error);
-      }
-    };
-
-    const togglePhoneVerification = () => {
-      captcha();
-      //   showPhoneVerification.value = true;
-    };
-
-    const handleSendVerificationCode = () => {
-      sendVerificationCode();
-      verificationCodeTab.value = true;
-    };
-
-    const sendVerificationCode = async () => {
-      try {
-        // if (!recaptchaVerifier.value) {
-        //   console.error("ReCAPTCHA verifier is not initialized.");
-        //   return;
-        // }
-
-        console.log("Sending OTP to:", phoneNumber.value);
-
-        const confirmationResult = await signInWithPhoneNumber(
-          auth,
-          phoneNumber.value,
-          appVerifier
-        );
-
-        console.log("Verification code sent to:", phoneNumber.value);
-        window.confirmationResult = confirmationResult;
-      } catch (error) {
-        console.error("Failed to send verification code:", error.message);
-        console.log(`Error: ${error.message}`); // Alert the user if there's an issue
-      }
-    };
-
-    const verifyCode = async () => {
-      try {
-        const confirmationResult = window.confirmationResult;
-        const result = await confirmationResult.confirm(verificationCode.value);
-        console.log("User Info:", result.user);
-        router.push("/");
-      } catch (error) {
-        console.error("Verification failed:", error);
-      }
-    };
-
-    return {
-      phoneNumber,
-      verificationCode,
-      showPhoneVerification,
-      sendVerificationCode,
-      verifyCode,
-      loginWithGoogle,
-      signInWithApple,
-      togglePhoneVerification,
-      verificationCodeTab,
-      handleSendVerificationCode,
-      captcha,
-    };
+const products = ref();
+const responsiveOptions = ref([
+  {
+    breakpoint: "1400px",
+    numVisible: 1,
+    numScroll: 1,
   },
+  {
+    breakpoint: "1199px",
+    numVisible: 1,
+    numScroll: 1,
+  },
+  {
+    breakpoint: "767px",
+    numVisible: 1,
+    numScroll: 1,
+  },
+  {
+    breakpoint: "575px",
+    numVisible: 1,
+    numScroll: 1,
+  },
+]);
+
+const getSeverity = (status) => {
+  switch (status) {
+    case "INSTOCK":
+      return "success";
+
+    case "LOWSTOCK":
+      return "warn";
+
+    case "OUTOFSTOCK":
+      return "danger";
+
+    default:
+      return null;
+  }
 };
 </script>
+
+//
+<script>
+// import { ref, onMounted } from "vue";
+// import { useRouter } from "vue-router";
+// import { auth } from "@/firebaseConfig";
+// import { ProductService } from "../assets/service/ProductService";
+// import {
+//   signInWithPopup,
+//   OAuthProvider,
+//   RecaptchaVerifier,
+//   signInWithPhoneNumber,
+//   getAuth,
+// } from "firebase/auth";
+
+// export default {
+//   setup() {
+//     const router = useRouter();
+//     const phoneNumber = ref("");
+//     const verificationCode = ref("");
+//     const showPhoneVerification = ref(false);
+//     // var recaptchaVerifier = ref(null);
+//     var appVerifier = ref(null);
+//     const verificationCodeTab = ref(false);
+
+//     // Initialize reCAPTCHA verifier
+//     onMounted(() => {
+//       ProductService.getProductsSmall().then(
+//         (data) => (products.value = data.slice(0, 9))
+//       );
+//     });
+//     const products = ref();
+
+//     const captcha = async () => {
+//       console.log("ReCAPTCHA solved:");
+//       const auth = getAuth();
+//       //   if (showPhoneVerification.value) {
+//       appVerifier = window.recaptchaVerifier = new RecaptchaVerifier(
+//         auth,
+//         "recaptcha-container",
+//         {
+//           size: "invisible",
+//           callback: (response) => {
+//             console.log(response);
+//             showPhoneVerification.value = true;
+//             // reCAPTCHA solved, allow signInWithPhoneNumber.
+//             // onSignInSubmit();
+//           },
+//         }
+//       );
+//       sendVerificationCode();
+//       //   }
+//     };
+
+//     const loginWithGoogle = async () => {
+//       try {
+//         const googleProvider = new OAuthProvider("google.com");
+//         googleProvider.addScope("email");
+//         const result = await signInWithPopup(auth, googleProvider);
+//         console.log("User Info:", result.user);
+//         router.push("/").then(() => {
+//           window.location.reload();
+//         });
+//       } catch (error) {
+//         console.error("Google login failed:", error);
+//       }
+//     };
+
+//     const signInWithApple = async () => {
+//       try {
+//         const appleProvider = new OAuthProvider("apple.com");
+//         appleProvider.addScope("email");
+//         const result = await signInWithPopup(auth, appleProvider);
+//         console.log("Apple User Info:", result.user);
+//         router.push("/").then(() => {
+//           window.location.reload();
+//         });
+//       } catch (error) {
+//         console.error("Apple login failed:", error);
+//       }
+//     };
+
+//     const togglePhoneVerification = () => {
+//       captcha();
+//       //   showPhoneVerification.value = true;
+//     };
+
+//     const handleSendVerificationCode = () => {
+//       sendVerificationCode();
+//       verificationCodeTab.value = true;
+//     };
+
+//     const sendVerificationCode = async () => {
+//       try {
+//         // if (!recaptchaVerifier.value) {
+//         //   console.error("ReCAPTCHA verifier is not initialized.");
+//         //   return;
+//         // }
+
+//         console.log("Sending OTP to:", phoneNumber.value);
+
+//         const confirmationResult = await signInWithPhoneNumber(
+//           auth,
+//           phoneNumber.value,
+//           appVerifier
+//         );
+
+//         console.log("Verification code sent to:", phoneNumber.value);
+//         window.confirmationResult = confirmationResult;
+//       } catch (error) {
+//         console.error("Failed to send verification code:", error.message);
+//         console.log(`Error: ${error.message}`); // Alert the user if there's an issue
+//       }
+//     };
+
+//     const verifyCode = async () => {
+//       try {
+//         const confirmationResult = window.confirmationResult;
+//         const result = await confirmationResult.confirm(verificationCode.value);
+//         console.log("User Info:", result.user);
+//         router.push("/");
+//       } catch (error) {
+//         console.error("Verification failed:", error);
+//       }
+//     };
+
+//     return {
+//       phoneNumber,
+//       verificationCode,
+//       showPhoneVerification,
+//       sendVerificationCode,
+//       verifyCode,
+//       loginWithGoogle,
+//       signInWithApple,
+//       togglePhoneVerification,
+//       verificationCodeTab,
+//       handleSendVerificationCode,
+//       captcha,
+//     };
+//   },
+// };
+//
+</script>
 <style scoped>
-.p-inputtext,
-.p-inputotp-input {
-  background: red !important;
+.login-carousel .p-highlight {
+  background-color: red !important;
+  width: 25px !important;
+}
+.login-carousel .p-carousel-indicator {
+  color: green;
+  background-color: white;
+  position: relative !important;
+  bottom: 25px;
+  width: 10px;
+  border-radius: 10px;
+}
+.p-carousel-next .p-link {
+  display: none !important;
 }
 </style>
