@@ -37,4 +37,6 @@ button.p-carousel-prev.p-link,
 button.p-carousel-next.p-link {
   display: none !important;
 }
-
+.p-carousel-content {
+  border-radius: 0 20px 20px 0 !important;
+}

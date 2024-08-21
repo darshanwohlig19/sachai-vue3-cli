@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center p-[100px]">
+  <div class="flex justify-center items-center p-[100px] loginnnn">
     <div class="w-[910px] h-[512px] flex bg-white rounded-[20px]">
       <div class="w-[50%] p-[5%]">
         <div class="flex justify-center mt-5">
@@ -109,7 +109,7 @@
                   <img
                     :src="slotProps.data.image"
                     :severity="getSeverity(slotProps.data.inventoryStatus)"
-                    class="w-[100%] h-[100%] object-fill rounded-r-[20px]"
+                    class="w-[100%] h-[100%] object-fill"
                   />
                 </div>
               </div>
@@ -119,13 +119,45 @@
       </div>
     </div>
   </div>
+
+  <div class="h-[100%] w-full">
+    <Carousel
+      :value="products"
+      :numVisible="1"
+      :numScroll="1"
+      class="carousel login-carousal"
+      showIndicators
+      circular
+      :responsiveOptions="responsiveOptions"
+    >
+      <!-- :autoplayInterval="2000" -->
+
+      <template #item="slotProps">
+        <div>
+          <div class="rounded-r-[20px]">
+            <div class="relative mx-auto h-full w-full">
+              <img
+                :src="slotProps.data.image"
+                :severity="getSeverity(slotProps.data.inventoryStatus)"
+                class="w-[100%] h-[100%] object-fill"
+              />
+            </div>
+          </div>
+        </div>
+      </template>
+    </Carousel>
+  </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
 import { ProductService } from "../assets/service/ProductService";
+import { MobileService } from "../assets/service/MobileService";
 
 onMounted(() => {
   ProductService.getProductsSmall().then(
+    (data) => (products.value = data.slice(0, 9))
+  );
+  MobileService.getProductsSmall().then(
     (data) => (products.value = data.slice(0, 9))
   );
 });
@@ -349,5 +381,11 @@ const getSeverity = (status) => {
 }
 .p-carousel-next .p-link {
   display: none !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .loginnnn {
+    display: none !important;
+  }
 }
 </style>
