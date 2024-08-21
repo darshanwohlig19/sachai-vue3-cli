@@ -120,7 +120,7 @@
     </div>
   </div>
 </template>
-<script setup>
+<!-- <script setup>
 import { ref, onMounted } from "vue";
 import { ProductService } from "../assets/service/ProductService";
 
@@ -169,149 +169,147 @@ const getSeverity = (status) => {
       return null;
   }
 };
-</script>
+</script> -->
 
-//
 <script>
-// import { ref, onMounted } from "vue";
-// import { useRouter } from "vue-router";
-// import { auth } from "@/firebaseConfig";
-// import { ProductService } from "../assets/service/ProductService";
-// import {
-//   signInWithPopup,
-//   OAuthProvider,
-//   RecaptchaVerifier,
-//   signInWithPhoneNumber,
-//   getAuth,
-// } from "firebase/auth";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { auth } from "@/firebaseConfig";
+import { ProductService } from "../assets/service/ProductService";
+import {
+  signInWithPopup,
+  OAuthProvider,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  getAuth,
+} from "firebase/auth";
 
-// export default {
-//   setup() {
-//     const router = useRouter();
-//     const phoneNumber = ref("");
-//     const verificationCode = ref("");
-//     const showPhoneVerification = ref(false);
-//     // var recaptchaVerifier = ref(null);
-//     var appVerifier = ref(null);
-//     const verificationCodeTab = ref(false);
+export default {
+  setup() {
+    const router = useRouter();
+    const phoneNumber = ref("");
+    const verificationCode = ref("");
+    const showPhoneVerification = ref(false);
+    // var recaptchaVerifier = ref(null);
+    var appVerifier = ref(null);
+    const verificationCodeTab = ref(false);
 
-//     // Initialize reCAPTCHA verifier
-//     onMounted(() => {
-//       ProductService.getProductsSmall().then(
-//         (data) => (products.value = data.slice(0, 9))
-//       );
-//     });
-//     const products = ref();
+    // Initialize reCAPTCHA verifier
+    onMounted(() => {
+      ProductService.getProductsSmall().then(
+        (data) => (products.value = data.slice(0, 9))
+      );
+    });
+    const products = ref();
 
-//     const captcha = async () => {
-//       console.log("ReCAPTCHA solved:");
-//       const auth = getAuth();
-//       //   if (showPhoneVerification.value) {
-//       appVerifier = window.recaptchaVerifier = new RecaptchaVerifier(
-//         auth,
-//         "recaptcha-container",
-//         {
-//           size: "invisible",
-//           callback: (response) => {
-//             console.log(response);
-//             showPhoneVerification.value = true;
-//             // reCAPTCHA solved, allow signInWithPhoneNumber.
-//             // onSignInSubmit();
-//           },
-//         }
-//       );
-//       sendVerificationCode();
-//       //   }
-//     };
+    const captcha = async () => {
+      console.log("ReCAPTCHA solved:");
+      const auth = getAuth();
+      //   if (showPhoneVerification.value) {
+      appVerifier = window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: (response) => {
+            console.log(response);
+            showPhoneVerification.value = true;
+            // reCAPTCHA solved, allow signInWithPhoneNumber.
+            // onSignInSubmit();
+          },
+        }
+      );
+      sendVerificationCode();
+      //   }
+    };
 
-//     const loginWithGoogle = async () => {
-//       try {
-//         const googleProvider = new OAuthProvider("google.com");
-//         googleProvider.addScope("email");
-//         const result = await signInWithPopup(auth, googleProvider);
-//         console.log("User Info:", result.user);
-//         router.push("/").then(() => {
-//           window.location.reload();
-//         });
-//       } catch (error) {
-//         console.error("Google login failed:", error);
-//       }
-//     };
+    const loginWithGoogle = async () => {
+      try {
+        const googleProvider = new OAuthProvider("google.com");
+        googleProvider.addScope("email");
+        const result = await signInWithPopup(auth, googleProvider);
+        console.log("User Info:", result.user);
+        router.push("/").then(() => {
+          window.location.reload();
+        });
+      } catch (error) {
+        console.error("Google login failed:", error);
+      }
+    };
 
-//     const signInWithApple = async () => {
-//       try {
-//         const appleProvider = new OAuthProvider("apple.com");
-//         appleProvider.addScope("email");
-//         const result = await signInWithPopup(auth, appleProvider);
-//         console.log("Apple User Info:", result.user);
-//         router.push("/").then(() => {
-//           window.location.reload();
-//         });
-//       } catch (error) {
-//         console.error("Apple login failed:", error);
-//       }
-//     };
+    const signInWithApple = async () => {
+      try {
+        const appleProvider = new OAuthProvider("apple.com");
+        appleProvider.addScope("email");
+        const result = await signInWithPopup(auth, appleProvider);
+        console.log("Apple User Info:", result.user);
+        router.push("/").then(() => {
+          window.location.reload();
+        });
+      } catch (error) {
+        console.error("Apple login failed:", error);
+      }
+    };
 
-//     const togglePhoneVerification = () => {
-//       captcha();
-//       //   showPhoneVerification.value = true;
-//     };
+    const togglePhoneVerification = () => {
+      captcha();
+      //   showPhoneVerification.value = true;
+    };
 
-//     const handleSendVerificationCode = () => {
-//       sendVerificationCode();
-//       verificationCodeTab.value = true;
-//     };
+    const handleSendVerificationCode = () => {
+      sendVerificationCode();
+      verificationCodeTab.value = true;
+    };
 
-//     const sendVerificationCode = async () => {
-//       try {
-//         // if (!recaptchaVerifier.value) {
-//         //   console.error("ReCAPTCHA verifier is not initialized.");
-//         //   return;
-//         // }
+    const sendVerificationCode = async () => {
+      try {
+        // if (!recaptchaVerifier.value) {
+        //   console.error("ReCAPTCHA verifier is not initialized.");
+        //   return;
+        // }
 
-//         console.log("Sending OTP to:", phoneNumber.value);
+        console.log("Sending OTP to:", phoneNumber.value);
 
-//         const confirmationResult = await signInWithPhoneNumber(
-//           auth,
-//           phoneNumber.value,
-//           appVerifier
-//         );
+        const confirmationResult = await signInWithPhoneNumber(
+          auth,
+          phoneNumber.value,
+          appVerifier
+        );
 
-//         console.log("Verification code sent to:", phoneNumber.value);
-//         window.confirmationResult = confirmationResult;
-//       } catch (error) {
-//         console.error("Failed to send verification code:", error.message);
-//         console.log(`Error: ${error.message}`); // Alert the user if there's an issue
-//       }
-//     };
+        console.log("Verification code sent to:", phoneNumber.value);
+        window.confirmationResult = confirmationResult;
+      } catch (error) {
+        console.error("Failed to send verification code:", error.message);
+        console.log(`Error: ${error.message}`); // Alert the user if there's an issue
+      }
+    };
 
-//     const verifyCode = async () => {
-//       try {
-//         const confirmationResult = window.confirmationResult;
-//         const result = await confirmationResult.confirm(verificationCode.value);
-//         console.log("User Info:", result.user);
-//         router.push("/");
-//       } catch (error) {
-//         console.error("Verification failed:", error);
-//       }
-//     };
+    const verifyCode = async () => {
+      try {
+        const confirmationResult = window.confirmationResult;
+        const result = await confirmationResult.confirm(verificationCode.value);
+        console.log("User Info:", result.user);
+        router.push("/");
+      } catch (error) {
+        console.error("Verification failed:", error);
+      }
+    };
 
-//     return {
-//       phoneNumber,
-//       verificationCode,
-//       showPhoneVerification,
-//       sendVerificationCode,
-//       verifyCode,
-//       loginWithGoogle,
-//       signInWithApple,
-//       togglePhoneVerification,
-//       verificationCodeTab,
-//       handleSendVerificationCode,
-//       captcha,
-//     };
-//   },
-// };
-//
+    return {
+      phoneNumber,
+      verificationCode,
+      showPhoneVerification,
+      sendVerificationCode,
+      verifyCode,
+      loginWithGoogle,
+      signInWithApple,
+      togglePhoneVerification,
+      verificationCodeTab,
+      handleSendVerificationCode,
+      captcha,
+    };
+  },
+};
 </script>
 <style>
 .login-carousal .p-highlight {
