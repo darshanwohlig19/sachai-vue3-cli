@@ -73,10 +73,10 @@
             <div v-else>
               <div class="card flex justify-center">
                 <div class="">
-                  <InputOtp
+                  <Input
                     v-model="verificationCode"
                     class="p-2 mt-2 w-full h-[50%]"
-                    mask
+                    integerOnly
                   />
                 </div>
               </div>
@@ -134,7 +134,8 @@ export default {
         auth,
         "recaptcha-container",
         {
-          size: "invisible",
+          // size: "invisible",
+          size: "normal",
           callback: (response) => {
             console.log(response);
             showPhoneVerification.value = true;
@@ -143,6 +144,7 @@ export default {
           },
         }
       );
+      console.log("appVerifier--", appVerifier);
       sendVerificationCode();
       //   }
     };
@@ -236,8 +238,7 @@ export default {
 };
 </script>
 <style scoped>
-.p-inputtext,
-.p-inputotp-input {
-  background: red !important;
+.p-inputotp.p-inputtext {
+  color: blueviolet;
 }
 </style>
