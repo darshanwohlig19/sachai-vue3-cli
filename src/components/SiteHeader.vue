@@ -36,7 +36,9 @@
         <div class="hidden md:flex gap-20">
           <div><a href="/">Home</a></div>
           <div><a href="#">Astrology</a></div>
-          <div><a href="/Login">Login</a></div>
+          <a :href="hasLocalStorageData ? '/Logout' : '/Login'">
+            {{ hasLocalStorageData ? "Logout" : "Login" }}
+          </a>
           <div v-if="showBookmarkLink" class="mb-5">
             <a href="/Bookmark">Bookmark</a>
             <div></div>
@@ -76,7 +78,7 @@
 <script>
 import axios from "axios";
 
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 export default {
   setup() {
@@ -111,6 +113,9 @@ export default {
         console.error("Error fetching categories:", error);
       }
     };
+    const hasLocalStorageData = computed(() => {
+      return !!localStorage.getItem("apiDataToken");
+    });
 
     fetchCategories();
     onMounted(() => {
@@ -126,6 +131,7 @@ export default {
       toggleMenu,
       showBookmarkLink,
       toggleDropdown,
+      hasLocalStorageData,
     };
   },
 };

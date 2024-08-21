@@ -13,6 +13,7 @@ auth.onAuthStateChanged((user) => {
     console.log("User is logged out");
   }
 });
+import { checkLocalStorage } from "./utils/globalState";
 // import { getAnalytics } from "firebase/analytics";
 // const analytics = getAnalytics(app);
 import App from "./App.vue";
@@ -68,6 +69,8 @@ import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
 
 const app = createApp(App);
+checkLocalStorage();
+
 app.use(router);
 app.use(ToastService);
 app.use(ConfirmationService);
