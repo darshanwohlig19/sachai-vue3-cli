@@ -104,18 +104,12 @@
 
           <template #item="slotProps">
             <div>
-              <div class="mb-4">
+              <div class="rounded-r-[20px]">
                 <div class="relative mx-auto h-[512px] rounded-r-[20px]">
                   <img
                     :src="slotProps.data.image"
-                    :alt="slotProps.data.name"
-                    class="w-[100%] h-[100%] object-fill"
-                  />
-                  <Tag
-                    :value="slotProps.data.inventoryStatus"
                     :severity="getSeverity(slotProps.data.inventoryStatus)"
-                    class="absolute none"
-                    style="left: 5px; top: 5px; display: none"
+                    class="w-[100%] h-[100%] object-fill rounded-r-[20px]"
                   />
                 </div>
               </div>
