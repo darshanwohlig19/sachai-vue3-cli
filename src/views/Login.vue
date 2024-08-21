@@ -254,6 +254,9 @@
 </template>
 
 <script setup>
+
+<!-- <script setup>
+
 import { ref, onMounted } from "vue";
 import { ProductService } from "../assets/service/ProductService";
 import { MobileService } from "../assets/service/MobileService";
@@ -304,6 +307,7 @@ const getSeverity = (status) => {
   }
 };
 
+
 // Lifecycle hook to fetch data when component is mounted
 onMounted(async () => {
   try {
@@ -345,6 +349,203 @@ const handleSendVerificationCode = () => {
 // Function to handle code verification
 const verifyCode = () => {
   // Your logic to verify the code here
+
+</script> -->
+
+<script>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { auth } from "@/firebaseConfig";
+import { ProductService } from "../assets/service/ProductService";
+import {
+  signInWithPopup,
+  OAuthProvider,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  getAuth,
+} from "firebase/auth";
+
+export default {
+  setup() {
+    const router = useRouter();
+    const phoneNumber = ref("");
+    const verificationCode = ref("");
+    const showPhoneVerification = ref(false);
+    // var recaptchaVerifier = ref(null);
+    var appVerifier = ref(null);
+    const verificationCodeTab = ref(false);
+    const userName = ref("");
+    const userEmail = ref("");
+    const userId = ref("");
+    // Initialize reCAPTCHA verifier
+    onMounted(() => {
+      ProductService.getProductsSmall().then(
+        (data) => (products.value = data.slice(0, 9))
+      );
+    });
+    const products = ref();
+
+    const captcha = async () => {
+      console.log("ReCAPTCHA solved:");
+      const auth = getAuth();
+      //   if (showPhoneVerification.value) {
+      appVerifier = window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: (response) => {
+            console.log(response);
+            showPhoneVerification.value = true;
+            // reCAPTCHA solved, allow signInWithPhoneNumber.
+            // onSignInSubmit();
+          },
+        }
+      );
+      sendVerificationCode();
+      //   }
+    };
+
+    const loginWithGoogle = async () => {
+      try {
+        const googleProvider = new OAuthProvider("google.com");
+        googleProvider.addScope("email");
+        const result = await signInWithPopup(auth, googleProvider);
+
+        // Storing the user information in variables
+        userName.value = result.user.displayName;
+        userEmail.value = result.user.email;
+        userId.value = result.user.uid;
+
+        console.log("Google User Info:", {
+          userName: userName.value,
+          userEmail: userEmail.value,
+          userId: userId.value,
+        });
+
+        // Send the data to your API
+        sendUserDataToApi(userName.value, userEmail.value, userId.value);
+
+        router.push("/").then(() => {
+          // window.location.reload();
+        });
+      } catch (error) {
+        console.error("Google login failed:", error);
+      }
+    };
+
+    const sendUserDataToApi = async (name, email, id) => {
+      const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
+      const payload = {
+        auth0: {
+          name: name,
+          email: email,
+          id: id,
+        },
+        type: "google",
+      };
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+        console.log("API Response:", responseData);
+        const token = responseData.data;
+
+        // Store the `data` field in local storage
+        localStorage.setItem("apiDataToken", token);
+
+        // Optionally, log the stored token to confirm
+        console.log("Stored token:", localStorage.getItem("apiDataToken"));
+        // Handle response data here if needed
+      } catch (error) {
+        console.error("Failed to send data to API:", error);
+      }
+    };
+
+    const signInWithApple = async () => {
+      try {
+        const appleProvider = new OAuthProvider("apple.com");
+        appleProvider.addScope("email");
+        const result = await signInWithPopup(auth, appleProvider);
+        console.log("Apple User Info:", result.user);
+        router.push("/").then(() => {
+          window.location.reload();
+        });
+      } catch (error) {
+        console.error("Apple login failed:", error);
+      }
+    };
+
+    const togglePhoneVerification = () => {
+      captcha();
+      showPhoneVerification.value = true;
+    };
+
+    const handleSendVerificationCode = () => {
+      sendVerificationCode();
+      verificationCodeTab.value = true;
+    };
+
+    const sendVerificationCode = async () => {
+      try {
+        // if (!recaptchaVerifier.value) {
+        //   console.error("ReCAPTCHA verifier is not initialized.");
+        //   return;
+        // }
+
+        console.log("Sending OTP to:", phoneNumber.value);
+
+        const confirmationResult = await signInWithPhoneNumber(
+          auth,
+          phoneNumber.value,
+          appVerifier
+        );
+
+        console.log("Verification code sent to:", phoneNumber.value);
+        window.confirmationResult = confirmationResult;
+      } catch (error) {
+        console.error("Failed to send verification code:", error.message);
+        console.log(`Error: ${error.message}`); // Alert the user if there's an issue
+      }
+    };
+
+    const verifyCode = async () => {
+      try {
+        const confirmationResult = window.confirmationResult;
+        const result = await confirmationResult.confirm(verificationCode.value);
+        console.log("User Info:", result);
+        router.push("/");
+      } catch (error) {
+        console.error("Verification failed:", error);
+      }
+    };
+
+    return {
+      phoneNumber,
+      verificationCode,
+      showPhoneVerification,
+      sendVerificationCode,
+      verifyCode,
+      loginWithGoogle,
+      signInWithApple,
+      togglePhoneVerification,
+      verificationCodeTab,
+      handleSendVerificationCode,
+      captcha,
+    };
+  },
+
 };
 </script>
 <style>
