@@ -95,19 +95,21 @@
           :value="products"
           :numVisible="1"
           :numScroll="1"
-          class="carousel mt-4 custom-carousal"
+          class="carousel login-carousal"
           showIndicators
           circular
           :responsiveOptions="responsiveOptions"
         >
+          <!-- :autoplayInterval="2000" -->
+
           <template #item="slotProps">
             <div>
               <div class="mb-4">
-                <div class="relative mx-auto">
+                <div class="relative mx-auto h-[512px] rounded-r-[20px]">
                   <img
                     :src="slotProps.data.image"
                     :alt="slotProps.data.name"
-                    class="w-full rounded"
+                    class="w-[100%] h-[100%] object-fill"
                   />
                   <Tag
                     :value="slotProps.data.inventoryStatus"
@@ -317,17 +319,38 @@ const getSeverity = (status) => {
 // };
 //
 </script>
-<style scoped>
+<style>
+.login-carousal .p-highlight {
+  background-color: red !important;
+  width: 25px !important;
+}
+.login-carousal .p-carousel-indicator {
+  color: green;
+  background-color: white;
+  position: relative !important;
+  bottom: 30px;
+  height: 8px;
+  width: 10px;
+
+  border-radius: 10px;
+}
+
+.p-carousel-indicator {
+  margin-top: -20px;
+  height: 8px ip !important;
+}
 .login-carousel .p-highlight {
   background-color: red !important;
   width: 25px !important;
 }
+
 .login-carousel .p-carousel-indicator {
   color: green;
   background-color: white;
   position: relative !important;
   bottom: 25px;
   width: 10px;
+  height: 8px;
   border-radius: 10px;
 }
 .p-carousel-next .p-link {
