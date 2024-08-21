@@ -353,6 +353,10 @@ const verifyCode = () => {
   background-color: red !important;
   width: 25px !important;
 }
+.loginnnn {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
 .p-carousel-content {
   border-radius: 0 20px 20px 0 !important;
 }
