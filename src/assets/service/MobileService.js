@@ -1,17 +1,17 @@
-export const ProductService = {
+export const MobileService = {
   getProductsData() {
     return [
       {
         image:
-          "https://ik.imagekit.io/553gmaygy/10%20(2).png?updatedAt=1724162343075",
+          "https://ik.imagekit.io/553gmaygy/Group%209350.png?updatedAt=1724240425638",
       },
       {
         image:
-          "https://ik.imagekit.io/553gmaygy/18.png?updatedAt=1724162350656",
+          "https://ik.imagekit.io/553gmaygy/Group%209347.png?updatedAt=1724240425811",
       },
       {
         image:
-          "https://ik.imagekit.io/553gmaygy/17.png?updatedAt=1724067776564",
+          "https://ik.imagekit.io/553gmaygy/Group%209348.png?updatedAt=1724240425862",
       },
     ];
   },
