@@ -193,7 +193,9 @@ export default {
     // var recaptchaVerifier = ref(null);
     var appVerifier = ref(null);
     const verificationCodeTab = ref(false);
-
+    const userName = ref("");
+    const userEmail = ref("");
+    const userId = ref("");
     // Initialize reCAPTCHA verifier
     onMounted(() => {
       ProductService.getProductsSmall().then(
@@ -228,12 +230,65 @@ export default {
         const googleProvider = new OAuthProvider("google.com");
         googleProvider.addScope("email");
         const result = await signInWithPopup(auth, googleProvider);
-        console.log("User Info:", result.user);
+
+        // Storing the user information in variables
+        userName.value = result.user.displayName;
+        userEmail.value = result.user.email;
+        userId.value = result.user.uid;
+
+        console.log("Google User Info:", {
+          userName: userName.value,
+          userEmail: userEmail.value,
+          userId: userId.value,
+        });
+
+        // Send the data to your API
+        sendUserDataToApi(userName.value, userEmail.value, userId.value);
+
         router.push("/").then(() => {
-          window.location.reload();
+          // window.location.reload();
         });
       } catch (error) {
         console.error("Google login failed:", error);
+      }
+    };
+
+    const sendUserDataToApi = async (name, email, id) => {
+      const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
+      const payload = {
+        auth0: {
+          name: name,
+          email: email,
+          id: id,
+        },
+        type: "google",
+      };
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+        console.log("API Response:", responseData);
+        const token = responseData.data;
+
+        // Store the `data` field in local storage
+        localStorage.setItem("apiDataToken", token);
+
+        // Optionally, log the stored token to confirm
+        console.log("Stored token:", localStorage.getItem("apiDataToken"));
+        // Handle response data here if needed
+      } catch (error) {
+        console.error("Failed to send data to API:", error);
       }
     };
 
@@ -253,7 +308,7 @@ export default {
 
     const togglePhoneVerification = () => {
       captcha();
-      //   showPhoneVerification.value = true;
+      showPhoneVerification.value = true;
     };
 
     const handleSendVerificationCode = () => {
@@ -288,7 +343,7 @@ export default {
       try {
         const confirmationResult = window.confirmationResult;
         const result = await confirmationResult.confirm(verificationCode.value);
-        console.log("User Info:", result.user);
+        console.log("User Info:", result);
         router.push("/");
       } catch (error) {
         console.error("Verification failed:", error);

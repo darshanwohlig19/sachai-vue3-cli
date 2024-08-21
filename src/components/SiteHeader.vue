@@ -37,6 +37,10 @@
           <div><a href="/">Home</a></div>
           <div><a href="#">Astrology</a></div>
           <div><a href="/Login">Login</a></div>
+          <div v-if="showBookmarkLink" class="mb-5">
+            <a href="/Bookmark">Bookmark</a>
+            <div></div>
+          </div>
         </div>
         <!-- Mobile Menu -->
         <div class="md:hidden flex items-end justify-end">
@@ -72,7 +76,7 @@
 <script>
 import axios from "axios";
 
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 export default {
   setup() {
@@ -80,6 +84,7 @@ export default {
     const isDropdownOpen = ref(false);
     const categories = ref([]);
     const activeCategoryId = ref(null);
+    const showBookmarkLink = ref(false);
 
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
@@ -108,12 +113,18 @@ export default {
     };
 
     fetchCategories();
+    onMounted(() => {
+      const storedData = localStorage.getItem("apiDataToken");
+      showBookmarkLink.value = !!storedData; // Show link if there is data in local storage
+      fetchCategories();
+    });
 
     return {
       isMenuOpen,
       isDropdownOpen,
       categories,
       toggleMenu,
+      showBookmarkLink,
       toggleDropdown,
     };
   },
