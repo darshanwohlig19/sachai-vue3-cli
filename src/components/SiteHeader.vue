@@ -92,6 +92,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { ref, onMounted, computed } from "vue";
+import { useToast } from "primevue/usetoast";
 
 export default {
   setup() {
@@ -101,6 +102,7 @@ export default {
     const activeCategoryId = ref(null);
     const showBookmarkLink = ref(false);
     const router = useRouter();
+    const toast = useToast();
 
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
@@ -117,7 +119,6 @@ export default {
       const auth = getAuth();
       try {
         if (hasLocalStorageData.value) {
-          // Perform logout
           await signOut(auth);
 
           const apiDataToken = localStorage.getItem("apiDataToken");
@@ -135,13 +136,22 @@ export default {
             if (response.status === 200) {
               localStorage.removeItem("apiDataToken");
 
+              // Set a flag in local storage to trigger the toast after reload
+              localStorage.setItem("logoutSuccess", "true");
+
+              // Reload the page
               location.reload();
             } else {
               console.error("Failed to log out from the external API.");
+              toast.add({
+                severity: "error",
+                summary: "Logout Failed",
+                detail: "There was an issue logging out. Please try again.",
+                life: 3000,
+              });
             }
           }
         } else {
-          // Redirect to login page if not logged in
           router.push("/Login");
         }
       } catch (error) {
@@ -173,10 +183,19 @@ export default {
     fetchCategories();
     onMounted(() => {
       const storedData = localStorage.getItem("apiDataToken");
-      showBookmarkLink.value = !!storedData; // Show link if there is data in local storage
+      showBookmarkLink.value = !!storedData;
+      const logoutSuccess = localStorage.getItem("logoutSuccess");
+      if (logoutSuccess) {
+        toast.add({
+          severity: "error",
+          summary: "Logout Successful",
+          detail: "You have been logged out successfully.",
+          life: 3000,
+        });
+        localStorage.removeItem("logoutSuccess");
+      }
       fetchCategories();
     });
-
     return {
       isMenuOpen,
       isDropdownOpen,
