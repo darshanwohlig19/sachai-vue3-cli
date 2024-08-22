@@ -254,13 +254,9 @@
 </template>
 
 <script setup>
-
-<!-- <script setup>
-
 import { ref, onMounted } from "vue";
 import { ProductService } from "../assets/service/ProductService";
 import { MobileService } from "../assets/service/MobileService";
-import InputOtp from "vue-input-otp"; // Ensure you have this component installed
 
 // Reactive variables for desktop and mobile products
 const desktopProducts = ref([]);
@@ -307,7 +303,6 @@ const getSeverity = (status) => {
   }
 };
 
-
 // Lifecycle hook to fetch data when component is mounted
 onMounted(async () => {
   try {
@@ -349,218 +344,19 @@ const handleSendVerificationCode = () => {
 // Function to handle code verification
 const verifyCode = () => {
   // Your logic to verify the code here
-
-</script> -->
-
-<script>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { auth } from "@/firebaseConfig";
-import { ProductService } from "../assets/service/ProductService";
-import {
-  signInWithPopup,
-  OAuthProvider,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  getAuth,
-} from "firebase/auth";
-
-export default {
-  setup() {
-    const router = useRouter();
-    const phoneNumber = ref("");
-    const verificationCode = ref("");
-    const showPhoneVerification = ref(false);
-    // var recaptchaVerifier = ref(null);
-    var appVerifier = ref(null);
-    const verificationCodeTab = ref(false);
-    const userName = ref("");
-    const userEmail = ref("");
-    const userId = ref("");
-    // Initialize reCAPTCHA verifier
-    onMounted(() => {
-      ProductService.getProductsSmall().then(
-        (data) => (products.value = data.slice(0, 9))
-      );
-    });
-    const products = ref();
-
-    const captcha = async () => {
-      console.log("ReCAPTCHA solved:");
-      const auth = getAuth();
-      //   if (showPhoneVerification.value) {
-      appVerifier = window.recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: (response) => {
-            console.log(response);
-            showPhoneVerification.value = true;
-            // reCAPTCHA solved, allow signInWithPhoneNumber.
-            // onSignInSubmit();
-          },
-        }
-      );
-      sendVerificationCode();
-      //   }
-    };
-
-    const loginWithGoogle = async () => {
-      try {
-        const googleProvider = new OAuthProvider("google.com");
-        googleProvider.addScope("email");
-        const result = await signInWithPopup(auth, googleProvider);
-
-        // Storing the user information in variables
-        userName.value = result.user.displayName;
-        userEmail.value = result.user.email;
-        userId.value = result.user.uid;
-
-        console.log("Google User Info:", {
-          userName: userName.value,
-          userEmail: userEmail.value,
-          userId: userId.value,
-        });
-
-        // Send the data to your API
-        sendUserDataToApi(userName.value, userEmail.value, userId.value);
-
-        router.push("/").then(() => {
-          // window.location.reload();
-        });
-      } catch (error) {
-        console.error("Google login failed:", error);
-      }
-    };
-
-    const sendUserDataToApi = async (name, email, id) => {
-      const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
-      const payload = {
-        auth0: {
-          name: name,
-          email: email,
-          id: id,
-        },
-        type: "google",
-      };
-
-      try {
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-          throw new Error(`API error: ${response.statusText}`);
-        }
-
-        const responseData = await response.json();
-        console.log("API Response:", responseData);
-        const token = responseData.data;
-
-        // Store the `data` field in local storage
-        localStorage.setItem("apiDataToken", token);
-
-        // Optionally, log the stored token to confirm
-        console.log("Stored token:", localStorage.getItem("apiDataToken"));
-        // Handle response data here if needed
-      } catch (error) {
-        console.error("Failed to send data to API:", error);
-      }
-    };
-
-    const signInWithApple = async () => {
-      try {
-        const appleProvider = new OAuthProvider("apple.com");
-        appleProvider.addScope("email");
-        const result = await signInWithPopup(auth, appleProvider);
-        console.log("Apple User Info:", result.user);
-        router.push("/").then(() => {
-          window.location.reload();
-        });
-      } catch (error) {
-        console.error("Apple login failed:", error);
-      }
-    };
-
-    const togglePhoneVerification = () => {
-      captcha();
-      showPhoneVerification.value = true;
-    };
-
-    const handleSendVerificationCode = () => {
-      sendVerificationCode();
-      verificationCodeTab.value = true;
-    };
-
-    const sendVerificationCode = async () => {
-      try {
-        // if (!recaptchaVerifier.value) {
-        //   console.error("ReCAPTCHA verifier is not initialized.");
-        //   return;
-        // }
-
-        console.log("Sending OTP to:", phoneNumber.value);
-
-        const confirmationResult = await signInWithPhoneNumber(
-          auth,
-          phoneNumber.value,
-          appVerifier
-        );
-
-        console.log("Verification code sent to:", phoneNumber.value);
-        window.confirmationResult = confirmationResult;
-      } catch (error) {
-        console.error("Failed to send verification code:", error.message);
-        console.log(`Error: ${error.message}`); // Alert the user if there's an issue
-      }
-    };
-
-    const verifyCode = async () => {
-      try {
-        const confirmationResult = window.confirmationResult;
-        const result = await confirmationResult.confirm(verificationCode.value);
-        console.log("User Info:", result);
-        router.push("/");
-      } catch (error) {
-        console.error("Verification failed:", error);
-      }
-    };
-
-    return {
-      phoneNumber,
-      verificationCode,
-      showPhoneVerification,
-      sendVerificationCode,
-      verifyCode,
-      loginWithGoogle,
-      signInWithApple,
-      togglePhoneVerification,
-      verificationCodeTab,
-      handleSendVerificationCode,
-      captcha,
-    };
-  },
-
 };
 </script>
 <style>
-/* Styles for the login carousel and indicators */
+//* Styles for the login carousel and indicators */
 .login-carousal .p-highlight {
   background-color: red !important;
   width: 25px !important;
 }
-.loginnnn {
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
-    rgba(0, 0, 0, 0.22) 0px 15px 12px;
-}
+
 .p-carousel-content {
   border-radius: 0 20px 20px 0 !important;
 }
+
 .login-carousal .p-carousel-indicator {
   color: green;
   background-color: white;
@@ -570,14 +366,17 @@ export default {
   width: 10px;
   border-radius: 10px;
 }
+
 .p-carousel-indicator {
   margin-top: -20px;
   height: 8px !important;
 }
+
 .login-carousel .p-highlight {
   background-color: red !important;
   width: 25px !important;
 }
+
 .login-carousel .p-carousel-indicator {
   color: green;
   background-color: white;
@@ -587,17 +386,20 @@ export default {
   height: 8px;
   border-radius: 10px;
 }
+
 .p-carousel-next .p-link {
   display: none !important;
-} /* Desktop styles */
+}
+
+/* Desktop styles */
 .loginnnn {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ensures it
-takes the full viewport height */
-} /* Hide mobile view and show desktop view
-for larger screens */
+  min-height: 100vh; /* Ensures it takes the full viewport height */
+}
+
+/* Hide mobile view and show desktop view for larger screens */
 @media only screen and (min-width: 768px) {
   .mobile {
     display: none;
@@ -605,10 +407,13 @@ for larger screens */
   .loginnnn {
     display: flex;
   }
-} /* Styles for mobile view */
+}
+
+/* Styles for mobile view */
 .mobile {
   display: none;
 }
+
 @media only screen and (max-width: 600px) {
   .loginnnn {
     display: none !important;
@@ -617,19 +422,21 @@ for larger screens */
     display: block;
     position: relative;
   }
+
   .p-carousel-content {
     border-radius: 0 0 0 0 !important;
-  } /* Center the login
-credentials */
+  }
+
+  /* Center the login credentials */
   .mobile .absolute {
     top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%; /* Adjust as needed */
-    max-width: 360px; /*
-Adjust as needed */
+    max-width: 360px; /* Adjust as needed */
   }
 }
+
 @media only screen and (max-width: 460px) {
   .mobile .absolute {
     top: 70%;
