@@ -22,6 +22,7 @@ import Button from "primevue/button";
 import TabView from "primevue/tabview";
 import Password from "primevue/password";
 
+import Toast from "primevue/toast";
 import TabPanel from "primevue/tabpanel";
 import InputText from "primevue/inputtext";
 import BadgeDirective from "primevue/badgedirective";
@@ -76,6 +77,7 @@ app.use(ConfirmationService);
 app.use(PrimeVue, { ripple: true });
 app.component("TreeTable", TreeTable);
 app.component("Toolbar", Toolbar);
+app.component("Toast", Toast);
 app.component("InputNumber", InputNumber);
 app.component("Calendar", Calendar);
 app.component("DataTable", DataTable);

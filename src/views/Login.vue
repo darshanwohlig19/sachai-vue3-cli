@@ -251,10 +251,23 @@
       </template>
     </Carousel>
   </div>
+  <div>
+    <div class="card flex justify-center">
+      <div class="flex flex-wrap gap-2">
+        <Button label="Success" severity="success" @click="showSuccess" />
+        <Button label="Info" severity="info" @click="showInfo" />
+        <Button label="Warn" severity="warn" @click="showWarn" />
+        <Button label="Error" severity="danger" @click="showError" />
+        <Button label="Secondary" severity="secondary" @click="showSecondary" />
+        <Button label="Contrast" severity="contrast" @click="showContrast" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 import { auth } from "@/firebaseConfig";
 import { ProductService } from "../assets/service/ProductService";
@@ -268,6 +281,8 @@ import {
 } from "firebase/auth";
 // Reactive variables for desktop and mobile products
 const router = useRouter();
+const toast = useToast();
+
 const phoneNumber = ref("");
 const verificationCode = ref("");
 const showPhoneVerification = ref(false);
@@ -283,7 +298,7 @@ const mobileProducts = ref([]);
 // const verificationCode = ref("");
 // const showPhoneVerification = ref(false);
 // const verificationCodeTab = ref(false);
-
+const showSuccess = () => {};
 const responsiveOptions = ref([
   {
     breakpoint: "1400px",
@@ -368,16 +383,32 @@ const loginWithGoogle = async () => {
       userEmail: userEmail.value,
       userId: userId.value,
     });
+    // Send user data to API
+    await sendUserDataToApi(userName.value, userEmail.value, userId.value);
 
-    sendUserDataToApi(userName.value, userEmail.value, userId.value);
-
-    router.push("/").then(() => {
-      // window.location.reload();
+    // Show toast notification after navigation
+    toast.add({
+      severity: "success",
+      summary: "Successfully Login",
+      detail: "Successfully logged in with Google!",
+      life: 3000,
     });
+
+    // Wait for navigation to complete
+    setTimeout(() => {
+      router.push("/");
+    }, 0);
   } catch (error) {
     console.error("Google login failed:", error);
+    toast.add({
+      severity: "error",
+      summary: "Login Failed",
+      detail: "There was an error logging in with Google. Please try again.",
+      life: 3000,
+    });
   }
 };
+
 const sendUserDataToApi = async (name, email, id) => {
   const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
   const payload = {
@@ -418,12 +449,38 @@ const signInWithApple = async () => {
     const appleProvider = new OAuthProvider("apple.com");
     appleProvider.addScope("email");
     const result = await signInWithPopup(auth, appleProvider);
-    console.log("Apple User Info:", result.user);
-    router.push("/").then(() => {
-      window.location.reload();
+
+    userName.value = result.user.displayName;
+    userEmail.value = result.user.email;
+    userId.value = result.user.uid;
+
+    console.log("Google User Info:", {
+      userName: userName.value,
+      userEmail: userEmail.value,
+      userId: userId.value,
     });
+
+    await sendUserDataToApi(userName.value, userEmail.value, userId.value);
+    console.log("Apple User Info:", result.user);
+    toast.add({
+      severity: "success",
+      summary: "Successfully Login",
+      detail: "Successfully logged in with Apple!",
+      life: 3000,
+    });
+
+    // Wait for navigation to complete
+    setTimeout(() => {
+      router.push("/");
+    }, 0);
   } catch (error) {
     console.error("Apple login failed:", error);
+    toast.add({
+      severity: "error",
+      summary: "Login Failed",
+      detail: "There was an error logging in with Apple. Please try again.",
+      life: 3000,
+    });
   }
 };
 
