@@ -36,7 +36,17 @@
         <div class="hidden md:flex gap-20">
           <div><a href="/">Home</a></div>
           <div><a href="#">Astrology</a></div>
-          <div><a href="/Login">Login</a></div>
+          <a
+            :href="hasLocalStorageData ? '/Logout' : '/Login'"
+            @click="clearApiDataToken"
+            @click.prevent="handleLogoutClick"
+          >
+            {{ hasLocalStorageData ? "Logout" : "Login" }}
+          </a>
+          <div v-if="showBookmarkLink" class="mb-5">
+            <a href="/Bookmark">Bookmark</a>
+            <div></div>
+          </div>
         </div>
         <!-- Mobile Menu -->
         <div class="md:hidden flex items-end justify-end">
@@ -62,7 +72,18 @@
         </div>
       </div>
       <div class="mb-5"><a href="#">Astrology</a></div>
-      <div class="mb-5"><a href="/Login">Login</a></div>
+      <div class="mb-5">
+        <a
+          :href="hasLocalStorageData ? '/Logout' : '/Login'"
+          @click="clearApiDataToken"
+        >
+          {{ hasLocalStorageData ? "Logout" : "Login" }}
+        </a>
+      </div>
+      <div v-if="showBookmarkLink" class="mb-5">
+        <a href="/Bookmark">Bookmark</a>
+        <div></div>
+      </div>
     </div>
   </section>
 
@@ -71,8 +92,9 @@
 
 <script>
 import axios from "axios";
+import { useRouter } from "vue-router";
 
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 export default {
   setup() {
@@ -80,6 +102,8 @@ export default {
     const isDropdownOpen = ref(false);
     const categories = ref([]);
     const activeCategoryId = ref(null);
+    const showBookmarkLink = ref(false);
+    const router = useRouter();
 
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
@@ -87,6 +111,17 @@ export default {
 
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
+    };
+    const clearApiDataToken = () => {
+      localStorage.removeItem("apiDataToken");
+      router.push("/");
+    };
+    const handleLogoutClick = () => {
+      if (hasLocalStorageData.value) {
+        clearApiDataToken(); // This will also update hasLocalStorageData to false
+      } else {
+        router.push("/Login");
+      }
     };
 
     const fetchCategories = async () => {
@@ -106,15 +141,27 @@ export default {
         console.error("Error fetching categories:", error);
       }
     };
+    const hasLocalStorageData = computed(() => {
+      return !!localStorage.getItem("apiDataToken");
+    });
 
     fetchCategories();
+    onMounted(() => {
+      const storedData = localStorage.getItem("apiDataToken");
+      showBookmarkLink.value = !!storedData; // Show link if there is data in local storage
+      fetchCategories();
+    });
 
     return {
       isMenuOpen,
       isDropdownOpen,
       categories,
       toggleMenu,
+      showBookmarkLink,
       toggleDropdown,
+      hasLocalStorageData,
+      clearApiDataToken,
+      handleLogoutClick,
     };
   },
 };

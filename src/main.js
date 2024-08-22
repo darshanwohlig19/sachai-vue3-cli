@@ -13,6 +13,7 @@ auth.onAuthStateChanged((user) => {
     console.log("User is logged out");
   }
 });
+import { checkLocalStorage } from "./utils/globalState";
 // import { getAnalytics } from "firebase/analytics";
 // const analytics = getAnalytics(app);
 import App from "./App.vue";
@@ -21,6 +22,7 @@ import Button from "primevue/button";
 import TabView from "primevue/tabview";
 import Password from "primevue/password";
 
+import Toast from "primevue/toast";
 import TabPanel from "primevue/tabpanel";
 import InputText from "primevue/inputtext";
 import BadgeDirective from "primevue/badgedirective";
@@ -63,16 +65,19 @@ import Tooltip from "primevue/tooltip";
 import TreeTable from "primevue/treetable";
 import Badge from "primevue/badge";
 import Skeleton from "primevue/skeleton";
+import InputOtp from "primevue/inputotp";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
 
 const app = createApp(App);
+checkLocalStorage();
 app.use(router);
 app.use(ToastService);
 app.use(ConfirmationService);
 app.use(PrimeVue, { ripple: true });
 app.component("TreeTable", TreeTable);
 app.component("Toolbar", Toolbar);
+app.component("Toast", Toast);
 app.component("InputNumber", InputNumber);
 app.component("Calendar", Calendar);
 app.component("DataTable", DataTable);
@@ -81,6 +86,7 @@ app.component("Column", Column);
 app.component("ColumnGroup", ColumnGroup);
 app.component("InputSwitch", InputSwitch);
 app.component("Row", Row);
+app.component("InputOtp", InputOtp);
 app.component("Divider", Divider);
 app.component("AccordionTab", AccordionTab);
 app.component("Sidebar", Sidebar);
