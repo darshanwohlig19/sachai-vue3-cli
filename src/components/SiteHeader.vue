@@ -36,13 +36,10 @@
         <div class="hidden md:flex gap-20">
           <div><a href="/">Home</a></div>
           <div><a href="#">Astrology</a></div>
-          <a
-            :href="hasLocalStorageData ? '/Logout' : '/Login'"
-            @click="clearApiDataToken"
-            @click.prevent="handleLogoutClick"
-          >
+          <a href="#" @click="logout">
             {{ hasLocalStorageData ? "Logout" : "Login" }}
           </a>
+
           <div v-if="showBookmarkLink" class="mb-5">
             <a href="/Bookmark">Bookmark</a>
             <div></div>
@@ -93,7 +90,7 @@
 <script>
 import axios from "axios";
 import { useRouter } from "vue-router";
-
+import { getAuth, signOut } from "firebase/auth";
 import { ref, onMounted, computed } from "vue";
 
 export default {
@@ -116,11 +113,39 @@ export default {
       localStorage.removeItem("apiDataToken");
       router.push("/");
     };
-    const handleLogoutClick = () => {
-      if (hasLocalStorageData.value) {
-        clearApiDataToken(); // This will also update hasLocalStorageData to false
-      } else {
-        router.push("/Login");
+    const logout = async () => {
+      const auth = getAuth();
+      try {
+        if (hasLocalStorageData.value) {
+          // Perform logout
+          await signOut(auth);
+
+          const apiDataToken = localStorage.getItem("apiDataToken");
+          if (apiDataToken) {
+            const response = await axios.post(
+              "https://api-uat.newsshield.io/user/logoutEvent",
+              {},
+              {
+                headers: {
+                  Authorization: `${apiDataToken}`,
+                },
+              }
+            );
+
+            if (response.status === 200) {
+              localStorage.removeItem("apiDataToken");
+
+              location.reload();
+            } else {
+              console.error("Failed to log out from the external API.");
+            }
+          }
+        } else {
+          // Redirect to login page if not logged in
+          router.push("/Login");
+        }
+      } catch (error) {
+        console.error("An error occurred during sign-out or API call:", error);
       }
     };
 
@@ -161,7 +186,7 @@ export default {
       toggleDropdown,
       hasLocalStorageData,
       clearApiDataToken,
-      handleLogoutClick,
+      logout,
     };
   },
 };
