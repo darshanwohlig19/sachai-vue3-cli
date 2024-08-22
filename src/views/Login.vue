@@ -427,9 +427,25 @@ const signInWithApple = async () => {
 
     await sendUserDataToApi(userName.value, userEmail.value, userId.value);
     console.log("Apple User Info:", result.user);
-    router.push("/").then(() => {});
+    toast.add({
+      severity: "success",
+      summary: "Successfully Login",
+      detail: "Successfully logged in with Apple!",
+      life: 3000,
+    });
+
+    // Wait for navigation to complete
+    setTimeout(() => {
+      router.push("/");
+    }, 0);
   } catch (error) {
     console.error("Apple login failed:", error);
+    toast.add({
+      severity: "error",
+      summary: "Login Failed",
+      detail: "There was an error logging in with Apple. Please try again.",
+      life: 3000,
+    });
   }
 };
 
@@ -465,47 +481,6 @@ const sendUserDataToApi = async (name, email, id) => {
     console.log("Stored token:", localStorage.getItem("apiDataToken"));
   } catch (error) {
     console.error("Failed to send data to API:", error);
-  }
-};
-
-
-const signInWithApple = async () => {
-  try {
-    const appleProvider = new OAuthProvider("apple.com");
-    appleProvider.addScope("email");
-    const result = await signInWithPopup(auth, appleProvider);
-
-    userName.value = result.user.displayName;
-    userEmail.value = result.user.email;
-    userId.value = result.user.uid;
-
-    console.log("Google User Info:", {
-      userName: userName.value,
-      userEmail: userEmail.value,
-      userId: userId.value,
-    });
-
-    await sendUserDataToApi(userName.value, userEmail.value, userId.value);
-    console.log("Apple User Info:", result.user);
-    toast.add({
-      severity: "success",
-      summary: "Successfully Login",
-      detail: "Successfully logged in with Apple!",
-      life: 3000,
-    });
-
-    // Wait for navigation to complete
-    setTimeout(() => {
-      router.push("/");
-    }, 0);
-  } catch (error) {
-    console.error("Apple login failed:", error);
-    toast.add({
-      severity: "error",
-      summary: "Login Failed",
-      detail: "There was an error logging in with Apple. Please try again.",
-      life: 3000,
-    });
   }
 };
 
