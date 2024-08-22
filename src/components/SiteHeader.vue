@@ -101,13 +101,13 @@
         <div class="flex justify-center mt-4">
           <button
             @click="handleLogout"
-            class="bg-red-500 text-white px-4 py-2 rounded mr-2"
+            class="bg-[#e44949] text-white px-4 py-2 rounded mr-2"
           >
             Logout
           </button>
           <button
             @click="hidePopup"
-            class="bg-gray-500 text-white px-4 py-2 rounded"
+            class="bg-[#1E0627] text-white px-4 py-2 rounded"
           >
             Cancel
           </button>
