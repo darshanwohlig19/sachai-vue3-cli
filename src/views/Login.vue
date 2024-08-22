@@ -369,15 +369,16 @@ const loginWithGoogle = async () => {
       userId: userId.value,
     });
 
-    sendUserDataToApi(userName.value, userEmail.value, userId.value);
+    await sendUserDataToApi(userName.value, userEmail.value, userId.value);
 
     router.push("/").then(() => {
-      // window.location.reload();
+      // window.location.reload(); // Optional, depending on your needs
     });
   } catch (error) {
     console.error("Google login failed:", error);
   }
 };
+
 const sendUserDataToApi = async (name, email, id) => {
   const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
   const payload = {

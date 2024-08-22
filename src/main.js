@@ -70,7 +70,6 @@ import "@mdi/font/css/materialdesignicons.css";
 
 const app = createApp(App);
 checkLocalStorage();
-
 app.use(router);
 app.use(ToastService);
 app.use(ConfirmationService);

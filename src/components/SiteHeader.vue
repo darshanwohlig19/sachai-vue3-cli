@@ -36,7 +36,11 @@
         <div class="hidden md:flex gap-20">
           <div><a href="/">Home</a></div>
           <div><a href="#">Astrology</a></div>
-          <a :href="hasLocalStorageData ? '/Logout' : '/Login'">
+          <a
+            :href="hasLocalStorageData ? '/Logout' : '/Login'"
+            @click="clearApiDataToken"
+            @click.prevent="handleLogoutClick"
+          >
             {{ hasLocalStorageData ? "Logout" : "Login" }}
           </a>
           <div v-if="showBookmarkLink" class="mb-5">
@@ -68,7 +72,18 @@
         </div>
       </div>
       <div class="mb-5"><a href="#">Astrology</a></div>
-      <div class="mb-5"><a href="/Login">Login</a></div>
+      <div class="mb-5">
+        <a
+          :href="hasLocalStorageData ? '/Logout' : '/Login'"
+          @click="clearApiDataToken"
+        >
+          {{ hasLocalStorageData ? "Logout" : "Login" }}
+        </a>
+      </div>
+      <div v-if="showBookmarkLink" class="mb-5">
+        <a href="/Bookmark">Bookmark</a>
+        <div></div>
+      </div>
     </div>
   </section>
 
@@ -77,6 +92,7 @@
 
 <script>
 import axios from "axios";
+import { useRouter } from "vue-router";
 
 import { ref, onMounted, computed } from "vue";
 
@@ -87,6 +103,7 @@ export default {
     const categories = ref([]);
     const activeCategoryId = ref(null);
     const showBookmarkLink = ref(false);
+    const router = useRouter();
 
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
@@ -94,6 +111,17 @@ export default {
 
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
+    };
+    const clearApiDataToken = () => {
+      localStorage.removeItem("apiDataToken");
+      router.push("/");
+    };
+    const handleLogoutClick = () => {
+      if (hasLocalStorageData.value) {
+        clearApiDataToken(); // This will also update hasLocalStorageData to false
+      } else {
+        router.push("/Login");
+      }
     };
 
     const fetchCategories = async () => {
@@ -132,6 +160,8 @@ export default {
       showBookmarkLink,
       toggleDropdown,
       hasLocalStorageData,
+      clearApiDataToken,
+      handleLogoutClick,
     };
   },
 };
