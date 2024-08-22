@@ -255,16 +255,34 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { auth } from "@/firebaseConfig";
 import { ProductService } from "../assets/service/ProductService";
 import { MobileService } from "../assets/service/MobileService";
-
+import {
+  signInWithPopup,
+  OAuthProvider,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  getAuth,
+} from "firebase/auth";
 // Reactive variables for desktop and mobile products
-const desktopProducts = ref([]);
-const mobileProducts = ref([]);
+const router = useRouter();
 const phoneNumber = ref("");
 const verificationCode = ref("");
 const showPhoneVerification = ref(false);
+const appVerifier = ref(null);
 const verificationCodeTab = ref(false);
+const userName = ref("");
+const userEmail = ref("");
+const userId = ref("");
+// const products = ref([]);
+const desktopProducts = ref([]);
+const mobileProducts = ref([]);
+// const phoneNumber = ref("");
+// const verificationCode = ref("");
+// const showPhoneVerification = ref(false);
+// const verificationCodeTab = ref(false);
 
 const responsiveOptions = ref([
   {
@@ -318,36 +336,135 @@ onMounted(async () => {
     // You might also set a state to show an error message or a default view
   }
 });
+const captcha = async () => {
+  console.log("ReCAPTCHA solved:");
+  const auth = getAuth();
 
-// Function to handle login with Google
-const loginWithGoogle = () => {
-  // Your Google login logic here
+  appVerifier.value = window.recaptchaVerifier = new RecaptchaVerifier(
+    auth,
+    "recaptcha-container",
+    {
+      size: "invisible",
+      callback: (response) => {
+        console.log(response);
+        showPhoneVerification.value = true;
+      },
+    }
+  );
+  sendVerificationCode();
+};
+const loginWithGoogle = async () => {
+  try {
+    const googleProvider = new OAuthProvider("google.com");
+    googleProvider.addScope("email");
+    const result = await signInWithPopup(auth, googleProvider);
+
+    userName.value = result.user.displayName;
+    userEmail.value = result.user.email;
+    userId.value = result.user.uid;
+
+    console.log("Google User Info:", {
+      userName: userName.value,
+      userEmail: userEmail.value,
+      userId: userId.value,
+    });
+
+    sendUserDataToApi(userName.value, userEmail.value, userId.value);
+
+    router.push("/").then(() => {
+      // window.location.reload();
+    });
+  } catch (error) {
+    console.error("Google login failed:", error);
+  }
+};
+const sendUserDataToApi = async (name, email, id) => {
+  const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
+  const payload = {
+    auth0: {
+      name: name,
+      email: email,
+      id: id,
+    },
+    type: "google",
+  };
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    console.log("API Response:", responseData);
+    const token = responseData.data;
+
+    localStorage.setItem("apiDataToken", token);
+    console.log("Stored token:", localStorage.getItem("apiDataToken"));
+  } catch (error) {
+    console.error("Failed to send data to API:", error);
+  }
 };
 
-// Function to handle login with Apple
-const signInWithApple = () => {
-  // Your Apple login logic here
+const signInWithApple = async () => {
+  try {
+    const appleProvider = new OAuthProvider("apple.com");
+    appleProvider.addScope("email");
+    const result = await signInWithPopup(auth, appleProvider);
+    console.log("Apple User Info:", result.user);
+    router.push("/").then(() => {
+      window.location.reload();
+    });
+  } catch (error) {
+    console.error("Apple login failed:", error);
+  }
 };
 
-// Function to toggle phone verification
 const togglePhoneVerification = () => {
-  showPhoneVerification.value = !showPhoneVerification.value;
-  verificationCodeTab.value = false;
+  captcha();
+  showPhoneVerification.value = true;
 };
 
-// Function to handle sending verification code
 const handleSendVerificationCode = () => {
-  // Your logic to send verification code here
+  sendVerificationCode();
   verificationCodeTab.value = true;
 };
+const sendVerificationCode = async () => {
+  try {
+    console.log("Sending OTP to:", phoneNumber.value);
 
-// Function to handle code verification
-const verifyCode = () => {
-  // Your logic to verify the code here
+    const confirmationResult = await signInWithPhoneNumber(
+      auth,
+      phoneNumber.value,
+      appVerifier.value
+    );
+
+    console.log("Verification code sent to:", phoneNumber.value);
+    window.confirmationResult = confirmationResult;
+  } catch (error) {
+    console.error("Failed to send verification code:", error.message);
+    console.log(`Error: ${error.message}`);
+  }
+};
+const verifyCode = async () => {
+  try {
+    const confirmationResult = window.confirmationResult;
+    const result = await confirmationResult.confirm(verificationCode.value);
+    console.log("User Info:", result);
+    router.push("/");
+  } catch (error) {
+    console.error("Verification failed:", error);
+  }
 };
 </script>
 <style>
-//* Styles for the login carousel and indicators */
 .login-carousal .p-highlight {
   background-color: red !important;
   width: 25px !important;
