@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App" />
     <SiteHeader />
     <CategoryChips
       :categories="categories"
@@ -11,34 +11,39 @@
     <Featured />
     <Latest />
     <BrowseByTopics />
-    <Footer1 />
+    <Footer1 /> -->
+    <div class="mx-[30px]">
+      <FeaturedNews />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "@/components/HelloWorld.vue";
-import SiteHeader from "@/components/SiteHeader.vue";
-import Latest from "@/components/Latest.vue";
-import Trending from "@/components/Trending.vue";
-import BrowseByTopics from "@/components/BrowseByTopics.vue";
-import Footer1 from "@/components/Footer.vue";
-import Featured from "@/components/Featured.vue";
+// import HelloWorld from "@/components/HelloWorld.vue";
+// import SiteHeader from "@/components/SiteHeader.vue";
+// import Latest from "@/components/Latest.vue";
+// import Trending from "@/components/Trending.vue";
+// import BrowseByTopics from "@/components/BrowseByTopics.vue";
+// import Footer1 from "@/components/Footer.vue";
+// import Featured from "@/components/Featured.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-import CategoryChips from "@/components/CategoryChips.vue";
+// import CategoryChips from "@/components/CategoryChips.vue";
+import FeaturedNews from "@/components/FeaturedNews.vue";
 
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
-    SiteHeader,
-    Latest,
-    Trending,
-    BrowseByTopics,
-    Footer1,
-    Featured,
-    CategoryChips,
+    // HelloWorld,
+    // SiteHeader,
+    // Latest,
+    // Trending,
+    // BrowseByTopics,
+    // Footer1,
+    // Featured,
+    // CategoryChips,
+    FeaturedNews,
   },
   setup() {
     const router = useRouter();
