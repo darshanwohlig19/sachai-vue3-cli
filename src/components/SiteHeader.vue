@@ -200,6 +200,12 @@ export default {
 
     const hidePopup = () => {
       isPopupVisible.value = false;
+      toast.add({
+        severity: "error",
+        summary: "Logout Failed",
+        detail: "There was an issue logging out. Please try again.",
+        life: 3000,
+      });
     };
 
     const onAuthAction = () => {
