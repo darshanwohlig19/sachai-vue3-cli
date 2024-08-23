@@ -24,6 +24,7 @@ import Password from "primevue/password";
 
 import Toast from "primevue/toast";
 import TabPanel from "primevue/tabpanel";
+
 import InputText from "primevue/inputtext";
 import BadgeDirective from "primevue/badgedirective";
 import ToastService from "primevue/toastservice";
@@ -69,6 +70,8 @@ import InputOtp from "primevue/inputotp";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
 import "./assets/CommonFont.css";
+import IconField from "primevue/iconfield";
+import InputIcon from "primevue/inputicon";
 
 const app = createApp(App);
 checkLocalStorage();
@@ -79,6 +82,8 @@ app.use(PrimeVue, { ripple: true });
 app.component("TreeTable", TreeTable);
 app.component("Toolbar", Toolbar);
 app.component("Toast", Toast);
+app.component("IconField", IconField);
+app.component("InputIcon", InputIcon);
 app.component("InputNumber", InputNumber);
 app.component("Calendar", Calendar);
 app.component("DataTable", DataTable);
