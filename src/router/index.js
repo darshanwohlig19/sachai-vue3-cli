@@ -4,7 +4,6 @@ import Category from "../views/Category.vue";
 import Login from "../views/Login.vue";
 import Aboutus from "../views/Aboutus.vue";
 import Astrology from "../views/Astrology.vue";
-
 const routes = [
   {
     path: "/",
