@@ -12,6 +12,7 @@
     <Latest />
     <BrowseByTopics />
     <Footer1 /> -->
+    <Navbarrr />
     <Campaign />
   </div>
 </template>
@@ -25,6 +26,7 @@
 // import Footer1 from "@/components/Footer.vue";
 // import Featured from "@/components/Featured.vue";
 import Campaign from "@/components/Campaign.vue";
+import Navbarrr from "@/components/Navbarrr.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
@@ -36,6 +38,7 @@ export default {
     Campaign,
     // HelloWorld,
     // SiteHeader,
+    Navbarrr,
     // Latest,
     // Trending,
     // BrowseByTopics,
