@@ -8,9 +8,9 @@
           alt="Sachai Logo"
           width="100px"
         />
-        <span class="text-lato font-bold text-[24px] text-[#1E0627] mt-5 block">
-          New Age News App Powered by AI
-        </span>
+        <span class="text-lato font-bold text-[24px] text-[#1E0627] mt-5 block"
+          >New Age News App Powered by AI</span
+        >
         <p class="text-[18px] text-lato mt-2">
           Get trustworthy news in an easy-to-read format, our smart chatbot
           provides a personalized and interactive news experience for you.
@@ -18,9 +18,9 @@
       </div>
       <!-- Popular Categories -->
       <div class="md:w-[35%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2">
-          Popular Categories
-        </span>
+        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
+          >Popular Categories</span
+        >
         <div class="flex flex-wrap gap-[23px]">
           <div class="w-full md:w-auto">
             <ul>
@@ -32,9 +32,8 @@
                 <a
                   style="text-transform: capitalize"
                   :href="`/categories/${heading._id}?category=${heading.name}`"
+                  >{{ heading.name }}</a
                 >
-                  {{ heading.name }}
-                </a>
               </li>
             </ul>
           </div>
@@ -48,9 +47,8 @@
                 <a
                   style="text-transform: capitalize"
                   :href="`/categories/${heading._id}?category=${heading.name}`"
+                  >{{ heading.name }}</a
                 >
-                  {{ heading.name }}
-                </a>
               </li>
             </ul>
           </div>
@@ -64,9 +62,8 @@
                 <a
                   style="text-transform: capitalize"
                   :href="`/categories/${heading._id}?category=${heading.name}`"
+                  >{{ heading.name }}</a
                 >
-                  {{ heading.name }}
-                </a>
               </li>
             </ul>
           </div>
@@ -80,9 +77,8 @@
                 <a
                   style="text-transform: capitalize"
                   :href="`/categories/${heading._id}?category=${heading.name}`"
+                  >{{ heading.name }}</a
                 >
-                  {{ heading.name }}
-                </a>
               </li>
             </ul>
           </div>
@@ -90,9 +86,9 @@
       </div>
       <!-- Latest News -->
       <div class="md:w-[15%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2">
-          Latest News
-        </span>
+        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
+          >Latest News</span
+        >
         <div>
           <ul>
             <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
@@ -104,9 +100,9 @@
       </div>
       <!-- HELP -->
       <div class="md:w-[15%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2">
-          Help
-        </span>
+        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
+          >Help</span
+        >
         <div>
           <ul>
             <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
@@ -147,9 +143,9 @@
       </div>
       <!-- Hot on the Web -->
       <div class="md:w-[32%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2">
-          Hot on the Web
-        </span>
+        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
+          >Hot on the Web</span
+        >
         <div class="flex flex-wrap gap-[23px]">
           <div class="w-full md:w-auto">
             <ul>
@@ -177,9 +173,9 @@
       </div>
       <!-- Trending Topics -->
       <div class="md:w-[32%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2">
-          Trending Topics
-        </span>
+        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
+          >Trending Topics</span
+        >
         <div class="flex flex-wrap gap-[23px]">
           <div class="w-full md:w-auto">
             <ul>
@@ -256,11 +252,13 @@ export default {
 .footer {
   position: relative;
   width: 100%;
-  padding: 0 20px;
+  padding-right: 20px;
+  padding-left: 20px;
   bottom: 0;
   left: 0;
   background-color: #fff;
   margin-top: 40px;
+  padding-top: 50px !important;
 }
 
 @media (min-width: 768px) {
