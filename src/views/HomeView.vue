@@ -1,8 +1,14 @@
 <template>
   <div class="home">
+
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App" />
+    <SiteHeader />
+    <CategoryChips
+
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
     <!-- <SiteHeader /> -->
     <!-- <CategoryChips
+
       :categories="categories"
       :activeCategoryId="activeCategoryId"
       @category-selected="selectCategory"
@@ -12,8 +18,14 @@
     <Latest />
     <BrowseByTopics />
     <Footer1 /> -->
+
+    <div class="mx-[30px]">
+      <FeaturedNews />
+    </div>
+
     <Navbarrr />
     <Campaign />
+
   </div>
 </template>
 
@@ -25,26 +37,41 @@
 // import BrowseByTopics from "@/components/BrowseByTopics.vue";
 // import Footer1 from "@/components/Footer.vue";
 // import Featured from "@/components/Featured.vue";
+
+
 import Campaign from "@/components/Campaign.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
+
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 // import CategoryChips from "@/components/CategoryChips.vue";
 
+import FeaturedNews from "@/components/FeaturedNews.vue";
+
+
+
 export default {
   name: "HomeView",
   components: {
+
+    // HelloWorld,
+    // SiteHeader,
+
     Campaign,
     // HelloWorld,
     // SiteHeader,
     Navbarrr,
+
     // Latest,
     // Trending,
     // BrowseByTopics,
     // Footer1,
     // Featured,
     // CategoryChips,
+
+    FeaturedNews,
+
   },
   setup() {
     const router = useRouter();
