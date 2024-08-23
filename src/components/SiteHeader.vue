@@ -34,9 +34,13 @@
       <div class="flex items-center">
         <!-- Desktop Menu -->
         <div class="hidden md:flex gap-20">
-          <div><a href="/">Home</a></div>
-          <div><a href="#">Astrology</a></div>
-          <a href="#" @click="logout">
+          <div>
+            <a href="/">Home</a>
+          </div>
+          <div>
+            <a href="#">Astrology</a>
+          </div>
+          <a href="#" @click="onAuthAction">
             {{ hasLocalStorageData ? "Logout" : "Login" }}
           </a>
 
@@ -52,10 +56,13 @@
       </div>
     </div>
     <div :class="['mobile-menu', { show: isMenuOpen }]">
-      <div class="mb-5"><a href="/">Home</a></div>
+      <div class="mb-5">
+        <a href="/">Home</a>
+      </div>
       <div class="dropdown mb-5">
         <button class="dropbtn" @click="toggleDropdown">
-          Category <i class="fa fa-caret-down"></i>
+          Category
+          <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content" v-if="isDropdownOpen">
           <a
@@ -63,28 +70,51 @@
             :key="heading._id"
             :href="`/categories/${heading._id}?category=${heading.name}`"
             class="nav-top"
+            >{{ heading.name }}</a
           >
-            {{ heading.name }}
-          </a>
         </div>
       </div>
-      <div class="mb-5"><a href="#">Astrology</a></div>
+      <div class="mb-5">
+        <a href="#">Astrology</a>
+      </div>
       <div class="mb-5">
         <a
           :href="hasLocalStorageData ? '/Logout' : '/Login'"
           @click="clearApiDataToken"
+          >{{ hasLocalStorageData ? "Logout" : "Login" }}</a
         >
-          {{ hasLocalStorageData ? "Logout" : "Login" }}
-        </a>
       </div>
       <div v-if="showBookmarkLink" class="mb-5">
         <a href="/Bookmark">Bookmark</a>
         <div></div>
       </div>
     </div>
-  </section>
 
-  <!-- The CategoryChips component will be used here -->
+    <!-- Confirmation Popup -->
+    <div
+      v-if="isPopupVisible"
+      class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-lg font-bold">Confirm Logout</h3>
+        <p class="mt-2">Are you sure you want to log out?</p>
+        <div class="flex justify-center mt-4">
+          <button
+            @click="handleLogout"
+            class="bg-[#e44949] text-white px-4 py-2 rounded mr-2"
+          >
+            Logout
+          </button>
+          <button
+            @click="hidePopup"
+            class="bg-[#1E0627] text-white px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -92,6 +122,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { ref, onMounted, computed } from "vue";
+import { useToast } from "primevue/usetoast";
 
 export default {
   setup() {
@@ -100,7 +131,9 @@ export default {
     const categories = ref([]);
     const activeCategoryId = ref(null);
     const showBookmarkLink = ref(false);
+    const isPopupVisible = ref(false);
     const router = useRouter();
+    const toast = useToast();
 
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
@@ -109,15 +142,17 @@ export default {
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
     };
+
     const clearApiDataToken = () => {
       localStorage.removeItem("apiDataToken");
       router.push("/");
     };
-    const logout = async () => {
+
+    const handleLogout = async () => {
+      hidePopup(); // Hide the popup before logging out
       const auth = getAuth();
       try {
         if (hasLocalStorageData.value) {
-          // Perform logout
           await signOut(auth);
 
           const apiDataToken = localStorage.getItem("apiDataToken");
@@ -134,18 +169,39 @@ export default {
 
             if (response.status === 200) {
               localStorage.removeItem("apiDataToken");
-
+              localStorage.setItem("logoutSuccess", "true");
               location.reload();
             } else {
               console.error("Failed to log out from the external API.");
+              toast.add({
+                severity: "error",
+                summary: "Logout Failed",
+                detail: "There was an issue logging out. Please try again.",
+                life: 3000,
+              });
             }
           }
         } else {
-          // Redirect to login page if not logged in
           router.push("/Login");
         }
       } catch (error) {
         console.error("An error occurred during sign-out or API call:", error);
+      }
+    };
+
+    const showPopup = () => {
+      isPopupVisible.value = true;
+    };
+
+    const hidePopup = () => {
+      isPopupVisible.value = false;
+    };
+
+    const onAuthAction = () => {
+      if (hasLocalStorageData.value) {
+        showPopup(); // Show popup if logging out
+      } else {
+        router.push("/Login"); // Redirect to login if not logged in
       }
     };
 
@@ -158,7 +214,6 @@ export default {
         );
         categories.value = response.data;
 
-        // Set default category as the first one
         if (categories.value.length > 0) {
           activeCategoryId.value = categories.value[0]._id;
         }
@@ -166,6 +221,7 @@ export default {
         console.error("Error fetching categories:", error);
       }
     };
+
     const hasLocalStorageData = computed(() => {
       return !!localStorage.getItem("apiDataToken");
     });
@@ -173,7 +229,17 @@ export default {
     fetchCategories();
     onMounted(() => {
       const storedData = localStorage.getItem("apiDataToken");
-      showBookmarkLink.value = !!storedData; // Show link if there is data in local storage
+      showBookmarkLink.value = !!storedData;
+      const logoutSuccess = localStorage.getItem("logoutSuccess");
+      if (logoutSuccess) {
+        toast.add({
+          severity: "success",
+          summary: "Logout Successful",
+          detail: "You have been logged out successfully.",
+          life: 3000,
+        });
+        localStorage.removeItem("logoutSuccess");
+      }
       fetchCategories();
     });
 
@@ -186,7 +252,11 @@ export default {
       toggleDropdown,
       hasLocalStorageData,
       clearApiDataToken,
-      logout,
+      showPopup,
+      isPopupVisible,
+      handleLogout,
+      hidePopup,
+      onAuthAction,
     };
   },
 };
@@ -233,11 +303,29 @@ export default {
 .nav-top {
   text-align: center;
 }
+.pop-up-confirm {
+  background-color: #000000b2;
+}
 @media (max-width: 768px) {
   .dropdown-content {
     display: block;
     position: static;
     box-shadow: none;
   }
+}
+.fixed {
+  position: fixed;
+}
+.bg-gray-900 {
+  background-color: #1a202c;
+}
+.bg-opacity-50 {
+  background-opacity: 0.5;
+}
+.bg-white {
+  background-color: #ffffff;
+}
+.shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 </style>

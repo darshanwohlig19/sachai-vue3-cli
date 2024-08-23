@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import Category from "../views/Category.vue";
 import Login from "../views/Login.vue";
 import Aboutus from "../views/Aboutus.vue";
+import Astrology from "../views/Astrology.vue";
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: "/AboutUs",
     name: "About",
     component: Aboutus,
+  },
+  {
+    path: "/Astrology",
+    name: "Astrology",
+    component: Astrology,
   },
 ];
 
