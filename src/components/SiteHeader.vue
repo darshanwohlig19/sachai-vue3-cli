@@ -94,8 +94,9 @@
     <div
       v-if="isPopupVisible"
       class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
+      @click="handleBackgroundClick"
     >
-      <div class="bg-white p-6 rounded-lg shadow-lg">
+      <div class="bg-white p-6 rounded-lg shadow-lg" @click.stop>
         <h3 class="text-lg font-bold">Confirm Logout</h3>
         <p class="mt-2">Are you sure you want to log out?</p>
         <div class="flex justify-center mt-4">
@@ -134,6 +135,10 @@ export default {
     const isPopupVisible = ref(false);
     const router = useRouter();
     const toast = useToast();
+
+    const handleBackgroundClick = () => {
+      hidePopup(); // Hide the popup when clicking on the background
+    };
 
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
@@ -257,6 +262,7 @@ export default {
       handleLogout,
       hidePopup,
       onAuthAction,
+      handleBackgroundClick,
     };
   },
 };
