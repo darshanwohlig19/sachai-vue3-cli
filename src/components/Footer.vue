@@ -252,13 +252,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .footer {
   position: relative;
   width: 100%;
   padding: 0 20px;
   bottom: 0;
   left: 0;
+  background-color: #fff;
+  margin-top: 40px;
 }
 
 @media (min-width: 768px) {
