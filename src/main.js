@@ -69,6 +69,9 @@ import Skeleton from "primevue/skeleton";
 import InputOtp from "primevue/inputotp";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
+import "./assets/CommonFont.css";
+import IconField from "primevue/iconfield";
+import InputIcon from "primevue/inputicon";
 
 const app = createApp(App);
 checkLocalStorage();
@@ -79,6 +82,8 @@ app.use(PrimeVue, { ripple: true });
 app.component("TreeTable", TreeTable);
 app.component("Toolbar", Toolbar);
 app.component("Toast", Toast);
+app.component("IconField", IconField);
+app.component("InputIcon", InputIcon);
 app.component("InputNumber", InputNumber);
 app.component("Calendar", Calendar);
 app.component("DataTable", DataTable);
