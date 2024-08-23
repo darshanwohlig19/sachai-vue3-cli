@@ -11,7 +11,7 @@
         <span class="text-lato font-bold text-[24px] text-[#1E0627] mt-5 block"
           >New Age News App Powered by AI</span
         >
-        <p class="text-[18px] text-lato mt-2">
+        <p class="text-[18px] text-lato mt-2 w-[402px]">
           Get trustworthy news in an easy-to-read format, our smart chatbot
           provides a personalized and interactive news experience for you.
         </p>
