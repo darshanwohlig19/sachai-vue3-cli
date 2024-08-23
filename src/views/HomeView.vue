@@ -1,18 +1,18 @@
 <template>
   <div class="home">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <!-- <SiteHeader /> -->
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App" />  -->
+    <!-- <SiteHeader />  -->
     <!-- <CategoryChips
       :categories="categories"
       :activeCategoryId="activeCategoryId"
       @category-selected="selectCategory"
     /> -->
-    <!-- <Trending />
-    <Featured />
-    <Latest />
-    <BrowseByTopics />
-    <Footer1 /> -->
-    <Campaign />
+    <!-- <Trending /> -->
+    <!-- <Featured /> -->
+    <!-- <Latest /> -->
+    <!-- <BrowseByTopics /> -->
+    <Footer1 />
+    <!-- <Careousel /> -->
   </div>
 </template>
 
@@ -22,9 +22,9 @@
 // import Latest from "@/components/Latest.vue";
 // import Trending from "@/components/Trending.vue";
 // import BrowseByTopics from "@/components/BrowseByTopics.vue";
-// import Footer1 from "@/components/Footer.vue";
+import Footer1 from "@/components/Footer.vue";
 // import Featured from "@/components/Featured.vue";
-import Campaign from "@/components/Campaign.vue";
+// import Careousel from "@/components/Carousel_Catogries.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
@@ -33,13 +33,13 @@ import { ref, onMounted } from "vue";
 export default {
   name: "HomeView",
   components: {
-    Campaign,
+    // Careousel,
     // HelloWorld,
     // SiteHeader,
     // Latest,
     // Trending,
     // BrowseByTopics,
-    // Footer1,
+    Footer1,
     // Featured,
     // CategoryChips,
   },
