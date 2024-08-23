@@ -68,6 +68,7 @@ import Skeleton from "primevue/skeleton";
 import InputOtp from "primevue/inputotp";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
+import "./assets/CommonFont.css";
 
 const app = createApp(App);
 checkLocalStorage();

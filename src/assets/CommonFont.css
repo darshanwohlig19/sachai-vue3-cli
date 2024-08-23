@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+.font-14 {
+  font-size: 14px;
+  font-family: "source-serif-pro-semibold";
+  color: #1e0627;
+}
+.font-16 {
+  font-size: 16px;
+  font-family: "source-serif-pro-semibold";
+  color: #1e0627;
+}
+.para {
+  font-size: 13px;
+  font-family: lato;
+  color: #878787;
+}
+.head-cat {
+  color: #717171;
+  font-size: 14px;
+  font-family: lato;
+}
+.head-navs {
+  color: #1a1a1a;
+  font-size: 14px;
+  font-family: lato;
+}
+.heads {
+  font-size: 18px;
+  color: #1e0627;
+  font-family: lato;
+  font-weight: 700;
+}
+.see-all {
+  font-size: 14px;
+  font-family: lato;
+  color: #ff0053;
+  font-weight: 700;
+}
+.footer-links {
+  font-size: 14px;
+  font-family: lato;
+  color: #52525b;
+}
+.footer-heads {
+  font-size: 13px;
+  color: #ff0053;
+  font-family: lato;
+  font-weight: 700;
+}
