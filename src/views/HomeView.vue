@@ -1,13 +1,12 @@
 <template>
   <div class="home">
-
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" />
     <SiteHeader />
     <CategoryChips
 
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <!-- <SiteHeader /> -->
-    <!-- <CategoryChips
+ <HelloWorld msg="Welcome to Your Vue.js App" />
+   <SiteHeader /> 
+   <CategoryChips
 
       :categories="categories"
       :activeCategoryId="activeCategoryId"
@@ -16,16 +15,14 @@
     <!-- <Trending />
     <Featured />
     <Latest />
-    <BrowseByTopics />
+    <BrowseByTopics />s
     <Footer1 /> -->
-
+    <Navbarrr />
     <div class="mx-[30px]">
       <FeaturedNews />
     </div>
 
-    <Navbarrr />
     <Campaign />
-
   </div>
 </template>
 
@@ -38,7 +35,6 @@
 // import Footer1 from "@/components/Footer.vue";
 // import Featured from "@/components/Featured.vue";
 
-
 import Campaign from "@/components/Campaign.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
 
@@ -49,12 +45,9 @@ import { ref, onMounted } from "vue";
 
 import FeaturedNews from "@/components/FeaturedNews.vue";
 
-
-
 export default {
   name: "HomeView",
   components: {
-
     // HelloWorld,
     // SiteHeader,
 
@@ -71,7 +64,6 @@ export default {
     // CategoryChips,
 
     FeaturedNews,
-
   },
   setup() {
     const router = useRouter();
