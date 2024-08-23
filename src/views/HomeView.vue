@@ -3,7 +3,6 @@
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" />  -->
     <!-- <SiteHeader />  -->
     <!-- <CategoryChips
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" />
     <SiteHeader />
     <CategoryChips
 
@@ -20,9 +19,9 @@
     <!-- <Featured /> -->
     <!-- <Latest /> -->
     <!-- <BrowseByTopics /> -->
-    <Footer1 />
+
     <!-- <Careousel /> -->
-   <!-- <Trending />
+    <!-- <Trending />
     <Featured />
     <Latest />
     <BrowseByTopics />s
@@ -33,7 +32,7 @@
     </div>
 
     <Campaign />
-
+    <Footer1 />
   </div>
 </template>
 
@@ -48,10 +47,8 @@ import Footer1 from "@/components/Footer.vue";
 
 // import Careousel from "@/components/Carousel_Catogries.vue";
 
-
 import Campaign from "@/components/Campaign.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
-
 
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -63,7 +60,6 @@ import FeaturedNews from "@/components/FeaturedNews.vue";
 export default {
   name: "HomeView",
   components: {
-
     // Careousel,
 
     // HelloWorld,
