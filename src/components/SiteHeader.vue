@@ -38,7 +38,7 @@
             <a href="/">Home</a>
           </div>
           <div>
-            <a href="#">Astrology</a>
+            <a href="/Astrology">Astrology</a>
           </div>
           <a href="#" @click="onAuthAction">
             {{ hasLocalStorageData ? "Logout" : "Login" }}
@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="mb-5">
-        <a href="#">Astrology</a>
+        <a href="Astrology">Astrology</a>
       </div>
       <div class="mb-5">
         <a
