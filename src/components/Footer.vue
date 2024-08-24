@@ -261,6 +261,7 @@ export default {
   left: 0;
   background-color: #fff;
   margin-top: 40px;
+  padding-top: 50px !important;
 }
 
 @media (min-width: 768px) {
