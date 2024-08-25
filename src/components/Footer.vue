@@ -6,7 +6,8 @@
         <img
           src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
           alt="Sachai Logo"
-          width="100px"
+          width="116px"
+          height="46px"
         />
         <span class="text-lato font-bold text-[24px] text-[#1E0627] mt-5 block">
           New Age News App Powered by AI
