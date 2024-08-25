@@ -9,6 +9,24 @@
   font-family: "source-serif-pro-semibold";
   color: #1e0627;
 }
+.font-24px{
+  font-size: 24px;
+  font-family: "Lato",sans-serif;
+  color: #1e0627;
+  font-weight: bold;
+}
+.font-18px{
+  font-size: 18px;
+  font-family: "Lato",sans-serif;
+  color: #5D5D5D;
+}
+.font-13{
+  font-size: 13px;
+  font-family: "Lato",sans-serif;
+  color: #FF0053;
+  font-weight: bold;
+  text-transform: uppercase;
+}
 .para {
   font-size: 13px;
   font-family: lato;
