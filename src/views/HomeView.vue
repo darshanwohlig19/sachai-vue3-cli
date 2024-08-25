@@ -30,6 +30,7 @@
     <div class="mx-[30px]">
       <FeaturedNews />
       <Campaign />
+      <MoreNews />
     </div>
     <Footer1 />
   </div>
@@ -42,6 +43,8 @@
 // import Trending from "@/components/Trending.vue";
 // import BrowseByTopics from "@/components/BrowseByTopics.vue";
 import Footer1 from "@/components/Footer.vue";
+import MoreNews from "@/components/MoreNews.vue";
+
 // import Featured from "@/components/Featured.vue";
 
 // import Careousel from "@/components/Carousel_Catogries.vue";
@@ -60,8 +63,7 @@ export default {
   name: "HomeView",
   components: {
     // Careousel,
-
-    // HelloWorld,
+    MoreNews, // HelloWorld,
     // SiteHeader,
 
     Campaign,
