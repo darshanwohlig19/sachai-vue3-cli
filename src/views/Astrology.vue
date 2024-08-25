@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SiteHeader />
+    <Navbarrr />
     <div>
       <img
         class="h-auto w-full"
@@ -136,12 +136,12 @@
   </div>
 </template>
 <script>
-import SiteHeader from "@/components/SiteHeader.vue";
+import Navbarrr from "@/components/Navbarrr.vue";
 import Footer from "@/components/Footer.vue";
 export default {
   name: "Astrology",
   components: {
-    SiteHeader,
+    Navbarrr,
     Footer,
   },
 };
