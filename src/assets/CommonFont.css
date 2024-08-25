@@ -27,6 +27,12 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+.font-15{
+  color:#52525B;
+  font-size: 15px;
+  font-family: "Lato",sans-serif;
+  line-height: 22px;
+}
 .para {
   font-size: 13px;
   font-family: lato;
