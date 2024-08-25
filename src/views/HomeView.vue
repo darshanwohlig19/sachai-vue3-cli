@@ -29,9 +29,9 @@
     <Navbarrr />
     <div class="mx-[30px]">
       <FeaturedNews />
+      <Campaign />
     </div>
     <Footer1 />
-    <Campaign />
   </div>
 </template>
 
