@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-[545px] w-full flex flex-row gap-10 bg-white mt-10 p-4">
+    <div class="h-full w-full flex flex-row gap-10 bg-white mt-10 p-4">
       <div class="info w-[30%]">
         <div>
           <img
