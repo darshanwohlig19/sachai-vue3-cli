@@ -47,7 +47,7 @@
             </div>
           </div>
         </div>
-        <div class="divider mt-3"></div>
+        <!-- <div class="divider mt-3"></div> -->
       </div>
       <div class="w-[3%] flex justify-center">
         <div class="divider1"></div>
@@ -97,7 +97,7 @@
             </div>
           </div>
         </div>
-        <div class="divider mt-3"></div>
+        <!-- <div class="divider mt-3"></div> -->
       </div>
       <div class="w-[3%] flex justify-center">
         <div class="divider1"></div>
@@ -147,7 +147,7 @@
             </div>
           </div>
         </div>
-        <div class="divider mt-3"></div>
+        <!-- <div class="divider mt-3"></div> -->
       </div>
     </div>
   </div>

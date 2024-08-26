@@ -107,7 +107,7 @@
         </div>
       </div>
     </div>
-    <div class="w-full h-[80px] mt-1 flex justify-around bg-white items-center">
+    <div class="w-full h-[67px] mt-1 flex justify-around bg-white items-center">
       <div v-for="category in navcategories3" :key="category._id" class="">
         <Chip
           class="bg-transparent border-1 border-[#D4D4D4] capitalize head-cat gap-5"
