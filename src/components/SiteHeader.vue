@@ -40,9 +40,6 @@
           <div>
             <a href="/Astrology">Astrology</a>
           </div>
-          <a href="#" @click="onAuthAction">
-            {{ hasLocalStorageData ? "Logout" : "Login" }}
-          </a>
 
           <div v-if="showBookmarkLink" class="mb-5">
             <a href="/Bookmark">Bookmark</a>

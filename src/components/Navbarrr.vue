@@ -24,8 +24,11 @@
         <div class="head-navs">
           <RouterLink to="/Bookmark">Bookmark</RouterLink>
         </div>
+
         <div class="head-navs">
-          <RouterLink to="/Login">Login</RouterLink>
+          <a href="#" @click="handleAuthAction">
+            {{ isLoggedIn ? "Logout" : "Login" }}
+          </a>
         </div>
 
         <div class="relative">
@@ -120,6 +123,8 @@
 <script>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { getAuth, signOut } from "firebase/auth";
+import { useRouter } from "vue-router";
 
 export default {
   props: {
@@ -157,7 +162,46 @@ export default {
         console.error(error);
       }
     };
+    const auth = getAuth();
+    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
+    const router = useRouter();
 
+    const handleAuthAction = async (event) => {
+      event.preventDefault(); // Prevent the default anchor behavior
+
+      if (isLoggedIn.value) {
+        // Handle logout
+        try {
+          // Sign out from Firebase
+          await signOut(auth);
+
+          // Call logout API
+          const apiDataToken = localStorage.getItem("apiDataToken");
+          if (apiDataToken) {
+            await axios.post(
+              "https://api-uat.newsshield.io/user/logoutEvent",
+              {},
+              {
+                headers: {
+                  Authorization: `${apiDataToken}`,
+                },
+              }
+            );
+            // Remove token from local storage
+            localStorage.removeItem("apiDataToken");
+          }
+
+          // Update local state and redirect
+          isLoggedIn.value = false;
+          router.push("/"); // Redirect to home page or another desired page
+        } catch (error) {
+          console.error("Error during logout:", error);
+        }
+      } else {
+        // Redirect to login page
+        router.push("/Login");
+      }
+    };
     onMounted(() => {
       fetchCategories();
     });
@@ -167,6 +211,8 @@ export default {
       navcategories3,
       selectedCategoryId,
       fetchCategories,
+      isLoggedIn,
+      handleAuthAction,
     };
   },
 };
