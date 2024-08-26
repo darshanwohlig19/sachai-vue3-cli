@@ -1,211 +1,275 @@
 <template>
-  <div class="footer">
-    <!-- LOGO -->
-    <div class="flex flex-col md:flex-row">
-      <div class="md:w-[35%] mb-6 md:mb-0">
-        <img
-          src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
-          alt="Sachai Logo"
-          width="100px"
-        />
-        <span class="text-lato font-bold text-[24px] text-[#1E0627] mt-5 block"
-          >New Age News App Powered by AI</span
-        >
-        <p class="text-[18px] text-lato mt-2 w-[402px]">
+  <div>
+    <div class="h-full w-full flex flex-row gap-10 bg-white mt-10 p-4">
+      <div class="info w-[30%]">
+        <div>
+          <img
+            src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
+            height="47px"
+            width="116px"
+            alt
+          />
+        </div>
+        <div class="font-24px mt-4">New Age News App Powered by AI</div>
+        <div class="font-18px mt-2">
           Get trustworthy news in an easy-to-read format, our smart chatbot
           provides a personalized and interactive news experience for you.
-        </p>
-      </div>
-      <!-- Popular Categories -->
-      <div class="md:w-[35%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
-          >Popular Categories</span
-        >
-        <div class="flex flex-wrap gap-[23px]">
-          <div class="w-full md:w-auto">
-            <ul>
-              <li
-                class="text-[#52525B] text-[14px] text-lato"
-                v-for="heading in categories.slice(0, 4)"
-                :key="heading._id"
-              >
-                <a
-                  style="text-transform: capitalize"
-                  :href="`/categories/${heading._id}?category=${heading.name}`"
-                  >{{ heading.name }}</a
-                >
-              </li>
-            </ul>
+        </div>
+        <div class="flex mt-4 gap-6">
+          <div>
+            <a
+              href="https://apps.apple.com/us/app/sachai/id6448037673?platform=iphone "
+            >
+              <img
+                src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab783_app-store.svg"
+                alt="App Store"
+                width="162px"
+                height="51px"
+              />
+            </a>
           </div>
-          <div class="w-full md:w-auto">
-            <ul>
-              <li
-                class="text-[#52525B] text-[14px] text-lato"
-                v-for="heading in categories.slice(4, 8)"
-                :key="heading._id"
-              >
-                <a
-                  style="text-transform: capitalize"
-                  :href="`/categories/${heading._id}?category=${heading.name}`"
-                  >{{ heading.name }}</a
-                >
-              </li>
-            </ul>
+          <div>
+            <a
+              href="https://play.google.com/store/search?q=sachai&c=apps&hl=en-IN"
+            >
+              <img
+                src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab784_google-play.svg"
+                alt="Play Store"
+                width="162px"
+                height="51px"
+              />
+            </a>
           </div>
-          <div class="w-full md:w-auto">
-            <ul>
-              <li
-                class="text-[#52525B] text-[14px] text-lato"
-                v-for="heading in categories.slice(8, 12)"
-                :key="heading._id"
-              >
-                <a
-                  style="text-transform: capitalize"
-                  :href="`/categories/${heading._id}?category=${heading.name}`"
-                  >{{ heading.name }}</a
-                >
-              </li>
-            </ul>
+        </div>
+        <div class="flex mt-4 gap-3">
+          <div>
+            <i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i>
           </div>
-          <div class="w-full md:w-auto">
-            <ul>
-              <li
-                class="text-[#52525B] text-[14px] text-lato"
-                v-for="heading in categories.slice(12, 16)"
-                :key="heading._id"
-              >
-                <a
-                  style="text-transform: capitalize"
-                  :href="`/categories/${heading._id}?category=${heading.name}`"
-                  >{{ heading.name }}</a
-                >
-              </li>
-            </ul>
+          <div>
+            <i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i>
+          </div>
+          <div>
+            <i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i>
+          </div>
+          <div>
+            <i class="mdi mdi-github text-[#52525B] text-[19px]"></i>
           </div>
         </div>
       </div>
-      <!-- Latest News -->
-      <div class="md:w-[15%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
-          >Latest News</span
-        >
+      <div class="pop_hot flex flex-col w-[35%] gap-6">
         <div>
-          <ul>
-            <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
-            <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
-            <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
-            <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
-          </ul>
+          <div class="font-13">Popular Categories</div>
+          <div class="flex flex-row gap-5">
+            <div>
+              <ul>
+                <li
+                  class="text-[#52525B] text-[14px] text-lato pt-[8px]"
+                  v-for="heading in categories.slice(0, 4)"
+                  :key="heading._id"
+                >
+                  <a
+                    style="text-transform: capitalize"
+                    :href="`/categories/${heading._id}?category=${heading.name}`"
+                  >
+                    {{ heading.name }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li
+                  class="text-[#52525B] text-[14px] text-lato pt-[8px]"
+                  v-for="heading in categories.slice(4, 8)"
+                  :key="heading._id"
+                >
+                  <a
+                    style="text-transform: capitalize"
+                    :href="`/categories/${heading._id}?category=${heading.name}`"
+                  >
+                    {{ heading.name }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li
+                  class="text-[#52525B] text-[14px] text-lato pt-[8px]"
+                  v-for="heading in categories.slice(8, 12)"
+                  :key="heading._id"
+                >
+                  <a
+                    style="text-transform: capitalize"
+                    :href="`/categories/${heading._id}?category=${heading.name}`"
+                  >
+                    {{ heading.name }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li
+                  class="text-[#52525B] text-[14px] text-lato pt-[8px]"
+                  v-for="heading in categories.slice(12, 16)"
+                  :key="heading._id"
+                >
+                  <a
+                    style="text-transform: capitalize"
+                    :href="`/categories/${heading._id}?category=${heading.name}`"
+                  >
+                    {{ heading.name }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="font-13">Hot on the Web</div>
+          <div class="flex flex-row gap-6">
+            <div>
+              <ul>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Aloe Vera</a>
+                </li>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Stree 2 Collection</a>
+                </li>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Vision Test</a>
+                </li>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Health Tips</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Optical illusion</a>
+                </li>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Egg Benefits</a>
+                </li>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Health+ Tips</a>
+                </li>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Technology News</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- HELP -->
-      <div class="md:w-[15%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
-          >Help</span
-        >
+      <div class="let_hlp_trend flex flex-col w-[30%] gap-6">
+        <div class="flex flex-row gap-[6.5rem]">
+          <div class="let">
+            <div class="font-13">Latest News</div>
+            <div class="flex flex-row gap-5">
+              <div>
+                <ul>
+                  <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                    <a style="text-transform: capitalize">Bharat Bandh</a>
+                  </li>
+                  <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                    <a style="text-transform: capitalize"
+                      >Kolkata Doctor Case</a
+                    >
+                  </li>
+                  <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                    <a style="text-transform: capitalize"
+                      >NEET PG 2024 Result</a
+                    >
+                  </li>
+                  <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                    <a style="text-transform: capitalize">PAK vs BAN Live</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="hlp">
+            <div class="font-13">Help</div>
+            <div>
+              <ul>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">About us</a>
+                </li>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Customer Support</a>
+                </li>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Terms & Conditions</a>
+                </li>
+                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                  <a style="text-transform: capitalize">Privacy Policy</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <div>
-          <ul>
-            <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
-            <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
-            <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
-            <li class="text-[#52525B] text-[14px] text-lato">Bharat Bandh</li>
-          </ul>
+          <div>
+            <div class="font-13">Trending Topics</div>
+            <div>
+              <div class="flex flex-row gap-6">
+                <div>
+                  <ul>
+                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                      <a style="text-transform: capitalize"
+                        >Khel Khel Mein Collection</a
+                      >
+                    </li>
+                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                      <a style="text-transform: capitalize"
+                        >Kalki 2898 AD OTT Release</a
+                      >
+                    </li>
+                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                      <a style="text-transform: capitalize"
+                        >Shraddha Kapoor House</a
+                      >
+                    </li>
+                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                      <a style="text-transform: capitalize">Health Tips</a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <ul>
+                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                      <a style="text-transform: capitalize"
+                        >Krishna Janmashtami Date</a
+                      >
+                    </li>
+                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                      <a style="text-transform: capitalize"
+                        >Anti Hair Fall Shampoo</a
+                      >
+                    </li>
+                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                      <a style="text-transform: capitalize"
+                        >World's Oldest Dinosaur</a
+                      >
+                    </li>
+                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
+                      <a style="text-transform: capitalize">Grrr OTT Release</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="flex flex-col md:flex-row mt-[20px]">
-      <!-- DOWNLOAD -->
-      <div class="md:w-[35%] mb-6 md:mb-0">
-        <div class="flex gap-[23px]">
-          <div>
-            <img
-              src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab783_app-store.svg"
-              alt="App Store"
-              width="100px"
-              height="100px"
-            />
-          </div>
-          <div>
-            <img
-              src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab784_google-play.svg"
-              alt="Play Store"
-              width="100px"
-              height="100px"
-            />
-          </div>
-        </div>
-        <div class="flex gap-[20px] mt-[20px]">
-          <i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i>
-          <i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i>
-          <i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i>
-          <i class="mdi mdi-github text-[#52525B] text-[19px]"></i>
-        </div>
+    <div class="copright bg-white">
+      <div class="flex justify-center item-center">
+        <div class="font-15">© 2024, All Rights Reserved</div>
       </div>
-      <!-- Hot on the Web -->
-      <div class="md:w-[32%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
-          >Hot on the Web</span
-        >
-        <div class="flex flex-wrap gap-[23px]">
-          <div class="w-full md:w-auto">
-            <ul>
-              <li class="text-[#52525B] text-[14px] text-lato">Aloe Vera</li>
-              <li class="text-[#52525B] text-[14px] text-lato">
-                Stree 2 Collection
-              </li>
-              <li class="text-[#52525B] text-[14px] text-lato">Vision Test</li>
-              <li class="text-[#52525B] text-[14px] text-lato">Health Tips</li>
-            </ul>
-          </div>
-          <div class="w-full md:w-auto">
-            <ul>
-              <li class="text-[#52525B] text-[14px] text-lato">
-                Optical illusion
-              </li>
-              <li class="text-[#52525B] text-[14px] text-lato">Egg Benefits</li>
-              <li class="text-[#52525B] text-[14px] text-lato">Health+ Tips</li>
-              <li class="text-[#52525B] text-[14px] text-lato">
-                Technology News
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- Trending Topics -->
-      <div class="md:w-[32%] mb-6 md:mb-0">
-        <span class="text-[#FF0053] text-[13px] text-lato font-bold block mb-2"
-          >Trending Topics</span
-        >
-        <div class="flex flex-wrap gap-[23px]">
-          <div class="w-full md:w-auto">
-            <ul>
-              <li class="text-[#52525B] text-[14px] text-lato">Aloe Vera</li>
-              <li class="text-[#52525B] text-[14px] text-lato">
-                Stree 2 Collection
-              </li>
-              <li class="text-[#52525B] text-[14px] text-lato">Vision Test</li>
-              <li class="text-[#52525B] text-[14px] text-lato">Health Tips</li>
-            </ul>
-          </div>
-          <div class="w-full md:w-auto">
-            <ul>
-              <li class="text-[#52525B] text-[14px] text-lato">
-                Optical illusion
-              </li>
-              <li class="text-[#52525B] text-[14px] text-lato">Egg Benefits</li>
-              <li class="text-[#52525B] text-[14px] text-lato">Health+ Tips</li>
-              <li class="text-[#52525B] text-[14px] text-lato">
-                Technology News
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="copyright flex justify-center items-center mt-6">
-      <span class="text-[#52525B] text-[15px]"
-        >© 2024, All Rights Reserved</span
-      >
     </div>
   </div>
 </template>
@@ -230,7 +294,7 @@ export default {
           name:
             category.name.toLowerCase() === "ai"
               ? category.name.toUpperCase()
-              : category.name,
+              : category.name.replace(/-/g, " "),
         }));
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -248,77 +312,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.footer {
-  position: relative;
-  width: 100%;
-  padding-right: 20px;
-  padding-left: 20px;
-  bottom: 0;
-  left: 0;
-  background-color: #fff;
-  margin-top: 40px;
-  padding-top: 50px !important;
-}
-
-@media (min-width: 768px) {
-  .footer {
-    padding: 0 50px;
-  }
-}
-
-.flex {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.flex-row {
-  flex-direction: row;
-}
-
-.md\\:w\\-[35\\%] {
-  width: 35%;
-}
-
-.md\\:w\\-[15\\%] {
-  width: 15%;
-}
-
-.md\\:w\\-[32\\%] {
-  width: 32%;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.text-lato {
-  font-family: "Lato", sans-serif;
-}
-
-.mt-6 {
-  margin-top: 24px;
-}
-
-.mb-6 {
-  margin-bottom: 24px;
-}
-
-@media (max-width: 768px) {
-  .text-[14px] {
-    font-size: 12px;
-  }
-
-  .text-[18px] {
-    font-size: 16px;
-  }
-
-  .text-[24px] {
-    font-size: 20px;
-  }
-}
-</style>
+<style></style>
