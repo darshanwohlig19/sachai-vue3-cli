@@ -4,9 +4,9 @@
       <div class="heads">Campaign</div>
       <div class="see-all">See all →</div>
     </div>
-    <div class="w-[100%] flex flex-row gap-4 mt-4">
-      <div class="w-[64%] flex justify-between">
-        <div class="w-[32%]">
+    <div class="w-[100%] flex flex-col sm:flex-row gap-4 mt-4">
+      <div class="w-[100%] sm:w-[64%] flex justify-between">
+        <div class="w-[100%] sm:w-[32%]">
           <div>
             <img
               class="w-[100%] h-[182px] rounded-[8px]"
@@ -20,7 +20,7 @@
             </div>
           </div>
         </div>
-        <div class="w-[32%]">
+        <div class="w-[32%] hidden sm:block">
           <div>
             <img
               class="w-[100%] h-[182px] rounded-[8px]"
@@ -34,7 +34,7 @@
             </div>
           </div>
         </div>
-        <div class="w-[32%]">
+        <div class="w-[32%] hidden sm:block">
           <div>
             <img
               class="w-[100%] h-[182px] rounded-[8px]"
@@ -52,7 +52,7 @@
       <div class="w-[1%] flex justify-center">
         <div class="divider1"></div>
       </div>
-      <div class="w-[34%]">
+      <div class="w-[100%] sm:w-[34%]">
         <div class="flex flex-row gap-2">
           <div class="flex justify-center items-center">
             <img src="../assets/Group.png" alt="" />
@@ -63,7 +63,7 @@
         </div>
         <div class="divider mt-3"></div>
 
-        <div class="flex flex-row gap-2 mt-4">
+        <div class="hidden sm:flex sm:flex-row gap-2 mt-4">
           <div class="flex justify-center items-center">
             <img src="../assets/Group.png" alt="" />
           </div>
@@ -71,8 +71,8 @@
             Lorem ipsum dolor sit amet consectetur. Leo est mattis Leo hello
           </div>
         </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-2 mt-4">
+        <div class="hidden sm:block divider mt-3"></div>
+        <div class="hidden sm:flex sm:flex-row gap-2 mt-4">
           <div class="flex justify-center items-center">
             <img src="../assets/Group.png" alt="" />
           </div>
@@ -80,7 +80,7 @@
             Lorem ipsum dolor sit amet consectetur. Leo est mattis Leo est
           </div>
         </div>
-        <div class="divider mt-3"></div>
+        <div class="hidden sm:block divider mt-3"></div>
         <div class="flex flex-row gap-2 mt-4">
           <div class="flex justify-center items-center">
             <img src="../assets/Group.png" alt="" />
