@@ -132,20 +132,28 @@ export default {
   setup(props, { emit }) {
     const languageId = ref("6421a32aa020a23deacecf92");
     const navcategories3 = ref([]);
-    const selectedCategoryId = ref(props.defaultCategoryId); // Use default category ID from props
+    const categories = ref([]);
+    const selectedCategoryId = ref(props.defaultCategoryId);
 
     const fetchCategories = async () => {
       try {
         const response = await axios.post(
           "https://dev-api.askus.news/category/getAllCat",
-          {
-            langauge: languageId.value,
-          }
+          { langauge: languageId.value }
         );
 
-        navcategories3.value = response.data.slice(0, 16);
+        const transformedCategories = response.data.map((category) => ({
+          ...category,
+          name:
+            category.name.toLowerCase() === "ai"
+              ? category.name.toUpperCase()
+              : category.name.replace(/-/g, " "),
+        }));
+
+        navcategories3.value = transformedCategories.slice(0, 16);
+        categories.value = transformedCategories;
+
         if (!selectedCategoryId.value && navcategories3.value.length > 0) {
-          // Set the first category as selected if no category is set
           selectedCategoryId.value = navcategories3.value[0]._id;
           emit(
             "categorySelected",
@@ -154,7 +162,7 @@ export default {
           );
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching categories:", error);
       }
     };
 
@@ -165,6 +173,7 @@ export default {
     return {
       languageId,
       navcategories3,
+      categories,
       selectedCategoryId,
       fetchCategories,
     };
