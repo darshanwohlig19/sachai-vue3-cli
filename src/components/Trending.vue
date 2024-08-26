@@ -6,7 +6,7 @@
         :numVisible="1"
         :numScroll="1"
         :responsiveOptions="responsiveOptions"
-        class="carousel w-[56%] mt-4 custom-carousal"
+        class="carousel w-[56%] mt-4 custom-carousal-custom"
         showIndicators
         circular
       >
@@ -169,14 +169,14 @@ export default {
 };
 </script>
 <style>
-.custom-carousal {
+.custom-carousal-custom {
   position: relative !important;
 }
-.custom-carousal .p-highlight {
+.custom-carousal-custom .p-highlight {
   background-color: red !important;
   width: 25px !important;
 }
-.custom-carousal .p-carousel-indicator {
+.custom-carousal-custom .p-carousel-indicator {
   color: green;
   background-color: white;
   position: relative !important;
@@ -185,7 +185,7 @@ export default {
   border-radius: 10px;
 }
 
-.custom-carousal .p-carousel-indicators {
+.custom-carousal-custom .p-carousel-indicators {
   position: absolute;
   right: 10px;
   bottom: 0px;

@@ -110,6 +110,7 @@
         </div>
       </div>
     </div>
+
     <div class="w-full h-[67px] mt-1 flex justify-around bg-white items-center">
       <div v-for="category in navcategories3" :key="category._id" class="">
         <Chip
@@ -118,13 +119,38 @@
         />
       </div>
     </div>
+    <!-- Popup Confirmation -->
+    <div
+      v-if="isPopupVisible"
+      class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
+      @click="handleBackgroundClick"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg" @click.stop>
+        <h3 class="text-lg font-bold">Confirm Logout</h3>
+        <p class="mt-2">Are you sure you want to log out?</p>
+        <div class="flex justify-center mt-4">
+          <button
+            @click="handleLogout"
+            class="bg-[#e44949] text-white px-4 py-2 rounded mr-2"
+          >
+            Logout
+          </button>
+          <button
+            @click="hidePopup"
+            class="bg-[#1E0627] text-white px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import { ref, onMounted } from "vue";
 import axios from "axios";
-import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { getAuth, signOut } from "firebase/auth";
+import { ref, onMounted } from "vue";
 
 export default {
   props: {
@@ -186,7 +212,7 @@ export default {
           // Call logout API
           const apiDataToken = localStorage.getItem("apiDataToken");
           if (apiDataToken) {
-            await axios.post(
+            const response = await axios.post(
               "https://api-uat.newsshield.io/user/logoutEvent",
               {},
               {
@@ -195,8 +221,11 @@ export default {
                 },
               }
             );
-            // Remove token from local storage
-            localStorage.removeItem("apiDataToken");
+            if (response.status === 200) {
+              localStorage.removeItem("apiDataToken");
+              localStorage.setItem("logoutSuccess", "true");
+              location.reload();
+            }
           }
 
           // Update local state and redirect
