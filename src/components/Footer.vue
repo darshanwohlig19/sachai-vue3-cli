@@ -286,7 +286,7 @@ export default {
           name:
             category.name.toLowerCase() === "ai"
               ? category.name.toUpperCase()
-              : category.name,
+              : category.name.replace(/-/g, " "),
         }));
       } catch (error) {
         console.error("Error fetching categories:", error);
