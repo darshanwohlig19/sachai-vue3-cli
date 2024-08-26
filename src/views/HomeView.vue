@@ -15,7 +15,6 @@
       @category-selected="selectCategory"
     /> -->
 
-    <!-- <Trending /> -->
     <!-- <Featured /> -->
     <!-- <Latest /> -->
     <!-- <BrowseByTopics /> -->
@@ -29,7 +28,9 @@
     <Navbarrr />
     <div class="mx-[30px]">
       <FeaturedNews />
+      <Trending />
       <Campaign />
+
       <MoreNews />
     </div>
     <Footer1 />
@@ -40,7 +41,7 @@
 // import HelloWorld from "@/components/HelloWorld.vue";
 // import SiteHeader from "@/components/SiteHeader.vue";
 // import Latest from "@/components/Latest.vue";
-// import Trending from "@/components/Trending.vue";
+import Trending from "@/components/Trending.vue";
 // import BrowseByTopics from "@/components/BrowseByTopics.vue";
 import Footer1 from "@/components/Footer.vue";
 import MoreNews from "@/components/MoreNews.vue";
@@ -65,7 +66,7 @@ export default {
     // Careousel,
     MoreNews, // HelloWorld,
     // SiteHeader,
-
+    Trending,
     Campaign,
 
     // HelloWorld,

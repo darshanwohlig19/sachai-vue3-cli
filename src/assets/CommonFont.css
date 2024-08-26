@@ -9,28 +9,33 @@
   font-family: "source-serif-pro-semibold";
   color: #1e0627;
 }
-.font-24px{
+.font-20 {
+  font-family: "source-serif-pro-semibold";
+  font-size: 20px;
+  color: #F7F7F4;
+}
+.font-24px {
   font-size: 24px;
-  font-family: "Lato",sans-serif;
+  font-family: "Lato", sans-serif;
   color: #1e0627;
   font-weight: bold;
 }
-.font-18px{
+.font-18px {
   font-size: 18px;
-  font-family: "Lato",sans-serif;
-  color: #5D5D5D;
+  font-family: "Lato", sans-serif;
+  color: #5d5d5d;
 }
-.font-13{
+.font-13 {
   font-size: 13px;
-  font-family: "Lato",sans-serif;
-  color: #FF0053;
+  font-family: "Lato", sans-serif;
+  color: #ff0053;
   font-weight: bold;
   text-transform: uppercase;
 }
-.font-15{
-  color:#52525B;
+.font-15 {
+  color: #52525b;
   font-size: 15px;
-  font-family: "Lato",sans-serif;
+  font-family: "Lato", sans-serif;
   line-height: 22px;
 }
 .para {
