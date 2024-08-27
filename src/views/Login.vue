@@ -266,6 +266,7 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
   getAuth,
+  GoogleAuthProvider,
 } from "firebase/auth";
 // Reactive variables for desktop and mobile products
 const router = useRouter();
@@ -276,9 +277,9 @@ const verificationCode = ref("");
 const showPhoneVerification = ref(false);
 const appVerifier = ref(null);
 const verificationCodeTab = ref(false);
-const userName = ref("");
-const userEmail = ref("");
-const userId = ref("");
+// const userName = ref("");
+// const userEmail = ref("");
+// const userId = ref("");
 // const products = ref([]);
 const desktopProducts = ref([]);
 const mobileProducts = ref([]);
@@ -358,34 +359,53 @@ const captcha = async () => {
 };
 const loginWithGoogle = async () => {
   try {
-    const googleProvider = new OAuthProvider("google.com");
-    googleProvider.addScope("email");
-    const result = await signInWithPopup(auth, googleProvider);
+    const provider = new GoogleAuthProvider();
+    provider.addScope("email");
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        console.log(token);
+        console.log(credential);
+        console.log("USER>>>>>>>>>>>");
 
-    userName.value = result.user.displayName;
-    userEmail.value = result.user.email;
-    userId.value = result.user.uid;
+        // Send user data to API
+        await sendUserDataToApi(
+          user.providerData[0].displayName,
+          user.providerData[0].email,
+          user.providerData[0].uid
+        );
 
-    console.log("Google User Info:", {
-      userName: userName.value,
-      userEmail: userEmail.value,
-      userId: userId.value,
-    });
-    // Send user data to API
-    await sendUserDataToApi(userName.value, userEmail.value, userId.value);
+        // // Show toast notification after navigation
+        // toast.add({
+        //   severity: "success",
+        //   summary: "Successfully Login",
+        //   detail: "Successfully logged in with Google!",
+        //   life: 3000,
+        // });
 
-    // Show toast notification after navigation
-    toast.add({
-      severity: "success",
-      summary: "Successfully Login",
-      detail: "Successfully logged in with Google!",
-      life: 3000,
-    });
-
-    // Wait for navigation to complete
-    setTimeout(() => {
-      router.push("/");
-    }, 0);
+        // Wait for navigation to complete
+        setTimeout(() => {
+          router.push("/");
+        }, 0);
+        // ...
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle Errors here.
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // // The email of the user's account used.
+        // const email = error.customData.email;
+        // // The AuthCredential type that was used.
+        // const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
   } catch (error) {
     console.error("Google login failed:", error);
     toast.add({
@@ -401,23 +421,32 @@ const signInWithApple = async () => {
   try {
     const appleProvider = new OAuthProvider("apple.com");
     appleProvider.addScope("email");
+
+    const auth = getAuth();
     const result = await signInWithPopup(auth, appleProvider);
 
-    userName.value = result.user.displayName;
-    userEmail.value = result.user.email;
-    userId.value = result.user.uid;
+    // The signed-in user info
+    const user = result.user;
 
-    console.log("Google User Info:", {
-      userName: userName.value,
-      userEmail: userEmail.value,
-      userId: userId.value,
-    });
+    // Apple credential
+    // const credential = OAuthProvider.credentialFromResult(result);
+    // const accessToken = credential.accessToken;
+    // const idToken = credential.idToken;
 
-    await sendUserDataToApi(userName.value, userEmail.value, userId.value);
-    console.log("Apple User Info:", result.user);
+    // Sending user data to your API
+    await sendUserDataToApi(
+      user.providerData[0].displayName,
+      user.providerData[0].email,
+      user.providerData[0].uid
+    );
+
+    // Log the user info
+    console.log("Apple User Info:", user);
+
+    // Show a success toast
     toast.add({
       severity: "success",
-      summary: "Successfully Login",
+      summary: "Successfully Logged In",
       detail: "Successfully logged in with Apple!",
       life: 3000,
     });
@@ -427,7 +456,10 @@ const signInWithApple = async () => {
       router.push("/");
     }, 0);
   } catch (error) {
+    // Handle errors here
     console.error("Apple login failed:", error);
+
+    // Show an error toast
     toast.add({
       severity: "error",
       summary: "Login Failed",
@@ -438,6 +470,9 @@ const signInWithApple = async () => {
 };
 
 const sendUserDataToApi = async (name, email, id) => {
+  console.log("name", name);
+  console.log("email", email);
+  console.log("id", id);
   const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
   const payload = {
     auth0: {
@@ -447,6 +482,7 @@ const sendUserDataToApi = async (name, email, id) => {
     },
     type: "google",
   };
+  console.log("payload", payload);
 
   try {
     const response = await fetch(apiUrl, {
