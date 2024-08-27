@@ -112,8 +112,4 @@ export default {
   },
 };
 </script>
-<style>
-.fontCustom {
-  font-family: "source-serif-pro-semibold";
-}
-</style>
+
