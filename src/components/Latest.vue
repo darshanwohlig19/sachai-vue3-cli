@@ -63,14 +63,7 @@ export default {
       screenWidth: window.innerWidth,
     };
   },
-  computed: {
-    slicedData() {
-      if (this.screenWidth < 640) {
-        return this.blogs.slice(0, 2);
-      }
-      return this.blogs.slice(0, 4);
-    },
-  },
+
   mounted() {
     this.fetchBlogs();
     window.addEventListener("resize", this.updateScreenWidth);
@@ -104,6 +97,20 @@ export default {
     },
     updateScreenWidth() {
       this.screenWidth = window.innerWidth;
+    },
+  },
+  computed: {
+    slicedData() {
+      if (this.screenWidth < 640) {
+        // Mobile devices
+        return this.blogs.slice(0, 1);
+      } else if (this.screenWidth >= 640 && this.screenWidth < 1024) {
+        // Tablets
+        return this.blogs.slice(0, 3);
+      } else {
+        // Desktop and larger devices
+        return this.blogs.slice(0, 4);
+      }
     },
   },
 };
