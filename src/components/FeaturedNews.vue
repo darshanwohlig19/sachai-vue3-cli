@@ -9,6 +9,9 @@
           class="rounded-[8px] h-[234px] w-full"
           alt=""
         />
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
+        ></div>
         <div class="absolute bottom-0 p-3 w-[405px]">
           <div class="text-[16px] fontCustom text-white">
             {{ blogs[0]?.headline || "No Headline" }}
@@ -20,6 +23,7 @@
           </div>
         </div>
       </div>
+
       <div class="flex flex-row gap-10 mt-5">
         <div class="font-14 multiline-truncate1">{{ blogs[1]?.headline }}</div>
         <div class="border-1"></div>
