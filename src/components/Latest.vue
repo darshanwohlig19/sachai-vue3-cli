@@ -1,11 +1,13 @@
 <template>
   <section>
     <div class="mt-5">
-      <div class="flex justify-between w-full items-center mb-5">
-        <div class="text-[20px] font-bold font-lato mt-4 mt-4">Latest News</div>
-        <div class="see">See all &nbsp;→</div>
+      <div class="flex justify-between w-full items-center mb-2">
+        <div class="text-[20px] font-bold font-lato">Latest News</div>
+        <div class="text-[16px] font-lato font-bold text-[#FF0053]">
+          See all &nbsp;→
+        </div>
       </div>
-      <div class="flex flex-row flex-wrap gap-3 justify-between">
+      <div class="flex flex-row flex-wrap gap-3 align-middle justify-between">
         <div v-for="news in slicedData" :key="news">
           <div
             class="flex flex-col bg-white rounded-[10px] drop-shadow-sm w-[330px]"
