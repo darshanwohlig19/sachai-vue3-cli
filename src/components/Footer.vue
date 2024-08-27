@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div class="h-full w-full flex flex-row gap-10 bg-white mt-10 p-4">
-      <div class="info w-[30%]">
+    <div
+      class="h-full w-full flex flex-col md:flex-row gap-6 md:gap-10 bg-white mt-10 p-6"
+    >
+      <!-- Info Section -->
+      <div class="info w-full md:w-[30%]">
         <div>
           <img
             src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
@@ -10,21 +13,20 @@
             alt
           />
         </div>
-        <div class="font-24px mt-4">New Age News App Powered by AI</div>
-        <div class="font-18px mt-2">
+        <div class="font-24 mt-4">New Age News App Powered by AI</div>
+        <div class="font-18 mt-2">
           Get trustworthy news in an easy-to-read format, our smart chatbot
           provides a personalized and interactive news experience for you.
         </div>
-        <div class="flex mt-4 gap-6">
+        <div class="flex mt-4 gap-4 md:gap-6">
           <div>
             <a
-              href="https://apps.apple.com/us/app/sachai/id6448037673?platform=iphone "
+              href="https://apps.apple.com/us/app/sachai/id6448037673?platform=iphone"
             >
               <img
                 src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab783_app-store.svg"
                 alt="App Store"
-                width="162px"
-                height="51px"
+                class="w-36 md:w-40"
               />
             </a>
           </div>
@@ -35,240 +37,159 @@
               <img
                 src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64ae7a0360c324b7e56ab784_google-play.svg"
                 alt="Play Store"
-                width="162px"
-                height="51px"
+                class="w-36 md:w-40"
               />
             </a>
           </div>
         </div>
         <div class="flex mt-4 gap-3">
-          <div>
-            <i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i>
-          </div>
-          <div>
-            <i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i>
-          </div>
-          <div>
-            <i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i>
-          </div>
-          <div>
-            <i class="mdi mdi-github text-[#52525B] text-[19px]"></i>
-          </div>
+          <i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i>
+          <i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i>
+          <i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i>
+          <i class="mdi mdi-github text-[#52525B] text-[19px]"></i>
         </div>
       </div>
-      <div class="pop_hot flex flex-col w-[35%] gap-6">
+
+      <!-- Popular Categories and Hot on the Web -->
+      <div class="pop_hot w-full md:w-[35%] flex flex-col gap-6">
         <div>
-          <div class="font-13">Popular Categories</div>
-          <div class="flex flex-row gap-5">
-            <div>
-              <ul>
-                <li
-                  class="text-[#52525B] text-[14px] text-lato pt-[8px]"
-                  v-for="heading in categories.slice(0, 4)"
-                  :key="heading._id"
+          <div class="footer-heads ml-[-10px] text-sm">Popular Categories</div>
+          <div class="grid grid-cols-2 md:grid-cols-4">
+            <ul v-for="heading in categories.slice(0, 16)" :key="heading._id">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a
+                  :href="`/categories/${heading._id}?category=${heading.name}`"
+                  class="capitalize"
+                  >{{ heading.name }}</a
                 >
-                  <a
-                    style="text-transform: capitalize"
-                    :href="`/categories/${heading._id}?category=${heading.name}`"
-                  >
-                    {{ heading.name }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul>
-                <li
-                  class="text-[#52525B] text-[14px] text-lato pt-[8px]"
-                  v-for="heading in categories.slice(4, 8)"
-                  :key="heading._id"
-                >
-                  <a
-                    style="text-transform: capitalize"
-                    :href="`/categories/${heading._id}?category=${heading.name}`"
-                  >
-                    {{ heading.name }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul>
-                <li
-                  class="text-[#52525B] text-[14px] text-lato pt-[8px]"
-                  v-for="heading in categories.slice(8, 12)"
-                  :key="heading._id"
-                >
-                  <a
-                    style="text-transform: capitalize"
-                    :href="`/categories/${heading._id}?category=${heading.name}`"
-                  >
-                    {{ heading.name }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul>
-                <li
-                  class="text-[#52525B] text-[14px] text-lato pt-[8px]"
-                  v-for="heading in categories.slice(12, 16)"
-                  :key="heading._id"
-                >
-                  <a
-                    style="text-transform: capitalize"
-                    :href="`/categories/${heading._id}?category=${heading.name}`"
-                  >
-                    {{ heading.name }}
-                  </a>
-                </li>
-              </ul>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
         <div>
-          <div class="font-13">Hot on the Web</div>
-          <div class="flex flex-row gap-6">
+          <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
+          <div class="grid grid-cols-2 md:flex md:flex-row md:gap-5 pt-3">
             <div>
               <ul>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Aloe Vera</a>
+                <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <a class="capitalize">Aloe Vera</a>
                 </li>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Stree 2 Collection</a>
+                <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <a class="capitalize">Stree 2 Collection</a>
                 </li>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Vision Test</a>
+                <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <a class="capitalize">Vision Test</a>
                 </li>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Health Tips</a>
+                <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <a class="capitalize">Health Tips</a>
                 </li>
               </ul>
             </div>
             <div>
               <ul>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Optical illusion</a>
+                <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <a class="capitalize">Aloe Vera</a>
                 </li>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Egg Benefits</a>
+                <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <a class="capitalize">Stree 2 Collection</a>
                 </li>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Health+ Tips</a>
+                <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <a class="capitalize">Vision Test</a>
                 </li>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Technology News</a>
+                <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <a class="capitalize">Health Tips</a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-      <div class="let_hlp_trend flex flex-col w-[30%] gap-6">
-        <div class="flex flex-row gap-[6.5rem]">
-          <div class="let">
-            <div class="font-13">Latest News</div>
-            <div class="flex flex-row gap-5">
-              <div>
-                <ul>
-                  <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                    <a style="text-transform: capitalize">Bharat Bandh</a>
-                  </li>
-                  <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                    <a style="text-transform: capitalize"
-                      >Kolkata Doctor Case</a
-                    >
-                  </li>
-                  <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                    <a style="text-transform: capitalize"
-                      >NEET PG 2024 Result</a
-                    >
-                  </li>
-                  <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                    <a style="text-transform: capitalize">PAK vs BAN Live</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+
+      <!-- Latest News, Help, and Trending Topics -->
+      <div class="let_hlp_trend w-full md:w-[30%] flex flex-col gap-6">
+        <div class="flex flex-wrap justify-between">
+          <!-- Latest News -->
+          <div class="let w-full md:w-auto">
+            <div class="footer-heads text-sm">Latest News</div>
+            <ul>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Bharat Bandh</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Kolkata Doctor Case</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">NEET PG 2024 Result</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">PAK vs BAN Live</a>
+              </li>
+            </ul>
           </div>
-          <div class="hlp">
-            <div class="font-13">Help</div>
-            <div>
-              <ul>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">About us</a>
-                </li>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Customer Support</a>
-                </li>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Terms & Conditions</a>
-                </li>
-                <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                  <a style="text-transform: capitalize">Privacy Policy</a>
-                </li>
-              </ul>
-            </div>
+
+          <!-- Help -->
+          <div class="hlp w-full md:w-auto">
+            <div class="footer-heads text-sm">Help</div>
+            <ul>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">About us</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Customer Support</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Terms & Conditions</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Privacy Policy</a>
+              </li>
+            </ul>
           </div>
         </div>
+
+        <!-- Trending Topics -->
         <div>
-          <div>
-            <div class="font-13">Trending Topics</div>
-            <div>
-              <div class="flex flex-row gap-6">
-                <div>
-                  <ul>
-                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                      <a style="text-transform: capitalize"
-                        >Khel Khel Mein Collection</a
-                      >
-                    </li>
-                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                      <a style="text-transform: capitalize"
-                        >Kalki 2898 AD OTT Release</a
-                      >
-                    </li>
-                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                      <a style="text-transform: capitalize"
-                        >Shraddha Kapoor House</a
-                      >
-                    </li>
-                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                      <a style="text-transform: capitalize">Health Tips</a>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <ul>
-                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                      <a style="text-transform: capitalize"
-                        >Krishna Janmashtami Date</a
-                      >
-                    </li>
-                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                      <a style="text-transform: capitalize"
-                        >Anti Hair Fall Shampoo</a
-                      >
-                    </li>
-                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                      <a style="text-transform: capitalize"
-                        >World's Oldest Dinosaur</a
-                      >
-                    </li>
-                    <li class="text-[#52525B] text-[14px] text-lato pt-[8px]">
-                      <a style="text-transform: capitalize">Grrr OTT Release</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
+          <div class="grid grid-cols-2 gap-4 pt-3">
+            <ul>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Khel Khel Mein Collection</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Kalki 2898 AD OTT Release</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Women Who Chose the Sword</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Salman Khan Diet</a>
+              </li>
+            </ul>
+            <ul>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Vicky Kaushal Katrina Kaif Wedding</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Sania Mirza Retirement</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">Bengaluru Metro Expansion</a>
+              </li>
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">2024 Budget Predictions</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
-    <div class="copright bg-white">
-      <div class="flex justify-center item-center">
-        <div class="font-15">© 2024, All Rights Reserved</div>
+
+    <!-- Bottom Section -->
+    <div
+      class="bg-[#fff] text-[#52525B] text-lato text-[15px] py-4 px-4 md:px-6"
+    >
+      <div class="flex flex-col md:flex-row justify-center">
+        <div>© 2024, All Rights Reserved</div>
       </div>
     </div>
   </div>
@@ -312,4 +233,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped></style>

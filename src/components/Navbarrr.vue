@@ -24,8 +24,11 @@
         <div class="head-navs">
           <RouterLink to="/Bookmark">Bookmark</RouterLink>
         </div>
+
         <div class="head-navs">
-          <RouterLink to="/Login">Login</RouterLink>
+          <a href="#" @click="handleAuthAction">
+            {{ isLoggedIn ? "Logout" : "Login" }}
+          </a>
         </div>
 
         <div class="relative">
@@ -57,6 +60,7 @@
             </defs>
           </svg>
         </div>
+
         <div
           class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
         >
@@ -107,60 +111,152 @@
         </div>
       </div>
     </div>
+
     <div class="w-full h-[67px] mt-1 flex justify-around bg-white items-center">
-      <div v-for="category in navcategories3" :key="category._id" class="">
+      <div v-for="heading in categories" :key="heading._id">
         <Chip
           class="bg-transparent border-1 border-[#D4D4D4] capitalize head-cat gap-5"
-          :label="category.name"
+          :label="heading.name"
         />
+      </div>
+    </div>
+
+    <!-- Popup Confirmation -->
+    <div
+      v-if="isPopupVisible"
+      class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
+      @click="handleBackgroundClick"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg" @click.stop>
+        <h3 class="text-lg font-bold">Confirm Logout</h3>
+        <p class="mt-2">Are you sure you want to log out?</p>
+        <div class="flex justify-center mt-4">
+          <button
+            @click="handleLogout"
+            class="bg-[#e44949] text-white px-4 py-2 rounded mr-2"
+          >
+            Logout
+          </button>
+          <button
+            @click="hidePopup"
+            class="bg-[#1E0627] text-white px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
-import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+import { getAuth, signOut } from "firebase/auth";
+import { ref, onMounted } from "vue";
+import { useToast } from "primevue/usetoast";
+import Chip from "primevue/chip";
 
 export default {
-  props: {
-    defaultCategoryId: {
-      type: String,
-      default: null,
-    },
+  components: {
+    Chip,
   },
-  emits: ["categorySelected"],
-  setup(props, { emit }) {
-    const languageId = ref("6421a32aa020a23deacecf92");
-    const navcategories3 = ref([]);
+  setup() {
+    const isMenuOpen = ref(false);
+    const isDropdownOpen = ref(false);
     const categories = ref([]);
-    const selectedCategoryId = ref(props.defaultCategoryId);
+    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
+    const showBookmarkLink = ref(true);
+    const isPopupVisible = ref(false);
+    const router = useRouter();
+    const toast = useToast();
 
+    const toggleMenu = () => {
+      isMenuOpen.value = !isMenuOpen.value;
+    };
+
+    const toggleDropdown = () => {
+      isDropdownOpen.value = !isDropdownOpen.value;
+    };
+
+    const handleBackgroundClick = () => {
+      hidePopup(); // Hide the popup when clicking on the background
+    };
+
+    const handleAuthAction = async () => {
+      if (isLoggedIn.value) {
+        showPopup(); // Show popup for confirmation
+      } else {
+        router.push("/Login"); // Redirect to login page
+      }
+    };
+
+    const showPopup = () => {
+      isPopupVisible.value = true;
+    };
+
+    const hidePopup = () => {
+      isPopupVisible.value = false;
+    };
+
+    const handleLogout = async () => {
+      try {
+        // Sign out from Firebase
+        const auth = getAuth();
+        await signOut(auth);
+
+        // Call logout API
+        const apiDataToken = localStorage.getItem("apiDataToken");
+        if (apiDataToken) {
+          const response = await axios.post(
+            "https://api-uat.newsshield.io/user/logoutEvent",
+            {},
+            {
+              headers: { Authorization: `${apiDataToken}` },
+            }
+          );
+
+          if (response.status === 200) {
+            localStorage.removeItem("apiDataToken");
+            localStorage.setItem("logoutSuccess", "true");
+            isLoggedIn.value = false;
+            router.push("/");
+
+            // Show success toaster notification
+            toast.add({
+              severity: "success",
+              summary: "Logout Successful",
+              detail: "You have been logged out successfully.",
+            });
+          } else {
+            throw new Error("Failed to logout, unexpected response status");
+          }
+        }
+      } catch (error) {
+        console.error("Error during logout:", error);
+        toast.add({
+          severity: "error",
+          summary: "Logout Error",
+          detail: "Failed to log out",
+        });
+      } finally {
+        hidePopup();
+      }
+    };
     const fetchCategories = async () => {
       try {
+        const languageId = "6421a32aa020a23deacecf92";
         const response = await axios.post(
           "https://dev-api.askus.news/category/getAllCat",
-          { langauge: languageId.value }
+          { langauge: languageId }
         );
-
-        const transformedCategories = response.data.map((category) => ({
+        categories.value = response.data.map((category) => ({
           ...category,
           name:
             category.name.toLowerCase() === "ai"
               ? category.name.toUpperCase()
               : category.name.replace(/-/g, " "),
         }));
-
-        navcategories3.value = transformedCategories.slice(0, 16);
-        categories.value = transformedCategories;
-
-        if (!selectedCategoryId.value && navcategories3.value.length > 0) {
-          selectedCategoryId.value = navcategories3.value[0]._id;
-          emit(
-            "categorySelected",
-            selectedCategoryId.value,
-            navcategories3.value[0].name
-          );
-        }
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -171,11 +267,18 @@ export default {
     });
 
     return {
-      languageId,
-      navcategories3,
+      isMenuOpen,
+      isDropdownOpen,
       categories,
-      selectedCategoryId,
-      fetchCategories,
+      isLoggedIn,
+      showBookmarkLink,
+      isPopupVisible,
+      toggleMenu,
+      toggleDropdown,
+      handleAuthAction,
+      handleBackgroundClick,
+      hidePopup,
+      handleLogout,
     };
   },
 };
