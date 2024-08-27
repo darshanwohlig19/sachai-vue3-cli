@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="h-full w-full flex flex-col md:flex-row gap-6 md:gap-10 bg-white mt-10 p-4"
+      class="h-full w-full flex flex-col md:flex-row gap-6 md:gap-10 bg-white mt-10 p-6"
     >
       <!-- Info Section -->
       <div class="info w-full md:w-[30%]">
@@ -53,7 +53,7 @@
       <!-- Popular Categories and Hot on the Web -->
       <div class="pop_hot w-full md:w-[35%] flex flex-col gap-6">
         <div>
-          <div class="footer-heads text-sm">Popular Categories</div>
+          <div class="footer-heads ml-[-10px] text-sm">Popular Categories</div>
           <div class="grid grid-cols-2 md:grid-cols-4">
             <ul v-for="heading in categories.slice(0, 16)" :key="heading._id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
@@ -67,36 +67,36 @@
           </div>
         </div>
         <div>
-          <div class="footer-heads text-sm">Hot on the Web</div>
+          <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
           <div class="grid grid-cols-2 md:flex md:flex-row md:gap-5 pt-3">
             <div>
               <ul>
-                <li class="footer-links text-[#52525B] text-sm pt-2">
+                <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Aloe Vera</a>
                 </li>
-                <li class="footer-links text-[#52525B] text-sm pt-2">
+                <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Stree 2 Collection</a>
                 </li>
-                <li class="footer-links text-[#52525B] text-sm pt-2">
+                <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Vision Test</a>
                 </li>
-                <li class="footer-links text-[#52525B] text-sm pt-2">
+                <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Health Tips</a>
                 </li>
               </ul>
             </div>
             <div>
               <ul>
-                <li class="footer-links text-[#52525B] text-sm pt-2">
+                <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Aloe Vera</a>
                 </li>
-                <li class="footer-links text-[#52525B] text-sm pt-2">
+                <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Stree 2 Collection</a>
                 </li>
-                <li class="footer-links text-[#52525B] text-sm pt-2">
+                <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Vision Test</a>
                 </li>
-                <li class="footer-links text-[#52525B] text-sm pt-2">
+                <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Health Tips</a>
                 </li>
               </ul>
@@ -112,16 +112,16 @@
           <div class="let w-full md:w-auto">
             <div class="footer-heads text-sm">Latest News</div>
             <ul>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Bharat Bandh</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Kolkata Doctor Case</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">NEET PG 2024 Result</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">PAK vs BAN Live</a>
               </li>
             </ul>
@@ -131,16 +131,16 @@
           <div class="hlp w-full md:w-auto">
             <div class="footer-heads text-sm">Help</div>
             <ul>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">About us</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Customer Support</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Terms & Conditions</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Privacy Policy</a>
               </li>
             </ul>
@@ -149,33 +149,33 @@
 
         <!-- Trending Topics -->
         <div>
-          <div class="footer-heads text-sm">Trending Topics</div>
+          <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
           <div class="grid grid-cols-2 gap-4 pt-3">
             <ul>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Khel Khel Mein Collection</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Kalki 2898 AD OTT Release</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Women Who Chose the Sword</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Salman Khan Diet</a>
               </li>
             </ul>
             <ul>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Vicky Kaushal Katrina Kaif Wedding</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Sania Mirza Retirement</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Bengaluru Metro Expansion</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-2">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">2024 Budget Predictions</a>
               </li>
             </ul>
@@ -185,10 +185,11 @@
     </div>
 
     <!-- Bottom Section -->
-    <div class="bg-[#E4E4E7] text-[#71717A] text-xs py-4 px-4 md:px-6">
-      <div class="flex flex-col md:flex-row justify-between">
-        <div>© 2024 Sachai. All rights reserved.</div>
-        <div class="mt-2 md:mt-0">Designed by Sachai Team.</div>
+    <div
+      class="bg-[#fff] text-[#52525B] text-lato text-[15px] py-4 px-4 md:px-6"
+    >
+      <div class="flex flex-col md:flex-row justify-center">
+        <div>© 2024, All Rights Reserved</div>
       </div>
     </div>
   </div>
