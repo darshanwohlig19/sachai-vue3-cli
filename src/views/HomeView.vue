@@ -35,6 +35,8 @@
 
       <Campaign />
 
+      <CarouselCat />
+
       <MoreNews />
     </div>
     <Footer1 />
@@ -54,7 +56,7 @@ import Latest from "@/components/Latest.vue";
 // import BrowseByTopics from "@/components/BrowseByTopics.vue";
 import Footer1 from "@/components/Footer.vue";
 import MoreNews from "@/components/MoreNews.vue";
-
+import CarouselCat from "@/components/Catogries_carousel.vue";
 // import Featured from "@/components/Featured.vue";
 
 // import Careousel from "@/components/Carousel_Catogries.vue";
@@ -75,7 +77,11 @@ export default {
     // Careousel,
     MoreNews, // HelloWorld,
     // SiteHeader,
+
+    CarouselCat,
+
     Trending,
+
     Campaign,
 
     // HelloWorld,

@@ -96,3 +96,6 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+.fontCustom {
+  font-family: "source-serif-pro-semibold";
+}
