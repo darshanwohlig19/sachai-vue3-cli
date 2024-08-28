@@ -12,21 +12,38 @@
       <div class="flex gap-4 items-center justify-center">
         <div class="head-navs">
           <!-- <a href="/">Home</a> -->
-          <RouterLink to="/">Home</RouterLink>
+          <RouterLink class="nav-items" active-class="active-link" to="/"
+            >Home</RouterLink
+          >
         </div>
         <div class="head-navs">
-          <RouterLink to="/Astrology">Astrology</RouterLink>
+          <RouterLink
+            class="nav-items"
+            active-class="active-link"
+            to="/Astrology"
+            >Astrology</RouterLink
+          >
           <!-- Astrology -->
         </div>
         <div class="head-navs">
-          <RouterLink to="/Category">Category</RouterLink>
+          <RouterLink
+            class="nav-items"
+            active-class="active-link"
+            to="/Category"
+            >Category</RouterLink
+          >
         </div>
         <div class="head-navs">
-          <RouterLink to="/Bookmark">Bookmark</RouterLink>
+          <RouterLink
+            class="nav-items"
+            active-class="active-link"
+            to="/Bookmark"
+            >Bookmark</RouterLink
+          >
         </div>
 
         <div class="head-navs">
-          <a href="#" @click="handleAuthAction">
+          <a href="#" class="nav-items" @click="handleAuthAction">
             {{ isLoggedIn ? "Logout" : "Login" }}
           </a>
         </div>
@@ -121,6 +138,8 @@
       </div>
     </div>
 
+
+
     <!-- Popup Confirmation -->
     <div
       v-if="isPopupVisible"
@@ -154,8 +173,11 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { ref, onMounted } from "vue";
+
+
 import { useToast } from "primevue/usetoast";
 import Chip from "primevue/chip";
+
 
 export default {
   components: {
@@ -261,7 +283,49 @@ export default {
         console.error("Error fetching categories:", error);
       }
     };
+    const auth = getAuth();
+    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
+    const router = useRouter();
 
+    const handleAuthAction = async (event) => {
+      event.preventDefault(); // Prevent the default anchor behavior
+
+      if (isLoggedIn.value) {
+        // Handle logout
+        try {
+          // Sign out from Firebase
+          await signOut(auth);
+
+          // Call logout API
+          const apiDataToken = localStorage.getItem("apiDataToken");
+          if (apiDataToken) {
+            const response = await axios.post(
+              "https://api-uat.newsshield.io/user/logoutEvent",
+              {},
+              {
+                headers: {
+                  Authorization: `${apiDataToken}`,
+                },
+              }
+            );
+            if (response.status === 200) {
+              localStorage.removeItem("apiDataToken");
+              localStorage.setItem("logoutSuccess", "true");
+              location.reload();
+            }
+          }
+
+          // Update local state and redirect
+          isLoggedIn.value = false;
+          router.push("/"); // Redirect to home page or another desired page
+        } catch (error) {
+          console.error("Error during logout:", error);
+        }
+      } else {
+        // Redirect to login page
+        router.push("/Login");
+      }
+    };
     onMounted(() => {
       fetchCategories();
     });
@@ -270,6 +334,12 @@ export default {
       isMenuOpen,
       isDropdownOpen,
       categories,
+
+      selectedCategoryId,
+      fetchCategories,
+      isLoggedIn,
+      handleAuthAction,
+
       isLoggedIn,
       showBookmarkLink,
       isPopupVisible,
@@ -279,7 +349,17 @@ export default {
       handleBackgroundClick,
       hidePopup,
       handleLogout,
+
     };
   },
 };
 </script>
+<style scoped>
+.nav-items.active-link {
+  color: #ff0053; /* Color for active navigation item */
+}
+
+.nav-items:active {
+  color: #ff0053; /* Color for active state */
+}
+</style>
