@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="text-2xl font-bold mb-4">News Categories</h2>
-    <div class="card">
+    <div class="carousel_card">
       <Carousel
         :value="categories"
         :numVisible="4"
@@ -101,3 +101,4 @@ onMounted(() => {
   }
 }
 </style>
+
