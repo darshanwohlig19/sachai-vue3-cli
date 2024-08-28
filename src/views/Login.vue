@@ -371,10 +371,14 @@ const loginWithGoogle = async () => {
       userEmail: userEmail.value,
       userId: userId.value,
     });
-    // Send user data to API
-    await sendUserDataToApi(userName.value, userEmail.value, userId.value);
 
-    // Show toast notification after navigation
+    await sendUserDataToApi(
+      userName.value,
+      userEmail.value,
+      userId.value,
+      "google"
+    );
+
     toast.add({
       severity: "success",
       summary: "Successfully Login",
@@ -382,7 +386,6 @@ const loginWithGoogle = async () => {
       life: 3000,
     });
 
-    // Wait for navigation to complete
     setTimeout(() => {
       router.push("/");
     }, 0);
@@ -407,14 +410,18 @@ const signInWithApple = async () => {
     userEmail.value = result.user.email;
     userId.value = result.user.uid;
 
-    console.log("Google User Info:", {
+    console.log("Apple User Info:", {
       userName: userName.value,
       userEmail: userEmail.value,
       userId: userId.value,
     });
 
-    await sendUserDataToApi(userName.value, userEmail.value, userId.value);
-    console.log("Apple User Info:", result.user);
+    await sendUserDataToApi(
+      userName.value,
+      userEmail.value,
+      userId.value,
+      "apple"
+    );
     toast.add({
       severity: "success",
       summary: "Successfully Login",
@@ -422,7 +429,6 @@ const signInWithApple = async () => {
       life: 3000,
     });
 
-    // Wait for navigation to complete
     setTimeout(() => {
       router.push("/");
     }, 0);
@@ -437,7 +443,7 @@ const signInWithApple = async () => {
   }
 };
 
-const sendUserDataToApi = async (name, email, id) => {
+const sendUserDataToApi = async (name, email, id, type) => {
   const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
   const payload = {
     auth0: {
@@ -445,7 +451,7 @@ const sendUserDataToApi = async (name, email, id) => {
       email: email,
       id: id,
     },
-    type: "google",
+    type: type,
   };
 
   try {
