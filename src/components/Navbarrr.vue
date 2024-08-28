@@ -12,21 +12,38 @@
       <div class="flex gap-4 items-center justify-center">
         <div class="head-navs">
           <!-- <a href="/">Home</a> -->
-          <RouterLink to="/">Home</RouterLink>
+          <RouterLink class="nav-items" active-class="active-link" to="/"
+            >Home</RouterLink
+          >
         </div>
         <div class="head-navs">
-          <RouterLink to="/Astrology">Astrology</RouterLink>
+          <RouterLink
+            class="nav-items"
+            active-class="active-link"
+            to="/Astrology"
+            >Astrology</RouterLink
+          >
           <!-- Astrology -->
         </div>
         <div class="head-navs">
-          <RouterLink to="/Category">Category</RouterLink>
+          <RouterLink
+            class="nav-items"
+            active-class="active-link"
+            to="/Category"
+            >Category</RouterLink
+          >
         </div>
         <div class="head-navs">
-          <RouterLink to="/Bookmark">Bookmark</RouterLink>
+          <RouterLink
+            class="nav-items"
+            active-class="active-link"
+            to="/Bookmark"
+            >Bookmark</RouterLink
+          >
         </div>
 
         <div class="head-navs">
-          <a href="#" @click="handleAuthAction">
+          <a href="#" class="nav-items" @click="handleAuthAction">
             {{ isLoggedIn ? "Logout" : "Login" }}
           </a>
         </div>
@@ -337,3 +354,12 @@ export default {
   },
 };
 </script>
+<style scoped>
+.nav-items.active-link {
+  color: #ff0053; /* Color for active navigation item */
+}
+
+.nav-items:active {
+  color: #ff0053; /* Color for active state */
+}
+</style>
