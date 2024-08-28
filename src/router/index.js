@@ -16,11 +16,7 @@ const routes = [
     component: Category,
     props: true,
   },
-  {
-    path: "/Login",
-    name: "Login",
-    component: Login,
-  },
+  { path: "/login", component: Login, meta: { requiresAuth: false } },
   {
     path: "/AboutUs",
     name: "About",
@@ -38,4 +34,19 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = !!localStorage.getItem("apiDataToken");
+
+  // Check if the route requires authentication
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    // Redirect to login if not authenticated
+    next("/login");
+  } else if (to.path === "/login" && isLoggedIn) {
+    // Redirect to home if already logged in and trying to access login page
+    next("/");
+  } else {
+    // Allow navigation to other routes
+    next();
+  }
+});
 export default router;

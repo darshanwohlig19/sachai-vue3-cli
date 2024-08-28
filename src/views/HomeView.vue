@@ -22,13 +22,17 @@
     <!-- <Careousel /> -->
     <!-- <Trending />
     <Featured />
-    <Latest />
+ 
     <BrowseByTopics />s
     <Footer1 /> -->
     <Navbarrr />
     <div class="mx-[30px]">
       <FeaturedNews />
+
       <Trending />
+
+      <Latest />
+
       <Campaign />
 
       <MoreNews />
@@ -40,8 +44,13 @@
 <script>
 // import HelloWorld from "@/components/HelloWorld.vue";
 // import SiteHeader from "@/components/SiteHeader.vue";
+
 // import Latest from "@/components/Latest.vue";
 import Trending from "@/components/Trending.vue";
+
+import Latest from "@/components/Latest.vue";
+// import Trending from "@/components/Trending.vue";
+
 // import BrowseByTopics from "@/components/BrowseByTopics.vue";
 import Footer1 from "@/components/Footer.vue";
 import MoreNews from "@/components/MoreNews.vue";
@@ -73,7 +82,7 @@ export default {
     // SiteHeader,
     Navbarrr,
 
-    // Latest,
+    Latest,
     // Trending,
     // BrowseByTopics,
     Footer1,

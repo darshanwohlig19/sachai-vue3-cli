@@ -1,5 +1,5 @@
 <template>
-  <SiteHeader />
+  <Navbarrr />
   <div class="mx-[20px] lg:mx-[60px]">
     <div class="flex flex-col lg:flex-row justify-between gap-5">
       <div class="w-[100%] lg:w-[50%]">
@@ -256,10 +256,11 @@ import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import moment from "moment";
-import SiteHeader from "@/components/SiteHeader.vue";
+
 import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
+import Navbarrr from "@/components/Navbarrr.vue";
 
 // Refs for storing news and pagination state
 const news = ref([]);

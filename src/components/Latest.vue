@@ -1,52 +1,48 @@
 <template>
   <section>
-    <div class="mt-20 mr-[60px] ml-[60px]">
+    <div class="mt-5">
       <div class="flex justify-between w-full items-center mb-5">
-        <div class="text-[45px] font-bold font-lato mt-4 mt-4">Latest News</div>
+        <div class="text-[20px] font-bold font-lato mt-4 mt-4">Latest News</div>
         <div class="see">See all &nbsp;→</div>
       </div>
-      <div class="flex flex-wrap gap-4 justify-between">
-        <div
-          v-for="blog in slicedData"
-          :key="blog._id"
-          class="w-[307px] p-2 bg-white rounded-md flex flex-col justify-between"
-        >
-          <a :href="`${SACHAI_NEWS_URL}${blog._id}`" class="block">
-            <img
-              class="h-[212px] w-full rounded-md object-cover"
-              :src="blog.imgixUrlHighRes"
-              alt=""
-            />
-          </a>
-          <div class="flex justify-between items-center p-2">
-            <div class="flex gap-1 text-gray-400 text-xs">
-              <div>{{ blog.source }}</div>
-              <div>| {{ formatPublishTime(blog.publishTime) }}</div>
+      <div class="flex flex-row flex-wrap gap-3 justify-between">
+        <div v-for="news in slicedData" :key="news">
+          <div
+            class="flex flex-col bg-white rounded-[10px] drop-shadow-sm w-[330px]"
+          >
+            <div class="rounded-[10px]">
+              <!-- Foreground Image -->
+              <img
+                :src="news.imgixUrlHighRes"
+                class="relative z-10 h-[156px] w-[330px] rounded-[10px] object-cover"
+                alt=""
+              />
             </div>
-            <div class="flex gap-1">
-              <span class="mdi mdi-share-variant text-[19px]"></span>
-              <span class="mdi mdi-bookmark-outline text-[21px]"></span>
+            <div class="flex justify-between items-center p-3">
+              <div class="flex gap-1 text-[#676767] text-xs">
+                <div>{{ news.source }}</div>
+                <div>| {{ formatPublishTime(news.publishTime) }}</div>
+              </div>
+              <div class="flex gap-1">
+                <span class="mdi mdi-share-variant text-[19px]"></span>
+                <span class="mdi mdi-bookmark-outline text-[21px]"></span>
+              </div>
             </div>
-          </div>
-          <div class="pl-2 pr-2 text-[18px] font-semibold">
-            <a
-              :href="`${SACHAI_NEWS_URL}${blog._id}`"
-              class="hover:text-current fontCustom"
-            >
-              {{ blog.headline }}
-            </a>
-          </div>
-          <div class="pl-2 pr-2 mt-2 text-base">
-            <a
-              :href="`${SACHAI_NEWS_URL}${blog._id}`"
-              class="hover:text-current"
-            >
-              {{ truncateText(blog.summary, 100) }}
-            </a>
-          </div>
-          <div class="p-2 mt-2 mb-2 text-sm flex gap-1">
-            <span class="text-red-500">Politics</span>
-            <span>| 4 min read</span>
+            <div class="pl-3 pr-3 text-[16px] font-semibold">
+              <a
+                :href="`${SACHAI_NEWS_URL}${news._id}`"
+                class="hover:text-current font-16 multiline-truncate1"
+              >
+                {{ news.headline }}
+              </a>
+            </div>
+            <div class="pl-3 pr-3 para multiline-truncate">
+              {{ news.summary }}
+            </div>
+            <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
+              <span class="text-red-500 bold">Politics</span>
+              <span>| 4 min read</span>
+            </div>
           </div>
         </div>
       </div>
@@ -67,14 +63,7 @@ export default {
       screenWidth: window.innerWidth,
     };
   },
-  computed: {
-    slicedData() {
-      if (this.screenWidth < 640) {
-        return this.blogs.slice(0, 2);
-      }
-      return this.blogs.slice(0, 4);
-    },
-  },
+
   mounted() {
     this.fetchBlogs();
     window.addEventListener("resize", this.updateScreenWidth);
@@ -110,10 +99,35 @@ export default {
       this.screenWidth = window.innerWidth;
     },
   },
+  computed: {
+    slicedData() {
+      if (this.screenWidth < 640) {
+        // Mobile devices
+        return this.blogs.slice(0, 1);
+      } else if (this.screenWidth >= 640 && this.screenWidth < 1024) {
+        // Tablets
+        return this.blogs.slice(0, 3);
+      } else {
+        // Desktop and larger devices
+        return this.blogs.slice(0, 4);
+      }
+    },
+  },
 };
 </script>
-<style>
-.fontCustom {
-  font-family: "source-serif-pro-semibold";
+<style scoped>
+.multiline-truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
