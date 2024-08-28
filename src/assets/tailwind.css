@@ -88,3 +88,7 @@ button.p-carousel-next.p-link {
 display: block !important;
 position: relative;
 }
+
+
+.p-carousel.p-component.p-carousel-horizontal.custom-carousel.w-full {
+  width: 100% !important;}
