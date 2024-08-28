@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         lato: ["Lato", "sans-serif"],
       },
+      screens: {
+        "between-sm-md": { min: "640px", max: "767px" }, // Custom range
+      },
     },
   },
   plugins: [],
