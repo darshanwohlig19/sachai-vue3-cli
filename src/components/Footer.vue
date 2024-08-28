@@ -4,7 +4,7 @@
       class="h-full w-full flex flex-col md:flex-row gap-6 md:gap-10 mob_des bg-white mt-10 p-6"
     >
       <!-- Info Section -->
-      <div class="info w-full md:w-[30%]">
+      <div class="info w-full md:w-[30%] mb-4">
         <div>
           <img
             src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
@@ -107,7 +107,9 @@
 
       <!-- Latest News, Help, and Trending Topics -->
       <div class="let_hlp_trend w-full md:w-[30%] flex flex-col gap-6">
-        <div class="flex flex-wrap gap-5 justify-between">
+        <div
+          class="flex flex-wrap gap-5 justify-between mt-6 ml-[-10px] md:mt-0"
+        >
           <!-- Latest News -->
           <div class="let w-full md:w-auto">
             <div class="footer-heads text-sm">Latest News</div>
@@ -128,7 +130,7 @@
           </div>
 
           <!-- Help -->
-          <div class="hlp w-full md:w-auto">
+          <div class="hlp w-full mt-4 md:mt-0 md:w-auto">
             <div class="footer-heads text-sm">Help</div>
             <ul>
               <li class="footer-links text-[#52525B] text-sm pt-3">
@@ -187,7 +189,7 @@
     <!-- TABLET -->
 
     <div class="tablet1 bg-white flex flex-row justify-between p-6">
-      <div class="info">
+      <div class="info mb-4 flex flex-col justify-center items-center">
         <div>
           <img
             src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
@@ -197,7 +199,7 @@
           />
         </div>
         <div class="font-24 mt-4">New Age News App Powered by AI</div>
-        <div class="font-18 mt-2 w-[318px]">
+        <div class="font-18 mt-2">
           Get trustworthy news in an easy-to-read format, our smart chatbot
           provides a personalized and interactive news experience for you.
         </div>
@@ -369,9 +371,9 @@
     </div>
     <!-- Bottom Section -->
     <div
-      class="bg-[#fff] text-[#52525B] text-lato text-[15px] py-4 px-4 md:px-6"
+      class="bg-[#fff] text-[#52525B] text-lato text-[15px] text-center py-4 px-4 md:px-6"
     >
-      <div class="flex flex-col md:flex-row justify-center">
+      <div class="flex flex-col text-center md:flex-row justify-center">
         <div>© 2024, All Rights Reserved</div>
       </div>
     </div>
