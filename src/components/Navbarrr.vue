@@ -138,8 +138,6 @@
       </div>
     </div>
 
-
-
     <!-- Popup Confirmation -->
     <div
       v-if="isPopupVisible"
@@ -173,11 +171,8 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { ref, onMounted } from "vue";
-
-
 import { useToast } from "primevue/usetoast";
 import Chip from "primevue/chip";
-
 
 export default {
   components: {
@@ -283,49 +278,7 @@ export default {
         console.error("Error fetching categories:", error);
       }
     };
-    const auth = getAuth();
-    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
-    const router = useRouter();
 
-    const handleAuthAction = async (event) => {
-      event.preventDefault(); // Prevent the default anchor behavior
-
-      if (isLoggedIn.value) {
-        // Handle logout
-        try {
-          // Sign out from Firebase
-          await signOut(auth);
-
-          // Call logout API
-          const apiDataToken = localStorage.getItem("apiDataToken");
-          if (apiDataToken) {
-            const response = await axios.post(
-              "https://api-uat.newsshield.io/user/logoutEvent",
-              {},
-              {
-                headers: {
-                  Authorization: `${apiDataToken}`,
-                },
-              }
-            );
-            if (response.status === 200) {
-              localStorage.removeItem("apiDataToken");
-              localStorage.setItem("logoutSuccess", "true");
-              location.reload();
-            }
-          }
-
-          // Update local state and redirect
-          isLoggedIn.value = false;
-          router.push("/"); // Redirect to home page or another desired page
-        } catch (error) {
-          console.error("Error during logout:", error);
-        }
-      } else {
-        // Redirect to login page
-        router.push("/Login");
-      }
-    };
     onMounted(() => {
       fetchCategories();
     });
@@ -334,12 +287,6 @@ export default {
       isMenuOpen,
       isDropdownOpen,
       categories,
-
-      selectedCategoryId,
-      fetchCategories,
-      isLoggedIn,
-      handleAuthAction,
-
       isLoggedIn,
       showBookmarkLink,
       isPopupVisible,
@@ -349,7 +296,6 @@ export default {
       handleBackgroundClick,
       hidePopup,
       handleLogout,
-
     };
   },
 };

@@ -132,4 +132,3 @@ export default {
   text-overflow: ellipsis;
 }
 </style>
-
