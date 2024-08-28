@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="text-2xl font-bold mb-4">News Categories</h2>
-    <div class="card">
+    <div class="carousel_card">
       <Carousel
         :value="categories"
         :numVisible="4"
@@ -9,6 +9,7 @@
         :circular="true"
         :showIndicators="true"
         :showNavigators="true"
+        :responsiveOptions="responsiveOptions"
         class="custom-carousel w-full"
       >
         <template #item="slotProps">
@@ -77,27 +78,31 @@ const fetchCategories = async () => {
   }
 };
 
+const responsiveOptions = [
+  {
+    breakpoint: "1024px",
+    numVisible: 4,
+    numScroll: 4,
+  },
+  {
+    breakpoint: "768px",
+    numVisible: 3,
+    numScroll: 3,
+  },
+  {
+    breakpoint: "480px",
+    numVisible: 1,
+    numScroll: 1,
+  },
+];
+
 onMounted(() => {
   fetchCategories();
 });
 </script>
 
 <style scoped>
-@media (max-width: 480px) {
-  .custom-carousel .p-carousel .p-carousel-item {
-    flex: 1 0 100%;
-  }
-}
-
-@media (min-width: 481px) and (max-width: 768px) {
-  .custom-carousel .p-carousel .p-carousel-item {
-    flex: 1 0 33.33%; /* 3 items per view */
-  }
-}
-
-@media (min-width: 769px) {
-  .custom-carousel .p-carousel .p-carousel-item {
-    flex: 1 0 25%; /* 4 items per view */
-  }
+.custom-carousel .p-carousel .p-carousel-item {
+  flex: 1 0 auto;
 }
 </style>
