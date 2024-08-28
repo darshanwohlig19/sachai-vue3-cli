@@ -6,6 +6,12 @@ module.exports = {
       fontFamily: {
         lato: ["Lato", "sans-serif"],
       },
+      screens: {
+        "xl-max": { max: "1300px" }, // Custom breakpoint for max 1300px
+        "lg-max": { max: "1024px" }, // Custom breakpoint for max 1024px
+        "md-max": { max: "768px" }, // Custom breakpoint for max 768px
+        "sm-max": { max: "750px" }, // Custom breakpoint for max 600px
+      },
     },
   },
   plugins: [],
