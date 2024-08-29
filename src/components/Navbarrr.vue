@@ -128,14 +128,34 @@
         </div>
       </div>
     </div>
-
-    <div class="w-full h-[67px] mt-1 flex justify-around bg-white items-center">
-      <div v-for="heading in categories" :key="heading._id">
-        <Chip
-          class="bg-transparent border-1 border-[#D4D4D4] capitalize head-cat gap-5"
-          :label="heading.name"
-        />
+    <div
+      class="w-full h-[67px] mt-1 flex justify-between bg-white items-center relative lg:overflow-x-hidden"
+    >
+      <!-- Icons for mobile and tablet screens -->
+      <i
+        class="pi pi-angle-left ml-2 cursor-pointer block md:hidden"
+        @click="scrollLeft"
+      ></i>
+      <div
+        class="flex items-center space-x-3 px-2 flex-1 overflow-x-auto lg:overflow-x-hidden whitespace-nowrap"
+        ref="categoriesContainer"
+      >
+        <div
+          v-for="heading in categories"
+          :key="heading._id"
+          class="flex-shrink-0"
+        >
+          <Chip
+            class="bg-transparent border-1 border-[#D4D4D4] capitalize head-cat"
+            :label="heading.name"
+          />
+        </div>
       </div>
+
+      <i
+        class="pi pi-angle-right mr-2 cursor-pointer block md:hidden"
+        @click="scrollRight"
+      ></i>
     </div>
 
     <!-- Popup Confirmation -->
@@ -187,7 +207,26 @@ export default {
     const isPopupVisible = ref(false);
     const router = useRouter();
     const toast = useToast();
+    const categoriesContainer = ref(null);
 
+    const scrollLeft = () => {
+      if (categoriesContainer.value) {
+        categoriesContainer.value.scrollBy({
+          left: -100, // Adjust the scroll distance as needed
+          behavior: "smooth",
+        });
+      }
+    };
+
+    // Scroll right function
+    const scrollRight = () => {
+      if (categoriesContainer.value) {
+        categoriesContainer.value.scrollBy({
+          left: 100, // Adjust the scroll distance as needed
+          behavior: "smooth",
+        });
+      }
+    };
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
     };
@@ -296,6 +335,9 @@ export default {
       handleBackgroundClick,
       hidePopup,
       handleLogout,
+      scrollRight,
+      scrollLeft,
+      categoriesContainer,
     };
   },
 };
