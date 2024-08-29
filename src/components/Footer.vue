@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-3">
     <div
       class="h-full w-full flex flex-col md:flex-row gap-6 md:gap-10 mob_des bg-white mt-10 p-6"
     >

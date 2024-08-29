@@ -2,7 +2,7 @@
   <div class="mt-3">
     <div class="heads">More News</div>
     <div class="bg-white w-[100%] flex rounded-[10px] p-3 mt-3">
-      <div class="w-[30%]">
+      <div class="w-[30%] between-sm-md:w-[50%] below-sm:w-[100%]">
         <div class="flex flex-row gap-3">
           <div class="w-[50px]">
             <img class="small-img" src="../assets/Group.png" />
@@ -48,10 +48,10 @@
           </div>
         </div>
       </div>
-      <div class="w-[3%] flex justify-center">
-        <div class="divider1"></div>
+      <div class="w-[3%] flex justify-center below-sm:hidden">
+        <div class="divider1 below-sm:hidden"></div>
       </div>
-      <div class="w-[30%]">
+      <div class="w-[30%] between-sm-md:w-[50%] below-sm:hidden">
         <div class="flex flex-row gap-3">
           <div class="w-[50px]">
             <img class="small-img" src="../assets/Group.png" />
@@ -97,11 +97,13 @@
           </div>
         </div>
       </div>
-      <div class="w-[3%] flex justify-center">
-        <div class="divider1"></div>
+      <div
+        class="w-[3%] flex justify-center between-sm-md:hidden below-sm:hidden"
+      >
+        <div class="divider1 between-sm-md:hidden below-sm:hidden"></div>
       </div>
 
-      <div class="w-[30%]">
+      <div class="w-[30%] between-sm-md:hidden below-sm:hidden">
         <div class="flex flex-row gap-3">
           <div class="w-[50px]">
             <img class="small-img" src="../assets/Group.png" />
