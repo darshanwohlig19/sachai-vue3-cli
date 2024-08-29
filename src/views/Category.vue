@@ -1,7 +1,7 @@
 <template>
   <Navbarrr />
-  <div class="mx-[20px] lg:mx-[60px]">
-    <div class="flex flex-col lg:flex-row justify-between gap-5">
+  <div class="mx-[20px]">
+    <!-- <div class="flex flex-col lg:flex-row justify-between gap-5">
       <div class="w-[100%] lg:w-[50%]">
         <img
           :src="news[0]?.imgixUrlHighRes || fallbackImage"
@@ -165,16 +165,18 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="flex flex-col lg:flex-row gap-5 mt-10">
-      <div class="w-[100%] lg:w-[70%] flex flex-col gap-5">
+    </div> -->
+    <div class="flex flex-col lg:flex-row gap-3 mt-3">
+      <div
+        class="w-[100%] lg:w-[62%] flex flex-col gap-3 bg-white rounded-[10px] p-3"
+      >
         <div
           v-for="(item, index) in paginatedNews"
           :key="index"
-          class="w-full h-[50%] bg-white h-[200px] flex rounded-lg"
+          class="w-full h-[50%] bg-white drop-shadow-md flex rounded-lg"
         >
-          <div class="w-full h-[50%] bg-white h-[200px] flex rounded-lg">
-            <div class="w-[40%] h-[212px] items-center p-2">
+          <div class="w-full h-[50%] bg-white flex rounded-lg">
+            <div class="w-[40%] h-[212px] items-center">
               <a :href="`${SACHAI_NEWS_URL}${item._id}`">
                 <img
                   class="w-full h-full rounded-md object-cover"
@@ -183,7 +185,7 @@
                 />
               </a>
             </div>
-            <div class="w-[60%] ml-2 mt-2 mr-2 flex flex-col justify-between">
+            <div class="w-[60%] ml-4 mt-2 mr-2 flex flex-col justify-between">
               <div class="flex justify-between items-center mt-1">
                 <div class="flex gap-1 text-gray-400 medium">
                   <div class="text-[8px] lg:text-[14px] font-lato">
@@ -207,7 +209,7 @@
                 </div>
               </div>
               <div
-                class="text-[12px] lg:text-[24px] fontCustom leading-1 bold mr-1 mt-2"
+                class="text-[12px] lg:text-[20px] fontCustom leading-1 bold mr-1 mt-2"
               >
                 <a
                   :href="`${SACHAI_NEWS_URL}${item._id}`"
@@ -217,7 +219,7 @@
                 </a>
               </div>
               <div
-                class="text-[10px] lg:text-[16px] font-lato leading-1 font-[16px] mr-1 mt-1 mb-3"
+                class="text-[10px] lg:text-[14px] text-[#878787] font-lato leading-1 mr-1 mt-1 mb-3"
               >
                 <a
                   :href="`${SACHAI_NEWS_URL}${item._id}`"
@@ -239,11 +241,10 @@
           :rows="rowsPerPage"
           :totalRecords="totalRecords"
           :page="currentPage"
-          :rowsPerPageOptions="[5, 10, 20]"
           @page="onPageChange"
         />
       </div>
-      <div class="w-[100%] lg:w-[30%]">
+      <div class="w-[100%] lg:w-[38%]">
         <HotTopics />
       </div>
     </div>
