@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex justify-between mt-6 relative">
+  <div class="w-full sm-max:!block flex justify-between mt-6 relative">
     <div class="relative">
       <Carousel
         :value="blogs"
@@ -66,9 +66,9 @@
       </Carousel>
     </div>
     <div
-      class="w-[65%] md:w-[65%] sm:w-[65%] rounded-[10px] bg-white relative mt-4 md:mt-0 sm:mt-4 flex justify-between p-4"
+      class="w-[65%] md:w-[65%] sm:w-[65%] sm-max:w-[100%] rounded-[10px] bg-white relative mt-4 md:mt-0 sm:mt-4 flex justify-between p-4"
     >
-      <div class="w-[48%] flex flex-col justify-between">
+      <div class="w-[48%] xl-max:w-[100%] flex flex-col justify-between">
         <div class="flex gap-2 mt-0">
           <div class="flex w-[50px]">
             <img class="image-small" src="../assets/Group.png" />
@@ -82,8 +82,8 @@
             </div>
           </div>
         </div>
-        <div class="border-1"></div>
-        <div class="flex gap-2 mt-0">
+        <div class="border-1 sm-max:mt-3"></div>
+        <div class="flex gap-2 sm-max:!mt-4 mt-0">
           <div class="flex w-[50px]">
             <img class="image-small" src="../assets/Group.png" />
           </div>
@@ -96,9 +96,9 @@
             </div>
           </div>
         </div>
-        <div class="border-1"></div>
+        <div class="border-1 sm-max:mt-3"></div>
 
-        <div class="flex gap-2 mt-0">
+        <div class="flex gap-2 mt-0 sm-max:!mt-4">
           <div class="flex w-[50px]">
             <img class="image-small" src="../assets/Group.png" />
           </div>
@@ -113,10 +113,10 @@
         </div>
         <!-- <div class="dividerrr mt-3"></div> -->
       </div>
-      <div class="w-[1%] flex justify-center">
+      <div class="w-[1%] xl-max:!hidden flex justify-center">
         <div class="divider11"></div>
       </div>
-      <div class="w-[48%] flex flex-col justify-between">
+      <div class="w-[48%] xl-max:!hidden flex flex-col justify-between">
         <div
           class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-0"
         >
@@ -179,6 +179,76 @@
             <div class="headline-tuncate">
               {{ blogs[3]?.headline || "headline" }}
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      class="xl-max:w-[100%] xl-max:bg-white xl-max:!mt-2 hidden xl-max:!block justify-between"
+    >
+      <div
+        class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-0"
+      >
+        <div class="flex-shrink-0">
+          <img
+            class="h-[57px] w-[78px] object-cover rounded-[8px]"
+            :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
+            alt="Blog Image"
+          />
+        </div>
+        <div class="font-14 p-2 h">
+          <div class="headline-tuncate">
+            {{ blogs[0]?.headline || "headline" }}
+          </div>
+        </div>
+      </div>
+      <div
+        class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
+      >
+        <div class="flex-shrink-0">
+          <img
+            class="h-[57px] w-[78px] object-cover rounded-[8px]"
+            :src="blogs[1]?.imgixUrlHighRes || fallbackImage"
+            alt="Blog Image"
+          />
+        </div>
+        <div class="font-14 p-2 h">
+          <div class="headline-tuncate">
+            {{ blogs[1]?.headline || "headline" }}
+          </div>
+        </div>
+      </div>
+      <div
+        class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
+      >
+        <div class="flex-shrink-0">
+          <img
+            class="h-[57px] w-[78px] object-cover rounded-[8px]"
+            :src="blogs[2]?.imgixUrlHighRes || fallbackImage"
+            alt="Blog Image"
+          />
+        </div>
+        <div class="font-14 p-2 h">
+          <div class="headline-tuncate">
+            {{ blogs[2]?.headline || "headline" }}
+          </div>
+        </div>
+      </div>
+      <div
+        class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
+      >
+        <div class="flex-shrink-0">
+          <img
+            class="h-[57px] w-[78px] object-cover rounded-[8px]"
+            :src="blogs[3]?.imgixUrlHighRes || fallbackImage"
+            alt="Blog Image"
+          />
+        </div>
+        <div class="font-14 p-2 h">
+          <div class="headline-tuncate">
+            {{ blogs[3]?.headline || "headline" }}
           </div>
         </div>
       </div>
@@ -344,16 +414,16 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* @media (max-width: 1600px) and (min-width: 1400px) {
+@media (max-width: 1200px) {
   .p-carousel {
     position: relative;
-    width: 40vw !important;
+    width: 45vh !important;
   }
 }
-@media (min-width: 1600px) {
+@media (max-width: 750px) {
   .p-carousel {
     position: relative;
-    width: 35vw !important;
+    width: 100% !important;
   }
-} */
+}
 </style>

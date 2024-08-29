@@ -38,7 +38,7 @@ button.p-carousel-next.p-link {
   display: none !important;
 }
 
-.card {
+.carousel_card {
   position: relative;
 }
 
@@ -55,8 +55,8 @@ button.p-carousel-next.p-link {
   font-family: lato;
 }
 
-.card button.p-carousel-prev.p-link,
-.card button.p-carousel-next.p-link {
+.carousel_card button.p-carousel-prev.p-link,
+.carousel_card button.p-carousel-next.p-link {
   display: flex !important;
   background-color: #ffff;
   justify-content: center;
@@ -67,24 +67,28 @@ button.p-carousel-next.p-link {
   padding: 0px;
   position: absolute;
 }
-.card button.p-carousel-prev.p-link{
+.carousel_card button.p-carousel-prev.p-link{
   top : 50%;
   left: 0px;
   z-index: 10;
   transform: translateY(-50%);
 }
 
-.card button.p-carousel-next.p-link{
+.carousel_card button.p-carousel-next.p-link{
   top : 50%;
   right: 0px;
   z-index: 10;
   transform: translateY(-50%);
 
 }
-.card button.p-carousel-next.p-link{
+.carousel_card button.p-carousel-next.p-link{
   color: #ff0053 !important;
 }
-.card .p-carousel-container{
+.carousel_card .p-carousel-container{
 display: block !important;
 position: relative;
 }
+
+
+.p-carousel.p-component.p-carousel-horizontal.custom-carousel.w-full {
+  width: 100% !important;}
