@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <div class="mt-3">
     <div class="heads">More News</div>
     <div class="bg-white w-[100%] flex rounded-[10px] p-3 mt-3">
       <div class="w-[30%]">

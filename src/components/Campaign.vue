@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white mt-6 rounded-[10px] p-4">
+  <div class="bg-white mt-3 rounded-[10px] p-4">
     <div class="w-[100%] flex justify-between">
       <div class="heads">Campaign</div>
       <div class="see-all">See all →</div>

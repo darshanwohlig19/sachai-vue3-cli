@@ -29,7 +29,7 @@
     <div class="mx-[30px]">
       <FeaturedNews />
 
-      <Trending />
+      <!-- <Trending /> -->
 
       <Latest />
 
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Trending from "@/components/Trending.vue";
+// import Trending from "@/components/Trending.vue";
 
 import Latest from "@/components/Latest.vue";
 // import Trending from "@/components/Trending.vue";
@@ -76,7 +76,7 @@ export default {
 
     CarouselCat,
 
-    Trending,
+    // Trending,
 
     Campaign,
 

@@ -145,10 +145,15 @@
           :key="heading._id"
           class="flex-shrink-0"
         >
-          <Chip
-            class="bg-transparent border-1 border-[#D4D4D4] capitalize head-cat"
-            :label="heading.name"
-          />
+          <a
+            :href="`/categories/${heading._id}?category=${heading.name}`"
+            class="no-underline"
+          >
+            <Chip
+              class="bg-transparent border-1 border-[#D4D4D4] capitalize head-cat"
+              :label="heading.name"
+            />
+          </a>
         </div>
       </div>
 
@@ -192,12 +197,9 @@ import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { ref, onMounted } from "vue";
 import { useToast } from "primevue/usetoast";
-import Chip from "primevue/chip";
 
 export default {
-  components: {
-    Chip,
-  },
+  components: {},
   setup() {
     const isMenuOpen = ref(false);
     const isDropdownOpen = ref(false);
@@ -218,7 +220,6 @@ export default {
       }
     };
 
-    // Scroll right function
     const scrollRight = () => {
       if (categoriesContainer.value) {
         categoriesContainer.value.scrollBy({
@@ -299,6 +300,7 @@ export default {
         hidePopup();
       }
     };
+
     const fetchCategories = async () => {
       try {
         const languageId = "6421a32aa020a23deacecf92";
@@ -349,5 +351,17 @@ export default {
 
 .nav-items:active {
   color: #ff0053; /* Color for active state */
+}
+.chip-button {
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #676767;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s;
+  text-transform: capitalize;
 }
 </style>

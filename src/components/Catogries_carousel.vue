@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h2 class="text-2xl font-bold mb-4">News Categories</h2>
+  <div class="mt-3">
     <div class="carousel_card">
       <Carousel
         :value="categories"
@@ -11,31 +10,37 @@
         :showNavigators="true"
         :responsiveOptions="responsiveOptions"
         class="custom-carousel w-full"
+        :autoplayInterval="5000"
       >
         <template #item="slotProps">
-          <div class="category-item p-2">
-            <Card class="h-full w-full p-3 rounded-[10px]">
+          <div class="category-item mx-2">
+            <Card class="h-full p-3 rounded-[10px]">
               <template #header>
-                <div class="flex justify-between items-center mb-2">
-                  <h3 class="font-18 capitalize">
-                    {{ slotProps.data.name }}
-                  </h3>
+                <div class="flex justify-between items-center mb-3">
+                  <div class="flex flex-row items-center gap-1">
+                    <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
+                    <h3 class="font-18 capitalize">
+                      {{ slotProps.data.name }}
+                    </h3>
+                  </div>
                   <a href="#" class="see-all">See all →</a>
                 </div>
               </template>
               <template #content>
-                <div class="flex flex-col gap-9">
+                <div class="flex flex-col gap-3">
                   <div
-                    v-for="heading in categories"
-                    :key="heading._id"
-                    class="mb-3 flex gap-3 rounded-[4px] shadow-md bg-white h-[67px]"
+                    v-for="news in slotProps.data.news.slice(0, 5)"
+                    :key="news._id"
+                    class="flex gap-3 rounded-[4px] drop-shadow-sm bg-white h-[67px]"
                   >
                     <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFcYJoetYqKxgVtDoFHN08qIF811Aglug-sw&s"
-                      class="w-[67px] h-[67px] object-cover mb-2 rounded"
+                      :src="news.imgixUrlHighRes"
+                      class="w-[67px] h-[67px] object-cover rounded"
                     />
-                    <p class="text-[14px] text-[#1E0627] fontCustom">
-                      {{ heading.name }}
+                    <p
+                      class="text-[14px] text-[#1E0627] multiline-truncate fontCustom"
+                    >
+                      {{ news.headline }}
                     </p>
                   </div>
                 </div>
@@ -59,6 +64,19 @@ import "primeicons/primeicons.css"; // Icons CSS
 
 const categories = ref([]);
 
+const fetchNewsForCategory = async (categoryId) => {
+  try {
+    const response = await axios.post(
+      "https://dev-api.askus.news/news/getCategoryWiseNewsForWeb/",
+      { categoryId }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching news for category ${categoryId}:`, error);
+    return [];
+  }
+};
+
 const fetchCategories = async () => {
   try {
     const languageId = "6421a32aa020a23deacecf92";
@@ -66,13 +84,19 @@ const fetchCategories = async () => {
       "https://dev-api.askus.news/category/getAllCat",
       { langauge: languageId }
     );
-    categories.value = response.data.slice(8, 16).map((category) => ({
+    const categoriesData = response.data.slice(8, 16).map((category) => ({
       ...category,
       name:
         category.name.toLowerCase() === "ai"
           ? category.name.toUpperCase()
           : category.name.replace(/-/g, " "),
     }));
+
+    for (let category of categoriesData) {
+      category.news = await fetchNewsForCategory(category._id);
+    }
+
+    categories.value = categoriesData;
   } catch (error) {
     console.error("Error fetching categories:", error);
   }
@@ -81,16 +105,16 @@ const fetchCategories = async () => {
 const responsiveOptions = [
   {
     breakpoint: "1024px",
-    numVisible: 4,
-    numScroll: 4,
-  },
-  {
-    breakpoint: "768px",
     numVisible: 3,
     numScroll: 3,
   },
   {
-    breakpoint: "480px",
+    breakpoint: "768px",
+    numVisible: 2,
+    numScroll: 2,
+  },
+  {
+    breakpoint: "625px",
     numVisible: 1,
     numScroll: 1,
   },
@@ -101,8 +125,24 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style>
 .custom-carousel .p-carousel .p-carousel-item {
   flex: 1 0 auto;
+}
+.multiline-truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.category-item .p-card {
+  box-shadow: none;
+}
+.category-item .p-card-content {
+  padding: 0px !important;
+}
+.category-item .p-card-body {
+  padding: 0px !important;
 }
 </style>

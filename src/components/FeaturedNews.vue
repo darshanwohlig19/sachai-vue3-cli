@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex flex-col between-sm-md:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-10"
+    class="flex flex-col between-sm-md:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-3"
   >
-    <div class="w-[100%] between-sm-md:w-[50%] lg:w-[30%] flex flex-col">
+    <div class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col">
       <div class="relative drop-shadow-lg">
         <img
           :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
@@ -12,11 +12,15 @@
         <div
           class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
         ></div>
-        <div class="absolute bottom-0 p-3 w-[405px]">
-          <div class="text-[16px] fontCustom text-white">
+        <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
+          <div
+            class="text-[14px] sm:text-[16px] md:text-[16px] fontCustom text-white"
+          >
             {{ blogs[0]?.headline || "No Headline" }}
           </div>
-          <div class="flex gap-2 text-white text-[12px] font-lato">
+          <div
+            class="flex gap-2 text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"
+          >
             <div>{{ blogs[0]?.source }}</div>
             <div>|</div>
             <div>{{ formatPublishTime(blogs[0]?.publishTime) }}</div>
@@ -31,9 +35,9 @@
       </div>
     </div>
     <div
-      class="w-[100%] between-sm-md:w-[50%] lg:w-[25%] flex flex-col justify-between"
+      class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col justify-between"
     >
-      <div v-for="blog in blogs1" :key="blog">
+      <div v-for="blog in blogs1" :key="blog" class="below-sm:mt-4">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
         >
@@ -50,11 +54,11 @@
         </div>
       </div>
     </div>
-    <!-- <div class="border-1"></div> -->
+    <div class="border-1 below-sm:hidden between-sm-md:hidden"></div>
     <div
-      class="w-[100%] between-sm-md:w-[100%] lg:w-[40%] flex flex-col justify-between"
+      class="w-[100%] between-sm-md:w-[100%] lg:w-[35%] flex flex-col justify-between"
     >
-      <div v-for="item in blogs2" :key="item">
+      <div v-for="item in blogs2" :key="item" class="mt-4 md:mt-4 lg:mt-0">
         <div class="flex flex-row gap-2">
           <div class="w-[5%] mt-2">
             <img src="../assets/Group.png" alt="" />
