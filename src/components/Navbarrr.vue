@@ -406,6 +406,7 @@ export default {
   top: 100%;
   right: 0;
   z-index: 10;
+}
 .chip-button {
   background-color: #fff;
   border: 1px solid #d4d4d4;
