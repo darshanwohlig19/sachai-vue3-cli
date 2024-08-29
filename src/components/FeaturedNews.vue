@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex flex-col md:flex-row p-4 bg-white rounded-[10px] gap-4 mt-10"
+    class="flex flex-col between-sm-md:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-10"
   >
-    <div class="w-[100%] md:w-[35%] flex flex-col">
+    <div class="w-[100%] between-sm-md:w-[50%] lg:w-[30%] flex flex-col">
       <div class="relative drop-shadow-lg">
         <img
           :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
@@ -30,7 +30,9 @@
         <div class="font-14 multiline-truncate1">{{ blogs[2]?.headline }}</div>
       </div>
     </div>
-    <div class="w-[100%] md:w-[30%] flex flex-col justify-between">
+    <div
+      class="w-[100%] between-sm-md:w-[50%] lg:w-[25%] flex flex-col justify-between"
+    >
       <div v-for="blog in blogs1" :key="blog">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
@@ -48,8 +50,10 @@
         </div>
       </div>
     </div>
-    <div class="border-1"></div>
-    <div class="w-[100%] md:w-[40%] flex flex-col justify-between">
+    <!-- <div class="border-1"></div> -->
+    <div
+      class="w-[100%] between-sm-md:w-[100%] lg:w-[40%] flex flex-col justify-between"
+    >
       <div v-for="item in blogs2" :key="item">
         <div class="flex flex-row gap-2">
           <div class="w-[5%] mt-2">
