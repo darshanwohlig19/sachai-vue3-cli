@@ -15,7 +15,7 @@
               Darshan Gada
             </div>
             <div style="color: white" class="text-[16px] sm:text-[32px]">
-              Swati 28 July 2023
+              28 July 2023
             </div>
           </div>
 

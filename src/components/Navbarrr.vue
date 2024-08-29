@@ -10,13 +10,13 @@
         />
       </div>
       <div class="flex gap-4 items-center justify-center">
-        <div class="head-navs">
+        <div class="hidden lg:flex head-navs">
           <!-- <a href="/">Home</a> -->
           <RouterLink class="nav-items" active-class="active-link" to="/"
             >Home</RouterLink
           >
         </div>
-        <div class="head-navs">
+        <div class="hidden lg:flex head-navs">
           <RouterLink
             class="nav-items"
             active-class="active-link"
@@ -25,7 +25,7 @@
           >
           <!-- Astrology -->
         </div>
-        <div class="head-navs">
+        <div class="hidden lg:flex head-navs">
           <RouterLink
             class="nav-items"
             active-class="active-link"
@@ -33,7 +33,7 @@
             >Category</RouterLink
           >
         </div>
-        <div class="head-navs">
+        <div class="hidden lg:flex head-navs">
           <RouterLink
             class="nav-items"
             active-class="active-link"
@@ -42,7 +42,7 @@
           >
         </div>
 
-        <div class="head-navs">
+        <div class="hidden lg:flex head-navs">
           <a href="#" class="nav-items" @click="handleAuthAction">
             {{ isLoggedIn ? "Logout" : "Login" }}
           </a>
@@ -126,6 +126,48 @@
             </svg>
           </i>
         </div>
+        <div
+          class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md lg:hidden"
+          @click="toggleCardDropdown"
+        >
+          <i class="pi pi-bars"></i>
+        </div>
+      </div>
+    </div>
+    <div
+      v-if="isCardDropdownOpen"
+      class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10"
+    >
+      <div class="py-1">
+        <RouterLink
+          to="/"
+          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
+          active-class="active-link"
+          >Home</RouterLink
+        >
+        <RouterLink
+          to="/Astrology"
+          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
+          active-class="active-link"
+          >Astrology</RouterLink
+        >
+        <RouterLink
+          to="/Category"
+          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
+          active-class="active-link"
+          >Category</RouterLink
+        >
+        <RouterLink
+          to="/Bookmark"
+          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
+          active-class="active-link"
+          >Bookmark</RouterLink
+        >
+        <a
+          @click="handleLogout"
+          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer nav-items"
+          >Logout</a
+        >
       </div>
     </div>
     <div
@@ -208,7 +250,12 @@ export default {
     const router = useRouter();
     const toast = useToast();
     const categoriesContainer = ref(null);
+    const isCardDropdownOpen = ref(false);
 
+    const toggleCardDropdown = () => {
+      isCardDropdownOpen.value = !isCardDropdownOpen.value;
+      console.log("Dropdown is now:", isCardDropdownOpen.value);
+    };
     const scrollLeft = () => {
       if (categoriesContainer.value) {
         categoriesContainer.value.scrollBy({
@@ -338,6 +385,8 @@ export default {
       scrollRight,
       scrollLeft,
       categoriesContainer,
+      isCardDropdownOpen,
+      toggleCardDropdown,
     };
   },
 };
@@ -349,5 +398,11 @@ export default {
 
 .nav-items:active {
   color: #ff0053; /* Color for active state */
+}
+.card-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
 }
 </style>
