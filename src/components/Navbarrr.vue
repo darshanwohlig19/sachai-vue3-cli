@@ -25,14 +25,7 @@
           >
           <!-- Astrology -->
         </div>
-        <div class="hidden lg:flex head-navs">
-          <RouterLink
-            class="nav-items"
-            active-class="active-link"
-            to="/Category"
-            >Category</RouterLink
-          >
-        </div>
+
         <div class="hidden lg:flex head-navs">
           <RouterLink
             class="nav-items"
@@ -150,12 +143,6 @@
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
           active-class="active-link"
           >Astrology</RouterLink
-        >
-        <RouterLink
-          to="/Category"
-          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
-          active-class="active-link"
-          >Category</RouterLink
         >
         <RouterLink
           to="/Bookmark"

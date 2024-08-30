@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div class="flex flex-row gap-10 mt-5">
+      <div class="flex flex-row gap-3 mt-5">
         <div class="font-14 multiline-truncate1">{{ blogs[1]?.headline }}</div>
         <div class="border-1"></div>
         <div class="font-14 multiline-truncate1">{{ blogs[2]?.headline }}</div>

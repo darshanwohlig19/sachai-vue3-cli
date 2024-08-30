@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-white mt-3 rounded-[10px] p-4">
+  <div class="bg-white mt-3 rounded-[10px] p-3">
     <div class="w-[100%] flex justify-between">
       <div class="flex flex-row items-center gap-2">
-        <div class="bg-[#FF0053] w-[3px] h-[10px] rounded-md"></div>
+        <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
         <div class="heads">Campaign</div>
       </div>
       <div class="see-all">See all →</div>
