@@ -5,16 +5,17 @@
         <div class="text-[20px] font-bold font-lato">Latest News</div>
         <div class="text-[16px] text-[#FF0053]">See all &nbsp;→</div>
       </div>
-      <div class="flex flex-row flex-wrap gap-3 justify-between">
-        <div v-for="news in slicedData" :key="news">
-          <div
-            class="flex flex-col bg-white rounded-[10px] drop-shadow-sm w-[330px]"
-          >
+      <div class="flex flex-row gap-3 justify-between">
+        <div
+          v-for="news in slicedData"
+          :key="news"
+          class="w-[33%] below-sm:w-full"
+        >
+          <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
             <div class="rounded-[10px]">
-              <!-- Foreground Image -->
               <img
                 :src="news.imgixUrlHighRes"
-                class="relative z-10 h-[156px] w-[330px] rounded-[10px] object-cover"
+                class="relative z-10 h-[156px] w-full rounded-[10px] object-cover"
                 alt=""
               />
             </div>

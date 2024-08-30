@@ -1,11 +1,16 @@
 <template>
   <div class="bg-white mt-3 rounded-[10px] p-4">
     <div class="w-[100%] flex justify-between">
-      <div class="heads">Campaign</div>
+      <div class="flex flex-row items-center gap-2">
+        <div class="bg-[#FF0053] w-[3px] h-[10px] rounded-md"></div>
+        <div class="heads">Campaign</div>
+      </div>
       <div class="see-all">See all →</div>
     </div>
-    <div class="w-[100%] flex flex-col md:flex-row gap-4 mt-4">
-      <div class="w-[100%] sm:w-[64%] flex justify-between gap-3">
+    <div class="w-[100%] flex flex-col md:flex-row gap-4 mt-3">
+      <div
+        class="w-[100%] sm:w-[64%] md-max:w-[100%] flex justify-between gap-3"
+      >
         <div class="w-[32%] between-sm-md:w-[50%] below-sm:w-[100%]">
           <div>
             <img
@@ -52,46 +57,47 @@
       <div class="w-[1%] flex justify-center">
         <div class="divider1"></div>
       </div>
-      <div class="w-[100%] md:w-[34%]">
-        <div class="flex flex-row gap-2">
-          <div class="flex justify-center items-center">
+      <div
+        class="w-[100%] sm:w-[36%] md-max:w-[100%] flex flex-col justify-between md-max:gap-5"
+      >
+        <div class="flex flex-row gap-2 items-center">
+          <div>
             <img src="../assets/Group.png" alt="" />
           </div>
           <div class="font-14">
             Lorem ipsum dolor sit amet consectetur. Leo est mattis Leo est
           </div>
         </div>
-        <div class="divider mt-3"></div>
-
-        <div class="hidden sm:flex sm:flex-row gap-2 mt-4">
-          <div class="flex justify-center items-center">
-            <img src="../assets/Group.png" alt="" />
-          </div>
-          <div class="font-14">
-            Lorem ipsum dolor sit amet consectetur. Leo est mattis Leo hello
-          </div>
-        </div>
-        <div class="hidden sm:block divider mt-3"></div>
-        <div class="hidden sm:flex sm:flex-row gap-2 mt-4">
-          <div class="flex justify-center items-center">
+        <div class="block divider"></div>
+        <div class="flex flex-row gap-2 items-center">
+          <div>
             <img src="../assets/Group.png" alt="" />
           </div>
           <div class="font-14">
             Lorem ipsum dolor sit amet consectetur. Leo est mattis Leo est
           </div>
         </div>
-        <div class="hidden sm:block divider mt-3"></div>
-        <div class="flex flex-row gap-2 mt-4">
-          <div class="flex justify-center items-center">
+        <div class="block divider"></div>
+        <div class="flex flex-row gap-2 items-center">
+          <div>
             <img src="../assets/Group.png" alt="" />
           </div>
           <div class="font-14">
             Lorem ipsum dolor sit amet consectetur. Leo est mattis Leo est
           </div>
         </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-2 mt-4">
-          <div class="flex justify-center items-center">
+        <div class="hidden md:block divider"></div>
+        <div class="hidden md:flex flex-row gap-2 items-center">
+          <div>
+            <img src="../assets/Group.png" alt="" />
+          </div>
+          <div class="font-14">
+            Lorem ipsum dolor sit amet consectetur. Leo est mattis Leo est
+          </div>
+        </div>
+        <div class="hidden md:block divider"></div>
+        <div class="hidden md:flex flex-row gap-2 items-center">
+          <div>
             <img src="../assets/Group.png" alt="" />
           </div>
           <div class="font-14">
