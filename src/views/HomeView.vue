@@ -34,7 +34,7 @@
       <Latest />
 
       <Campaign />
-
+      <CategoryNews />
       <CarouselCat />
 
       <MoreNews />
@@ -48,7 +48,7 @@
 
 import Latest from "@/components/Latest.vue";
 // import Trending from "@/components/Trending.vue";
-
+import CategoryNews from "@/components/CategoryNews.vue";
 // import BrowseByTopics from "@/components/BrowseByTopics.vue";
 import Footer1 from "@/components/Footer.vue";
 import MoreNews from "@/components/MoreNews.vue";
@@ -73,7 +73,7 @@ export default {
     // Careousel,
     MoreNews, // HelloWorld,
     // SiteHeader,
-
+    CategoryNews,
     CarouselCat,
 
     // Trending,

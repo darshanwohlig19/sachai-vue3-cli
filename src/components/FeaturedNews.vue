@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div class="flex flex-row gap-10 mt-5">
+      <div class="flex flex-row gap-3 mt-5">
         <div class="font-14 multiline-truncate1">{{ blogs[1]?.headline }}</div>
         <div class="border-1"></div>
         <div class="font-14 multiline-truncate1">{{ blogs[2]?.headline }}</div>
@@ -58,7 +58,11 @@
     <div
       class="w-[100%] between-sm-md:w-[100%] lg:w-[35%] flex flex-col justify-between"
     >
-      <div v-for="item in blogs2" :key="item" class="mt-4 md:mt-4 lg:mt-0">
+      <div
+        v-for="(item, index) in blogs2"
+        :key="item"
+        class="mt-4 md:mt-4 lg:mt-0"
+      >
         <div class="flex flex-row gap-2">
           <div class="w-[5%] mt-2">
             <img src="../assets/Group.png" alt="" />
@@ -68,6 +72,10 @@
             <div class="para multiline-truncate1">{{ item.summary }}</div>
           </div>
         </div>
+        <hr
+          v-if="index < blogs2.length - 1"
+          class="mt-4 border-t border-gray-300"
+        />
       </div>
     </div>
   </div>

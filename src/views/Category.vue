@@ -173,25 +173,25 @@
         <div
           v-for="(item, index) in paginatedNews"
           :key="index"
-          class="w-full h-[50%] bg-white drop-shadow-md flex rounded-lg"
+          class="w-full h-[170px] bg-white drop-shadow-md flex rounded-lg"
         >
-          <div class="w-full h-[50%] bg-white flex rounded-lg">
-            <div class="w-[40%] h-[212px] items-center">
+          <div class="w-full bg-white flex rounded-lg">
+            <div class="w-[40%] h-full items-center">
               <a :href="`${SACHAI_NEWS_URL}${item._id}`">
                 <img
-                  class="w-full h-full rounded-md object-cover"
+                  class="w-full h-full rounded-md object-contain"
                   :src="item.imgixUrlHighRes || fallbackImage"
                   alt=""
                 />
               </a>
             </div>
-            <div class="w-[60%] ml-4 mt-2 mr-2 flex flex-col justify-between">
+            <div class="w-[60%] ml-4 mr-2 flex flex-col justify-evenly">
               <div class="flex justify-between items-center mt-1">
                 <div class="flex gap-1 text-gray-400 medium">
-                  <div class="text-[8px] lg:text-[14px] font-lato">
+                  <div class="text-[8px] lg:text-[12px] font-lato">
                     {{ item?.source || "No source" }}
                   </div>
-                  <div class="text-[8px] lg:text-[14px]">
+                  <div class="text-[8px] lg:text-[12px]">
                     | {{ moment(item?.publishTime || new Date()).fromNow() }}
                   </div>
                 </div>
@@ -209,7 +209,7 @@
                 </div>
               </div>
               <div
-                class="text-[12px] lg:text-[20px] fontCustom leading-1 bold mr-1 mt-2"
+                class="text-[12px] lg:text-[16px] fontCustom leading-1 bold mr-1 mt-2"
               >
                 <a
                   :href="`${SACHAI_NEWS_URL}${item._id}`"
@@ -219,7 +219,7 @@
                 </a>
               </div>
               <div
-                class="text-[10px] lg:text-[14px] text-[#878787] font-lato leading-1 mr-1 mt-1 mb-3"
+                class="text-[10px] lg:text-[12px] text-[#878787] font-lato leading-1 mr-1 mt-1 mb-1"
               >
                 <a
                   :href="`${SACHAI_NEWS_URL}${item._id}`"
@@ -228,7 +228,7 @@
                   {{ truncateText(item?.summary || "No summary", 140) }}
                 </a>
               </div>
-              <div class="text-[8px] lg:text-[14px] flex gap-3">
+              <div class="text-[8px] lg:text-[12px] flex gap-3">
                 <span class="text-red-500">Politics</span>
                 <span>|</span>
                 <span> 4 min read</span>
