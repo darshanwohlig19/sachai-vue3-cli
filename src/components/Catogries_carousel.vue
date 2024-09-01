@@ -17,13 +17,18 @@
             <Card class="h-full p-3 rounded-[10px]">
               <template #header>
                 <div class="flex justify-between items-center mb-3">
-                  <div class="flex flex-row items-center gap-1">
+                  <div class="flex items-center gap-1">
                     <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
                     <h3 class="font-18 capitalize">
                       {{ slotProps.data.name }}
                     </h3>
                   </div>
-                  <a href="#" class="see-all">See all →</a>
+                  <a
+                    :href="`/categories/${slotProps.data._id}?category=${slotProps.data.name}`"
+                    class="see-all"
+                  >
+                    See all →
+                  </a>
                 </div>
               </template>
               <template #content>
@@ -37,11 +42,15 @@
                       :src="news.imgixUrlHighRes"
                       class="w-[67px] h-[67px] object-cover rounded"
                     />
-                    <p
-                      class="text-[14px] text-[#1E0627] multiline-truncate fontCustom"
+                    <a
+                      :href="`https://news.sachai.io/news/${slotProps.data._id}`"
                     >
-                      {{ news.headline }}
-                    </p>
+                      <p
+                        class="text-[14px] text-[#1E0627] multiline-truncate fontCustom"
+                      >
+                        {{ news.headline }}
+                      </p>
+                    </a>
                   </div>
                 </div>
               </template>
@@ -66,11 +75,11 @@ const categories = ref([]);
 
 const fetchNewsForCategory = async (categoryId) => {
   try {
-    const response = await axios.post(
+    const { data } = await axios.post(
       "https://dev-api.askus.news/news/getCategoryWiseNewsForWeb/",
       { categoryId }
     );
-    return response.data;
+    return data;
   } catch (error) {
     console.error(`Error fetching news for category ${categoryId}:`, error);
     return [];
@@ -80,11 +89,12 @@ const fetchNewsForCategory = async (categoryId) => {
 const fetchCategories = async () => {
   try {
     const languageId = "6421a32aa020a23deacecf92";
-    const response = await axios.post(
+    const { data } = await axios.post(
       "https://dev-api.askus.news/category/getAllCat",
       { langauge: languageId }
     );
-    const categoriesData = response.data.slice(8, 16).map((category) => ({
+
+    const categoriesData = data.slice(8, 16).map((category) => ({
       ...category,
       name:
         category.name.toLowerCase() === "ai"
@@ -129,6 +139,7 @@ onMounted(() => {
 .custom-carousel .p-carousel .p-carousel-item {
   flex: 1 0 auto;
 }
+
 .multiline-truncate {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -136,13 +147,13 @@ onMounted(() => {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .category-item .p-card {
   box-shadow: none;
 }
-.category-item .p-card-content {
-  padding: 0px !important;
-}
+
+.category-item .p-card-content,
 .category-item .p-card-body {
-  padding: 0px !important;
+  padding: 0 !important;
 }
 </style>
