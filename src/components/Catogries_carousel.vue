@@ -42,15 +42,12 @@
                       :src="news.imgixUrlHighRes"
                       class="w-[67px] h-[67px] object-cover rounded"
                     />
-                    <a
-                      :href="`https://news.sachai.io/news/${slotProps.data._id}`"
+
+                    <p
+                      class="text-[14px] text-[#1E0627] multiline-truncate fontCustom"
                     >
-                      <p
-                        class="text-[14px] text-[#1E0627] multiline-truncate fontCustom"
-                      >
-                        {{ news.headline }}
-                      </p>
-                    </a>
+                      {{ news.headline }}
+                    </p>
                   </div>
                 </div>
               </template>
