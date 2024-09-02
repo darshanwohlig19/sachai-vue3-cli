@@ -151,10 +151,12 @@
           >Bookmark</RouterLink
         >
         <a
-          @click="handleLogout"
+          href="#"
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer nav-items"
-          >Logout</a
+          @click="handleAuthAction"
         >
+          {{ isLoggedIn ? "Logout" : "Login" }}
+        </a>
       </div>
     </div>
     <div
