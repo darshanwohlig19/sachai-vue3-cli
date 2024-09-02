@@ -321,6 +321,7 @@ export default {
               summary: "Logout Successful",
               detail: "You have been logged out successfully.",
             });
+            isCardDropdownOpen.value = !isCardDropdownOpen.value;
           } else {
             throw new Error("Failed to logout, unexpected response status");
           }
