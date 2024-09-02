@@ -2,108 +2,108 @@
   <div class="mt-3">
     <div class="heads">More News</div>
     <div class="bg-white w-[100%] flex rounded-[10px] p-3 mt-3">
-      <div class="w-[30%] between-sm-md:w-[50%] below-sm:w-[100%]">
-        <div class="flex flex-row gap-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="w-[3%] flex justify-center below-sm:hidden">
-        <div class="divider1 below-sm:hidden"></div>
-      </div>
-      <div class="w-[30%] between-sm-md:w-[50%] below-sm:hidden">
-        <div class="flex flex-row gap-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
-        </div>
-      </div>
       <div
-        class="w-[3%] flex justify-center between-sm-md:hidden below-sm:hidden"
+        class="w-[30%] sm-425:w-[100%] sm-max:w-[50%] between-sm-md:w-[50%] below-sm:w-[100%]"
       >
-        <div class="divider1 between-sm-md:hidden below-sm:hidden"></div>
+        <div class="flex flex-row gap-3">
+          <div class="w-[50px]">
+            <img class="small-img" src="../assets/Group.png" />
+          </div>
+          <div>
+            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
+            <div class="para">
+              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
+              id facilisis. Rhoncus viverra placerat faucibus in duis cras
+              viverra sed. Egestas etiam enim orci quam viverra praesent enim
+              diam.
+            </div>
+          </div>
+        </div>
+        <div class="divider mt-3"></div>
+        <div class="flex flex-row gap-3 mt-3">
+          <div class="w-[50px]">
+            <img class="small-img" src="../assets/Group.png" />
+          </div>
+          <div>
+            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
+            <div class="para">
+              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
+              id facilisis. Rhoncus viverra placerat faucibus in duis cras
+              viverra sed. Egestas etiam enim orci quam viverra praesent enim
+              diam.
+            </div>
+          </div>
+        </div>
+        <div class="divider mt-3"></div>
+        <div class="flex flex-row gap-3 mt-3">
+          <div class="w-[50px]">
+            <img class="small-img" src="../assets/Group.png" />
+          </div>
+          <div>
+            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
+            <div class="para">
+              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
+              id facilisis. Rhoncus viverra placerat faucibus in duis cras
+              viverra sed. Egestas etiam enim orci quam viverra praesent enim
+              diam.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-[3%] flex justify-center sm-425:hidden">
+        <div class="divider1 sm-425:hidden"></div>
+      </div>
+      <div class="w-[30%] sm-max:w-[50%] between-sm-md:w-[50%] sm-425:hidden">
+        <div class="flex flex-row gap-3">
+          <div class="w-[50px]">
+            <img class="small-img" src="../assets/Group.png" />
+          </div>
+          <div>
+            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
+            <div class="para">
+              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
+              id facilisis. Rhoncus viverra placerat faucibus in duis cras
+              viverra sed. Egestas etiam enim orci quam viverra praesent enim
+              diam.
+            </div>
+          </div>
+        </div>
+        <div class="divider mt-3"></div>
+        <div class="flex flex-row gap-3 mt-3">
+          <div class="w-[50px]">
+            <img class="small-img" src="../assets/Group.png" />
+          </div>
+          <div>
+            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
+            <div class="para">
+              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
+              id facilisis. Rhoncus viverra placerat faucibus in duis cras
+              viverra sed. Egestas etiam enim orci quam viverra praesent enim
+              diam.
+            </div>
+          </div>
+        </div>
+        <div class="divider mt-3"></div>
+        <div class="flex flex-row gap-3 mt-3">
+          <div class="w-[50px]">
+            <img class="small-img" src="../assets/Group.png" />
+          </div>
+          <div>
+            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
+            <div class="para">
+              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
+              id facilisis. Rhoncus viverra placerat faucibus in duis cras
+              viverra sed. Egestas etiam enim orci quam viverra praesent enim
+              diam.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-[3%] flex justify-center">
+        <div class="divider1 sm-max:hidden"></div>
       </div>
 
-      <div class="w-[30%] between-sm-md:hidden below-sm:hidden">
+      <div class="w-[30%] sm-max:hidden">
         <div class="flex flex-row gap-3">
           <div class="w-[50px]">
             <img class="small-img" src="../assets/Group.png" />

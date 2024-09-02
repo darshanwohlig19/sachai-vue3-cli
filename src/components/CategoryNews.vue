@@ -10,11 +10,11 @@
             </div>
             <div class="see-all">See all →</div>
           </div>
-          <div class="flex flex-col md:flex-row gap-5">
-            <div class="md-max:w-[100%] w-[60%]">
+          <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
+            <div class="md-max:w-[100%] w-[70%]">
               <div class="flex flex-col gap-5">
-                <div class="flex sm:flex-row flex-col gap-5 h-[80%]">
-                  <div class="sm:w-[35%] w-[100%]">
+                <div class="flex sm:flex-row flex-col gap-3 h-[80%]">
+                  <div class="md:w-[70%] w-[100%]">
                     <div
                       v-for="news in category.news.slice(0, 1)"
                       :key="news._id"
@@ -22,7 +22,7 @@
                       <div class="relative drop-shadow-lg">
                         <img
                           :src="news.imgixUrlHighRes || fallbackImage"
-                          class="rounded-[8px] w-full"
+                          class="rounded-[8px] w h-[20vh]"
                           alt=""
                         />
                         <div
@@ -40,21 +40,22 @@
                     </div>
                   </div>
                   <div
-                    class="sm:w-[65%] w-[100%] flex flex-col justify-between gap-3 sm:gap-0"
+                    class="sm:w-[70%] w-[100%] flex flex-col justify-between gap-3 sm:gap-0"
                   >
                     <div
-                      v-for="news in category.news.slice(1, 5)"
+                      v-for="news in displayedNews(category.news)"
                       :key="news._id"
                       class=""
                     >
                       <div class="flex flex-row gap-2 items-center">
-                        <div>
+                        <div class="w-[15px]">
                           <img src="../assets/Group.png" alt="" />
                         </div>
                         <div class="font-14 one-line">
                           {{ news.headline }}
                         </div>
                       </div>
+                      <div class="divider-horizontal mt-2"></div>
                     </div>
                   </div>
                 </div>
@@ -62,24 +63,27 @@
                   <div
                     v-for="news in getDisplayedNews(category.news)"
                     :key="news._id"
-                    class="flex flex-col w-[30%]"
+                    class="flex flex-row gap-1 w-[30%]"
                   >
                     <div class="multiline-truncate1 font-14 w-[100%]">
                       {{ news.headline }}
                     </div>
+                    <!-- v-if="index < news.length - 1" -->
+                    <!-- v-if="index < getDisplayedNews(category.news).length - 1" -->
+                    <div class="divider-vertical"></div>
                   </div>
                 </div>
               </div>
             </div>
-
+            <div class="divider-vertical"></div>
             <div
-              class="md-max:w-[100%] w-[40%] flex flex-col justify-between gap-3 sm:gap-0"
+              class="md-max:w-[100%] flex flex-col justify-between gap-3 sm:gap-3"
             >
-              <div v-for="news in category.news.slice(9, 12)" :key="news._id">
+              <div v-for="news in category.news.slice(9, 13)" :key="news._id">
                 <div
                   class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
                 >
-                  <div class="w-[20%]">
+                  <div class="">
                     <img
                       class="rounded-[6px] h-[47px]"
                       :src="news.imgixUrlHighRes"
@@ -99,7 +103,7 @@
   </div>
 </template>
 <script>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
 
 export default {
@@ -109,9 +113,16 @@ export default {
       required: true,
     },
   },
+  // data() {
+  //   return {
+  //     SACHAI_NEWS_URL: "https://news.sachai.io/news/",
+  //     // screenWidth: window.innerWidth,
+  //   };
+  // },
   setup() {
     const categories = ref([]);
     const isMobileOrTablet = ref(window.innerWidth < 768);
+    const screenWidth = ref(window.innerWidth);
 
     const fetchNewsForCategory = async (categoryId) => {
       try {
@@ -125,6 +136,12 @@ export default {
         return [];
       }
     };
+
+    const displayedNews = computed(() => {
+      return (news) => {
+        return screenWidth.value > 1600 ? news.slice(1, 5) : news.slice(1, 4);
+      };
+    });
 
     const fetchCategories = async () => {
       try {
@@ -143,6 +160,7 @@ export default {
 
         for (let category of categoriesData) {
           category.news = await fetchNewsForCategory(category._id);
+          // this.categoryNews = category.news;
         }
 
         categories.value = categoriesData;
@@ -160,6 +178,7 @@ export default {
 
     const handleResize = () => {
       isMobileOrTablet.value = window.innerWidth < 768;
+      screenWidth.value = window.innerWidth;
     };
 
     onMounted(() => {
@@ -174,6 +193,8 @@ export default {
     return {
       categories,
       getDisplayedNews,
+      displayedNews,
+      screenWidth,
     };
   },
 };
@@ -183,7 +204,7 @@ export default {
 .one-line {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* Number of lines to display */
+  -webkit-line-clamp: 2; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -193,5 +214,15 @@ export default {
   -webkit-line-clamp: 3; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.divider-vertical {
+  height: auto;
+  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
+  width: 1px;
+}
+.divider-horizontal {
+  height: 1px;
+  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
+  width: 100%;
 }
 </style>

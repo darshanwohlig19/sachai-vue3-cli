@@ -40,6 +40,7 @@
       <MoreNews />
     </div>
     <Footer1 />
+    <!-- <customImage /> -->
   </div>
 </template>
 
@@ -66,6 +67,7 @@ import { ref, onMounted } from "vue";
 // import CategoryChips from "@/components/CategoryChips.vue";
 
 import FeaturedNews from "@/components/FeaturedNews.vue";
+// import customImage from "@/components/customImage";
 
 export default {
   name: "HomeView",
@@ -75,7 +77,7 @@ export default {
     // SiteHeader,
     CategoryNews,
     CarouselCat,
-
+    // customImage,
     // Trending,
 
     Campaign,

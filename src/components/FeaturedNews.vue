@@ -1,12 +1,13 @@
 <template>
   <div
-    class="flex flex-col between-sm-md:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-3"
+    class="flex flex-col sm:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-3"
   >
-    <div class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col">
+    <div class="w-[100%] sm:w-[48%] lg:w-[30%] flex flex-col">
       <div class="relative drop-shadow-lg">
         <img
           :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
           class="rounded-[8px] h-[234px] w-full"
+          r
           alt=""
         />
         <div
@@ -34,9 +35,7 @@
         <div class="font-14 multiline-truncate1">{{ blogs[2]?.headline }}</div>
       </div>
     </div>
-    <div
-      class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col justify-between"
-    >
+    <div class="w-[100%] sm:w-[48%] lg:w-[30%] flex flex-col justify-between">
       <div v-for="blog in blogs1" :key="blog" class="below-sm:mt-4">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
@@ -54,14 +53,13 @@
         </div>
       </div>
     </div>
-    <div class="border-1 below-sm:hidden between-sm-md:hidden"></div>
-    <div
-      class="w-[100%] between-sm-md:w-[100%] lg:w-[35%] flex flex-col justify-between"
-    >
+    <div class="border-1 below-sm:hidden sm:hidden"></div>
+    <div class="w-[100%] sm:w-[100%] lg:w-[35%] flex flex-col justify-between">
+      <hr class="mt-3 sm:block lg:hidden border-t border-gray-300" />
       <div
         v-for="(item, index) in blogs2"
         :key="item"
-        class="mt-4 md:mt-4 lg:mt-0"
+        class="mt-3 sm:mt-3 lg:mt-0"
       >
         <div class="flex flex-row gap-2">
           <div class="w-[5%] mt-2">
@@ -74,7 +72,7 @@
         </div>
         <hr
           v-if="index < blogs2.length - 1"
-          class="mt-4 border-t border-gray-300"
+          class="mt-3 border-t border-gray-300"
         />
       </div>
     </div>
