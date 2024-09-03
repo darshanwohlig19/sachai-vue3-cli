@@ -9,7 +9,7 @@
         <div
           v-for="news in slicedData"
           :key="news"
-          class="w-[33%] below-sm:w-full"
+          class="w-[33%] sm-425:w-full"
         >
           <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
             <div class="rounded-[10px]">

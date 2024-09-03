@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full sm-max:!block flex justify-between mt-6 relative">
+  <div class="w-full md-max:!block flex gap-4 justify-between mt-6 relative">
     <div class="relative">
       <Carousel
         :value="blogs"
@@ -12,7 +12,7 @@
       >
         <template #item="slotProps">
           <div
-            class="relative rounded-[20px] ml-2 mr-2 overflow-hidden h-[421px] bg-gradient-to-t from-black via-black/60"
+            class="relative rounded-[20px] ml-2 mr-2 overflow-hidden h-[421px] md-max:h-[300px] bg-gradient-to-t from-black via-black/60"
           >
             <img
               :src="slotProps.data.imgixUrlHighRes"
@@ -29,13 +29,13 @@
             >
               <div>
                 <i
-                  class="mdi mdi-share-variant text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center icon-black"
+                  class="mdi mdi-share-variant text-black bg-white rounded-[50%] sm:h-[40px] sm:w-[40px] sm:text-[22px] h-[30px] w-[30px] text-[14px] flex justify-center items-center icon-black"
                   style="color: black"
                 ></i>
               </div>
               <div>
                 <i
-                  class="mdi mdi-bookmark-outline text-black bg-white rounded-[50%] h-[40px] w-[40px] text-[22px] flex justify-center items-center"
+                  class="mdi mdi-bookmark-outline text-black bg-white rounded-[50%] sm:h-[40px] sm:w-[40px] sm:text-[22px] h-[30px] w-[30px] text-[14px] flex justify-center items-center"
                 ></i>
               </div>
             </div>
@@ -47,7 +47,7 @@
                   <a
                     :href="`${SACHAI_NEWS_URL}${slotProps.data._id}`"
                     style="line-height: 1.2"
-                    class="hover:text-current font-20"
+                    class="hover:text-current font-20 sm:font-16-16"
                   >
                     {{ slotProps.data.headline }}
                   </a>
@@ -66,118 +66,43 @@
       </Carousel>
     </div>
     <div
-      class="w-[65%] md:w-[65%] sm:w-[65%] sm-max:w-[100%] rounded-[10px] bg-white relative mt-4 md:mt-0 sm:mt-4 flex justify-between p-4"
+      class="w-[100%] md-max:w-[100%] sm:w-[65%] sm-max:w-[100%] rounded-[10px] bg-white relative mt-4 md:mt-0 sm:mt-4 flex justify-between p-4"
     >
-      <div class="w-[48%] xl-max:w-[100%] flex flex-col justify-between">
-        <div class="flex gap-2 mt-0">
+      <div class="w-[48%] xl-max:w-[100%] flex flex-col gap-5">
+        <div
+          v-for="(item, index) in news.slice(0, 3)"
+          :key="index"
+          class="flex gap-2 mt-0 sm-max:!mt-4"
+        >
           <div class="flex w-[50px]">
             <img class="image-small" src="../assets/Group.png" />
           </div>
           <div>
-            <div v-if="news[0]" class="font-16 headline-tuncate">
-              {{ news[0].headline }}
-            </div>
-            <div v-if="news[1]" class="font-133 summary-tuncate">
-              {{ news[1].summary }}
-            </div>
+            <div class="font-16 headline-tuncate">{{ item.headline }}</div>
+            <div class="font-133 summary-tuncate">{{ item.summary }}</div>
+            <div v-if="index < 2" class="border-1 sm-max:mt-3 mt-3"></div>
           </div>
         </div>
-        <div class="border-1 sm-max:mt-3"></div>
-        <div class="flex gap-2 sm-max:!mt-4 mt-0">
-          <div class="flex w-[50px]">
-            <img class="image-small" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div v-if="news[1]" class="font-16 headline-tuncate">
-              {{ news[1].headline }}
-            </div>
-            <div v-if="news[1]" class="font-133 summary-tuncate">
-              {{ news[1].summary }}
-            </div>
-          </div>
-        </div>
-        <div class="border-1 sm-max:mt-3"></div>
-
-        <div class="flex gap-2 mt-0 sm-max:!mt-4">
-          <div class="flex w-[50px]">
-            <img class="image-small" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div v-if="news[2]" class="font-16 headline-tuncate">
-              {{ news[2].headline }}
-            </div>
-            <div v-if="news[2]" class="font-133 summary-tuncate">
-              {{ news[2].summary }}
-            </div>
-          </div>
-        </div>
-        <!-- <div class="dividerrr mt-3"></div> -->
       </div>
       <div class="w-[1%] xl-max:!hidden flex justify-center">
         <div class="divider11"></div>
       </div>
       <div class="w-[48%] xl-max:!hidden flex flex-col justify-between">
         <div
-          class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-0"
-        >
-          <div class="flex-shrink-0">
-            <img
-              class="h-[57px] w-[78px] object-cover rounded-[8px]"
-              :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
-              alt="Blog Image"
-            />
-          </div>
-          <div class="font-14 p-2 h">
-            <div class="headline-tuncate">
-              {{ blogs[0]?.headline || "headline" }}
-            </div>
-          </div>
-        </div>
-        <div
+          v-for="(blog, index) in blogs.slice(0, 4)"
+          :key="index"
           class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
         >
           <div class="flex-shrink-0">
             <img
               class="h-[57px] w-[78px] object-cover rounded-[8px]"
-              :src="blogs[1]?.imgixUrlHighRes || fallbackImage"
+              :src="blog.imgixUrlHighRes || fallbackImage"
               alt="Blog Image"
             />
           </div>
           <div class="font-14 p-2 h">
             <div class="headline-tuncate">
-              {{ blogs[1]?.headline || "headline" }}
-            </div>
-          </div>
-        </div>
-        <div
-          class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
-        >
-          <div class="flex-shrink-0">
-            <img
-              class="h-[57px] w-[78px] object-cover rounded-[8px]"
-              :src="blogs[2]?.imgixUrlHighRes || fallbackImage"
-              alt="Blog Image"
-            />
-          </div>
-          <div class="font-14 p-2 h">
-            <div class="headline-tuncate">
-              {{ blogs[2]?.headline || "headline" }}
-            </div>
-          </div>
-        </div>
-        <div
-          class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
-        >
-          <div class="flex-shrink-0">
-            <img
-              class="h-[57px] w-[78px] object-cover rounded-[8px]"
-              :src="blogs[3]?.imgixUrlHighRes || fallbackImage"
-              alt="Blog Image"
-            />
-          </div>
-          <div class="font-14 p-2 h">
-            <div class="headline-tuncate">
-              {{ blogs[3]?.headline || "headline" }}
+              {{ blog.headline || "headline" }}
             </div>
           </div>
         </div>
@@ -189,73 +114,24 @@
       class="xl-max:w-[100%] xl-max:bg-white xl-max:!mt-2 hidden xl-max:!block justify-between"
     >
       <div
-        class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-0"
-      >
-        <div class="flex-shrink-0">
-          <img
-            class="h-[57px] w-[78px] object-cover rounded-[8px]"
-            :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
-            alt="Blog Image"
-          />
-        </div>
-        <div class="font-14 p-2 h">
-          <div class="headline-tuncate">
-            {{ blogs[0]?.headline || "headline" }}
-          </div>
-        </div>
-      </div>
-      <div
+        v-for="(blog, index) in blogs.slice(0, 4)"
+        :key="index"
         class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
       >
         <div class="flex-shrink-0">
           <img
             class="h-[57px] w-[78px] object-cover rounded-[8px]"
-            :src="blogs[1]?.imgixUrlHighRes || fallbackImage"
+            :src="blog.imgixUrlHighRes || fallbackImage"
             alt="Blog Image"
           />
         </div>
         <div class="font-14 p-2 h">
-          <div class="headline-tuncate">
-            {{ blogs[1]?.headline || "headline" }}
-          </div>
-        </div>
-      </div>
-      <div
-        class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
-      >
-        <div class="flex-shrink-0">
-          <img
-            class="h-[57px] w-[78px] object-cover rounded-[8px]"
-            :src="blogs[2]?.imgixUrlHighRes || fallbackImage"
-            alt="Blog Image"
-          />
-        </div>
-        <div class="font-14 p-2 h">
-          <div class="headline-tuncate">
-            {{ blogs[2]?.headline || "headline" }}
-          </div>
-        </div>
-      </div>
-      <div
-        class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
-      >
-        <div class="flex-shrink-0">
-          <img
-            class="h-[57px] w-[78px] object-cover rounded-[8px]"
-            :src="blogs[3]?.imgixUrlHighRes || fallbackImage"
-            alt="Blog Image"
-          />
-        </div>
-        <div class="font-14 p-2 h">
-          <div class="headline-tuncate">
-            {{ blogs[3]?.headline || "headline" }}
-          </div>
+          <div class="headline-tuncate">{{ blog.headline || "headline" }}</div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import { ref } from "vue";
@@ -420,7 +296,7 @@ export default {
     width: 45vh !important;
   }
 }
-@media (max-width: 750px) {
+@media (max-width: 768px) {
   .p-carousel {
     position: relative;
     width: 100% !important;
