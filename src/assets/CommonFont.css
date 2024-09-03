@@ -16,19 +16,14 @@
   color: #f7f7f4;
 }
 
-
-.font-24{
-
+.font-24 {
   font-size: 24px;
   font-family: "Lato", sans-serif;
   color: #1e0627;
   font-weight: bold;
 }
 
-
-
-.font-18{
-
+.font-18 {
   font-size: 18px;
   font-family: "Lato", sans-serif;
   color: #5d5d5d;
@@ -49,9 +44,8 @@
   text-transform: uppercase;
 }
 
-
-.font-15{
-  color:#52525B;
+.font-15 {
+  color: #52525b;
 
   font-size: 15px;
   font-family: "Lato", sans-serif;
@@ -86,17 +80,25 @@
 }
 .footer-links {
   font-size: 14px;
-  font-family: "Lato",sans-serif;
+  font-family: "Lato", sans-serif;
   line-height: 15px;
-  color: #52525B;
+  color: #52525b;
 }
 .footer-heads {
   font-size: 13px;
-  font-family: "Lato",sans-serif;
-  color: #FF0053;
+  font-family: "Lato", sans-serif;
+  color: #ff0053;
   font-weight: bold;
   text-transform: uppercase;
 }
 .fontCustom {
   font-family: "source-serif-pro-semibold";
+}
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
