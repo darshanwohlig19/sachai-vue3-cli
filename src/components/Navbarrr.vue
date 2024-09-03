@@ -4,10 +4,12 @@
       class="w-[100%] h-[67px] bg-white rounded-b-[20px] shadow-[0px_4px_6px_rgba(240,0,0,0.2)] flex justify-between items-center pl-4 pr-4"
     >
       <div>
-        <img
-          class="h-[20px] w-[78px] object-cover"
-          src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
-        />
+        <a href="/">
+          <img
+            class="h-[20px] w-[78px] object-cover"
+            src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
+          />
+        </a>
       </div>
       <div class="flex gap-4 items-center justify-center">
         <div class="hidden lg:flex head-navs">
