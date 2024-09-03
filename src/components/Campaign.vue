@@ -8,7 +8,7 @@
       <div class="see-all">See all →</div>
     </div>
     <div class="w-[100%] flex flex-col lg:flex-row gap-2 sm:gap-4 mt-3">
-      <div class="w-[100%] sm:w-[100%] flex justify-between">
+      <div class="w-[100%] sm:w-[100%] gap-4 flex justify-between">
         <div
           v-for="campaignNews in displayedNews(campaigns)"
           :key="campaignNews._id"
@@ -39,11 +39,12 @@
           v-for="campaignnews in campaigns1"
           :key="campaignnews._id"
           class="flex flex-row gap-2.5 items-center"
+          style="border-bottom: 1px solid #e5e7eb"
         >
           <div class="w-[15px]">
             <img src="../assets/Group.png" alt="" />
           </div>
-          <div class="font-14 lines2">
+          <div class="font-14 lines2 pb-2">
             {{ campaignnews.headline || "No Headline" }}
           </div>
         </div>

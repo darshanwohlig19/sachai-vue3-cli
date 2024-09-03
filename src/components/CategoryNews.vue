@@ -22,7 +22,7 @@
                       <div class="relative drop-shadow-lg">
                         <img
                           :src="news.imgixUrlHighRes || fallbackImage"
-                          class="rounded-[8px] w h-[20vh]"
+                          class="rounded-[8px] w-full h-[30vh]"
                           alt=""
                         />
                         <div

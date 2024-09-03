@@ -168,7 +168,7 @@
         @click="scrollLeft"
       ></i>
       <div
-        class="flex items-center space-x-3 px-2 flex-1 overflow-x-auto lg:overflow-x-hidden whitespace-nowrap"
+        class="flex items-center space-x-3 px-2 flex-1 overflow-x-auto lg:overflow-x-hidden whitespace-nowrap head-cat"
         ref="categoriesContainer"
       >
         <div
@@ -408,5 +408,8 @@ export default {
   outline: none;
   transition: background-color 0.3s, color 0.3s;
   text-transform: capitalize;
+}
+.head-cat::-webkit-scrollbar {
+  display: none !important;
 }
 </style>
