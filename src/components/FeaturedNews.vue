@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col sm:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-3"
+    class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-3"
   >
     <div class="w-[100%] sm:w-[48%] lg:w-[30%] flex flex-col">
       <div class="relative drop-shadow-lg">
@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    <div class="border-1 below-sm:hidden sm:hidden"></div>
+    <div class="border-1 lg:block md:hidden sm:hidden"></div>
     <div class="w-[100%] sm:w-[100%] lg:w-[35%] flex flex-col justify-between">
       <hr class="mt-3 sm:block lg:hidden border-t border-gray-300" />
       <div
