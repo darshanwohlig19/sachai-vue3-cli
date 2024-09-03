@@ -11,7 +11,7 @@
             <div class="see-all">See all →</div>
           </div>
           <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
-            <div class="md-max:w-[100%] w-[70%]">
+            <div class="md-max:w-[100%] w-[100%]">
               <div class="flex flex-col gap-5">
                 <div class="flex sm:flex-row flex-col gap-3 h-[80%]">
                   <div class="md:w-[70%] w-[100%]">
@@ -61,16 +61,17 @@
                 </div>
                 <div class="flex flex-row h-[10%] gap-3">
                   <div
-                    v-for="news in getDisplayedNews(category.news)"
+                    v-for="(news, index) in getDisplayedNews(category.news)"
                     :key="news._id"
-                    class="flex flex-row gap-1 w-[30%]"
+                    class="flex flex-row gap-1 w-[50%] md:w-[30%]"
                   >
                     <div class="multiline-truncate1 font-14 w-[100%]">
                       {{ news.headline }}
                     </div>
-                    <!-- v-if="index < news.length - 1" -->
-                    <!-- v-if="index < getDisplayedNews(category.news).length - 1" -->
-                    <div class="divider-vertical"></div>
+                    <div
+                      v-if="index < getDisplayedNews(category.news).length - 1"
+                      class="divider-vertical"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -120,7 +121,7 @@ export default {
   //   };
   // },
   setup() {
-    const categories = ref([]);
+    const categories = ref({});
     const isMobileOrTablet = ref(window.innerWidth < 768);
     const screenWidth = ref(window.innerWidth);
 
@@ -173,7 +174,7 @@ export default {
       if (!news || !Array.isArray(news)) {
         return [];
       }
-      return isMobileOrTablet.value ? news.slice(5, 8) : news.slice(5, 9);
+      return isMobileOrTablet.value ? news.slice(5, 7) : news.slice(5, 9);
     };
 
     const handleResize = () => {
