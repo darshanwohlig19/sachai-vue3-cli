@@ -27,11 +27,12 @@
                 </div>
               </template>
               <template #content>
-                <div class="flex flex-col gap-3">
+                <div class="flex flex-col gap-3 cursor-pointer">
                   <div
                     v-for="news in slotProps.data.news.slice(0, 5)"
                     :key="news._id"
                     class="flex gap-3 rounded-[4px] drop-shadow-sm bg-white h-[67px]"
+                    @click="navigateToCategoryDetail(news._id)"
                   >
                     <img
                       :src="news.imgixUrlHighRes"
@@ -61,9 +62,14 @@ import Card from "primevue/card";
 import "primevue/resources/themes/saga-blue/theme.css"; // Theme CSS
 import "primevue/resources/primevue.min.css"; // Core CSS
 import "primeicons/primeicons.css"; // Icons CSS
+import { useRouter } from "vue-router";
 
 const categories = ref([]);
+const router = useRouter(); // Use Vue Router
 
+const navigateToCategoryDetail = (id) => {
+  router.push(`/news/${id}`);
+};
 const fetchNewsForCategory = async (categoryId) => {
   try {
     const response = await axios.post(

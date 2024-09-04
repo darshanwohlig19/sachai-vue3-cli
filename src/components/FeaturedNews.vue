@@ -2,8 +2,13 @@
   <div
     class="flex flex-col between-sm-md:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-3"
   >
-    <div class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col">
-      <div class="relative drop-shadow-lg">
+    <div
+      class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col cursor-pointer"
+    >
+      <div
+        class="relative drop-shadow-lg"
+        @click="navigateToCategory(blogs[0]?._id)"
+      >
         <img
           :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
           class="rounded-[8px] h-[234px] w-full"
@@ -28,10 +33,20 @@
         </div>
       </div>
 
-      <div class="flex flex-row gap-10 mt-5">
-        <div class="font-14 multiline-truncate1">{{ blogs[1]?.headline }}</div>
+      <div class="flex flex-row gap-10 mt-5 cursor-pointer">
+        <div
+          class="font-14 multiline-truncate1"
+          @click="navigateToCategory(blogs[1]?._id)"
+        >
+          {{ blogs[1]?.headline }}
+        </div>
         <div class="border-1"></div>
-        <div class="font-14 multiline-truncate1">{{ blogs[2]?.headline }}</div>
+        <div
+          class="font-14 multiline-truncate1"
+          @click="navigateToCategory(blogs[2]?._id)"
+        >
+          {{ blogs[2]?.headline }}
+        </div>
       </div>
     </div>
     <div
@@ -39,7 +54,8 @@
     >
       <div v-for="blog in blogs1" :key="blog" class="below-sm:mt-4">
         <div
-          class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
+          class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+          @click="navigateToCategory(blog._id)"
         >
           <div class="w-[20%]">
             <img
@@ -58,8 +74,12 @@
     <div
       class="w-[100%] between-sm-md:w-[100%] lg:w-[35%] flex flex-col justify-between"
     >
-      <div v-for="item in blogs2" :key="item" class="mt-4 md:mt-4 lg:mt-0">
-        <div class="flex flex-row gap-2">
+      <div
+        v-for="item in blogs2"
+        :key="item"
+        class="mt-4 md:mt-4 lg:mt-0 cursor-pointer"
+      >
+        <div class="flex flex-row gap-2" @click="navigateToCategory(item._id)">
           <div class="w-[5%] mt-2">
             <img src="../assets/Group.png" alt="" />
           </div>
@@ -76,12 +96,14 @@
 import { ref } from "vue";
 import axios from "axios";
 import moment from "moment";
+import { useRouter } from "vue-router";
 
 const blogs = ref([]);
 const blogs1 = ref([]);
 const blogs2 = ref([]);
+const router = useRouter(); // Use Vue Router
 
-const languageId = ref("6421a32aa020a23deacecf92"); // Assuming you have a languageId, adjust this as needed
+const languageId = ref("6421a32aa020a23deacecf92");
 function formatPublishTime(publishTime) {
   return moment(publishTime).fromNow();
 }
@@ -102,7 +124,11 @@ async function fetchBlogs() {
     console.error("Error fetching blogs:", error);
   }
 }
-
+function navigateToCategory(id) {
+  if (id) {
+    router.push(`/news/${id}`);
+  }
+}
 fetchBlogs();
 </script>
 <style>

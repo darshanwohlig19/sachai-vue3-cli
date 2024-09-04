@@ -4,6 +4,7 @@ import Category from "../views/Category.vue";
 import Login from "../views/Login.vue";
 import Aboutus from "../views/Aboutus.vue";
 import Astrology from "../views/Astrology.vue";
+import News from "../components/IdData.vue";
 const routes = [
   {
     path: "/",
@@ -14,6 +15,12 @@ const routes = [
     path: "/categories/:slugOrId",
     name: "Category",
     component: Category,
+    props: true,
+  },
+  {
+    path: "/news/:id",
+    name: "news",
+    component: News,
     props: true,
   },
   { path: "/login", component: Login, meta: { requiresAuth: false } },

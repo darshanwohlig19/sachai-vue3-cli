@@ -179,7 +179,7 @@
         @click="scrollLeft"
       ></i>
       <div
-        class="flex items-center space-x-3 px-2 flex-1 overflow-x-auto lg:overflow-x-hidden whitespace-nowrap"
+        class="flex items-center space-x-3 px-2 flex-1 overflow-x-auto custom-scrollbar lg:overflow-x-hidden whitespace-nowrap"
         ref="categoriesContainer"
       >
         <div

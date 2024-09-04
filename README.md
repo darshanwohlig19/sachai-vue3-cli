@@ -1,4 +1,4 @@
-# sacchi-new1
+# sachai-news
 
 ## Project setup
 ```
