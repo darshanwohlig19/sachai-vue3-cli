@@ -382,12 +382,12 @@ const loginWithGoogle = async () => {
         );
 
         // // Show toast notification after navigation
-        // toast.add({
-        //   severity: "success",
-        //   summary: "Successfully Login",
-        //   detail: "Successfully logged in with Google!",
-        //   life: 3000,
-        // });
+        toast.add({
+          severity: "success",
+          summary: "Successfully Login",
+          detail: "Successfully logged in with Google!",
+          life: 3000,
+        });
 
         // Wait for navigation to complete
         setTimeout(() => {

@@ -16,6 +16,11 @@
   color: #f7f7f4;
 }
 
+.font-16-16 {
+  font-family: "source-serif-pro-semibold";
+  font-size: 16px;
+  color: #f7f7f4;
+}
 .font-24 {
   font-size: 24px;
   font-family: "Lato", sans-serif;
@@ -68,6 +73,12 @@
 }
 .heads {
   font-size: 20px;
+  color: #1e0627;
+  font-family: lato;
+  font-weight: 700;
+}
+.heads1 {
+  font-size: 18px;
   color: #1e0627;
   font-family: lato;
   font-weight: 700;

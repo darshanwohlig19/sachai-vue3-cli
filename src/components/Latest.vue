@@ -14,7 +14,7 @@
             <div class="rounded-[10px]">
               <img
                 :src="news.imgixUrlHighRes"
-                class="relative z-10 h-[156px] w-[330px] rounded-[10px] object-cover"
+                class="relative z-10 h-[156px] w-full rounded-[10px] object-cover"
                 alt=""
               />
             </div>

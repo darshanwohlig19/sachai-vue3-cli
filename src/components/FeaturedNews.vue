@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col between-sm-md:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-3"
+    class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px] mt-3"
   >
     <div
       class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col cursor-pointer"
@@ -12,6 +12,7 @@
         <img
           :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
           class="rounded-[8px] h-[234px] w-full"
+          r
           alt=""
         />
         <div
@@ -49,9 +50,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col justify-between"
-    >
+    <div class="w-[100%] sm:w-[48%] lg:w-[30%] flex flex-col justify-between">
       <div v-for="blog in blogs1" :key="blog" class="below-sm:mt-4">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
@@ -88,6 +87,10 @@
             <div class="para multiline-truncate1">{{ item.summary }}</div>
           </div>
         </div>
+        <hr
+          v-if="index < blogs2.length - 1"
+          class="mt-3 border-t border-gray-300"
+        />
       </div>
     </div>
   </div>

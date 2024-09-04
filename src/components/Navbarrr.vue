@@ -4,10 +4,12 @@
       class="w-[100%] h-[67px] bg-white rounded-b-[20px] shadow-[0px_4px_6px_rgba(240,0,0,0.2)] flex justify-between items-center pl-4 pr-4"
     >
       <div>
-        <img
-          class="h-[20px] w-[78px] object-cover"
-          src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
-        />
+        <a href="/">
+          <img
+            class="h-[20px] w-[78px] object-cover"
+            src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
+          />
+        </a>
       </div>
       <div class="flex gap-4 items-center justify-center">
         <div class="hidden lg:flex head-navs">
@@ -25,14 +27,7 @@
           >
           <!-- Astrology -->
         </div>
-        <div class="hidden lg:flex head-navs">
-          <RouterLink
-            class="nav-items"
-            active-class="active-link"
-            to="/Category"
-            >Category</RouterLink
-          >
-        </div>
+
         <div class="hidden lg:flex head-navs">
           <RouterLink
             class="nav-items"
@@ -152,22 +147,18 @@
           >Astrology</RouterLink
         >
         <RouterLink
-          to="/Category"
-          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
-          active-class="active-link"
-          >Category</RouterLink
-        >
-        <RouterLink
           to="/Bookmark"
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
           active-class="active-link"
           >Bookmark</RouterLink
         >
         <a
-          @click="handleLogout"
+          href="#"
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer nav-items"
-          >Logout</a
+          @click="handleAuthAction"
         >
+          {{ isLoggedIn ? "Logout" : "Login" }}
+        </a>
       </div>
     </div>
     <div
@@ -332,6 +323,7 @@ export default {
               summary: "Logout Successful",
               detail: "You have been logged out successfully.",
             });
+            isCardDropdownOpen.value = !isCardDropdownOpen.value;
           } else {
             throw new Error("Failed to logout, unexpected response status");
           }
@@ -418,5 +410,8 @@ export default {
   outline: none;
   transition: background-color 0.3s, color 0.3s;
   text-transform: capitalize;
+}
+.head-cat::-webkit-scrollbar {
+  display: none !important;
 }
 </style>

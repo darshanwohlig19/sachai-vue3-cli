@@ -20,7 +20,7 @@
           />
         </a>
       </div>
-      <div class="flex flex-col justify-between">
+      <div class="flex flex-col w-[80%] justify-between">
         <div class="text-[14px] mt-1 fontCustom">
           <a :href="`${SACHAI_NEWS_URL}${item._id}`" class="hover:text-current">
             {{ item?.headline || "No Headline" }}

@@ -29,26 +29,27 @@
     <div class="mx-[30px]">
       <FeaturedNews />
 
-      <!-- <Trending /> -->
+      <Trending />
 
       <Latest />
 
       <Campaign />
-
+      <CategoryNews />
       <CarouselCat />
 
       <MoreNews />
     </div>
     <Footer1 />
+    <!-- <customImage /> -->
   </div>
 </template>
 
 <script>
-// import Trending from "@/components/Trending.vue";
+import Trending from "@/components/Trending.vue";
 
 import Latest from "@/components/Latest.vue";
 // import Trending from "@/components/Trending.vue";
-
+import CategoryNews from "@/components/CategoryNews.vue";
 // import BrowseByTopics from "@/components/BrowseByTopics.vue";
 import Footer1 from "@/components/Footer.vue";
 import MoreNews from "@/components/MoreNews.vue";
@@ -66,6 +67,7 @@ import { ref, onMounted } from "vue";
 // import CategoryChips from "@/components/CategoryChips.vue";
 
 import FeaturedNews from "@/components/FeaturedNews.vue";
+// import customImage from "@/components/customImage";
 
 export default {
   name: "HomeView",
@@ -73,10 +75,10 @@ export default {
     // Careousel,
     MoreNews, // HelloWorld,
     // SiteHeader,
-
+    CategoryNews,
     CarouselCat,
-
-    // Trending,
+    // customImage,
+    Trending,
 
     Campaign,
 
