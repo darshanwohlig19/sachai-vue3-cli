@@ -63,28 +63,32 @@ button.p-carousel-next.p-link {
   padding: 0px;
   position: absolute;
 }
-.carousel_card button.p-carousel-prev.p-link{
-  top : 50%;
+.carousel_card button.p-carousel-prev.p-link {
+  top: 50%;
   left: 0px;
   z-index: 10;
   transform: translateY(-50%);
 }
 
-.carousel_card button.p-carousel-next.p-link{
-  top : 50%;
+.carousel_card button.p-carousel-next.p-link {
+  top: 50%;
   right: 0px;
   z-index: 10;
   transform: translateY(-50%);
-
 }
-.carousel_card button.p-carousel-next.p-link{
+.carousel_card button.p-carousel-next.p-link {
   color: #ff0053 !important;
 }
-.carousel_card .p-carousel-container{
-display: block !important;
-position: relative;
+.carousel_card .p-carousel-container {
+  display: block !important;
+  position: relative;
 }
 
-
 .p-carousel.p-component.p-carousel-horizontal.custom-carousel.w-full {
-  width: 100% !important;}
+  width: 100% !important;
+}
+
+.p-toast-message-content {
+  display: flex;
+  justify-content: space-between;
+}

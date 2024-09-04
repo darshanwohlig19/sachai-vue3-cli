@@ -70,9 +70,10 @@
     >
       <div class="w-[48%] xl-max:w-[100%] flex flex-col gap-5">
         <div
+          @click="navigateToTrending(item._id)"
           v-for="(item, index) in news.slice(0, 3)"
           :key="index"
-          class="flex gap-2 mt-0 sm-max:!mt-4"
+          class="flex gap-2 mt-0 sm-max:!mt-4 cursor-pointer"
         >
           <div class="flex w-[50px]">
             <img class="image-small" src="../assets/Group.png" />
@@ -89,9 +90,10 @@
       </div>
       <div class="w-[48%] xl-max:!hidden flex flex-col justify-between">
         <div
+          @click="navigateToTrending(blog._id)"
           v-for="(blog, index) in blogs.slice(0, 4)"
           :key="index"
-          class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
+          class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3 cursor-pointer"
         >
           <div class="flex-shrink-0">
             <img
@@ -138,7 +140,6 @@ import { ref } from "vue";
 import moment from "moment";
 import { ProductService } from "../../src/assets/service/ProductService";
 const blogs = ref([]);
-
 export default {
   data() {
     return {
@@ -187,6 +188,7 @@ export default {
       this.products = data.slice(0, 9);
     });
   },
+
   beforeUnmount() {
     window.removeEventListener("resize", this.updateScreenWidth);
   },
@@ -218,6 +220,11 @@ export default {
     },
     updateScreenWidth() {
       this.screenWidth = window.innerWidth;
+    },
+    navigateToTrending(id) {
+      if (id) {
+        this.$router.push(`/news/${id}`); //
+      }
     },
     getSeverity(status) {
       switch (status) {
