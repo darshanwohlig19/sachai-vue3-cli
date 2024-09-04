@@ -293,45 +293,46 @@
                 </li>
               </ul>
             </div>
-          </div>
-          <!-- HOT -->
-          <div>
-            <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
-            <div class="grid grid-cols-2 md:flex md:flex-row md:gap-5 pt-3">
-              <div>
-                <ul>
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
-                    <a class="capitalize">Aloe Vera</a>
-                  </li>
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
-                    <a class="capitalize">Stree 2 Collection</a>
-                  </li>
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
-                    <a class="capitalize">Vision Test</a>
-                  </li>
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
-                    <a class="capitalize">Health Tips</a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <ul>
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
-                    <a class="capitalize">Aloe Vera</a>
-                  </li>
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
-                    <a class="capitalize">Stree 2 Collection</a>
-                  </li>
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
-                    <a class="capitalize">Vision Test</a>
-                  </li>
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
-                    <a class="capitalize">Health Tips</a>
-                  </li>
-                </ul>
+            <!-- HOT -->
+            <div>
+              <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
+              <div class="grid grid-cols-2 md:flex md:flex-row md:gap-5 pt-3">
+                <div>
+                  <ul>
+                    <li class="footer-links text-[#52525B] text-sm pt-3">
+                      <a class="capitalize">Aloe Vera</a>
+                    </li>
+                    <li class="footer-links text-[#52525B] text-sm pt-3">
+                      <a class="capitalize">Stree 2 Collection</a>
+                    </li>
+                    <li class="footer-links text-[#52525B] text-sm pt-3">
+                      <a class="capitalize">Vision Test</a>
+                    </li>
+                    <li class="footer-links text-[#52525B] text-sm pt-3">
+                      <a class="capitalize">Health Tips</a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <ul>
+                    <li class="footer-links text-[#52525B] text-sm pt-3">
+                      <a class="capitalize">Aloe Vera</a>
+                    </li>
+                    <li class="footer-links text-[#52525B] text-sm pt-3">
+                      <a class="capitalize">Stree 2 Collection</a>
+                    </li>
+                    <li class="footer-links text-[#52525B] text-sm pt-3">
+                      <a class="capitalize">Vision Test</a>
+                    </li>
+                    <li class="footer-links text-[#52525B] text-sm pt-3">
+                      <a class="capitalize">Health Tips</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
+
           <!-- Trending Topics -->
           <div>
             <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>

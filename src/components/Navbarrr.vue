@@ -202,22 +202,20 @@
       class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
       @click="handleBackgroundClick"
     >
-      <div class="bg-white p-6 rounded-lg shadow-lg" @click.stop>
-        <h3 class="text-lg font-bold">Confirm Logout</h3>
-        <p class="mt-2">Are you sure you want to log out?</p>
-        <div class="flex justify-center mt-4">
-          <button
-            @click="handleLogout"
-            class="bg-[#e44949] text-white px-4 py-2 rounded mr-2"
-          >
-            Logout
-          </button>
-          <button
-            @click="hidePopup"
-            class="bg-[#1E0627] text-white px-4 py-2 rounded"
-          >
-            Cancel
-          </button>
+      <div class="bg-white p-6 rounded-[18px] shadow-lg" @click.stop>
+        <p class="mt-2 text-[#121212] font-lato font-bold font-[24px]">
+          Are you sure you want to logout?
+        </p>
+        <div class="flex flex-col gap-3 justify-center mt-4">
+          <div class="flex justify-center items-center">
+            <button
+              @click="handleLogout"
+              class="bg-[#1E0627] font-lato text-white px-4 h-[52px] w-[200px] py-2 rounded-[18px]"
+            >
+              Yes, Logout
+            </button>
+          </div>
+          <button @click="hidePopup" class="text-#000 font-lato">Cancel</button>
         </div>
       </div>
     </div>
