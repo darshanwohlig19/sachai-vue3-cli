@@ -382,13 +382,18 @@ const loginWithGoogle = async () => {
         );
 
         // // Show toast notification after navigation
+        // toast.add({
+        //   severity: "success",
+        //   summary: "Successfully Login",
+        //   detail: "Successfully logged in with Google!",
+        //   life: 3000,
+        // });
         toast.add({
           severity: "success",
-          summary: "Successfully Login",
-          detail: "Successfully logged in with Google!",
-          life: 3000,
+          summary: "Logged in successfully!",
+          summary2: "Welcome back!",
+          group: "bc",
         });
-
         // Wait for navigation to complete
         setTimeout(() => {
           router.push("/");
