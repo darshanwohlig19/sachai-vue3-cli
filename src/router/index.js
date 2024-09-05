@@ -6,11 +6,18 @@ import Aboutus from "../views/Aboutus.vue";
 import Astrology from "../views/Astrology.vue";
 import News from "../components/IdData.vue";
 import Bookmark from "../views/Bookmark.vue";
+import Setting from "../views/Setting.vue";
+
 const routes = [
   {
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/Setting",
+    name: "Setting",
+    component: Setting,
   },
   {
     path: "/categories/:slugOrId",

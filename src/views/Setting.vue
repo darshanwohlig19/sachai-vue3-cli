@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <Navbarrr />
+  </div>
   <div class="flex min-h-screen bg-gray-100">
     <!-- Sidebar -->
     <div class="w-64 bg-white shadow-md">
@@ -68,6 +71,9 @@
       </div>
     </div>
   </div>
+  <div>
+    <Footer />
+  </div>
 </template>
 
 <script setup>
@@ -75,6 +81,8 @@ import { ref } from "vue";
 import { Button } from "primevue/button";
 import { InputText } from "primevue/inputtext";
 import { Checkbox } from "primevue/checkbox";
+import Navbarrr from "@/components/Navbarrr.vue";
+import Footer from "@/components/Footer.vue";
 
 const menuItems = ref([
   { label: "Language", icon: "pi pi-globe", active: true },

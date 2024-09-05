@@ -66,41 +66,15 @@
             </ul>
           </div>
         </div>
+
         <div>
           <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
-          <div class="grid grid-cols-2 md:flex md:flex-row md:gap-5 pt-3">
-            <div>
-              <ul>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Aloe Vera</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Stree 2 Collection</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Vision Test</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Health Tips</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Aloe Vera</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Stree 2 Collection</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Vision Test</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Health Tips</a>
-                </li>
-              </ul>
-            </div>
+          <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
+            <ul v-for="item in hotOnTheWeb.slice(0, 8)" :key="item.id">
+              <li class="footer-links text-[#52525B] text-sm pt-3">
+                <a class="capitalize">{{ item.name }}</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -114,17 +88,12 @@
           <div class="let w-full md:w-auto">
             <div class="footer-heads text-sm">Latest News</div>
             <ul>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Bharat Bandh</a>
-              </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Kolkata Doctor Case</a>
-              </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">NEET PG 2024 Result</a>
-              </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">PAK vs BAN Live</a>
+              <li
+                v-for="news in latestNews.slice(0, 4)"
+                :key="news.id"
+                class="footer-links text-[#52525B] text-sm pt-3"
+              >
+                <a class="capitalize">{{ news.name }}</a>
               </li>
             </ul>
           </div>
@@ -152,33 +121,10 @@
         <!-- Trending Topics -->
         <div>
           <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
-          <div class="grid grid-cols-2 gap-4 pt-3">
-            <ul>
+          <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
+            <ul v-for="topic in trendingTopics.slice(0, 8)" :key="topic.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Khel Khel Mein Collection</a>
-              </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Kalki 2898 AD OTT Release</a>
-              </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Women Who Chose the Sword</a>
-              </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Salman Khan Diet</a>
-              </li>
-            </ul>
-            <ul>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Vicky Kaushal Katrina Kaif Wedding</a>
-              </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Sania Mirza Retirement</a>
-              </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Bengaluru Metro Expansion</a>
-              </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">2024 Budget Predictions</a>
+                <a class="capitalize">{{ topic.name }}</a>
               </li>
             </ul>
           </div>
@@ -234,6 +180,7 @@
           <i class="mdi mdi-github text-[#52525B] text-[19px]"></i>
         </div>
       </div>
+
       <div class="">
         <div class="pop_hot lex flex-col gap-6">
           <div>
@@ -253,24 +200,20 @@
             </div>
           </div>
         </div>
-        <!-- Latest News, Help, and Trending Topics -->
+
+        <!-- Latest News, Help, and Hot on the Web -->
         <div class="let_hlp_trend flex flex-col gap-6">
           <div class="flex mt-5 ml-[-10px] gap-7">
             <!-- Latest News -->
             <div class="let w-full md:w-auto">
               <div class="footer-heads text-sm">Latest News</div>
               <ul>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Bharat Bandh</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Kolkata Doctor Case</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">NEET PG 2024 Result</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">PAK vs BAN Live</a>
+                <li
+                  v-for="news in latestNews.slice(0, 4)"
+                  :key="news.id"
+                  class="footer-links text-[#52525B] text-sm pt-3"
+                >
+                  <a class="capitalize">{{ news.name }}</a>
                 </li>
               </ul>
             </div>
@@ -293,42 +236,16 @@
                 </li>
               </ul>
             </div>
-            <!-- HOT -->
+
+            <!-- Hot on the Web -->
             <div>
               <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
-              <div class="grid grid-cols-2 md:flex md:flex-row md:gap-5 pt-3">
-                <div>
-                  <ul>
-                    <li class="footer-links text-[#52525B] text-sm pt-3">
-                      <a class="capitalize">Aloe Vera</a>
-                    </li>
-                    <li class="footer-links text-[#52525B] text-sm pt-3">
-                      <a class="capitalize">Stree 2 Collection</a>
-                    </li>
-                    <li class="footer-links text-[#52525B] text-sm pt-3">
-                      <a class="capitalize">Vision Test</a>
-                    </li>
-                    <li class="footer-links text-[#52525B] text-sm pt-3">
-                      <a class="capitalize">Health Tips</a>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <ul>
-                    <li class="footer-links text-[#52525B] text-sm pt-3">
-                      <a class="capitalize">Aloe Vera</a>
-                    </li>
-                    <li class="footer-links text-[#52525B] text-sm pt-3">
-                      <a class="capitalize">Stree 2 Collection</a>
-                    </li>
-                    <li class="footer-links text-[#52525B] text-sm pt-3">
-                      <a class="capitalize">Vision Test</a>
-                    </li>
-                    <li class="footer-links text-[#52525B] text-sm pt-3">
-                      <a class="capitalize">Health Tips</a>
-                    </li>
-                  </ul>
-                </div>
+              <div class="grid grid-cols-2 pt-2">
+                <ul v-for="item in hotOnTheWeb.slice(0, 8)" :key="item.id">
+                  <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
+                    <a class="capitalize">{{ item.name }}</a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -336,35 +253,21 @@
           <!-- Trending Topics -->
           <div>
             <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
-            <div class="grid grid-cols-2 gap-4 pt-3">
-              <ul>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Khel Khel Mein Collection</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Kalki 2898 AD OTT Release</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Women Who Chose the Sword</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Salman Khan Diet</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Vicky Kaushal Katrina Kaif Wedding</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Sania Mirza Retirement</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Bengaluru Metro Expansion</a>
-                </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">2024 Budget Predictions</a>
-                </li>
-              </ul>
+            <div class="grid grid-cols-2 pt-2 md:flex md:gap-6">
+              <div>
+                <ul v-for="topic in trendingTopics.slice(0, 4)" :key="topic.id">
+                  <li class="footer-links text-[#52525B] text-sm pt-3">
+                    <a class="capitalize">{{ topic.name }}</a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <ul v-for="topic in trendingTopics.slice(4, 8)" :key="topic.id">
+                  <li class="footer-links text-[#52525B] text-sm pt-3">
+                    <a class="capitalize">{{ topic.name }}</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -380,7 +283,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import { ref, onMounted } from "vue";
@@ -388,6 +290,9 @@ import { ref, onMounted } from "vue";
 export default {
   setup() {
     const categories = ref([]);
+    const latestNews = ref([]);
+    const hotOnTheWeb = ref([]);
+    const trendingTopics = ref([]);
 
     const fetchCategories = async () => {
       try {
@@ -408,12 +313,53 @@ export default {
       }
     };
 
+    const fetchLatestNews = async () => {
+      try {
+        const languageId = "6421a32aa020a23deacecf92";
+        const response = await axios.post(
+          "https://api-uat.newsshield.io/category/getAllCat",
+          { langauge: languageId }
+        );
+        latestNews.value = response.data;
+      } catch (error) {
+        console.error("Error fetching latest news:", error);
+      }
+    };
+
+    const fetchHotOnTheWeb = async () => {
+      try {
+        const response = await axios.get(
+          "https://api-uat.newsshield.io/category/getAllCat"
+        );
+        hotOnTheWeb.value = response.data;
+      } catch (error) {
+        console.error("Error fetching hot on the web:", error);
+      }
+    };
+
+    const fetchTrendingTopics = async () => {
+      try {
+        const response = await axios.get(
+          "https://api-uat.newsshield.io/category/getAllCat"
+        );
+        trendingTopics.value = response.data;
+      } catch (error) {
+        console.error("Error fetching trending topics:", error);
+      }
+    };
+
     onMounted(() => {
       fetchCategories();
+      fetchLatestNews();
+      fetchHotOnTheWeb();
+      fetchTrendingTopics();
     });
 
     return {
       categories,
+      latestNews,
+      hotOnTheWeb,
+      trendingTopics,
     };
   },
 };
