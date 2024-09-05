@@ -44,35 +44,71 @@
         </div>
 
         <div class="relative">
-          <input
-            type="text"
-            id="fname"
-            name="fname"
-            placeholder="Search"
-            class="pr-10 pl-3 py-2 rounded-[100px] text-[14px] w-full border-1"
-          />
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 15 15"
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clip-path="url(#clip0_2352_4463)">
-              <path
-                d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
-                fill="#ACACAC"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_2352_4463">
-                <rect width="15" height="15" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
+          <!-- Search Input Field -->
+          <div v-if="isInputVisible" class="relative">
+            <input
+              type="text"
+              v-model="searchQuery"
+              @blur="handleSearch"
+              @focus="isInputVisible = true"
+              placeholder="Search"
+              class="pr-10 pl-3 py-2 rounded-[100px] text-[14px] w-full border-1"
+            />
+            <svg
+              @click="handleSearch"
+              width="14"
+              height="14"
+              viewBox="0 0 15 15"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_2352_4463)">
+                <path
+                  d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
+                  fill="#ACACAC"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_2352_4463">
+                  <rect width="15" height="15" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
 
+          <!-- Search Icon Only -->
+          <div
+            :class="
+              isInputVisible
+                ? 'bg-white'
+                : 'shadow-md h-[34px] w-[34px] rounded-full flex justify-center items-center bg-white'
+            "
+          >
+            <svg
+              v-if="!isInputVisible"
+              @click="toggleSearchInput"
+              width="14"
+              height="14"
+              viewBox="0 0 15 15"
+              class="text-gray-500 cursor-pointer"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_2352_4463)">
+                <path
+                  d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
+                  fill="#ACACAC"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_2352_4463">
+                  <rect width="15" height="15" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+        </div>
         <div
           class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
         >
@@ -202,22 +238,20 @@
       class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
       @click="handleBackgroundClick"
     >
-      <div class="bg-white p-6 rounded-lg shadow-lg" @click.stop>
-        <h3 class="text-lg font-bold">Confirm Logout</h3>
-        <p class="mt-2">Are you sure you want to log out?</p>
-        <div class="flex justify-center mt-4">
-          <button
-            @click="handleLogout"
-            class="bg-[#e44949] text-white px-4 py-2 rounded mr-2"
-          >
-            Logout
-          </button>
-          <button
-            @click="hidePopup"
-            class="bg-[#1E0627] text-white px-4 py-2 rounded"
-          >
-            Cancel
-          </button>
+      <div class="bg-white p-6 rounded-[18px] shadow-lg" @click.stop>
+        <p class="mt-2 text-[#121212] font-lato font-bold font-[24px]">
+          Are you sure you want to logout?
+        </p>
+        <div class="flex flex-col gap-3 justify-center mt-4">
+          <div class="flex justify-center items-center">
+            <button
+              @click="handleLogout"
+              class="bg-[#1E0627] font-lato text-white px-4 h-[52px] w-[200px] py-2 rounded-[18px]"
+            >
+              Yes, Logout
+            </button>
+          </div>
+          <button @click="hidePopup" class="text-#000 font-lato">Cancel</button>
         </div>
       </div>
     </div>
@@ -245,10 +279,14 @@ export default {
     const categoriesContainer = ref(null);
     const isCardDropdownOpen = ref(false);
 
+    const isInputVisible = ref(false);
+    const searchQuery = ref("");
+
     const toggleCardDropdown = () => {
       isCardDropdownOpen.value = !isCardDropdownOpen.value;
       console.log("Dropdown is now:", isCardDropdownOpen.value);
     };
+
     const scrollLeft = () => {
       if (categoriesContainer.value) {
         categoriesContainer.value.scrollBy({
@@ -266,6 +304,7 @@ export default {
         });
       }
     };
+
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
     };
@@ -359,6 +398,20 @@ export default {
       }
     };
 
+    const toggleSearchInput = () => {
+      isInputVisible.value = !isInputVisible.value;
+    };
+
+    const handleSearch = () => {
+      if (searchQuery.value.trim()) {
+        // Perform the search operation
+        console.log(`Searching for: ${searchQuery.value}`);
+      }
+      // Reset the input field and show only the icon again
+      isInputVisible.value = false;
+      searchQuery.value = "";
+    };
+
     onMounted(() => {
       fetchCategories();
     });
@@ -381,10 +434,15 @@ export default {
       categoriesContainer,
       isCardDropdownOpen,
       toggleCardDropdown,
+      isInputVisible,
+      searchQuery,
+      toggleSearchInput,
+      handleSearch,
     };
   },
 };
 </script>
+
 <style scoped>
 .nav-items.active-link {
   color: #ff0053; /* Color for active navigation item */
