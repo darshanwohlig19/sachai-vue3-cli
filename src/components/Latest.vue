@@ -1,16 +1,17 @@
 <template>
-  <section>
+  <section class="mt-3">
     <div>
       <div class="flex justify-between w-full items-center mb-3">
         <div class="text-[20px] font-bold font-lato">{{ headingText }}</div>
         <div class="text-[16px] text-[#FF0053]">See all &nbsp;→</div>
       </div>
-      <div class="flex flex-row flex-wrap gap-3 justify-between cursor-pointer">
-        <div v-for="news in slicedData" :key="news._id">
-          <div
-            class="flex flex-col bg-white rounded-[10px] drop-shadow-sm w-[330px]"
-            @click="navigateToNewsDetail(news._id)"
-          >
+      <div class="flex flex-row gap-3 justify-between cursor-pointer">
+        <div
+          v-for="news in slicedData"
+          :key="news._id"
+          class="w-[33%] md-max:w-full"
+        >
+          <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
             <div class="rounded-[10px]">
               <img
                 :src="news.imgixUrlHighRes"
@@ -26,12 +27,21 @@
               <div class="flex gap-1">
                 <span class="mdi mdi-share-variant text-[19px]"></span>
                 <span
-                  class="mdi mdi-bookmark-outline text-[21px] cursor-pointer"
+                  :class="[
+                    'mdi',
+                    news.bookmarked
+                      ? 'mdi-bookmark text-red-500'
+                      : 'mdi-bookmark-outline text-[21px]',
+                  ]"
+                  class="cursor-pointer"
                   @click="addBookmark(news._id)"
                 ></span>
               </div>
             </div>
-            <div class="pl-3 pr-3 text-[16px] font-semibold">
+            <div
+              class="pl-3 pr-3 text-[16px] font-semibold"
+              @click="navigateToNewsDetail(news._id)"
+            >
               <a class="hover:text-current font-16 multiline-truncate1">
                 {{ news.headline }}
               </a>
@@ -74,7 +84,10 @@ const fetchBlogs = async () => {
         page: 1,
       }
     );
-    blogs.value = response.data;
+    blogs.value = response.data.map((news) => ({
+      ...news,
+      bookmarked: false, // Initialize with 'false'
+    }));
   } catch (error) {
     console.error("Error fetching blogs:", error);
   }
@@ -105,6 +118,55 @@ const updateScreenWidth = () => {
 
 const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
+};
+const addBookmark = async (id) => {
+  try {
+    const token = localStorage.getItem("apiDataToken");
+    if (!token) {
+      throw new Error("No authentication token found");
+    }
+
+    // Find the news item to check its current bookmark status
+    const newsItem = blogs.value.find((news) => news._id === id);
+
+    // Toggle the status between "Enabled" and "Disabled"
+    const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
+
+    const res = await axios.post(
+      `https://dev-api.askus.news/bookmark/addBookmark/${id}`,
+      { status: newStatus },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+    console.log(res);
+
+    // Update the local state to reflect the new bookmark status
+    newsItem.bookmarked = !newsItem.bookmarked;
+
+    console.log(
+      `News item ${id} bookmark status updated successfully to ${newStatus}`
+    );
+  } catch (error) {
+    if (error.response) {
+      console.error(
+        `Error updating bookmark status for news item ${id}:`,
+        error.response.data
+      );
+    } else if (error.request) {
+      console.error(
+        `Error updating bookmark status for news item ${id}: No response received`,
+        error.request
+      );
+    } else {
+      console.error(
+        `Error updating bookmark status for news item ${id}:`,
+        error.message
+      );
+    }
+  }
 };
 
 const checkRouteParam = () => {

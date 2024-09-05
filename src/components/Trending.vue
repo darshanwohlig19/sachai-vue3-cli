@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full md-max:!block flex gap-4 justify-between mt-6 relative">
+  <div class="w-full md-max:!block flex gap-4 justify-between mt-3 relative">
     <div class="relative">
       <Carousel
         :value="blogs"
