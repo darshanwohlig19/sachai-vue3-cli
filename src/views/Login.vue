@@ -392,7 +392,8 @@ const loginWithGoogle = async () => {
           severity: "success",
           summary: "Logged in successfully!",
           summary2: "Welcome back!",
-          group: "bc",
+          group: "success",
+          life: 2000,
         });
         // Wait for navigation to complete
         setTimeout(() => {
