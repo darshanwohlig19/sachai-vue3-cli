@@ -50,7 +50,9 @@
         </div>
       </div>
     </div>
-    <div class="w-[100%] sm:w-[48%] lg:w-[30%] flex flex-col justify-between">
+    <div
+      class="w-[100%] between-sm-md:w-[100%] lg:w-[30%] flex flex-col justify-between"
+    >
       <div v-for="blog in blogs1" :key="blog" class="below-sm:mt-4">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"

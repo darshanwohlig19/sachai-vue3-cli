@@ -5,6 +5,7 @@ import Login from "../views/Login.vue";
 import Aboutus from "../views/Aboutus.vue";
 import Astrology from "../views/Astrology.vue";
 import News from "../components/IdData.vue";
+import Bookmark from "../views/Bookmark.vue";
 const routes = [
   {
     path: "/",
@@ -28,6 +29,11 @@ const routes = [
     path: "/AboutUs",
     name: "About",
     component: Aboutus,
+  },
+  {
+    path: "/Bookmark",
+    name: "Bookmark",
+    component: Bookmark,
   },
   {
     path: "/Astrology",

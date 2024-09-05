@@ -78,7 +78,7 @@ const newsId = ref(route.params.id || "");
 const fetchBlogs = async () => {
   try {
     const response = await axios.post(
-      "https://dev-api.askus.news/news/getAllBlogsForWeb",
+      "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
       {
         language: "6421a32aa020a23deacecf92",
         page: 1,
@@ -97,7 +97,7 @@ const fetchRelatedNews = async () => {
   if (!newsId.value) return;
   try {
     const response = await axios.post(
-      `https://dev-api.askus.news/pinecone/getRelatedNews/${newsId.value}`,
+      `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`,
       {
         language: "6421a32aa020a23deacecf92",
       }
@@ -133,7 +133,7 @@ const addBookmark = async (id) => {
     const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
 
     const res = await axios.post(
-      `https://dev-api.askus.news/bookmark/addBookmark/${id}`,
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${id}`,
       { status: newStatus },
       {
         headers: {
@@ -141,7 +141,7 @@ const addBookmark = async (id) => {
         },
       }
     );
-    console.log(res);
+    console.log("hiii", res);
 
     // Update the local state to reflect the new bookmark status
     newsItem.bookmarked = !newsItem.bookmarked;
