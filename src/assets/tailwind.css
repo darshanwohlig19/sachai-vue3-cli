@@ -91,4 +91,5 @@ button.p-carousel-next.p-link {
 .p-toast-message-content {
   display: flex;
   justify-content: space-between;
+  background-color: white;
 }
