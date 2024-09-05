@@ -413,11 +413,11 @@ const loginWithGoogle = async () => {
         // ...
       });
   } catch (error) {
-    console.error("Google login failed:", error);
+    console.error("Apple login failed:", error);
     toast.add({
       severity: "error",
       summary: "Login Failed",
-      detail: "There was an error logging in with Google. Please try again.",
+      detail: "There was an error logging in with Apple. Please try again.",
       life: 3000,
     });
   }
