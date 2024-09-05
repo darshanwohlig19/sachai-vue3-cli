@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-3 rounded-lg shadow-md max-w-2xl mx-auto">
+  <div class="bg-white p-3 rounded-lg shadow-md max-w-2xl mx-auto mt-[4%]">
     <h2 class="text-2xl font-bold mb-4 border-l-4 border-red-500 pl-2">
       Featured News
     </h2>

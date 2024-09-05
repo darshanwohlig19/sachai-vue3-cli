@@ -1,30 +1,5 @@
 <template>
   <div class="home">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" />  -->
-    <!-- <SiteHeader />  -->
-    <!-- <CategoryChips
-    <SiteHeader />
-    <CategoryChips
-
- <HelloWorld msg="Welcome to Your Vue.js App" />
-   <SiteHeader /> 
-   <CategoryChips
-
-      :categories="categories"
-      :activeCategoryId="activeCategoryId"
-      @category-selected="selectCategory"
-    /> -->
-
-    <!-- <Featured /> -->
-    <!-- <Latest /> -->
-    <!-- <BrowseByTopics /> -->
-
-    <!-- <Careousel /> -->
-    <!-- <Trending />
-    <Featured />
- 
-    <BrowseByTopics />s
-    <Footer1 /> -->
     <Navbarrr />
     <div class="mx-[30px]">
       <FeaturedNews />
@@ -46,53 +21,29 @@
 
 <script>
 import Trending from "@/components/Trending.vue";
-
 import Latest from "@/components/Latest.vue";
-// import Trending from "@/components/Trending.vue";
 import CategoryNews from "@/components/CategoryNews.vue";
-// import BrowseByTopics from "@/components/BrowseByTopics.vue";
 import Footer1 from "@/components/Footer.vue";
 import MoreNews from "@/components/MoreNews.vue";
 import CarouselCat from "@/components/Catogries_carousel.vue";
-// import Featured from "@/components/Featured.vue";
-
-// import Careousel from "@/components/Carousel_Catogries.vue";
-
 import Campaign from "@/components/Campaign.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
-
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-// import CategoryChips from "@/components/CategoryChips.vue";
-
 import FeaturedNews from "@/components/FeaturedNews.vue";
-// import customImage from "@/components/customImage";
 
 export default {
   name: "HomeView",
   components: {
-    // Careousel,
-    MoreNews, // HelloWorld,
-    // SiteHeader,
+    MoreNews,
     CategoryNews,
     CarouselCat,
-    // customImage,
     Trending,
-
     Campaign,
-
-    // HelloWorld,
-    // SiteHeader,
     Navbarrr,
-
     Latest,
-    // Trending,
-    // BrowseByTopics,
     Footer1,
-    // Featured,
-    // CategoryChips,
-
     FeaturedNews,
   },
   setup() {
@@ -114,7 +65,7 @@ export default {
       try {
         const languageId = "6421a32aa020a23deacecf92";
         const response = await axios.post(
-          "https://dev-api.askus.news/category/getAllCat",
+          "https://api-uat.newsshield.io/category/getAllCat",
           { langauge: languageId }
         );
         categories.value = response.data;
@@ -148,8 +99,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* .home {
-  margin: 0 80px 0 80px;
-} */
-</style>
+<style scoped></style>

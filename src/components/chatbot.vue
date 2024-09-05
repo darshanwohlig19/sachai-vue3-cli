@@ -1,92 +1,103 @@
 <template>
-  <div class="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
+  <div
+    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg"
+  >
     <div class="bg-purple-900 text-white p-4">
       <h2 class="text-xl font-semibold leading-tight">
         {{ title }}
       </h2>
     </div>
-    <div class="p-4 space-y-4">
-      <div class="flex justify-end">
-        <div class="bg-blue-100 text-blue-800 rounded-full px-4 py-2">
-          {{ helloText }}
-        </div>
-      </div>
-      <div class="flex items-center space-x-2">
-        <div class="bg-gray-100 rounded-lg p-4 flex-grow">
-          <p class="font-semibold">{{ greeting }}</p>
-        </div>
-      </div>
+
+    <!-- Conditional rendering for explainText -->
+    <div v-if="explainText" class="p-4 space-y-4 h-content-fixed">
       <div class="flex justify-end">
         <div class="bg-blue-100 text-blue-800 rounded-full px-4 py-2">
           {{ explainText }}
         </div>
       </div>
-      <div class="flex items-start space-x-2">
-        <div class="bg-gray-100 rounded-lg p-4 flex-grow">
+
+      <!-- Conditional rendering for content -->
+      <div v-if="content" class="flex items-start space-x-2">
+        <div
+          class="bg-gray-100 rounded-lg p-4 flex-grow h-content-fixed-inner overflow-y-auto"
+        >
           <p>{{ content }}</p>
           <hr />
           <div class="flex items-center space-x-4">
-            <div class="text-gray-500 text-sm flex items-center space-x-2">
-              <span>{{ questionsLeft }} questions left</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                  clip-rule="evenodd"
-                />
-              </svg>
+            <div class="flex-grow flex items-center space-x-4">
+              <span class="text-gray-500 text-sm">
+                {{ questionsLeft }} questions left
+              </span>
+              <div class="flex-grow"></div>
             </div>
-            <button @click="handleClick" class="p-1 rounded-full bg-gray-100">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 text-gray-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <button
+              @click="handleClick"
+              class="p-1 rounded-full bg-gray-100 flex items-center space-x-2"
+              aria-label="Like or Dislike"
+            >
+              <span
+                class="p-1 rounded-full w-10 bg-gray-400 text-[#121212] flex items-center justify-center"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"
-                />
-              </svg>
+                <i class="pi pi-thumbs-up text-xl"></i>
+              </span>
+              <span
+                class="p-1 rounded-full w-10 bg-gray-400 text-[#121212] flex items-center justify-center"
+              >
+                <i class="pi pi-thumbs-down text-xl"></i>
+              </span>
             </button>
           </div>
         </div>
       </div>
+
+      <!-- New card showing "Hello" text if both explainText and content are present -->
     </div>
-    <div class="bg-gray-100 p-4">
+    <div
+      v-if="showQuestions && !explainText && !content"
+      class="p-3 bg-gray-100 rounded-lg shadow-md w-[85%] mx-auto h-assist-card mt-[3%]"
+    >
+      <h2 class="text-lg font-bold mb-2 text-gray-800">
+        Need any assistance with your queries?
+      </h2>
+      <p class="text-gray-600 mb-2">
+        Our AI chatbot support is always available to provide answers to any
+        questions but to begin with, here are some of our most asked questions
+      </p>
+      <div class="space-y-4">
+        <div class="bg-white p-2 rounded-lg shadow">
+          <p class="text-gray-800 font-medium text-center">
+            How have real estate owners reacted to the provisions of Union
+            Budget 2024?
+          </p>
+        </div>
+        <div class="bg-white p-2 rounded-lg shadow">
+          <p class="text-gray-800 font-medium text-center">
+            What is the main impact of Union Budget 2024 on property owners?
+          </p>
+        </div>
+        <div class="flex justify-center mt-4">
+          <Button variant="outline" class="" @click="toggleQuestionsVisibility">
+            Hide Questions
+          </Button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 p-4 mt-input">
       <div class="flex items-center bg-white rounded overflow-hidden">
         <input
           type="text"
           v-model="userQuestion"
           placeholder="Ask a question about this article!"
           class="flex-grow px-4 py-2 focus:outline-none"
+          aria-label="User question input"
         />
         <button
           @click="submitQuestion"
-          class="bg-purple-900 text-white p-2 rounded-full"
+          class="bg-purple-900 text-white p-2 rounded"
+          aria-label="Submit question"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
+          <img :src="vectorImg" alt="Submit question" />
         </button>
       </div>
     </div>
@@ -95,29 +106,65 @@
 
 <script setup>
 import { ref } from "vue";
+import vectorImg from "@/assets/png/Vector.png";
 
 // Define reactive state
 const title = ref(
   "Pro-Khalistani Protests Outside Indian Diplomatic Missions In London, Melbourne..."
 );
-const helloText = ref("hello");
-const explainText = ref("explain");
-const greeting = ref("Hello! How can I assist you today?");
-const content = ref(
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla lobortis enim, a vulputate lorem tincidunt et. Praesent sagittis finibus nisl sed venenatis. Sed tristique ligula eget eros venenatis, vel"
-);
+const explainText = ref("");
+const content = ref("");
 const questionsLeft = ref(50);
 const userQuestion = ref("");
+const showQuestions = ref(true);
 
-// Define methods
+// Method to handle button click
 const handleClick = () => {
-  // Logic for button click
   console.log("Button clicked!");
 };
 
-const submitQuestion = () => {
-  // Logic for submitting the question
-  console.log(`Question submitted: ${userQuestion.value}`);
-  userQuestion.value = ""; // Clear the input after submission
+const toggleQuestionsVisibility = () => {
+  showQuestions.value = !showQuestions.value;
+};
+// Method to submit the user question
+const submitQuestion = async () => {
+  if (userQuestion.value.trim()) {
+    explainText.value = userQuestion.value;
+    try {
+      const response = await fetch(
+        `https://api.example.com/data?query=${encodeURIComponent(
+          userQuestion.value
+        )}`
+      );
+      if (!response.ok) throw new Error("Network response was not ok.");
+      const data = await response.json();
+      content.value = data.content || "No content available";
+      userQuestion.value = "";
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      content.value = "Failed to load content";
+    }
+  } else {
+    console.log("Please enter a question");
+  }
 };
 </script>
+
+<style scoped>
+.h-content-fixed {
+  height: 400px; /* Adjust height as needed */
+  overflow: hidden; /* To prevent content from overflowing */
+}
+
+.h-content-fixed-inner {
+  height: 100%; /* Fill the height of the parent container */
+}
+
+.h-assist-card {
+  height: 390px; /* Adjust height as needed */
+}
+
+.mt-input {
+  margin-top: 20px; /* Adjust to your desired spacing */
+}
+</style>

@@ -1,16 +1,17 @@
 <template>
   <section>
-    <div>
+    <div class="mt-3">
       <div class="flex justify-between w-full items-center mb-3">
-        <div class="text-[20px] font-bold font-lato">{{ headingText }}</div>
+        <div class="text-[20px] font-bold font-lato">{{ sectionTitle }}</div>
         <div class="text-[16px] text-[#FF0053]">See all &nbsp;→</div>
       </div>
-      <div class="flex flex-row flex-wrap gap-3 justify-between cursor-pointer">
-        <div v-for="news in slicedData" :key="news._id">
-          <div
-            class="flex flex-col bg-white rounded-[10px] drop-shadow-sm w-[330px]"
-            @click="navigateToNewsDetail(news._id)"
-          >
+      <div class="flex flex-row gap-3 justify-between">
+        <div
+          v-for="news in newsId ? newsData : slicedData"
+          :key="news._id"
+          class="w-[33%] sm-425:w-full"
+        >
+          <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
             <div class="rounded-[10px]">
               <img
                 :src="news.imgixUrlHighRes"
@@ -25,18 +26,21 @@
               </div>
               <div class="flex gap-1">
                 <span class="mdi mdi-share-variant text-[19px]"></span>
-                <span
-                  class="mdi mdi-bookmark-outline text-[21px] cursor-pointer"
-                  @click="addBookmark(news._id)"
-                ></span>
+                <span class="mdi mdi-bookmark-outline text-[21px]"></span>
               </div>
             </div>
             <div class="pl-3 pr-3 text-[16px] font-semibold">
-              <a class="hover:text-current font-16 multiline-truncate1">
+              <a
+                @click="navigateToLatestDetail(news._id)"
+                class="hover:text-current font-16 multiline-truncate1"
+              >
                 {{ news.headline }}
               </a>
             </div>
-            <div class="pl-3 pr-3 para multiline-truncate">
+            <div
+              class="pl-3 pr-3 para multiline-truncate"
+              @click="navigateToLatestDetail(news._id)"
+            >
               {{ news.summary }}
             </div>
             <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
@@ -50,97 +54,111 @@
   </section>
 </template>
 
-<script setup>
-import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+<script>
+import { ref, onMounted, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import moment from "moment";
-import { useRoute, useRouter } from "vue-router";
 
-const route = useRoute();
-const router = useRouter();
+export default {
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const newsId = route.params.newsId;
+    const blogs = ref([]);
+    const latestNews = ref([]);
+    console.log("latestNews", latestNews.value);
 
-const blogs = ref([]);
-const screenWidth = ref(window.innerWidth);
-const headingText = ref("Latest News");
-const isRelatedNews = ref(false);
-const newsId = ref(route.params.id || "");
+    const languageId = "6421a32aa020a23deacecf92";
+    const screenWidth = ref(window.innerWidth);
 
-const fetchBlogs = async () => {
-  try {
-    const response = await axios.post(
-      "https://dev-api.askus.news/news/getAllBlogsForWeb",
-      {
-        language: "6421a32aa020a23deacecf92",
-        page: 1,
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.post(
+          "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
+          {
+            language: languageId,
+            page: 1,
+          }
+        );
+        blogs.value = response.data;
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
       }
-    );
-    blogs.value = response.data;
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
-  }
-};
+    };
 
-const fetchRelatedNews = async () => {
-  if (!newsId.value) return;
-  try {
-    const response = await axios.post(
-      `https://dev-api.askus.news/pinecone/getRelatedNews/${newsId.value}`,
-      {
-        language: "6421a32aa020a23deacecf92",
+    const fetchRelatedNews = async () => {
+      try {
+        const response = await axios.post(
+          `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId}`,
+          {
+            language: languageId,
+          }
+        );
+        latestNews.value = response.data;
+      } catch (error) {
+        console.error("Error fetching related news:", error);
       }
-    );
-    blogs.value = response.data;
-  } catch (error) {
-    console.error("Error fetching related news:", error);
-  }
+    };
+
+    const truncateText = (text, maxLength) => {
+      return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+    };
+
+    const formatPublishTime = (publishTime) => {
+      return moment(publishTime).fromNow();
+    };
+
+    const updateScreenWidth = () => {
+      screenWidth.value = window.innerWidth;
+    };
+    const navigateToLatestDetail = (id) => {
+      router.push(`/news/${id}`);
+    };
+    onMounted(() => {
+      fetchBlogs();
+      if (newsId) {
+        fetchRelatedNews();
+      }
+      window.addEventListener("resize", updateScreenWidth);
+    });
+
+    const sectionTitle = computed(() => {
+      return newsId ? "Related News" : "Latest News";
+    });
+
+    return {
+      blogs,
+      screenWidth,
+      truncateText,
+      formatPublishTime,
+      updateScreenWidth,
+      sectionTitle,
+      navigateToLatestDetail,
+    };
+  },
+
+  computed: {
+    newsData() {
+      if (this.screenWidth < 640) {
+        return this.latestNews.slice(0, 1);
+      } else if (this.screenWidth >= 640 && this.screenWidth < 1024) {
+        return this.latestNews.slice(0, 3);
+      } else {
+        return this.latestNews.slice(0, 4);
+      }
+    },
+    slicedData() {
+      if (this.screenWidth < 640) {
+        return this.blogs.slice(0, 1);
+      } else if (this.screenWidth >= 640 && this.screenWidth < 1024) {
+        return this.blogs.slice(0, 3);
+      } else {
+        return this.blogs.slice(0, 4);
+      }
+    },
+  },
 };
-
-const formatPublishTime = (publishTime) => {
-  return moment(publishTime).fromNow();
-};
-
-const updateScreenWidth = () => {
-  screenWidth.value = window.innerWidth;
-};
-
-const navigateToNewsDetail = (id) => {
-  router.push(`/news/${id}`);
-};
-
-const checkRouteParam = () => {
-  newsId.value = route.params.id || "";
-  if (newsId.value) {
-    isRelatedNews.value = true;
-    headingText.value = "Related News";
-    fetchRelatedNews();
-  } else {
-    isRelatedNews.value = false;
-    headingText.value = "Latest News";
-    fetchBlogs();
-  }
-};
-
-const slicedData = computed(() => {
-  if (screenWidth.value < 640) {
-    // Mobile devices
-    return blogs.value.slice(0, 1);
-  } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
-    // Tablets
-    return blogs.value.slice(0, 3);
-  } else {
-    // Desktop and larger devices
-    return blogs.value.slice(0, 4);
-  }
-});
-
-onMounted(() => {
-  checkRouteParam();
-  window.addEventListener("resize", updateScreenWidth);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", updateScreenWidth);
-});
 </script>
 
 <style scoped>

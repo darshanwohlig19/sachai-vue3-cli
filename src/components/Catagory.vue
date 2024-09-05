@@ -33,7 +33,7 @@ const emit = defineEmits(["categorySelected"]);
 const fetchCategories = async () => {
   try {
     const response = await axios.post(
-      "https://dev-api.askus.news/category/getAllCat",
+      "https://api-uat.newsshield.io/category/getAllCat",
       {
         langauge: languageId.value,
       }

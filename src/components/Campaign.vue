@@ -106,7 +106,7 @@ export default {
     async function fetchBlogs() {
       try {
         const response = await axios.post(
-          "https://dev-api.askus.news/news/getAllBlogsForWeb",
+          `https://api-uat.newsshield.io/news/getAllBlogsForWeb`,
           {
             language: languageId.value,
             page: 1,

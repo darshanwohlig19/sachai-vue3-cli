@@ -276,7 +276,7 @@ const categoryId = route.params.slugOrId;
 const fetchNews = async () => {
   try {
     const response = await axios.post(
-      "https://dev-api.askus.news/news/getCategoryWiseNewsForWeb/",
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
       {
         categoryId,
       }

@@ -79,7 +79,7 @@ const navigateToCategoryDetail = (id) => {
 const fetchNewsForCategory = async (categoryId) => {
   try {
     const { data } = await axios.post(
-      "https://dev-api.askus.news/news/getCategoryWiseNewsForWeb/",
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
       { categoryId }
     );
     return data;
@@ -93,7 +93,7 @@ const fetchCategories = async () => {
   try {
     const languageId = "6421a32aa020a23deacecf92";
     const { data } = await axios.post(
-      "https://dev-api.askus.news/category/getAllCat",
+      "https://api-uat.newsshield.io/category/getAllCat",
       { langauge: languageId }
     );
 

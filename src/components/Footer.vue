@@ -392,7 +392,7 @@ export default {
       try {
         const languageId = "6421a32aa020a23deacecf92";
         const response = await axios.post(
-          "https://dev-api.askus.news/category/getAllCat",
+          "https://api-uat.newsshield.io/category/getAllCat",
           { langauge: languageId }
         );
         categories.value = response.data.map((category) => ({

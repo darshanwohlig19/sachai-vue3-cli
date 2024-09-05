@@ -5,7 +5,34 @@ module.exports = {
     extend: {
       fontFamily: {
         lato: ["Lato", "sans-serif"],
+        "source-serif-pro": ["'Source Serif Pro Semibold'", "serif"],
       },
+      fontSize: {
+        "16px": "16px",
+      },
+      colors: {
+        "custom-gray": "#f7f7f4",
+        gray: {
+          10: "#5B5B5B",
+          20: "#8E8E8E",
+          30: "#AAAAAA",
+          50: "#F5F6FA",
+          80: "#8d96a0",
+          100: "#EEF0F6",
+          150: "#9299a0",
+          200: "#DADEEC",
+          250: "#808080	",
+          300: "#C9D0E3",
+          350: "#a4b1d5",
+          400: "#B0BBD5",
+          500: "#B5BED9",
+          600: "#A3AED0",
+          700: "#707eae",
+          800: "#2D396B",
+          900: "#1B2559",
+        },
+      },
+
       screens: {
         xs: "350px",
         "xs-max": { max: "350px" },
