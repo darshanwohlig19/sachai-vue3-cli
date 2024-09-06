@@ -107,9 +107,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import vectorImg from "@/assets/png/Vector.png";
-import axios from "axios";
 import { useRoute } from "vue-router";
-
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 // Define reactive state
 const title = ref(
   "Pro-Khalistani Protests Outside Indian Diplomatic Missions In London, Melbourne..."
@@ -133,27 +133,21 @@ const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
 };
 const handleQnAClick = async () => {
-  const token = localStorage.getItem("apiDataToken");
-
-  // Check if token exists before making the request
-  if (!token) {
-    console.error("No token found");
-    return;
-  }
-
   try {
-    const response = await axios.post(
-      `https://api-uat.newsshield.io/chats/saveClickedSuggestedQnA/${newsId}`,
-      null,
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
-    newsItem.value = response.data;
+    try {
+      const response = await apiService.apiCall(
+        "post",
+        `${apiConfig.ADD_QA_DATA}/${newsId}`
+      );
+      newsItem.value = response.data;
+    } catch (error) {
+      console.error("Error fetching news item:", error);
+    }
+
+    // Handle response
   } catch (error) {
-    console.error("Error fetching news item:", error);
+    // Handle errors
+    console.error("Error adding new users:", error);
   }
 };
 
