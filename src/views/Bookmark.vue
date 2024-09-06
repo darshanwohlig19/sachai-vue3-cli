@@ -40,7 +40,7 @@
               </div>
               <div
                 class="text-[10px] md:text-[14px] text-[#878787] multiline-truncate font-lato leading-1 mr-1 mt-1 mb-1 cursor-pointer"
-                @click="navigateToNewsDetail(item._id)"
+                @click="navigateToNewsDetail(item.newsId)"
               >
                 {{ item.summary || "No summary" }}
               </div>
@@ -51,7 +51,7 @@
                   <span> 4 min read</span>
                 </div>
                 <div class="font-12">
-                  <button @click="removeBookmark(item._id)">Remove</button>
+                  <button @click="removeBookmark(item.newsId)">Remove</button>
                 </div>
               </div>
             </div>
@@ -98,6 +98,7 @@ const Bookmark = async () => {
         },
       }
     );
+    console.log("data", response);
     BookmarkData.value = response.data;
     console.log(response.data);
   } catch (error) {
@@ -114,7 +115,7 @@ const removeBookmark = async (id) => {
     }
 
     const newStatus = "Disabled";
-
+    console.log("This is id", id);
     const res = await axios.post(
       `https://api-uat.newsshield.io/bookmark/addBookmark/${id}`,
       { status: newStatus },
@@ -129,6 +130,7 @@ const removeBookmark = async (id) => {
       BookmarkData.value = BookmarkData.value.filter((item) => item._id !== id);
       localStorage.removeItem(`bookmark_${id}`);
       console.log(`News item ${id} removed from bookmarks successfully.`);
+      Bookmark();
     } else {
       console.log("unable");
     }

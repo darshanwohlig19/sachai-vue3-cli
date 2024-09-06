@@ -30,7 +30,7 @@
                   :class="[
                     'mdi',
                     news.bookmarked
-                      ? 'mdi-bookmark text-red-500 text-[21px]'
+                      ? 'mdi-bookmark text-[#FF0053] text-[21px]'
                       : 'mdi-bookmark-outline text-[21px]',
                   ]"
                   class="cursor-pointer"
