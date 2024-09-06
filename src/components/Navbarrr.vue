@@ -390,9 +390,10 @@ export default {
 
             // Show success toaster notification
             toast.add({
-              severity: "success",
-              summary: "Logout Successful",
-              detail: "You have been logged out successfully.",
+              severity: "error",
+              summary: "Logged out successfully!",
+              group: "error",
+              life: 2000,
             });
             isCardDropdownOpen.value = !isCardDropdownOpen.value;
           } else {
@@ -403,11 +404,13 @@ export default {
         console.error("Error during logout:", error);
         toast.add({
           severity: "error",
-          summary: "Logout Error",
-          detail: "Failed to log out",
+          summary: "Logged out successfully!",
+          group: "error",
+          life: 2000,
         });
       } finally {
         hidePopup();
+        toggleCardDropdown();
       }
     };
 

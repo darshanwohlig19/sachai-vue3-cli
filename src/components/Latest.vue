@@ -30,7 +30,7 @@
                   :class="[
                     'mdi',
                     news.bookmarked
-                      ? 'mdi-bookmark text-red-500'
+                      ? 'mdi-bookmark text-red-500 text-[21px]'
                       : 'mdi-bookmark-outline text-[21px]',
                   ]"
                   class="cursor-pointer"
@@ -87,7 +87,7 @@ const fetchBlogs = async () => {
     );
     blogs.value = response.data.map((news) => ({
       ...news,
-      bookmarked: false, // Initialize with 'false'
+      bookmarked: localStorage.getItem(`bookmark_${news._id}`) === "Enabled",
     }));
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -104,6 +104,10 @@ const fetchRelatedNews = async () => {
       }
     );
     relatedNews.value = response?.data;
+    blogs.value = response.data.map((news) => ({
+      ...news,
+      bookmarked: localStorage.getItem(`bookmark_${news._id}`) === "Enabled",
+    }));
   } catch (error) {
     console.error("Error fetching related news:", error);
   }
@@ -133,7 +137,7 @@ const addBookmark = async (id) => {
     // Toggle the status between "Enabled" and "Disabled"
     const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
 
-    const res = await axios.post(
+    await axios.post(
       `https://api-uat.newsshield.io/bookmark/addBookmark/${id}`,
       { status: newStatus },
       {
@@ -142,31 +146,19 @@ const addBookmark = async (id) => {
         },
       }
     );
-    console.log("hiii", res);
 
-    // Update the local state to reflect the new bookmark status
+    // Update the local state and local storage to reflect the new bookmark status
     newsItem.bookmarked = !newsItem.bookmarked;
+    localStorage.setItem(
+      `bookmark_${id}`,
+      newsItem.bookmarked ? "Enabled" : "Disabled"
+    );
 
     console.log(
       `News item ${id} bookmark status updated successfully to ${newStatus}`
     );
   } catch (error) {
-    if (error.response) {
-      console.error(
-        `Error updating bookmark status for news item ${id}:`,
-        error.response.data
-      );
-    } else if (error.request) {
-      console.error(
-        `Error updating bookmark status for news item ${id}: No response received`,
-        error.request
-      );
-    } else {
-      console.error(
-        `Error updating bookmark status for news item ${id}:`,
-        error.message
-      );
-    }
+    console.error(`Error updating bookmark status for news item ${id}:`, error);
   }
 };
 

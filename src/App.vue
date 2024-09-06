@@ -1,5 +1,7 @@
 <template>
-  <nav><router-link to="/"></router-link></nav>
+  <nav>
+    <router-link to="/"></router-link>
+  </nav>
   <router-view />
   <Toast position="top-right" group="success" @close="onClose">
     <template #message="slotProps">
@@ -42,7 +44,7 @@
           <div
             class="bg-[red] flex justify-center items-center w-[28px] h-[28px] rounded-full"
           >
-            <i class="mdi mdi-error text-white"></i>
+            <i class="mdi mdi-alert-circle-outline text-white"></i>
           </div>
         </div>
 
