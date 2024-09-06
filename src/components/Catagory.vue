@@ -39,14 +39,14 @@ const fetchCategories = async () => {
       }
     );
 
-    navcategories3.value = response.data.slice(0, 16);
-    if (!selectedCategoryId.value && navcategories3.value.length > 0) {
+    navcategories3.value = response?.data?.slice(0, 16);
+    if (!selectedCategoryId?.value && navcategories3?.value.length > 0) {
       // Set the first category as selected if no category is set
-      selectedCategoryId.value = navcategories3.value[0]._id;
+      selectedCategoryId.value = navcategories3?.value[0]?._id;
       emit(
         "categorySelected",
         selectedCategoryId.value,
-        navcategories3.value[0].name
+        navcategories3?.value[0]?.name
       );
     }
   } catch (error) {

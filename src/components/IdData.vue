@@ -43,14 +43,14 @@
           <ChatBot />
         </div>
         <div class="flex-grow">
-          <FeatureNews />
+          <FeatureNews :category="newsItem" />
         </div>
       </div>
     </div>
 
     <!-- Latest News -->
     <div class="mt-8">
-      <LatestNews />
+      <RelatedNewsData />
     </div>
   </div>
   <Footer />
@@ -64,23 +64,24 @@ import moment from "moment";
 import Footer from "@/components/Footer.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
 import FeatureNews from "@/components/FeaturedIdStories.vue";
-import LatestNews from "@/components/Latest.vue";
+import RelatedNewsData from "@/components/RelatedNews.vue";
 import ChatBot from "@/components/chatbot.vue";
 
 const route = useRoute();
 const newsItem = ref(null);
 const newsId = route.params.id;
-
+console.log("newsId", newsId);
 const fetchNewsItem = async () => {
   try {
     const response = await axios.get(
-      `https://dev-api.askus.news/news/getOneNewsForWeb/${newsId}`
+      `https://api-uat.newsshield.io/news/getOneNewsForWeb/${newsId}`
     );
     newsItem.value = response.data;
   } catch (error) {
     console.error("Error fetching news item:", error);
   }
 };
+
 const formattedPublishTime = () => {
   return moment(newsItem.value?.publishtime).fromNow();
 };

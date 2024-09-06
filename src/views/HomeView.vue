@@ -72,7 +72,7 @@ export default {
 
         // Set default category as the first one
         if (categories.value.length > 0) {
-          activeCategoryId.value = categories.value[0]._id;
+          activeCategoryId.value = categories?.value[0]?._id;
         }
       } catch (error) {
         console.error("Error fetching categories:", error);

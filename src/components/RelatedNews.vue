@@ -2,7 +2,7 @@
   <section class="mt-3">
     <div>
       <div class="flex justify-between w-full items-center mb-3">
-        <div class="text-[20px] font-bold font-lato">{{ headingText }}</div>
+        <div class="text-[20px] font-bold font-lato">Related News</div>
         <div class="text-[16px] text-[#FF0053]">See all &nbsp;→</div>
       </div>
       <div class="flex flex-row gap-3 justify-between cursor-pointer">
@@ -70,19 +70,16 @@ const route = useRoute();
 const router = useRouter();
 
 const blogs = ref([]);
-const relatedNews = ref([]);
+console.log("blogs", blogs);
 const screenWidth = ref(window.innerWidth);
-const headingText = ref("Latest News");
-const isRelatedNews = ref(false);
 const newsId = ref(route.params.id || "");
 
 const fetchBlogs = async () => {
   try {
     const response = await axios.post(
-      "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
+      `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`,
       {
         language: "6421a32aa020a23deacecf92",
-        page: 1,
       }
     );
     blogs.value = response.data.map((news) => ({
@@ -91,21 +88,6 @@ const fetchBlogs = async () => {
     }));
   } catch (error) {
     console.error("Error fetching blogs:", error);
-  }
-};
-
-const fetchRelatedNews = async () => {
-  if (!newsId.value) return;
-  try {
-    const response = await axios.post(
-      `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`,
-      {
-        language: "6421a32aa020a23deacecf92",
-      }
-    );
-    relatedNews.value = response?.data;
-  } catch (error) {
-    console.error("Error fetching related news:", error);
   }
 };
 
@@ -134,7 +116,7 @@ const addBookmark = async (id) => {
     const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
 
     const res = await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${id}`,
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${newsId.value}`,
       { status: newStatus },
       {
         headers: {
@@ -172,15 +154,6 @@ const addBookmark = async (id) => {
 
 const checkRouteParam = () => {
   newsId.value = route.params.id || "";
-  if (newsId.value) {
-    isRelatedNews.value = true;
-    headingText.value = "Related News";
-    fetchRelatedNews();
-  } else {
-    isRelatedNews.value = false;
-    headingText.value = "Latest News";
-    fetchBlogs();
-  }
 };
 
 const slicedData = computed(() => {
@@ -197,6 +170,7 @@ const slicedData = computed(() => {
 });
 
 onMounted(() => {
+  fetchBlogs();
   checkRouteParam();
   window.addEventListener("resize", updateScreenWidth);
 });

@@ -376,9 +376,9 @@ const loginWithGoogle = async () => {
 
         // Send user data to API
         await sendUserDataToApi(
-          user.providerData[0].displayName,
-          user.providerData[0].email,
-          user.providerData[0].uid
+          user.providerData[0]?.displayName,
+          user.providerData[0]?.email,
+          user.providerData[0]?.uid
         );
 
         // // Show toast notification after navigation
@@ -441,9 +441,9 @@ const signInWithApple = async () => {
 
     // Sending user data to your API
     await sendUserDataToApi(
-      user.providerData[0].displayName,
-      user.providerData[0].email,
-      user.providerData[0].uid
+      user.providerData[0]?.displayName,
+      user.providerData[0]?.email,
+      user.providerData[0]?.uid
     );
 
     // Log the user info

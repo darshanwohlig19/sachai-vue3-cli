@@ -1,13 +1,13 @@
 <template>
   <div
-    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg"
+    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card"
   >
     <div class="bg-purple-900 text-white p-4">
       <h2 class="text-xl font-semibold leading-tight">
         {{ title }}
       </h2>
     </div>
-
+    <div v-if="!showQuestions" class="h-content-fixed"></div>
     <!-- Conditional rendering for explainText -->
     <div v-if="explainText" class="p-4 space-y-4 h-content-fixed">
       <div class="flex justify-end">
@@ -64,14 +64,14 @@
         questions but to begin with, here are some of our most asked questions
       </p>
       <div class="space-y-4">
-        <div class="bg-white p-2 rounded-lg shadow">
+        <div class="bg-white p-2 rounded-lg shadow cursor-pointer">
           <p class="text-gray-800 font-medium text-center">
             How have real estate owners reacted to the provisions of Union
             Budget 2024?
           </p>
         </div>
         <div class="bg-white p-2 rounded-lg shadow">
-          <p class="text-gray-800 font-medium text-center">
+          <p class="text-gray-800 font-medium text-center cursor-pointer">
             What is the main impact of Union Budget 2024 on property owners?
           </p>
         </div>
@@ -105,18 +105,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import vectorImg from "@/assets/png/Vector.png";
+import axios from "axios";
+import { useRoute } from "vue-router";
 
 // Define reactive state
 const title = ref(
   "Pro-Khalistani Protests Outside Indian Diplomatic Missions In London, Melbourne..."
 );
+const route = useRoute();
 const explainText = ref("");
 const content = ref("");
 const questionsLeft = ref(50);
 const userQuestion = ref("");
 const showQuestions = ref(true);
+const newsItem = ref([]);
+console.log("newsItem", newsItem);
+const newsId = route.params.id;
 
 // Method to handle button click
 const handleClick = () => {
@@ -126,6 +132,34 @@ const handleClick = () => {
 const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
 };
+const handleQnAClick = async () => {
+  const token = localStorage.getItem("apiDataToken");
+
+  // Check if token exists before making the request
+  if (!token) {
+    console.error("No token found");
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/chats/saveClickedSuggestedQnA/${newsId}`,
+      null,
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+    newsItem.value = response.data;
+  } catch (error) {
+    console.error("Error fetching news item:", error);
+  }
+};
+
+onMounted(() => {
+  handleQnAClick();
+});
 // Method to submit the user question
 const submitQuestion = async () => {
   if (userQuestion.value.trim()) {
@@ -166,5 +200,10 @@ const submitQuestion = async () => {
 
 .mt-input {
   margin-top: 20px; /* Adjust to your desired spacing */
+}
+.bg-assist-card {
+  background-image: url("../assets/png/chatbotbg.png");
+  background-size: cover;
+  background-position: center;
 }
 </style>

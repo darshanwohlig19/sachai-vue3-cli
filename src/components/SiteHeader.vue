@@ -223,7 +223,7 @@ export default {
         categories.value = response.data;
 
         if (categories.value.length > 0) {
-          activeCategoryId.value = categories.value[0]._id;
+          activeCategoryId.value = categories?.value[0]?._id;
         }
       } catch (error) {
         console.error("Error fetching categories:", error);

@@ -108,21 +108,21 @@ export default {
         const response = await axios.post(
           `https://api-uat.newsshield.io/news/getAllBlogsForWeb`,
           {
-            language: languageId.value,
+            language: languageId?.value,
             page: 1,
           }
         );
-        campaigns.value = response.data.slice(0, 3);
-        console.log(campaigns.value[0]);
-        campaigns1.value = response.data.slice(3, 8);
+        campaigns.value = response?.data?.slice(0, 3);
+        console.log(campaigns?.value[0]);
+        campaigns1.value = response?.data?.slice(3, 8);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       }
     }
     const displayedNews = computed(() => {
       return (news) => {
-        if (screenWidth.value <= 425) return news.slice(0, 1);
-        return screenWidth.value > 1024 ? news : news.slice(0, 2);
+        if (screenWidth.value <= 425) return news?.slice(0, 1);
+        return screenWidth.value > 1024 ? news : news?.slice(0, 2);
       };
     });
 

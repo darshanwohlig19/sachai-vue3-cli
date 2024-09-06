@@ -22,9 +22,9 @@
                 alt="Times of India"
                 class="w-6 h-6 rounded-full"
               />
-              <span class="text-sm text-gray-600"
-                >Times of India | {{ item.time }}</span
-              >
+              <span class="text-sm text-gray-600">
+                Times of India | {{ item.time }}
+              </span>
             </div>
             <div class="flex space-x-2">
               <button class="text-gray-400 hover:text-gray-600">
@@ -65,32 +65,39 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  props: {
+    categories: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
-    return {
-      newsItems: [
-        {
-          image: "/news-image.jpg",
-          time: "12 min ago",
-          title:
-            "How To Spend The Perfect Day On Croatia's Most Magical Island",
-          category: "Politics",
-          readTime: "4 min read",
-        },
-        {
-          image: "/news-image.jpg",
-          time: "12 min ago",
-          title:
-            "How To Spend The Perfect Day On Croatia's Most Magical Island",
-          category: "Politics",
-          readTime: "4 min read",
-        },
-        // Add more news items here...
-      ],
-    };
+    return {};
+  },
+  methods: {
+    async fetchBlogs() {
+      try {
+        const response = await axios.post(
+          "https://api-uat.newsshield.io/category/getAllCat",
+          { categories: "breaking-news" }
+        );
+        console.log("Fetched blogs:", response.data);
+        // Handle response.data as needed
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+    },
+  },
+  mounted() {
+    this.fetchBlogs();
+    console.log("Categories prop:", this.categories);
   },
 };
 </script>
+
 <style>
 .fontCustom {
   font-family: "source-serif-pro-semibold";
