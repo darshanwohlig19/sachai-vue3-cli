@@ -93,3 +93,6 @@ button.p-carousel-next.p-link {
   justify-content: space-between;
   background-color: white;
 }
+.dialog-component .p-dialog-header {
+  display: none !important;
+}

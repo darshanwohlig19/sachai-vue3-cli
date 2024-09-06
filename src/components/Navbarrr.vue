@@ -42,19 +42,24 @@
             {{ isLoggedIn ? "Logout" : "Login" }}
           </a>
         </div>
+
         <div class="relative">
           <input
             type="text"
             id="fname"
+            @click="showSearchDialog = true"
             name="fname"
+            autocomplete="off"
             placeholder="Search"
             class="pr-10 pl-3 py-2 rounded-[100px] text-[14px] w-full border-1"
           />
+          <!-- Search Icon -->
           <svg
+            @click="showSearchDialog = true"
             width="14"
             height="14"
             viewBox="0 0 15 15"
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -70,6 +75,82 @@
               </clipPath>
             </defs>
           </svg>
+
+          <!-- PrimeVue Dialog -->
+          <Dialog
+            v-model:visible="showSearchDialog"
+            :modal="true"
+            :closable="true"
+            :dismissable-mask="true"
+            class="w-[1300px] dialog-component rounded-[10px]"
+          >
+            <div>
+              <InputText
+                type="text"
+                v-model="searchQuery"
+                @input="handleSearch"
+                placeholder="Search for new..."
+                class="border-1 mt-3 h-full w-[100%] rounded-full p-2"
+              />
+            </div>
+            <div class="mt-0">
+              <div v-if="searchResults.length" class="search-results">
+                <div
+                  @click="navigateToNewsDetail(result._id)"
+                  v-for="(result, index) in searchResults"
+                  :key="index"
+                  class="flex gap-3 flex-row border-1 rounded-[10px] mt-3 p-2 cursor-pointer"
+                >
+                  <div class="h-[54px] w-[54px]">
+                    <img :src="result.imgixUrlHighRes" class="h-full w-full" />
+                  </div>
+                  <div>
+                    {{ result.headline }}
+                    <!-- Adjust the property names according to your API response -->
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="flex gap-3 flex-row border-1 rounded-[10px] p-2">
+                <div class="h-[54px] w-[54px]">
+                  <img src="" class="h-full w-full" />
+                </div>
+                <div></div>
+              </div>
+              <div class="flex gap-3 flex-row border-1 rounded-[10px] mt-3 p-2">
+                <div class="h-[54px] w-[54px]">
+                  <img src="" class="h-full w-full" />
+                </div>
+                <div>
+                  Lorem ipsum dolor sit amet consectetur. Et velit massa amet
+                  scelerisque hac. Duis mattis mauris neque dolor eu purus cras
+                  id. Ut dui dolor magna malesuada diam nam. Quisque justo id
+                  sit ornare congue.
+                </div>
+              </div>
+              <div class="flex gap-3 flex-row border-1 rounded-[10px] mt-3 p-2">
+                <div class="h-[54px] w-[54px]">
+                  <img src="" class="h-full w-full" />
+                </div>
+                <div>
+                  Lorem ipsum dolor sit amet consectetur. Et velit massa amet
+                  scelerisque hac. Duis mattis mauris neque dolor eu purus cras
+                  id. Ut dui dolor magna malesuada diam nam. Quisque justo id
+                  sit ornare congue.
+                </div>
+              </div>
+              <div class="flex gap-3 flex-row border-1 rounded-[10px] mt-3 p-2">
+                <div class="h-[54px] w-[54px]">
+                  <img src="" class="h-full w-full" />
+                </div>
+                <div>
+                  Lorem ipsum dolor sit amet consectetur. Et velit massa amet
+                  scelerisque hac. Duis mattis mauris neque dolor eu purus cras
+                  id. Ut dui dolor magna malesuada diam nam. Quisque justo id
+                  sit ornare congue.
+                </div>
+              </div> -->
+            </div>
+          </Dialog>
         </div>
 
         <!-- <div class="relative">
@@ -294,7 +375,7 @@
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useToast } from "primevue/usetoast";
 
 export default {
@@ -310,10 +391,11 @@ export default {
     const toast = useToast();
     const categoriesContainer = ref(null);
     const isCardDropdownOpen = ref(false);
+    const showSearchDialog = ref(false);
 
     const isInputVisible = ref(false);
     const searchQuery = ref("");
-
+    const searchResults = ref([]);
     const toggleCardDropdown = () => {
       isCardDropdownOpen.value = !isCardDropdownOpen.value;
       console.log("Dropdown is now:", isCardDropdownOpen.value);
@@ -336,7 +418,9 @@ export default {
         });
       }
     };
-
+    const navigateToNewsDetail = (id) => {
+      router.push(`/news/${id}`);
+    };
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
     };
@@ -437,15 +521,33 @@ export default {
       isInputVisible.value = !isInputVisible.value;
     };
 
-    const handleSearch = () => {
-      if (searchQuery.value.trim()) {
-        // Perform the search operation
-        console.log(`Searching for: ${searchQuery.value}`);
+    const handleSearch = async () => {
+      if (searchQuery.value.trim().length >= 4) {
+        try {
+          const response = await axios.post(
+            "https://api-uat.newsshield.io/news/searchNewsFromWeb",
+            {
+              language: "6421a32aa020a23deacecf92",
+              search: searchQuery.value,
+            }
+          );
+          searchResults.value = response.data;
+        } catch (error) {
+          console.error("Error fetching search results:", error);
+        }
+      } else {
+        searchResults.value = [];
       }
-      // Reset the input field and show only the icon again
-      isInputVisible.value = false;
-      searchQuery.value = "";
     };
+
+    // Watch for changes in searchQuery to perform search
+    watch(searchQuery, (newValue) => {
+      if (newValue.trim().length >= 4) {
+        handleSearch();
+      } else {
+        searchResults.value = [];
+      }
+    });
 
     onMounted(() => {
       fetchCategories();
@@ -473,6 +575,9 @@ export default {
       searchQuery,
       toggleSearchInput,
       handleSearch,
+      showSearchDialog,
+      searchResults,
+      navigateToNewsDetail,
     };
   },
 };

@@ -61,6 +61,7 @@ import Toolbar from "primevue/toolbar";
 import FileUpload from "primevue/fileupload";
 import SelectButton from "primevue/selectbutton";
 import ProgressSpinner from "primevue/progressspinner";
+
 import Tooltip from "primevue/tooltip";
 import TreeTable from "primevue/treetable";
 import Badge from "primevue/badge";
@@ -70,6 +71,8 @@ import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
 import "./assets/CommonFont.css";
 import IconField from "primevue/iconfield";
+import AutoComplete from "primevue/autocomplete";
+
 import InputIcon from "primevue/inputicon";
 
 const app = createApp(App);
@@ -80,6 +83,7 @@ app.use(ConfirmationService);
 app.use(PrimeVue, { ripple: true });
 app.component("TreeTable", TreeTable);
 app.component("Toolbar", Toolbar);
+app.component("AutoComplete", AutoComplete);
 app.component("Toast", Toast);
 app.component("IconField", IconField);
 app.component("InputIcon", InputIcon);
