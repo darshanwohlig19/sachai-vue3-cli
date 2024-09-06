@@ -12,7 +12,7 @@
           class="w-[33%] md-max:w-full"
         >
           <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
-            <div class="rounded-[10px]">
+            <div class="rounded-[10px]" @click="navigateToNewsDetail(news._id)">
               <img
                 :src="news.imgixUrlHighRes"
                 class="relative z-10 h-[156px] w-full rounded-[10px] object-cover"
@@ -46,7 +46,10 @@
                 {{ news.headline }}
               </a>
             </div>
-            <div class="pl-3 pr-3 para multiline-truncate">
+            <div
+              class="pl-3 pr-3 para multiline-truncate"
+              @click="navigateToNewsDetail(news._id)"
+            >
               {{ news.summary }}
             </div>
             <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">

@@ -54,7 +54,7 @@
       <div class="pop_hot w-full md:w-[35%] flex flex-col gap-6">
         <div>
           <div class="footer-heads ml-[-10px] text-sm">Popular Categories</div>
-          <div class="grid grid-cols-2 xl:grid-cols-3 md:grid-cols-3 pt-2">
+          <div class="grid grid-cols-2 xl:grid-cols-4 md:grid-cols-3 pt-2">
             <ul v-for="heading in categories.slice(0, 16)" :key="heading._id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a
