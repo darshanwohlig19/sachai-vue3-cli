@@ -81,8 +81,8 @@ export default {
     async fetchBlogs() {
       try {
         const response = await axios.post(
-          "https://api-uat.newsshield.io/category/getAllCat",
-          { categories: "breaking-news" }
+          "https://api-uat.newsshield.io/news/getAllBlogsForWeb/",
+          { categoryId: "668f6e06b665d0e0fdc1384b" }
         );
         console.log("Fetched blogs:", response.data);
         // Handle response.data as needed

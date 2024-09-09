@@ -7,12 +7,28 @@
         {{ title }}
       </h2>
     </div>
-    <div v-if="!showQuestions" class="h-content-fixed"></div>
+    <div
+      v-if="!showQuestions && !conversation.length === 0"
+      class="h-content-fixed"
+    ></div>
 
-    <div v-if="explainText" class="p-4 space-y-4 h-content-fixed">
-      <div class="flex justify-end">
-        <div class="bg-blue-100 text-blue-800 rounded-full px-4 py-2">
-          {{ explainText }}
+    <div v-if="conversation.length" class="p-4 space-y-4 h-content-fixed">
+      <div
+        v-for="(message, index) in conversation"
+        :key="index"
+        :class="{
+          'flex justify-end': message.type === 'user',
+          'text-left': message.type === 'bot',
+        }"
+      >
+        <div
+          :class="{
+            'bg-blue-100': message.type === 'user',
+            'bg-gray-100': message.type === 'bot',
+          }"
+          class="p-4 rounded-lg"
+        >
+          <p>{{ message.text }}</p>
         </div>
       </div>
 
@@ -33,14 +49,22 @@
               aria-label="Like or Dislike"
             >
               <span
-                class="p-1 rounded-full w-10 bg-gray-400 text-[#121212] flex items-center justify-center"
+                :class="[
+                  'p-1 rounded-full w-10 flex items-center justify-center',
+                  thumbsUpSelected ? 'bg-green-500' : 'bg-gray-400',
+                ]"
+                @click.stop="toggleThumbsUp"
               >
-                <i class="pi pi-thumbs-up text-xl"></i>
+                <i class="pi pi-thumbs-up text-xl text-white"></i>
               </span>
               <span
-                class="p-1 rounded-full w-10 bg-gray-400 text-[#121212] flex items-center justify-center"
+                :class="[
+                  'p-1 rounded-full w-10 flex items-center justify-center',
+                  thumbsDownSelected ? 'bg-red-500' : 'bg-gray-400',
+                ]"
+                @click.stop="toggleThumbsDown"
               >
-                <i class="pi pi-thumbs-down text-xl"></i>
+                <i class="pi pi-thumbs-down text-xl text-white"></i>
               </span>
             </button>
           </div>
@@ -49,12 +73,7 @@
     </div>
 
     <div
-      v-if="
-        showQuestions &&
-        !explainText &&
-        !content &&
-        selectedQuestions.length === 0
-      "
+      v-if="showQuestions"
       class="p-3 bg-gray-100 rounded-lg shadow-md w-[85%] mx-auto h-assist-card mt-[3%] overflow-y-auto"
     >
       <h2 class="text-lg font-bold mb-2 text-gray-800">
@@ -122,55 +141,89 @@ const title = ref(
   "Pro-Khalistani Protests Outside Indian Diplomatic Missions In London, Melbourne..."
 );
 const route = useRoute();
-const explainText = ref();
-const content = ref("");
-const questionsLeft = ref(50);
 const userQuestion = ref("");
+const conversation = ref([]);
 const showQuestions = ref(true);
-const selectedQuestions = ref([]);
 const selectedQuestionIndex = ref(null);
 const selectedQuestionAnswers = ref([]);
-console.log(
-  "selectedQuestionAnswersselectedQuestionAnswers",
-  selectedQuestionAnswers
-);
-const chatData = ref([]);
-const newsId = route.params.id;
+const thumbsUpSelected = ref(false);
+const thumbsDownSelected = ref(false);
 
-const handleClick = () => {
-  console.log("Button clicked!");
-};
+const newsId = route.params.id;
 
 const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
 };
 
-const handleQnAClick = (question, index) => {
-  console.log("Question Clicked:", question, "Index:", index);
-  explainText.value = question;
+const handleQnAClick = async (question, index) => {
+  userQuestion.value = question;
   selectedQuestionIndex.value = index;
   selectedQuestionAnswers.value = props.category?.suggestedQnA[index]?.answer;
-  console.log("Selected Question Answers:", selectedQuestionAnswers.value);
-  content.value = selectedQuestionAnswers.value;
-  console.log("Content Value Set To:", content.value);
-};
 
-const handleChatClick = async () => {
+  // Add user message to the conversation
+  conversation.value.push({ type: "user", text: question });
+
+  // Add the suggested answer from category to the conversation as a simulated bot response
+  const suggestedAnswer = props.category?.suggestedQnA[index]?.answer;
+  if (suggestedAnswer) {
+    conversation.value.push({ type: "bot", text: suggestedAnswer });
+  }
+
+  // Fetch the bot's response from the API
   try {
-    explainText.value = userQuestion.value;
-
-    const payload = {
-      question: explainText.value,
-    };
-
+    const payload = { question: userQuestion.value };
     const response = await apiService.apiCall(
       "post",
       `${apiConfig.CHAT_BOT_DATA}/${newsId}`,
       payload
     );
-    chatData.value = response.data;
+    const botResponse = response.data.message;
+    conversation.value.push({ type: "bot", text: botResponse });
   } catch (error) {
-    console.error("Error fetching news item:", error);
+    console.error("Error fetching response:", error);
+  } finally {
+    userQuestion.value = "";
+    showQuestions.value = false;
+  }
+};
+
+const handleChatClick = async () => {
+  if (!userQuestion.value.trim()) return;
+  conversation.value.push({ type: "user", text: userQuestion.value });
+  try {
+    const payload = { question: userQuestion.value };
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.CHAT_BOT_DATA}/${newsId}`,
+      payload
+    );
+    const botResponse = response.data.message; // Adjust based on API response structure
+
+    // Add bot response to the conversation
+    conversation.value.push({ type: "bot", text: botResponse });
+  } catch (error) {
+    console.error("Error fetching response:", error);
+    conversation.value.push({
+      type: "bot",
+      text: "Sorry, there was an error processing your request.",
+    });
+  } finally {
+    // Clear the input field after submission
+    userQuestion.value = "";
+  }
+};
+
+const toggleThumbsUp = () => {
+  thumbsUpSelected.value = !thumbsUpSelected.value;
+  if (thumbsUpSelected.value) {
+    thumbsDownSelected.value = false;
+  }
+};
+
+const toggleThumbsDown = () => {
+  thumbsDownSelected.value = !thumbsDownSelected.value;
+  if (thumbsDownSelected.value) {
+    thumbsUpSelected.value = false;
   }
 };
 </script>
@@ -178,11 +231,7 @@ const handleChatClick = async () => {
 <style scoped>
 .h-content-fixed {
   height: 400px;
-  overflow: hidden;
-}
-
-.h-content-fixed-inner {
-  height: 100%;
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
 .h-assist-card {
@@ -197,5 +246,47 @@ const handleChatClick = async () => {
   background-image: url("../assets/png/chatbotbg.png");
   background-size: cover;
   background-position: center;
+}
+
+/* Add styles for user and bot messages */
+/* Add styles for user and bot messages */
+.message {
+  max-width: 75%; /* Adjust width as needed */
+  padding: 10px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.message-user {
+  background-color: #d1e7dd; /* Light green for user messages */
+  align-self: flex-end;
+}
+
+.message-bot {
+  background-color: #f8f9fa; /* Light gray for bot messages */
+  align-self: flex-start;
+}
+
+.message-container {
+  display: flex;
+  justify-content: flex-end; /* Default alignment for user messages */
+}
+
+.message-container.bot {
+  justify-content: flex-start; /* Alignment for bot messages */
+}
+
+/* Icon button styles */
+.bg-green-500 {
+  background-color: #34d399; /* Tailwind's green-500 color */
+}
+
+.bg-red-500 {
+  background-color: #ef4444; /* Tailwind's red-500 color */
+}
+
+.text-white {
+  color: #ffffff;
 }
 </style>
