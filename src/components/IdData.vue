@@ -40,7 +40,7 @@
       <!-- Sidebar -->
       <div class="lg:w-1/3 mt-8 lg:mt-0 flex-shrink-0 flex flex-col">
         <div class="flex-grow">
-          <ChatBot />
+          <ChatBot :category="newsItem" />
         </div>
         <div class="flex-grow">
           <FeatureNews :category="newsItem" />
@@ -69,6 +69,7 @@ import ChatBot from "@/components/chatbot.vue";
 
 const route = useRoute();
 const newsItem = ref(null);
+console.log("newsItem", newsItem);
 const newsId = route.params.id;
 console.log("newsId", newsId);
 const fetchNewsItem = async () => {

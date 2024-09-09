@@ -116,10 +116,9 @@ function formatPublishTime(publishTime) {
 async function fetchBlogs() {
   try {
     const response = await axios.post(
-      "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
       {
         language: languageId.value,
-        page: 1,
       }
     );
     blogs.value = response.data.slice(0, 4);

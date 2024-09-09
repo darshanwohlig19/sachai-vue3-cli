@@ -8,7 +8,7 @@
       </h2>
     </div>
     <div v-if="!showQuestions" class="h-content-fixed"></div>
-    <!-- Conditional rendering for explainText -->
+
     <div v-if="explainText" class="p-4 space-y-4 h-content-fixed">
       <div class="flex justify-end">
         <div class="bg-blue-100 text-blue-800 rounded-full px-4 py-2">
@@ -16,11 +16,8 @@
         </div>
       </div>
 
-      <!-- Conditional rendering for content -->
-      <div v-if="content" class="flex items-start space-x-2">
-        <div
-          class="bg-gray-100 rounded-lg p-4 flex-grow h-content-fixed-inner overflow-y-auto"
-        >
+      <div v-if="content" class="flex items-start space-x-2 overflow-y-auto">
+        <div class="bg-gray-100 rounded-lg p-4 flex-grow h-content-fixed-inner">
           <p>{{ content }}</p>
           <hr />
           <div class="flex items-center space-x-4">
@@ -49,12 +46,16 @@
           </div>
         </div>
       </div>
-
-      <!-- New card showing "Hello" text if both explainText and content are present -->
     </div>
+
     <div
-      v-if="showQuestions && !explainText && !content"
-      class="p-3 bg-gray-100 rounded-lg shadow-md w-[85%] mx-auto h-assist-card mt-[3%]"
+      v-if="
+        showQuestions &&
+        !explainText &&
+        !content &&
+        selectedQuestions.length === 0
+      "
+      class="p-3 bg-gray-100 rounded-lg shadow-md w-[85%] mx-auto h-assist-card mt-[3%] overflow-y-auto"
     >
       <h2 class="text-lg font-bold mb-2 text-gray-800">
         Need any assistance with your queries?
@@ -63,20 +64,19 @@
         Our AI chatbot support is always available to provide answers to any
         questions but to begin with, here are some of our most asked questions
       </p>
-      <div class="space-y-4">
-        <div class="bg-white p-2 rounded-lg shadow cursor-pointer">
+      <div class="space-y-4 max-h-96">
+        <div
+          v-for="(item, index) in category?.suggestedQnA"
+          :key="index"
+          @click="handleQnAClick(item.question, index)"
+          class="bg-white p-2 rounded-lg shadow cursor-pointer"
+        >
           <p class="text-gray-800 font-medium text-center">
-            How have real estate owners reacted to the provisions of Union
-            Budget 2024?
+            {{ item.question }}
           </p>
         </div>
-        <div class="bg-white p-2 rounded-lg shadow">
-          <p class="text-gray-800 font-medium text-center cursor-pointer">
-            What is the main impact of Union Budget 2024 on property owners?
-          </p>
-        </div>
-        <div class="flex justify-center mt-4">
-          <Button variant="outline" class="" @click="toggleQuestionsVisibility">
+        <div class="flex justify-center mt-2">
+          <Button variant="outline" @click="toggleQuestionsVisibility">
             Hide Questions
           </Button>
         </div>
@@ -93,7 +93,7 @@
           aria-label="User question input"
         />
         <button
-          @click="submitQuestion"
+          @click="handleChatClick"
           class="bg-purple-900 text-white p-2 rounded"
           aria-label="Submit question"
         >
@@ -105,26 +105,38 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { defineProps, ref } from "vue";
 import vectorImg from "@/assets/png/Vector.png";
 import { useRoute } from "vue-router";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
-// Define reactive state
+
+const props = defineProps({
+  category: {
+    type: Object,
+    required: true,
+  },
+});
+
 const title = ref(
   "Pro-Khalistani Protests Outside Indian Diplomatic Missions In London, Melbourne..."
 );
 const route = useRoute();
-const explainText = ref("");
+const explainText = ref();
 const content = ref("");
 const questionsLeft = ref(50);
 const userQuestion = ref("");
 const showQuestions = ref(true);
-const newsItem = ref([]);
-console.log("newsItem", newsItem);
+const selectedQuestions = ref([]);
+const selectedQuestionIndex = ref(null);
+const selectedQuestionAnswers = ref([]);
+console.log(
+  "selectedQuestionAnswersselectedQuestionAnswers",
+  selectedQuestionAnswers
+);
+const chatData = ref([]);
 const newsId = route.params.id;
 
-// Method to handle button click
 const handleClick = () => {
   console.log("Button clicked!");
 };
@@ -132,69 +144,55 @@ const handleClick = () => {
 const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
 };
-const handleQnAClick = async () => {
-  try {
-    try {
-      const response = await apiService.apiCall(
-        "post",
-        `${apiConfig.ADD_QA_DATA}/${newsId}`
-      );
-      newsItem.value = response.data;
-    } catch (error) {
-      console.error("Error fetching news item:", error);
-    }
 
-    // Handle response
-  } catch (error) {
-    // Handle errors
-    console.error("Error adding new users:", error);
-  }
+const handleQnAClick = (question, index) => {
+  console.log("Question Clicked:", question, "Index:", index);
+  explainText.value = question;
+  selectedQuestionIndex.value = index;
+  selectedQuestionAnswers.value = props.category?.suggestedQnA[index]?.answer;
+  console.log("Selected Question Answers:", selectedQuestionAnswers.value);
+  content.value = selectedQuestionAnswers.value;
+  console.log("Content Value Set To:", content.value);
 };
 
-onMounted(() => {
-  handleQnAClick();
-});
-// Method to submit the user question
-const submitQuestion = async () => {
-  if (userQuestion.value.trim()) {
+const handleChatClick = async () => {
+  try {
     explainText.value = userQuestion.value;
-    try {
-      const response = await fetch(
-        `https://api.example.com/data?query=${encodeURIComponent(
-          userQuestion.value
-        )}`
-      );
-      if (!response.ok) throw new Error("Network response was not ok.");
-      const data = await response.json();
-      content.value = data.content || "No content available";
-      userQuestion.value = "";
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      content.value = "Failed to load content";
-    }
-  } else {
-    console.log("Please enter a question");
+
+    const payload = {
+      question: explainText.value,
+    };
+
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.CHAT_BOT_DATA}/${newsId}`,
+      payload
+    );
+    chatData.value = response.data;
+  } catch (error) {
+    console.error("Error fetching news item:", error);
   }
 };
 </script>
 
 <style scoped>
 .h-content-fixed {
-  height: 400px; /* Adjust height as needed */
-  overflow: hidden; /* To prevent content from overflowing */
+  height: 400px;
+  overflow: hidden;
 }
 
 .h-content-fixed-inner {
-  height: 100%; /* Fill the height of the parent container */
+  height: 100%;
 }
 
 .h-assist-card {
-  height: 390px; /* Adjust height as needed */
+  height: 390px;
 }
 
 .mt-input {
-  margin-top: 20px; /* Adjust to your desired spacing */
+  margin-top: 20px;
 }
+
 .bg-assist-card {
   background-image: url("../assets/png/chatbotbg.png");
   background-size: cover;
