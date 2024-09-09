@@ -42,7 +42,7 @@
               class="pl-3 pr-3 text-[16px] font-semibold"
               @click="navigateToNewsDetail(news._id)"
             >
-              <a class="hover:text-current font-16 multiline-truncate1">
+              <a class="hover:text-current font-16">
                 {{ news.headline }}
               </a>
             </div>
@@ -82,6 +82,7 @@ const fetchBlogs = async () => {
         language: "6421a32aa020a23deacecf92",
       }
     );
+    console.log("THIS IS RESPONE", response.data);
     blogs.value = response.data.map((news) => ({
       ...news,
       bookmarked: false, // Initialize with 'false'
