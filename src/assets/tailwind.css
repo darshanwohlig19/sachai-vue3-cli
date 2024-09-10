@@ -62,6 +62,7 @@ button.p-carousel-next.p-link {
   /* margin: 15px; */
   padding: 0px;
   position: absolute;
+  color: #ff0053 !important;
 }
 .carousel_card button.p-carousel-prev.p-link {
   top: 50%;
@@ -76,9 +77,7 @@ button.p-carousel-next.p-link {
   z-index: 10;
   transform: translateY(-50%);
 }
-.carousel_card button.p-carousel-next.p-link {
-  color: #ff0053 !important;
-}
+
 .carousel_card .p-carousel-container {
   display: block !important;
   position: relative;

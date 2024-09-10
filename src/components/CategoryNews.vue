@@ -20,11 +20,13 @@
                       :key="news._id"
                     >
                       <div class="relative drop-shadow-lg">
-                        <img
-                          :src="news.imgixUrlHighRes || fallbackImage"
-                          class="rounded-[8px] w-full h-[30vh]"
-                          alt=""
-                        />
+                        <div class="md:w-[45vw] lg:w-[30vw] sm-max:w-[100%]">
+                          <img
+                            :src="news.imgixUrlHighRes || fallbackImage"
+                            class="rounded-[8px] w-full h-[30vh]"
+                            alt=""
+                          />
+                        </div>
                         <div
                           class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
                         ></div>
@@ -45,7 +47,6 @@
                     <div
                       v-for="news in displayedNews(category.news)"
                       :key="news._id"
-                      class=""
                     >
                       <div class="flex flex-row gap-2 items-center">
                         <div class="w-[15px]">
@@ -63,7 +64,7 @@
                   <div
                     v-for="(news, index) in getDisplayedNews(category.news)"
                     :key="news._id"
-                    class="flex flex-row gap-1 w-[50%] md:w-[30%]"
+                    class="flex flex-row gap-2 w-[50%] md:w-[30%]"
                   >
                     <div class="multiline-truncate1 font-14 w-[100%]">
                       {{ news.headline }}
@@ -80,18 +81,18 @@
             <div
               class="md-max:w-[100%] flex flex-col justify-between gap-3 sm:gap-3"
             >
-              <div v-for="news in category.news.slice(9, 13)" :key="news._id">
+              <div v-for="news in slicedNews" :key="news._id">
                 <div
                   class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
                 >
-                  <div class="">
+                  <div>
                     <img
                       class="rounded-[6px] h-[47px]"
                       :src="news.imgixUrlHighRes"
                       alt=""
                     />
                   </div>
-                  <div class="font-14 w-[70%] multiline-truncate">
+                  <div class="font-14 w-[70%] multiline-truncate1">
                     {{ news.headline }}
                   </div>
                 </div>
@@ -103,6 +104,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
@@ -114,15 +116,8 @@ export default {
       required: true,
     },
   },
-  // data() {
-  //   return {
-  //     SACHAI_NEWS_URL: "https://news.sachai.io/news/",
-  //     // screenWidth: window.innerWidth,
-  //   };
-  // },
   setup() {
     const categories = ref({});
-    const isMobileOrTablet = ref(window.innerWidth < 768);
     const screenWidth = ref(window.innerWidth);
 
     const fetchNewsForCategory = async (categoryId) => {
@@ -137,12 +132,6 @@ export default {
         return [];
       }
     };
-
-    const displayedNews = computed(() => {
-      return (news) => {
-        return screenWidth.value > 1600 ? news.slice(1, 5) : news.slice(1, 4);
-      };
-    });
 
     const fetchCategories = async () => {
       try {
@@ -161,7 +150,6 @@ export default {
 
         for (let category of categoriesData) {
           category.news = await fetchNewsForCategory(category._id);
-          // this.categoryNews = category.news;
         }
 
         categories.value = categoriesData;
@@ -170,17 +158,31 @@ export default {
       }
     };
 
+    const handleResize = () => {
+      screenWidth.value = window.innerWidth;
+    };
+
+    const displayedNews = (news) => {
+      return (
+        screenWidth.value >= 1440 ? news.slice(1, 5) : news.slice(1, 4),
+        screenWidth.value >= 2560 ? news.slice(1, 6) : news.slice(1, 5)
+      );
+    };
+
     const getDisplayedNews = (news) => {
       if (!news || !Array.isArray(news)) {
         return [];
       }
-      return isMobileOrTablet.value ? news.slice(5, 7) : news.slice(5, 9);
+      return screenWidth.value < 768 ? news.slice(5, 7) : news.slice(5, 9);
     };
 
-    const handleResize = () => {
-      isMobileOrTablet.value = window.innerWidth < 768;
-      screenWidth.value = window.innerWidth;
-    };
+    const slicedNews = computed(() => {
+      if (screenWidth.value >= 2560) {
+        return categories.value[0]?.news.slice(9, 14) || [];
+      } else {
+        return categories.value[0]?.news.slice(9, 13) || [];
+      }
+    });
 
     onMounted(() => {
       fetchCategories();
@@ -195,6 +197,7 @@ export default {
       categories,
       getDisplayedNews,
       displayedNews,
+      slicedNews,
       screenWidth,
     };
   },
@@ -205,25 +208,25 @@ export default {
 .one-line {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* Number of lines to display */
+  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .multiline-truncate1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Number of lines to display */
+  -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .divider-vertical {
   height: auto;
-  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
+  background-color: #e5e7eb;
   width: 1px;
 }
 .divider-horizontal {
   height: 1px;
-  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
+  background-color: #e5e7eb;
   width: 100%;
 }
 </style>

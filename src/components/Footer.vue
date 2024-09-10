@@ -51,12 +51,15 @@
       </div>
 
       <!-- Popular Categories and Hot on the Web -->
-      <div class="pop_hot w-full md:w-[35%] flex flex-col gap-6">
+      <div class="pop_hot w-full md:w-[35%] flex flex-col justify-between">
         <div>
           <div class="footer-heads ml-[-10px] text-sm">Popular Categories</div>
-          <div class="grid grid-cols-2 xl:grid-cols-4 md:grid-cols-3 pt-2">
+          <div
+            class="grid grid-cols-2 xl:grid-cols-4 md:grid-cols-3 pt-2"
+            style="column-gap: 17px"
+          >
             <ul v-for="heading in categories.slice(0, 16)" :key="heading._id">
-              <li class="footer-links text-[#52525B] text-sm pt-3">
+              <li class="footer-links text-[#52525B] text-[14px] pt-3">
                 <a
                   :href="`/categories/${heading._id}?category=${heading.name}`"
                   class="capitalize"
@@ -66,8 +69,7 @@
             </ul>
           </div>
         </div>
-
-        <div>
+        <div class="mt-5">
           <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="item in hotOnTheWeb.slice(0, 8)" :key="item.id">
@@ -80,10 +82,10 @@
       </div>
 
       <!-- Latest News, Help, and Trending Topics -->
-      <div class="let_hlp_trend w-full md:w-[30%] flex flex-col gap-6">
-        <div
-          class="flex flex-wrap gap-5 justify-between mt-6 ml-[-10px] md:mt-0"
-        >
+      <div
+        class="let_hlp_trend w-full md:w-[30%] flex flex-col justify-between"
+      >
+        <div class="flex gap-5 justify-around mt-6 ml-[-10px] md:mt-0">
           <!-- Latest News -->
           <div class="let w-full md:w-auto">
             <div class="footer-heads text-sm">Latest News</div>
@@ -99,17 +101,17 @@
           </div>
 
           <!-- Help -->
-          <div class="hlp w-full mt-4 md:mt-0 md:w-auto">
+          <div class="hlp w-full md:w-auto">
             <div class="footer-heads text-sm">Help</div>
             <ul>
               <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">About us</a>
               </li>
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Customer Support</a>
+                <a class="capitalize line">Customer Support</a>
               </li>
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Terms & Conditions</a>
+                <a class="capitalize line">Terms & Conditions</a>
               </li>
               <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">Privacy Policy</a>
@@ -119,7 +121,7 @@
         </div>
 
         <!-- Trending Topics -->
-        <div>
+        <div class="trend">
           <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="topic in trendingTopics.slice(0, 8)" :key="topic.id">
@@ -205,7 +207,7 @@
         <div class="let_hlp_trend flex flex-col gap-6">
           <div class="flex mt-5 ml-[-10px] gap-7">
             <!-- Latest News -->
-            <div class="let w-full md:w-auto">
+            <div class="let">
               <div class="footer-heads text-sm">Latest News</div>
               <ul>
                 <li
@@ -219,7 +221,7 @@
             </div>
 
             <!-- Help -->
-            <div class="hlp w-full md:w-auto">
+            <div class="hlp">
               <div class="footer-heads text-sm">Help</div>
               <ul>
                 <li class="footer-links text-[#52525B] text-sm pt-3">
@@ -366,10 +368,17 @@ export default {
 </script>
 
 <style scoped>
+.trend {
+  margin-top: 0px;
+}
 .tablet1 {
   display: none !important;
 }
+
 @media screen and (max-width: 950px) {
+  .trend {
+    margin-top: 20%;
+  }
   .tablet1 {
     display: block !important;
   }
@@ -377,12 +386,17 @@ export default {
     display: none !important;
   }
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 500px) {
   .tablet1 {
     display: none !important;
   }
   .mob_des {
     display: block !important;
+  }
+}
+@media screen and (max-width: 425px) {
+  .line {
+    line-height: 20px;
   }
 }
 </style>

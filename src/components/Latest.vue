@@ -22,7 +22,8 @@
             <div class="flex justify-between items-center p-3">
               <div class="flex gap-1 text-[#676767] text-xs">
                 <div>{{ news.source }}</div>
-                <div>| {{ formatPublishTime(news.publishTime) }}</div>
+                <!-- <div>|</div>
+                <div>{{ formatPublishTime(news.publishTime) }}</div> -->
               </div>
               <div class="flex gap-1">
                 <span class="mdi mdi-share-variant text-[19px]"></span>
@@ -54,7 +55,11 @@
             </div>
             <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
               <span class="text-red-500 bold">Politics</span>
-              <span>| 4 min read</span>
+              <span>
+                <div class="text-[#676767] text-xs">
+                  | {{ formatPublishTime(news.publishTime) }}
+                </div></span
+              >
             </div>
           </div>
         </div>

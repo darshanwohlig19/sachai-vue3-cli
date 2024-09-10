@@ -76,8 +76,8 @@
       class="w-[100%] between-sm-md:w-[100%] lg:w-[35%] flex flex-col justify-between"
     >
       <div
-        v-for="item in blogs2"
-        :key="item"
+        v-for="(item, index) in blogs2"
+        :key="item._id"
         class="mt-4 md:mt-4 lg:mt-0 cursor-pointer"
       >
         <div class="flex flex-row gap-2" @click="navigateToCategory(item._id)">
@@ -116,11 +116,12 @@ function formatPublishTime(publishTime) {
 async function fetchBlogs() {
   try {
     const response = await axios.post(
-      "https://api-uat.newsshield.io/news/getAllBlogsForWeb/",
+      "https://api-uat.newsshield.io/news/gettrendingnews",
       {
         language: languageId.value,
       }
     );
+    console.log("Trending " + response.data);
     blogs.value = response.data.slice(0, 4);
     blogs1.value = response.data.slice(4, 8);
     blogs2.value = response.data.slice(8, 11);

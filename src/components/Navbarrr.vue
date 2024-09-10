@@ -42,7 +42,7 @@
             {{ isLoggedIn ? "Logout" : "Login" }}
           </a>
         </div>
-        <div class="relative">
+        <div class="relative sm-max:hidden">
           <input
             type="text"
             id="fname"
@@ -71,7 +71,34 @@
             </defs>
           </svg>
         </div>
-
+        <router-link class="md:hidden sm-max:block">
+          <div
+            class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+          >
+            <i>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 15 15"
+                class="right-3 text-gray-500"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_2352_4463)">
+                  <path
+                    d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
+                    fill="#ACACAC"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2352_4463">
+                    <rect width="15" height="15" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </i>
+          </div>
+        </router-link>
         <!-- <div class="relative">
           <div v-if="isInputVisible" class="relative">
             <input
@@ -136,7 +163,7 @@
             </svg>
           </div>
         </div> -->
-        <router-link to="/Setting">
+        <router-link>
           <div
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
           >
@@ -156,7 +183,7 @@
             </i>
           </div>
         </router-link>
-        <router-link to="/Profile">
+        <router-link>
           <div
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
           >
@@ -190,7 +217,7 @@
         </router-link>
 
         <div
-          class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md lg:hidden"
+          class="h-[34px] w-[34px] flex justify-center items-center lg:hidden"
           @click="toggleCardDropdown"
         >
           <i class="pi pi-bars"></i>

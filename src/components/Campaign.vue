@@ -14,7 +14,7 @@
           :key="campaignNews._id"
           class="w-[100%] sm:w-[100%] md-max:w-[100%] flex justify-between"
         >
-          <div class="">
+          <div>
             <div>
               <img
                 class="w-full h-[182px] rounded-[8px] object-contain"
@@ -36,54 +36,22 @@
         class="w-[100%] sm:w-[100%] sm:gap-2 md-max:w-[100%] flex flex-col justify-between md-max:gap-5"
       >
         <div
-          v-for="campaignnews in campaigns1"
-          :key="campaignnews._id"
-          class="flex flex-row gap-2.5 items-center"
-          style="border-bottom: 1px solid #e5e7eb"
+          v-for="(item, index) in campaigns1"
+          :key="item._id"
+          :class="[
+            'flex flex-row gap-2.5 items-center',
+            index < campaigns1.length - 1
+              ? 'border-b border-gray-300 pb-3'
+              : '',
+          ]"
         >
           <div class="w-[15px]">
             <img src="../assets/Group.png" alt="" />
           </div>
-          <div class="font-14 lines2 pb-2">
-            {{ campaignnews.headline || "No Headline" }}
+          <div class="font-14 lines2">
+            {{ item.headline || "No Headline" }}
           </div>
         </div>
-        <!-- <div class="block divider"></div>
-        <div class="flex flex-row gap-2.5 items-center">
-          <div class="w-[15px]">
-            <img src="../assets/Group.png" alt="" />
-          </div>
-          <div class="font-14">
-            {{ campaigns1[1]?.headline || "No Headline" }}
-          </div>
-        </div> -->
-        <!-- <div class="block divider"></div> -->
-        <!-- <div class="flex flex-row gap-2.5 items-center">
-          <div class="w-[15px]">
-            <img src="../assets/Group.png" alt="" />
-          </div>
-          <div class="font-14">
-            {{ campaigns1[2]?.headline || "No Headline" }}
-          </div>
-        </div>
-        <div class="hidden md:block divider"></div>
-        <div class="hidden md:flex flex-row gap-2.5 items-center">
-          <div class="w-[15px]">
-            <img src="../assets/Group.png" alt="" />
-          </div>
-          <div class="font-14">
-            {{ campaigns1[3]?.headline || "No Headline" }}
-          </div>
-        </div>
-        <div class="hidden lg:block divider"></div>
-        <div class="hidden lg:flex flex-row gap-2.5 items-center">
-          <div class="w-[15px]">
-            <img src="../assets/Group.png" alt="" />
-          </div>
-          <div class="font-14">
-            {{ campaigns1[4]?.headline || "No Headline" }}
-          </div>
-        </div> -->
       </div>
     </div>
   </div>

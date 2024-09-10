@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full md-max:!block flex gap-4 justify-between mt-6 relative">
+  <div class="w-full md-max:!block flex gap-4 justify-between mt-4 relative">
     <div class="relative">
       <Carousel
         :value="blogs"
@@ -66,20 +66,20 @@
       </Carousel>
     </div>
     <div
-      class="w-[100%] md-max:w-[100%] sm:w-[65%] sm-max:w-[100%] rounded-[10px] bg-white relative mt-4 md:mt-0 sm:mt-4 flex justify-between p-4"
+      class="w-[100%] md-max:w-[100%] sm:w-[65%] sm-max:w-[100%] rounded-[10px] bg-white relative md:mt-0 flex justify-between p-4 sm:mt-4 sm-max:mt-4"
     >
-      <div class="w-[48%] xl-max:w-[100%] flex flex-col gap-5">
+      <div class="w-[48%] xl-max:w-[100%] flex flex-col gap-3">
         <div
           @click="navigateToTrending(item._id)"
           v-for="(item, index) in news.slice(0, 3)"
           :key="index"
-          class="flex gap-2 mt-0 sm-max:!mt-4 cursor-pointer"
+          class="flex gap-2 mt-0 sm-max:!mt-0 cursor-pointer"
         >
           <div class="flex w-[50px]">
             <img class="image-small" src="../assets/Group.png" />
           </div>
           <div>
-            <div class="font-16 headline-tuncate">{{ item.headline }}</div>
+            <div class="font-16">{{ item.headline }}</div>
             <div class="font-133 summary-tuncate">{{ item.summary }}</div>
             <div v-if="index < 2" class="border-1 sm-max:mt-3 mt-3"></div>
           </div>
@@ -113,12 +113,12 @@
   </div>
   <div>
     <div
-      class="xl-max:w-[100%] xl-max:bg-white xl-max:!mt-2 hidden xl-max:!block justify-between"
+      class="xl-max:w-[100%] xl-max:!mt-2 hidden xl-max:!block justify-between"
     >
       <div
         v-for="(blog, index) in blogs.slice(0, 4)"
         :key="index"
-        class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
+        class="shadow-md bg-white flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] mt-3"
       >
         <div class="flex-shrink-0">
           <img
@@ -196,15 +196,16 @@ export default {
     async fetchBlogs() {
       try {
         const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
+          "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
           {
-            language: this.languageId,
-            page: 1,
+            language: "6421a32aa020a23deacecf92",
+            categoryId: "63d90e4098d783ac0cbe2310",
           }
         );
         this.blogs = response.data.slice(0, 5);
         this.news = response.data.slice(6, 12);
-        console.log(blogs.value, "blogs-news");
+        console.log(response.data, "blogs-news");
+        console.log(blogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       }
