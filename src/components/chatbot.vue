@@ -193,7 +193,8 @@ const handleQnAClick = async (question, index) => {
   conversation.value.push({ type: "user", text: question });
   const suggestedAnswer = props.category?.suggestedQnA[index]?.answer;
   if (suggestedAnswer) {
-    conversation.value.push({ type: "bot", text: suggestedAnswer });
+    const botMessage = typewriterEffect(suggestedAnswer);
+    conversation.value.push({ type: "bot", text: botMessage });
   }
 };
 
@@ -220,6 +221,21 @@ const handleChatClick = async () => {
   }
 };
 
+const typewriterEffect = (text, delay = 50) => {
+  const message = ref("");
+  let index = 0;
+
+  const type = () => {
+    if (index < text.length) {
+      message.value += text[index];
+      index++;
+      setTimeout(type, delay);
+    }
+  };
+
+  type();
+  return message;
+};
 const toggleThumbsUp = () => {
   thumbsUpSelected.value = !thumbsUpSelected.value;
   if (thumbsUpSelected.value) {
