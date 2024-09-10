@@ -202,9 +202,14 @@
                     share
                   </span>
                   <span
-                    class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
+                    :class="[
+                      'mdi',
+                      item.bookmarked
+                        ? 'mdi-bookmark text-[#FF0053] text-[21px]'
+                        : 'mdi-bookmark-outline text-[21px]',
+                    ]"
+                    @click="toggleBookmark(item._id)"
                   >
-                    bookmark
                   </span>
                 </div>
               </div>
@@ -308,10 +313,37 @@ const onPageChange = (event) => {
   rowsPerPage.value = event.rows;
 };
 
-// Fetch news when the component is mounted
+// Toggle bookmark status
+const toggleBookmark = async (id) => {
+  // Retrieve existing bookmarks from local storage
+  const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || {};
+
+  // Toggle the bookmark status
+  if (bookmarks[id]) {
+    bookmarks[id] = false;
+  } else {
+    bookmarks[id] = true;
+  }
+
+  // Save the updated bookmarks back to local storage
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+
+  // Update the bookmark status in the news array
+  const newsItem = news1.value.find((item) => item._id === id);
+  if (newsItem) {
+    newsItem.bookmarked = bookmarks[id];
+  }
+};
+
 onMounted(() => {
   if (categoryId) {
-    fetchNews();
+    fetchNews().then(() => {
+      // After fetching news, update bookmark status from local storage
+      const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || {};
+      news1.value.forEach((item) => {
+        item.bookmarked = bookmarks[item._id] || false;
+      });
+    });
   }
 });
 </script>

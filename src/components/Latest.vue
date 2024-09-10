@@ -34,7 +34,7 @@
                       : 'mdi-bookmark-outline text-[21px]',
                   ]"
                   class="cursor-pointer"
-                  @click="addBookmark(news._id)"
+                  @click="toggleBookmark(news._id)"
                 ></span>
               </div>
             </div>
@@ -68,7 +68,7 @@ import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
-
+import { addBookmark } from "../helpers/commonFunction.js";
 const route = useRoute();
 const router = useRouter();
 
@@ -115,6 +115,9 @@ const fetchRelatedNews = async () => {
     console.error("Error fetching related news:", error);
   }
 };
+const toggleBookmark = async (id) => {
+  await addBookmark(id, blogs);
+};
 
 const formatPublishTime = (publishTime) => {
   return moment(publishTime).fromNow();
@@ -126,43 +129,6 @@ const updateScreenWidth = () => {
 
 const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
-};
-const addBookmark = async (id) => {
-  try {
-    const token = localStorage.getItem("apiDataToken");
-    if (!token) {
-      throw new Error("No authentication token found");
-    }
-
-    // Find the news item to check its current bookmark status
-    const newsItem = blogs.value.find((news) => news._id === id);
-
-    // Toggle the status between "Enabled" and "Disabled"
-    const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
-
-    await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${id}`,
-      { status: newStatus },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
-
-    // Update the local state and local storage to reflect the new bookmark status
-    newsItem.bookmarked = !newsItem.bookmarked;
-    localStorage.setItem(
-      `bookmark_${id}`,
-      newsItem.bookmarked ? "Enabled" : "Disabled"
-    );
-
-    console.log(
-      `News item ${id} bookmark status updated successfully to ${newStatus}`
-    );
-  } catch (error) {
-    console.error(`Error updating bookmark status for news item ${id}:`, error);
-  }
 };
 
 const checkRouteParam = () => {
