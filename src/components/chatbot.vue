@@ -9,6 +9,35 @@
     </div>
     <div v-if="!showQuestions" class="h-content-fixed"></div>
 
+    <div
+      class="p-3 bg-gray-100 rounded-lg shadow-md w-[85%] mx-auto h-assist-card mt-[3%] overflow-y-auto"
+    >
+      <h2 class="text-lg font-bold mb-2 text-gray-800">
+        Need any assistance with your queries?
+      </h2>
+      <p class="text-gray-600 mb-2">
+        Our AI chatbot support is always available to provide answers to any
+        questions but to begin with, here are some of our most asked questions
+      </p>
+      <div class="space-y-4 max-h-96">
+        <div
+          v-for="(item, index) in category?.suggestedQnA"
+          :key="index"
+          @click="handleQnAClick(item.question, index)"
+          class="bg-white p-2 rounded-lg shadow cursor-pointer"
+        >
+          <p class="text-gray-800 font-medium text-center">
+            {{ item.question }}
+          </p>
+        </div>
+        <div class="flex justify-center mt-2">
+          <Button variant="outline" @click="toggleQuestionsVisibility">
+            Hide Questions
+          </Button>
+        </div>
+      </div>
+    </div>
+
     <div v-if="conversation.length" class="p-4 space-y-4 h-content-fixed">
       <div
         v-for="(message, index) in conversation"
@@ -63,76 +92,44 @@
           </div>
         </div>
       </div>
-
-      <div v-if="content" class="flex items-start space-x-2 overflow-y-auto">
-        <div class="bg-gray-100 rounded-lg p-4 flex-grow h-content-fixed-inner">
-          <p>{{ content }}</p>
-          <hr />
-          <div class="flex items-center space-x-4">
-            <div class="flex-grow flex items-center space-x-4">
-              <span class="text-gray-500 text-sm">
-                {{ questionsLeft }} questions left
-              </span>
-              <div class="flex-grow"></div>
-            </div>
-            <button
-              class="p-1 rounded-full bg-gray-100 flex items-center space-x-2"
-              aria-label="Like or Dislike"
-            >
-              <span
-                :class="[
-                  'p-1 rounded-full w-10 flex items-center justify-center',
-                  thumbsUpSelected ? 'bg-green-500' : 'bg-gray-400',
-                ]"
-                @click.stop="toggleThumbsUp"
-              >
-                <i class="pi pi-thumbs-up text-xl text-white"></i>
-              </span>
-              <span
-                :class="[
-                  'p-1 rounded-full w-10 flex items-center justify-center',
-                  thumbsDownSelected ? 'bg-red-500' : 'bg-gray-400',
-                ]"
-                @click.stop="toggleThumbsDown"
-              >
-                <i class="pi pi-thumbs-down text-xl text-white"></i>
-              </span>
-            </button>
+    </div>
+    <div v-if="content" class="flex items-start space-x-2 overflow-y-auto">
+      <div class="bg-gray-100 rounded-lg p-4 flex-grow h-content-fixed-inner">
+        <p>{{ content }}</p>
+        <hr />
+        <div class="flex items-center space-x-4">
+          <div class="flex-grow flex items-center space-x-4">
+            <span class="text-gray-500 text-sm">
+              {{ questionsLeft }} questions left
+            </span>
+            <div class="flex-grow"></div>
           </div>
+          <button
+            class="p-1 rounded-full bg-gray-100 flex items-center space-x-2"
+            aria-label="Like or Dislike"
+          >
+            <span
+              :class="[
+                'p-1 rounded-full w-10 flex items-center justify-center',
+                thumbsUpSelected ? 'bg-green-500' : 'bg-gray-400',
+              ]"
+              @click.stop="toggleThumbsUp"
+            >
+              <i class="pi pi-thumbs-up text-xl text-white"></i>
+            </span>
+            <span
+              :class="[
+                'p-1 rounded-full w-10 flex items-center justify-center',
+                thumbsDownSelected ? 'bg-red-500' : 'bg-gray-400',
+              ]"
+              @click.stop="toggleThumbsDown"
+            >
+              <i class="pi pi-thumbs-down text-xl text-white"></i>
+            </span>
+          </button>
         </div>
       </div>
     </div>
-
-    <div
-      v-if="shouldShowQuestions"
-      class="p-3 bg-gray-100 rounded-lg shadow-md w-[85%] mx-auto h-assist-card mt-[3%] overflow-y-auto"
-    >
-      <h2 class="text-lg font-bold mb-2 text-gray-800">
-        Need any assistance with your queries?
-      </h2>
-      <p class="text-gray-600 mb-2">
-        Our AI chatbot support is always available to provide answers to any
-        questions but to begin with, here are some of our most asked questions
-      </p>
-      <div class="space-y-4 max-h-96">
-        <div
-          v-for="(item, index) in category?.suggestedQnA"
-          :key="index"
-          @click="handleQnAClick(item.question, index)"
-          class="bg-white p-2 rounded-lg shadow cursor-pointer"
-        >
-          <p class="text-gray-800 font-medium text-center">
-            {{ item.question }}
-          </p>
-        </div>
-        <div class="flex justify-center mt-2">
-          <Button variant="outline" @click="toggleQuestionsVisibility">
-            Hide Questions
-          </Button>
-        </div>
-      </div>
-    </div>
-
     <div class="bg-gray-100 p-4 mt-input">
       <div class="flex items-center bg-white rounded overflow-hidden">
         <input
@@ -155,7 +152,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, computed } from "vue";
+import { defineProps, ref } from "vue";
 import vectorImg from "@/assets/png/Vector.png";
 import { useRoute } from "vue-router";
 import apiService from "@/services/apiServices";
@@ -185,9 +182,9 @@ const newsId = route.params.id;
 const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
 };
-const shouldShowQuestions = computed(() => {
-  return conversation.value.length === 0 && showQuestions.value;
-});
+// const shouldShowQuestions = computed(() => {
+//   return conversation.value.length === 0 && showQuestions.value;
+// });
 
 const handleQnAClick = async (question, index) => {
   userQuestion.value = question;
