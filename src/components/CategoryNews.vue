@@ -22,7 +22,8 @@
                     <div
                       v-for="news in category.news.slice(0, 1)"
                       :key="news._id"
-                      @click="navigateToCategoryNews(category._id)"
+                      @click="navigateToCategoryNews(news._id)"
+                      class="cursor-pointer"
                     >
                       <div class="relative drop-shadow-lg">
                         <div class="md:w-[45vw] lg:w-[30vw] sm-max:w-[100%]">
@@ -53,7 +54,10 @@
                       v-for="news in displayedNews(category.news)"
                       :key="news._id"
                     >
-                      <div class="flex flex-row gap-2 items-center">
+                      <div
+                        class="flex flex-row gap-2 items-center cursor-pointer"
+                        @click="navigateToCategoryNews(news._id)"
+                      >
                         <div class="w-[15px]">
                           <img src="../assets/Group.png" alt="" />
                         </div>
@@ -69,7 +73,8 @@
                   <div
                     v-for="(news, index) in getDisplayedNews(category.news)"
                     :key="news._id"
-                    class="flex flex-row gap-2 w-[50%] md:w-[30%]"
+                    class="flex flex-row gap-2 w-[50%] md:w-[30%] cursor-pointer"
+                    @click="navigateToCategoryNews(news._id)"
                   >
                     <div class="multiline-truncate1 font-14 w-[100%]">
                       {{ news.headline }}
@@ -86,7 +91,12 @@
             <div
               class="md-max:w-[100%] flex flex-col justify-between gap-3 sm:gap-3"
             >
-              <div v-for="news in slicedNews" :key="news._id">
+              <div
+                v-for="news in slicedNews"
+                :key="news._id"
+                class="cursor-pointer"
+                @click="navigateToCategoryNews(news._id)"
+              >
                 <div
                   class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
                 >
@@ -113,6 +123,7 @@
 <script>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
 
 export default {
   props: {
@@ -124,7 +135,7 @@ export default {
   setup() {
     const categories = ref({});
     const screenWidth = ref(window.innerWidth);
-
+    const router = useRouter();
     const fetchNewsForCategory = async (categoryId) => {
       try {
         const response = await axios.post(
@@ -190,9 +201,7 @@ export default {
     });
 
     const navigateToCategoryNews = (id) => {
-      if (id) {
-        window.location.href = `/news/${id}`;
-      }
+      router.push(`/news/${id}`);
     };
 
     onMounted(() => {
