@@ -186,7 +186,7 @@
               </a>
             </div>
             <div class="w-[60%] ml-4 mr-2 flex flex-col justify-evenly">
-              <div class="flex justify-between items-center mt-1">
+              <div class="flex justify-between items-center">
                 <div class="flex gap-1 text-gray-400 medium">
                   <div class="text-[8px] lg:text-[12px] font-lato">
                     {{ item?.source || "No source" }}
@@ -195,7 +195,7 @@
                     | {{ moment(item?.publishTime || new Date()).fromNow() }}
                   </div>
                 </div>
-                <div class="flex gap-1">
+                <div class="flex gap-1 items-center">
                   <span
                     class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
                   >
