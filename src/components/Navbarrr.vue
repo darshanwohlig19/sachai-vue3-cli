@@ -163,7 +163,7 @@
             </svg>
           </div>
         </div> -->
-        <router-link>
+        <router-link v-if="isLoggedIn">
           <div
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
           >
@@ -183,7 +183,7 @@
             </i>
           </div>
         </router-link>
-        <router-link>
+        <router-link v-if="isLoggedIn">
           <div
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
           >
@@ -330,7 +330,7 @@ export default {
     const isMenuOpen = ref(false);
     const isDropdownOpen = ref(false);
     const categories = ref([]);
-    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
+    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"), true);
     const showBookmarkLink = ref(true);
     const isPopupVisible = ref(false);
     const router = useRouter();
@@ -344,6 +344,9 @@ export default {
     const toggleCardDropdown = () => {
       isCardDropdownOpen.value = !isCardDropdownOpen.value;
       console.log("Dropdown is now:", isCardDropdownOpen.value);
+    };
+    const toggleLogin = () => {
+      isLoggedIn.value = !isLoggedIn.value;
     };
 
     const scrollLeft = () => {
@@ -480,6 +483,7 @@ export default {
 
     return {
       isMenuOpen,
+      toggleLogin,
       isDropdownOpen,
       categories,
       isLoggedIn,

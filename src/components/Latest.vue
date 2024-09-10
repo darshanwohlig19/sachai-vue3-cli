@@ -3,7 +3,7 @@
     <div>
       <div class="flex justify-between w-full items-center mb-3">
         <div class="text-[20px] font-bold font-lato">{{ headingText }}</div>
-        <div class="text-[16px] text-[#FF0053]">See all &nbsp;→</div>
+        <div class="text-[16px] text-[#FF0053]">See all →</div>
       </div>
       <div class="flex flex-row gap-3 justify-between cursor-pointer">
         <div

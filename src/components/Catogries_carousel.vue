@@ -19,7 +19,7 @@
                 <div class="flex justify-between items-center mb-3">
                   <div class="flex items-center gap-1">
                     <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
-                    <h3 class="font-18 capitalize">
+                    <h3 class="font-18 capitalize !text-[#1e0627]">
                       {{ slotProps.data.name }}
                     </h3>
                   </div>

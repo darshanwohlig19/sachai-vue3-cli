@@ -2,159 +2,129 @@
   <div class="mt-3">
     <div class="heads">More News</div>
     <div class="bg-white w-[100%] flex rounded-[10px] p-3 mt-3">
+      <!-- First Column -->
       <div
         class="w-[30%] sm-425:w-[100%] sm-max:w-[50%] between-sm-md:w-[50%] below-sm:w-[100%]"
       >
-        <div class="flex flex-row gap-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
+        <div
+          v-for="(news, index) in leftColumnNews"
+          :key="'news-left-' + index"
+          class="mt-3"
+          @click="navigateToMoreNews(news._id)"
+        >
+          <div class="flex flex-row gap-3 cursor-pointer">
+            <div class="w-[50px]">
+              <img class="small-img" src="../assets/Group.png" />
+            </div>
+            <div>
+              <div class="font-16 more_headline">{{ news.headline }}</div>
+              <div class="para summary">{{ news.summary }}</div>
             </div>
           </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
+          <div
+            v-if="index < leftColumnNews.length - 1"
+            class="divider mt-3"
+          ></div>
         </div>
       </div>
+
+      <!-- Divider Column -->
       <div class="w-[3%] flex justify-center sm-425:hidden">
         <div class="divider1 sm-425:hidden"></div>
       </div>
+
+      <!-- Second Column -->
       <div class="w-[30%] sm-max:w-[50%] between-sm-md:w-[50%] sm-425:hidden">
-        <div class="flex flex-row gap-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
+        <div
+          v-for="(news, index) in middleColumnNews"
+          :key="'news-middle-' + index"
+          class="mt-3"
+          @click="navigateToMoreNews(news._id)"
+        >
+          <div class="flex flex-row gap-3 cursor-pointer">
+            <div class="w-[50px]">
+              <img class="small-img" src="../assets/Group.png" />
+            </div>
+            <div>
+              <div class="font-16 more_headline">{{ news.headline }}</div>
+              <div class="para summary">{{ news.summary }}</div>
             </div>
           </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
+          <div
+            v-if="index < middleColumnNews.length - 1"
+            class="divider mt-3"
+          ></div>
         </div>
       </div>
+
+      <!-- Divider Column -->
       <div class="w-[3%] flex justify-center">
         <div class="divider1 sm-max:hidden"></div>
       </div>
 
+      <!-- Third Column -->
       <div class="w-[30%] sm-max:hidden">
-        <div class="flex flex-row gap-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
+        <div
+          v-for="(news, index) in rightColumnNews"
+          :key="'news-right-' + index"
+          class="mt-3"
+          @click="navigateToMoreNews(news._id)"
+        >
+          <div class="flex flex-row gap-3 cursor-pointer">
+            <div class="w-[50px]">
+              <img class="small-img" src="../assets/Group.png" />
+            </div>
+            <div>
+              <div class="font-16 more_headline">{{ news.headline }}</div>
+              <div class="para summary">{{ news.summary }}</div>
             </div>
           </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
-        </div>
-        <div class="divider mt-3"></div>
-        <div class="flex flex-row gap-3 mt-3">
-          <div class="w-[50px]">
-            <img class="small-img" src="../assets/Group.png" />
-          </div>
-          <div>
-            <div class="font-16">Lorem ipsum dolor sit amet consectetur.</div>
-            <div class="para">
-              Lorem ipsum dolor sit amet consectetur. Leo est mattis commodo sit
-              id facilisis. Rhoncus viverra placerat faucibus in duis cras
-              viverra sed. Egestas etiam enim orci quam viverra praesent enim
-              diam.
-            </div>
-          </div>
+          <div
+            v-if="index < rightColumnNews.length - 1"
+            class="divider mt-3"
+          ></div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { ref, computed, onMounted } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
+
+const allNews = ref([]);
+
+const leftColumnNews = computed(() => allNews.value.slice(0, 3));
+const middleColumnNews = computed(() => allNews.value.slice(3, 6));
+const rightColumnNews = computed(() => allNews.value.slice(6, 9));
+
+const navigateToMoreNews = (id) => {
+  router.push(`/news/${id}`);
+};
+
+const fetchNews = async () => {
+  try {
+    const response = await axios.post(
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
+      {
+        language: "6421a32aa020a23deacecf92",
+        categoryId: "63d90e4098d783ac0cbe2310",
+        page: 9,
+      }
+    );
+    console.log("data", response.data);
+
+    allNews.value = response.data.slice(0, 9);
+  } catch (error) {
+    console.error("Error fetching news:", error);
+  }
+};
+
+const router = useRouter();
+
+onMounted(fetchNews);
 </script>
 
 <style scoped>
@@ -162,7 +132,7 @@ export default {};
   height: 10px;
   width: 10px;
   margin-top: 6px;
-  object-fit: contain; /* Ensures the image fits within the specified dimensions */
+  object-fit: contain;
 }
 
 .divider {
@@ -182,6 +152,22 @@ export default {};
 }
 
 .para {
-  color: #6b7280; /* Adjust as needed */
+  color: #6b7280;
+}
+.summary {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #6b7280;
+}
+.more_headline {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #1e0627;
 }
 </style>

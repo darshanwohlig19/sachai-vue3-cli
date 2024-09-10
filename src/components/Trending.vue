@@ -17,7 +17,7 @@
             <img
               :src="slotProps.data.imgixUrlHighRes"
               :alt="slotProps.data.name"
-              class="w-full h-full object-contain rounded-[20px]"
+              class="w-full h-full object-cover rounded-[20px]"
             />
             <Tag
               :value="slotProps.data.inventoryStatus"

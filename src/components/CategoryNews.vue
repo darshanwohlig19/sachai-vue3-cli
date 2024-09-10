@@ -8,7 +8,11 @@
               <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
               <div class="heads1 capitalize">{{ category.name }}</div>
             </div>
-            <div class="see-all">See all →</div>
+            <div class="see-all">
+              <a :href="`/categories/${category._id}?category=${category.name}`"
+                >See all →</a
+              >
+            </div>
           </div>
           <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
             <div class="md-max:w-[100%] w-[100%]">
@@ -18,6 +22,7 @@
                     <div
                       v-for="news in category.news.slice(0, 1)"
                       :key="news._id"
+                      @click="navigateToCategoryNews(category._id)"
                     >
                       <div class="relative drop-shadow-lg">
                         <div class="md:w-[45vw] lg:w-[30vw] sm-max:w-[100%]">
@@ -184,6 +189,12 @@ export default {
       }
     });
 
+    const navigateToCategoryNews = (id) => {
+      if (id) {
+        window.location.href = `/news/${id}`;
+      }
+    };
+
     onMounted(() => {
       fetchCategories();
       window.addEventListener("resize", handleResize);
@@ -199,6 +210,7 @@ export default {
       displayedNews,
       slicedNews,
       screenWidth,
+      navigateToCategoryNews,
     };
   },
 };

@@ -126,7 +126,7 @@
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="topic in trendingTopics.slice(0, 8)" :key="topic.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">{{ topic.name }}</a>
+                <a class="capitalize">{{ topic.data }}</a>
               </li>
             </ul>
           </div>
@@ -314,6 +314,7 @@ export default {
         console.error("Error fetching categories:", error);
       }
     };
+    console.log("Catogries", categories.value);
 
     const fetchLatestNews = async () => {
       try {
@@ -342,13 +343,14 @@ export default {
     const fetchTrendingTopics = async () => {
       try {
         const response = await axios.get(
-          "https://api-uat.newsshield.io/category/getAllCat"
+          "https://api-uat.newsshield.io/news/getTrendingTopics"
         );
         trendingTopics.value = response.data;
       } catch (error) {
         console.error("Error fetching trending topics:", error);
       }
     };
+    console.log("trending topics", trendingTopics);
 
     onMounted(() => {
       fetchCategories();
