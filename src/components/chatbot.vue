@@ -7,10 +7,7 @@
         {{ title }}
       </h2>
     </div>
-    <div
-      v-if="!showQuestions && !conversation.length === 0"
-      class="h-content-fixed"
-    ></div>
+    <div v-if="!showQuestions" class="h-content-fixed"></div>
 
     <div v-if="conversation.length" class="p-4 space-y-4 h-content-fixed">
       <div
@@ -29,6 +26,41 @@
           class="p-4 rounded-lg"
         >
           <p>{{ message.text }}</p>
+          <hr v-if="message.type === 'bot'" />
+          <div
+            class="flex items-center space-x-4"
+            v-if="message.type === 'bot'"
+          >
+            <div class="flex-grow flex items-center space-x-4">
+              <span class="text-gray-500 text-sm">
+                {{ count }} questions left
+              </span>
+              <div class="flex-grow"></div>
+            </div>
+            <button
+              class="p-1 rounded-full bg-gray-100 flex items-center space-x-2"
+              aria-label="Like or Dislike"
+            >
+              <span
+                :class="[
+                  'p-1 rounded-full w-10 flex items-center justify-center',
+                  thumbsUpSelected ? 'text-green-500' : 'bg-gray-400',
+                ]"
+                @click.stop="toggleThumbsUp"
+              >
+                <i class="pi pi-thumbs-up text-xl text-white"></i>
+              </span>
+              <span
+                :class="[
+                  'p-1 rounded-full w-10 flex items-center justify-center',
+                  thumbsDownSelected ? 'text-red-500' : 'bg-gray-400',
+                ]"
+                @click.stop="toggleThumbsDown"
+              >
+                <i class="pi pi-thumbs-down text-xl text-white"></i>
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -44,7 +76,6 @@
               <div class="flex-grow"></div>
             </div>
             <button
-              @click="handleClick"
               class="p-1 rounded-full bg-gray-100 flex items-center space-x-2"
               aria-label="Like or Dislike"
             >
@@ -73,7 +104,7 @@
     </div>
 
     <div
-      v-if="showQuestions"
+      v-if="shouldShowQuestions"
       class="p-3 bg-gray-100 rounded-lg shadow-md w-[85%] mx-auto h-assist-card mt-[3%] overflow-y-auto"
     >
       <h2 class="text-lg font-bold mb-2 text-gray-800">
@@ -124,7 +155,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, ref, computed } from "vue";
 import vectorImg from "@/assets/png/Vector.png";
 import { useRoute } from "vue-router";
 import apiService from "@/services/apiServices";
@@ -154,6 +185,10 @@ const newsId = route.params.id;
 const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
 };
+const shouldShowQuestions = computed(() => {
+  // Hide questions if there are messages in the conversation
+  return conversation.value.length === 0 && showQuestions.value;
+});
 
 const handleQnAClick = async (question, index) => {
   userQuestion.value = question;
@@ -168,23 +203,6 @@ const handleQnAClick = async (question, index) => {
   if (suggestedAnswer) {
     conversation.value.push({ type: "bot", text: suggestedAnswer });
   }
-
-  // Fetch the bot's response from the API
-  try {
-    const payload = { question: userQuestion.value };
-    const response = await apiService.apiCall(
-      "post",
-      `${apiConfig.CHAT_BOT_DATA}/${newsId}`,
-      payload
-    );
-    const botResponse = response.data.message;
-    conversation.value.push({ type: "bot", text: botResponse });
-  } catch (error) {
-    console.error("Error fetching response:", error);
-  } finally {
-    userQuestion.value = "";
-    showQuestions.value = false;
-  }
 };
 
 const handleChatClick = async () => {
@@ -197,7 +215,7 @@ const handleChatClick = async () => {
       `${apiConfig.CHAT_BOT_DATA}/${newsId}`,
       payload
     );
-    const botResponse = response.data.message; // Adjust based on API response structure
+    const botResponse = response.data.answer; // Adjust based on API response structure
 
     // Add bot response to the conversation
     conversation.value.push({ type: "bot", text: botResponse });
