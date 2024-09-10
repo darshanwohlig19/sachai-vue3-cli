@@ -68,7 +68,7 @@
     <div
       class="w-[100%] md-max:w-[100%] sm:w-[65%] sm-max:w-[100%] rounded-[10px] bg-white relative md:mt-0 flex justify-between p-4 sm:mt-4 sm-max:mt-4"
     >
-      <div class="w-[48%] xl-max:w-[100%] flex flex-col gap-3">
+      <div class="w-[48%] xl-max:w-[100%] flex flex-col gap-6">
         <div
           @click="navigateToTrending(item._id)"
           v-for="(item, index) in news.slice(0, 3)"
@@ -79,7 +79,7 @@
             <img class="image-small" src="../assets/Group.png" />
           </div>
           <div>
-            <div class="font-16">{{ item.headline }}</div>
+            <div class="font-16 headline-tuncate">{{ item.headline }}</div>
             <div class="font-133 summary-tuncate">{{ item.summary }}</div>
             <div v-if="index < 2" class="border-1 sm-max:mt-3 mt-3"></div>
           </div>
@@ -294,7 +294,7 @@ export default {
 .headline-tuncate {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* Number of lines to display */
+  -webkit-line-clamp: 1 !important; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }
