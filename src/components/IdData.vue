@@ -17,11 +17,13 @@
             />
 
             <div class="flex items-center mb-4 flex-wrap text-sm">
-              <span class="text-light-gray mr-2">{{ newsItem?.source }}</span>
-              <span class="text-light-gray mr-2">|</span>
-              <span class="text-light-gray">{{ formattedPublishTime() }}</span>
-              <span class="text-light-gray mx-2">|</span>
-              <span class="text-red-500">{{ newsItem?.categories[0] }}</span>
+              <span class="text-light-gray mr-1">{{ newsItem?.source }}</span>
+              <span class="text-light-gray mr-1">|</span>
+              <span class="text-light-gray">2 min ago</span>
+              <span class="text-[#000000] mx-1">•</span>
+              <span class="text-pink-10">{{ newsItem?.categories[0] }}</span>
+              <span class="text-light-gray mx-1">|</span>
+              <span class="text-light-gray">1 min read</span>
             </div>
 
             <h2 class="text-2xl font-semibold text-Old-Burgundy mb-4">
@@ -60,7 +62,6 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
-import moment from "moment";
 import Footer from "@/components/Footer.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
 // import FeatureNews from "@/components/FeaturedIdStories.vue";
@@ -81,10 +82,6 @@ const fetchNewsItem = async () => {
   } catch (error) {
     console.error("Error fetching news item:", error);
   }
-};
-
-const formattedPublishTime = () => {
-  return moment(newsItem.value?.publishtime).fromNow();
 };
 
 onMounted(() => {
