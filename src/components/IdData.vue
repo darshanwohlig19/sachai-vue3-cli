@@ -30,7 +30,7 @@
 
             <div class="text-gray-700 space-y-4">
               <p>
-                {{ newsItem?.fullContent }}
+                {{ newsItem?.summary }}
               </p>
             </div>
           </div>
