@@ -186,7 +186,6 @@ const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
 };
 const shouldShowQuestions = computed(() => {
-  // Hide questions if there are messages in the conversation
   return conversation.value.length === 0 && showQuestions.value;
 });
 
@@ -194,11 +193,7 @@ const handleQnAClick = async (question, index) => {
   userQuestion.value = question;
   selectedQuestionIndex.value = index;
   selectedQuestionAnswers.value = props.category?.suggestedQnA[index]?.answer;
-
-  // Add user message to the conversation
   conversation.value.push({ type: "user", text: question });
-
-  // Add the suggested answer from category to the conversation as a simulated bot response
   const suggestedAnswer = props.category?.suggestedQnA[index]?.answer;
   if (suggestedAnswer) {
     conversation.value.push({ type: "bot", text: suggestedAnswer });
@@ -215,9 +210,7 @@ const handleChatClick = async () => {
       `${apiConfig.CHAT_BOT_DATA}/${newsId}`,
       payload
     );
-    const botResponse = response.data.answer; // Adjust based on API response structure
-
-    // Add bot response to the conversation
+    const botResponse = response.data.answer;
     conversation.value.push({ type: "bot", text: botResponse });
   } catch (error) {
     console.error("Error fetching response:", error);
@@ -226,7 +219,6 @@ const handleChatClick = async () => {
       text: "Sorry, there was an error processing your request.",
     });
   } finally {
-    // Clear the input field after submission
     userQuestion.value = "";
   }
 };
@@ -249,7 +241,7 @@ const toggleThumbsDown = () => {
 <style scoped>
 .h-content-fixed {
   height: 400px;
-  overflow-y: auto; /* Allow scrolling if content overflows */
+  overflow-y: auto;
 }
 
 .h-assist-card {
@@ -266,10 +258,8 @@ const toggleThumbsDown = () => {
   background-position: center;
 }
 
-/* Add styles for user and bot messages */
-/* Add styles for user and bot messages */
 .message {
-  max-width: 75%; /* Adjust width as needed */
+  max-width: 75%;
   padding: 10px;
   border-radius: 15px;
   margin-bottom: 10px;
@@ -277,31 +267,30 @@ const toggleThumbsDown = () => {
 }
 
 .message-user {
-  background-color: #d1e7dd; /* Light green for user messages */
+  background-color: #d1e7dd;
   align-self: flex-end;
 }
 
 .message-bot {
-  background-color: #f8f9fa; /* Light gray for bot messages */
+  background-color: #f8f9fa;
   align-self: flex-start;
 }
 
 .message-container {
   display: flex;
-  justify-content: flex-end; /* Default alignment for user messages */
+  justify-content: flex-end;
 }
 
 .message-container.bot {
-  justify-content: flex-start; /* Alignment for bot messages */
+  justify-content: flex-start;
 }
 
-/* Icon button styles */
 .bg-green-500 {
-  background-color: #34d399; /* Tailwind's green-500 color */
+  background-color: #34d399;
 }
 
 .bg-red-500 {
-  background-color: #ef4444; /* Tailwind's red-500 color */
+  background-color: #ef4444;
 }
 
 .text-white {
