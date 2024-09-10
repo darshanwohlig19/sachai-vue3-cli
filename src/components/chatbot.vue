@@ -2,9 +2,9 @@
   <div
     class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card"
   >
-    <div class="bg-purple-900 text-white p-4">
-      <h2 class="text-xl font-semibold leading-tight">
-        {{ title }}
+    <div class="bg-[#320A38] text-white p-4">
+      <h2 class="text-xl font-Lato leading-tight">
+        {{ category?.headline }}
       </h2>
     </div>
     <div v-if="!showQuestions" class="h-content-fixed"></div>
@@ -54,7 +54,12 @@
           }"
           class="p-4 rounded-lg"
         >
-          <p>{{ message.text }}</p>
+          <p v-if="message.type === 'user'">
+            {{ message.text }}
+          </p>
+          <p v-if="message.type === 'bot'">
+            {{ message.text }}
+          </p>
           <hr v-if="message.type === 'bot'" />
           <div
             class="flex items-center space-x-4"
@@ -165,9 +170,6 @@ const props = defineProps({
   },
 });
 
-const title = ref(
-  "Pro-Khalistani Protests Outside Indian Diplomatic Missions In London, Melbourne..."
-);
 const route = useRoute();
 const userQuestion = ref("");
 const conversation = ref([]);
@@ -176,7 +178,6 @@ const selectedQuestionIndex = ref(null);
 const selectedQuestionAnswers = ref([]);
 const thumbsUpSelected = ref(false);
 const thumbsDownSelected = ref(false);
-
 const newsId = route.params.id;
 
 const toggleQuestionsVisibility = () => {
@@ -187,14 +188,31 @@ const toggleQuestionsVisibility = () => {
 // });
 
 const handleQnAClick = async (question, index) => {
-  userQuestion.value = question;
   selectedQuestionIndex.value = index;
   selectedQuestionAnswers.value = props.category?.suggestedQnA[index]?.answer;
+
   conversation.value.push({ type: "user", text: question });
+
   const suggestedAnswer = props.category?.suggestedQnA[index]?.answer;
+
   if (suggestedAnswer) {
     const botMessage = typewriterEffect(suggestedAnswer);
     conversation.value.push({ type: "bot", text: botMessage });
+  }
+
+  const payload = { question: conversation.value[0].value };
+  try {
+    await apiService.apiCall(
+      "post",
+      `${apiConfig.ADD_QA_DATA}/${newsId}`,
+      payload
+    );
+  } catch (error) {
+    console.error("Error fetching response:", error);
+    conversation.value.push({
+      type: "bot",
+      text: "Sorry, there was an error processing your request.",
+    });
   }
 };
 

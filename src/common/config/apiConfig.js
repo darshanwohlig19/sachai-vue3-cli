@@ -15,5 +15,6 @@ config.PORT_IP = {
 // NodalOfficer Api
 config.ADD_QA_DATA = config.PORT_IP.LOGIN + "/chats/saveClickedSuggestedQnA";
 config.CHAT_BOT_DATA = config.PORT_IP.LOGIN + "/chats/addQnA";
+config.GET_CHAT_BOT_DATA = config.PORT_IP.LOGIN + "/chats/getChatsperUser";
 
 export default config;

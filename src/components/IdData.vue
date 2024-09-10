@@ -6,7 +6,7 @@
       <div class="lg:w-2/3 flex-grow flex flex-col">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow">
           <div class="p-4">
-            <h1 class="text-3xl font-bold mb-4">
+            <h1 class="text-3xl font-sourcePro mb-4">
               {{ newsItem?.headline }}
             </h1>
 
@@ -17,18 +17,18 @@
             />
 
             <div class="flex items-center mb-4 flex-wrap text-sm">
-              <span class="text-gray-600 mr-2">{{ newsItem?.source }}</span>
-              <span class="text-gray-400 mr-2">|</span>
-              <span class="text-gray-600">{{ formattedPublishTime() }}</span>
-              <span class="text-gray-400 mx-2">|</span>
+              <span class="text-light-gray mr-2">{{ newsItem?.source }}</span>
+              <span class="text-light-gray mr-2">|</span>
+              <span class="text-light-gray">{{ formattedPublishTime() }}</span>
+              <span class="text-light-gray mx-2">|</span>
               <span class="text-red-500">{{ newsItem?.categories[0] }}</span>
             </div>
 
-            <h2 class="text-2xl font-semibold mb-4">
+            <h2 class="text-2xl font-semibold text-Old-Burgundy mb-4">
               {{ newsItem?.author }}
             </h2>
 
-            <div class="text-gray-700 space-y-4">
+            <div class="text-gray-5 space-y-4">
               <p>
                 {{ newsItem?.summary }}
               </p>
@@ -42,9 +42,9 @@
         <div class="flex-grow">
           <ChatBot :category="newsItem" />
         </div>
-        <div class="flex-grow">
+        <!-- <div class="flex-grow">
           <FeatureNews :category="newsItem" />
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -63,7 +63,7 @@ import axios from "axios";
 import moment from "moment";
 import Footer from "@/components/Footer.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
-import FeatureNews from "@/components/FeaturedIdStories.vue";
+// import FeatureNews from "@/components/FeaturedIdStories.vue";
 import RelatedNewsData from "@/components/RelatedNews.vue";
 import ChatBot from "@/components/chatbot.vue";
 

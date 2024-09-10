@@ -80,9 +80,10 @@ export default {
   methods: {
     async fetchBlogs() {
       try {
+        const languageId = "6421a32aa020a23deacecf92";
         const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getAllBlogsForWeb/",
-          { categoryId: "668f6e06b665d0e0fdc1384b" }
+          "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
+          { categoryId: "63d90fa9aabaf4bf0169c2b6", languageId: languageId }
         );
         console.log("Fetched blogs:", response.data);
         // Handle response.data as needed

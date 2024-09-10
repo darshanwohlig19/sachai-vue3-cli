@@ -5,14 +5,18 @@ module.exports = {
     extend: {
       fontFamily: {
         lato: ["Lato", "sans-serif"],
-        "source-serif-pro": ["'Source Serif Pro Semibold'", "serif"],
+        sourcePro: ["'Source Serif Pro Semibold'", "serif"],
       },
       fontSize: {
         "16px": "16px",
+        "12px": "12px",
       },
       colors: {
+        "light-gray": "#676767",
         "custom-gray": "#f7f7f4",
+        "Old-Burgundy": "#3E3232",
         gray: {
+          5: "#878787",
           10: "#5B5B5B",
           20: "#8E8E8E",
           30: "#AAAAAA",
