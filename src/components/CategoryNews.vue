@@ -30,7 +30,7 @@
                           <img
                             :src="news.imgixUrlHighRes || fallbackImage"
                             class="rounded-[8px] w-full h-[30vh]"
-                            alt=""
+                            alt
                           />
                         </div>
                         <div
@@ -59,11 +59,9 @@
                         @click="navigateToCategoryNews(news._id)"
                       >
                         <div class="w-[15px]">
-                          <img src="../assets/Group.png" alt="" />
+                          <img src="../assets/Group.png" alt />
                         </div>
-                        <div class="font-14 one-line">
-                          {{ news.headline }}
-                        </div>
+                        <div class="font-14 one-line">{{ news.headline }}</div>
                       </div>
                       <div class="divider-horizontal mt-2"></div>
                     </div>
@@ -104,7 +102,7 @@
                     <img
                       class="rounded-[6px] h-[47px]"
                       :src="news.imgixUrlHighRes"
-                      alt=""
+                      alt
                     />
                   </div>
                   <div class="font-14 w-[70%] multiline-truncate1">

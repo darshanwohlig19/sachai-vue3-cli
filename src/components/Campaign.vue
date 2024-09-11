@@ -22,7 +22,10 @@
               />
             </div>
             <div class="p-2 shadow-lg rounded-b-[8px]">
-              <div class="font-16 lines2">
+              <div
+                class="font-16 lines2 cursor-pointer"
+                @click="navigateToCampingNews(campaignNews._id)"
+              >
                 {{ campaignNews.headline || "No Headline" }}
               </div>
             </div>
@@ -48,7 +51,10 @@
           <div class="w-[15px]">
             <img src="../assets/Group.png" alt="" />
           </div>
-          <div class="font-14 lines2">
+          <div
+            class="font-14 lines2 cursor-pointer"
+            @click="navigateToCampingNews(item._id)"
+          >
             {{ item.headline || "No Headline" }}
           </div>
         </div>
@@ -60,6 +66,7 @@
 import { ref } from "vue";
 import axios from "axios";
 import { computed, onMounted, onBeforeUnmount } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -70,6 +77,7 @@ export default {
     // function formatPublishTime(publishTime) {
     //   return moment(publishTime).fromNow();
     // }
+    const router = useRouter();
 
     async function fetchBlogs() {
       try {
@@ -87,6 +95,8 @@ export default {
         console.error("Error fetching blogs:", error);
       }
     }
+    console.log("Camping Data", campaigns);
+
     const displayedNews = computed(() => {
       return (news) => {
         if (screenWidth.value <= 425) return news?.slice(0, 1);
@@ -97,7 +107,9 @@ export default {
     const handleResize = () => {
       screenWidth.value = window.innerWidth;
     };
-
+    const navigateToCampingNews = (id) => {
+      router.push(`/news/${id}`);
+    };
     onMounted(() => {
       fetchBlogs();
       window.addEventListener("resize", handleResize);
@@ -111,6 +123,7 @@ export default {
       displayedNews,
       campaigns,
       campaigns1,
+      navigateToCampingNews,
     };
   },
 };

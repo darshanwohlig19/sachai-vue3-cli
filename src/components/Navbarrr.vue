@@ -416,14 +416,15 @@ export default {
             localStorage.removeItem("apiDataToken");
             localStorage.setItem("logoutSuccess", "true");
             isLoggedIn.value = false;
-            router.push("/");
+            router.push("/Login");
 
             // Show success toaster notification
             toast.add({
               severity: "error",
               summary: "Logged out successfully!",
-              group: "error",
-              life: 2000,
+              summary2: "You have been safely logged out.",
+              group: "success",
+              life: 3000,
             });
             isCardDropdownOpen.value = !isCardDropdownOpen.value;
           } else {
