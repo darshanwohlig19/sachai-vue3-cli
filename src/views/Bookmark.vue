@@ -2,11 +2,11 @@
   <Navbarrr />
   <div class="mx-[30px] mt-3">
     <div class="font-24 mb-3">Bookmarks</div>
-    <div class="flex flex-col gap-3 bg-white rounded-[10px] p-3">
+    <div class="flex flex-col bg-white rounded-[10px] p-3">
       <div v-if="BookmarkData.length > 0">
-        <div v-for="item in BookmarkData" :key="item._id">
-          <div class="w-full bg-white flex rounded-lg">
-            <div class="w-[20%] h-full items-center cursor-pointer">
+        <div v-for="item in BookmarkData" :key="item._id" class="my-3">
+          <div class="w-full bg-white flex rounded-lg drop-shadow-md">
+            <div class="w-[30%] h-full items-center cursor-pointer">
               <img
                 class="w-full h-full rounded-md object-contain"
                 :src="item.imgixUrlHighRes || fallbackImage"
@@ -14,8 +14,8 @@
                 alt=""
               />
             </div>
-            <div class="w-[80%] ml-4 mr-2 flex flex-col justify-evenly">
-              <div class="flex justify-between items-center mt-1">
+            <div class="w-[70%] ml-4 mr-2 flex flex-col justify-evenly">
+              <div class="flex justify-between items-center mt-3">
                 <div class="flex gap-1 text-gray-400 medium">
                   <div class="text-[8px] lg:text-[12px] font-lato">
                     {{ item.source || "No source" }}
@@ -33,24 +33,24 @@
                 </div>
               </div>
               <div
-                class="text-[12px] md:text-[20px] fontCustom leading-1 bold mr-1 mt-2 cursor-pointer"
+                class="text-[12px] md:text-[20px] fontCustom leading-1 bold mr-1 mt-2 cursor-pointer multiline-truncate1"
                 @click="navigateToNewsDetail(item._id)"
               >
                 {{ truncateText(item.headline || "No Headline", 80) }}
               </div>
               <div
-                class="text-[10px] md:text-[14px] text-[#878787] multiline-truncate font-lato leading-1 mr-1 mt-1 mb-1 cursor-pointer"
+                class="text-[10px] md:text-[14px] text-[#878787] multiline-truncate1 md:multiline-truncate font-lato leading-1 mr-1 mt-1 mb-1 cursor-pointer"
                 @click="navigateToNewsDetail(item.newsId)"
               >
                 {{ item.summary || "No summary" }}
               </div>
-              <div class="flex justify-between">
+              <div class="flex justify-between mb-3 mt-2">
                 <div class="text-[8px] lg:text-[12px] flex gap-3">
                   <span class="text-red-500">Politics</span>
                   <span>|</span>
                   <span> 4 min read</span>
                 </div>
-                <div class="font-12">
+                <div class="text-[8px] lg:text-[12px] text-[#ff0053]">
                   <button @click="removeBookmark(item.newsId)">Remove</button>
                 </div>
               </div>
@@ -58,7 +58,7 @@
           </div>
         </div>
       </div>
-      <div v-else class="text-center font-24">No Bookmarks</div>
+      <div v-else class="text-center">No Bookmarks</div>
     </div>
   </div>
 </template>
@@ -68,7 +68,8 @@ import { ref, onMounted } from "vue";
 import moment from "moment";
 import Navbarrr from "@/components/Navbarrr.vue";
 import { useRouter } from "vue-router";
-
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const router = useRouter();
 const BookmarkData = ref([]);
 
@@ -138,6 +139,12 @@ const removeBookmark = async (id) => {
     localStorage.removeItem(`bookmark_${id}`);
 
     console.log(`News item ${id} removed from bookmarks successfully.`);
+    toast.add({
+      severity: "info",
+      summary: "Bookmark removed!",
+      group: "BookmarkRemove",
+      life: 2000,
+    });
   } catch (error) {
     console.error(`Error removing bookmark for news item ${id}:`, error);
   }
@@ -148,11 +155,18 @@ onMounted(() => {
 });
 </script>
 
-<style>
+<style scoped>
 .multiline-truncate {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }

@@ -25,6 +25,7 @@
                           class="rounded-[8px] w-full h-[30vh]"
                           alt=""
                         />
+
                         <div
                           class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
                         ></div>

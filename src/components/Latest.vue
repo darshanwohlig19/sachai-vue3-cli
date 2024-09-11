@@ -69,6 +69,9 @@ import axios from "axios";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import { addBookmark } from "../helpers/commonFunction.js";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
 const route = useRoute();
 const router = useRouter();
 
@@ -116,7 +119,28 @@ const fetchRelatedNews = async () => {
   }
 };
 const toggleBookmark = async (id) => {
-  await addBookmark(id, blogs);
+  // Check current bookmark status
+  const currentStatus = localStorage.getItem(`bookmark_${id}`);
+
+  if (currentStatus === "Enabled") {
+    // Remove bookmark
+    await addBookmark(id, blogs, "Disabled");
+    toast.add({
+      severity: "info",
+      summary: "Bookmark removed!",
+      group: "BookmarkRemove",
+      life: 2000,
+    });
+  } else {
+    // Add bookmark
+    await addBookmark(id, blogs, "Enabled");
+    toast.add({
+      severity: "success",
+      summary: "Bookmarked successfully!",
+      group: "BookmarkSuccess",
+      life: 2000,
+    });
+  }
 };
 
 const formatPublishTime = (publishTime) => {
