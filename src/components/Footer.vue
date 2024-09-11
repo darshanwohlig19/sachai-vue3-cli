@@ -126,7 +126,7 @@
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="topic in trendingTopics.slice(0, 8)" :key="topic.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">{{ topic.data }}</a>
+                <a class="capitalize">{{ topic }}</a>
               </li>
             </ul>
           </div>
