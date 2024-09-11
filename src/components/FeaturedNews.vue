@@ -136,7 +136,7 @@ function navigateToCategory(id) {
 }
 fetchBlogs();
 </script>
-<style>
+<style scoped>
 .fontCustom {
   font-family: "source-serif-pro-semibold";
 }

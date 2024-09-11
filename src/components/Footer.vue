@@ -72,9 +72,9 @@
         <div class="mt-5">
           <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
-            <ul v-for="item in hotOnTheWeb.slice(0, 8)" :key="item.id">
+            <ul v-for="item in hotOnTheWeb" :key="item.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">{{ item.name }}</a>
+                <a class="capitalize">{{ item }}</a>
               </li>
             </ul>
           </div>
@@ -91,11 +91,11 @@
             <div class="footer-heads text-sm">Latest News</div>
             <ul>
               <li
-                v-for="news in latestNews.slice(0, 4)"
+                v-for="news in latestNews"
                 :key="news.id"
                 class="footer-links text-[#52525B] text-sm pt-3"
               >
-                <a class="capitalize">{{ news.name }}</a>
+                <a class="capitalize">{{ news }}</a>
               </li>
             </ul>
           </div>
@@ -124,7 +124,7 @@
         <div class="trend">
           <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
-            <ul v-for="topic in trendingTopics.slice(0, 8)" :key="topic.id">
+            <ul v-for="topic in trendingTopics" :key="topic.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize">{{ topic }}</a>
               </li>
@@ -211,7 +211,7 @@
               <div class="footer-heads text-sm">Latest News</div>
               <ul>
                 <li
-                  v-for="news in latestNews.slice(0, 4)"
+                  v-for="news in latestNews"
                   :key="news.id"
                   class="footer-links text-[#52525B] text-sm pt-3"
                 >
@@ -243,7 +243,7 @@
             <div>
               <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
               <div class="grid grid-cols-2 pt-2">
-                <ul v-for="item in hotOnTheWeb.slice(0, 8)" :key="item.id">
+                <ul v-for="item in hotOnTheWeb" :key="item.id">
                   <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
                     <a class="capitalize">{{ item.name }}</a>
                   </li>
@@ -257,15 +257,19 @@
             <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
             <div class="grid grid-cols-2 pt-2 md:flex md:gap-6">
               <div>
-                <ul v-for="topic in trendingTopics.slice(0, 4)" :key="topic.id">
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
+                <ul v-for="topic in trendingTopics" :key="topic.id">
+                  <li
+                    class="footer-links text-[#52525B] text-sm pt-3 multiline-truncate1"
+                  >
                     <a class="capitalize">{{ topic.name }}</a>
                   </li>
                 </ul>
               </div>
               <div>
                 <ul v-for="topic in trendingTopics.slice(4, 8)" :key="topic.id">
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <li
+                    class="footer-links text-[#52525B] text-sm pt-3 multiline-truncate1"
+                  >
                     <a class="capitalize">{{ topic.name }}</a>
                   </li>
                 </ul>
@@ -316,47 +320,26 @@ export default {
     };
     console.log("Catogries", categories.value);
 
-    const fetchLatestNews = async () => {
-      try {
-        const languageId = "6421a32aa020a23deacecf92";
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/category/getAllCat",
-          { langauge: languageId }
-        );
-        latestNews.value = response.data;
-      } catch (error) {
-        console.error("Error fetching latest news:", error);
-      }
-    };
-
-    const fetchHotOnTheWeb = async () => {
-      try {
-        const response = await axios.get(
-          "https://api-uat.newsshield.io/category/getAllCat"
-        );
-        hotOnTheWeb.value = response.data;
-      } catch (error) {
-        console.error("Error fetching hot on the web:", error);
-      }
-    };
-
-    const fetchTrendingTopics = async () => {
+    const fetchNewsTopics = async () => {
       try {
         const response = await axios.get(
           "https://api-uat.newsshield.io/news/getTrendingTopics"
         );
-        trendingTopics.value = response.data;
+        console.log(response.data); // Check what the API is returning
+        latestNews.value = response.data.slice(0, 4);
+        hotOnTheWeb.value = response.data.slice(5, 13);
+        trendingTopics.value = response.data.slice(13, 20);
+        console.log("latest", latestNews);
       } catch (error) {
-        console.error("Error fetching trending topics:", error);
+        console.error("Error fetching footer news:", error);
       }
     };
+
     console.log("trending topics", trendingTopics);
 
     onMounted(() => {
       fetchCategories();
-      fetchLatestNews();
-      fetchHotOnTheWeb();
-      fetchTrendingTopics();
+      fetchNewsTopics();
     });
 
     return {
@@ -376,7 +359,6 @@ export default {
 .tablet1 {
   display: none !important;
 }
-
 @media screen and (max-width: 950px) {
   .trend {
     margin-top: 20%;
