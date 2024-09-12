@@ -128,8 +128,9 @@ const rowsPerPage = ref(5);
 // const newStatus = ref("disable");
 const route = useRoute();
 const categoryId = route.params.slugOrId;
+const categoryName = route.query.category;
 
-console.log("name", categoryId);
+console.log("categoryName", categoryName);
 // Fetching news based on category ID
 const fetchNews = async () => {
   const token = localStorage.getItem("apiDataToken");
