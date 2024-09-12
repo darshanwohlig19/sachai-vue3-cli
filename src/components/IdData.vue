@@ -3,8 +3,10 @@
   <div class="max-w-[1400px] mx-auto mt-2">
     <div class="flex flex-col lg:flex-row lg:space-x-4">
       <!-- Main Content -->
-      <div class="flex-grow flex flex-col">
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow">
+      <div class="flex-grow flex flex-col h-full">
+        <div
+          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-[682px]"
+        >
           <div class="p-2">
             <div class="image-container">
               <img
@@ -16,7 +18,7 @@
 
             <div class="flex items-center">
               <span class="text-neon-pink mr-2">
-                {{ newsItem?.categories[0] }}
+                {{ newsItem?.categoriesName[0] }}
               </span>
               <span class="text-light-gray mr-2">|</span>
               <span class="text-light-gray mr-2">
