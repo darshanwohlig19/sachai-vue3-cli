@@ -1,12 +1,12 @@
 <template>
   <div class="mt-3 bg-white p-3 rounded-[10px]">
-     <div class="flex justify-between w-full items-center">
-        <div class="flex flex-row items-center gap-2">
-          <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
-          <div class="text-[20px] font-bold font-lato">More News</div>
-        </div>
-        <Button />
+    <div class="flex justify-between w-full items-center">
+      <div class="flex flex-row items-center gap-2">
+        <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
+        <div class="text-[20px] font-bold font-lato">More News</div>
       </div>
+      <Button />
+    </div>
     <div class="bg-white w-[100%] flex">
       <!-- First Column -->
       <div
@@ -100,7 +100,6 @@ import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
-
 
 const allNews = ref([]);
 
