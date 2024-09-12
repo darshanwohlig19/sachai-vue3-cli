@@ -36,14 +36,12 @@
         <div class="flex flex-row gap-3">
           <div>
             <div
-              class="bg-[red] flex justify-center items-center w-[8px] h-[100%] rounded-md"
+              class="bg-[#E4404D] flex justify-center items-center w-[5px] h-[100%] rounded-[100px]"
             ></div>
           </div>
           <div class="flex justify-center items-center">
-            <div
-              class="bg-[red] flex justify-center items-center w-[28px] h-[28px] rounded-full"
-            >
-              <i class="mdi mdi-alert-circle-outline text-white"></i>
+            <div class="flex justify-center items-center">
+              <img src="../src/assets/failed.svg" alt="" />
             </div>
           </div>
 
