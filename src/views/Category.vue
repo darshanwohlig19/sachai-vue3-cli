@@ -196,15 +196,15 @@
                   </div>
                 </div>
                 <div class="flex gap-1">
+                  <span class="mdi mdi-share-variant text-[19px]"></span>
                   <span
-                    class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
+                    :class="[
+                      'mdi',
+                      'mdi-bookmark text-[11px] lg:text-[19px] cursor-pointer',
+                      getBookmarkColor(item.isBookmarked),
+                    ]"
+                    @click="addBookmark(item)"
                   >
-                    share
-                  </span>
-                  <span
-                    class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
-                  >
-                    bookmark
                   </span>
                 </div>
               </div>
@@ -229,7 +229,9 @@
                 </a>
               </div>
               <div class="text-[8px] lg:text-[12px] flex gap-3">
-                <span class="text-red-500">Politics</span>
+                <span class="text-red-500 capitalize">{{
+                  item.categories[0].name
+                }}</span>
                 <span>|</span>
                 <span> 4 min read</span>
               </div>
@@ -265,26 +267,79 @@ import Navbarrr from "@/components/Navbarrr.vue";
 
 // Refs for storing news and pagination state
 const news = ref([]);
-const news1 = ref([]);
+// const news1 = ref([]);
 const currentPage = ref(0);
 const rowsPerPage = ref(5);
-
+// const newStatus = ref("disable");
 const route = useRoute();
 const categoryId = route.params.slugOrId;
 
 // Fetching news based on category ID
 const fetchNews = async () => {
-  try {
-    const response = await axios.post(
+  const token = localStorage.getItem("apiDataToken");
+  var response;
+  if (token == null) {
+    response = await axios.post(
       "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
       {
         categoryId,
       }
     );
-    news.value = response.data.slice(0, 3);
-    news1.value = response.data.slice(4, response.data.length - 1);
+  } else {
+    response = await axios.post(
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+      {
+        categoryId,
+      },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+  }
+  try {
+    console.log("category", response);
+    news.value = response.data;
+    console.log("newsssss", news);
+    // console.log(news.value); // news.value = response.data.slice(4, response.data.length - 1);
   } catch (error) {
     console.error("Error fetching news:", error);
+  }
+};
+const getBookmarkColor = (isBookmarked) => {
+  console.log(isBookmarked);
+  return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
+};
+
+// const getBookmarkColor = computed((isBookmarked) =>
+//   isBookmarked ? "text-red-500" : "text-gray-500"
+// );
+
+const addBookmark = async (news) => {
+  const token = localStorage.getItem("apiDataToken");
+  try {
+    console.log(news.isBookmarked);
+    const currentStatus =
+      news.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
+
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${news._id}`,
+      {
+        status: currentStatus,
+      },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+    news.isBookmarked = currentStatus;
+    console.log("bookmark  " + news.isBookmarked);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error adding bookmark:", error);
   }
 };
 
@@ -296,11 +351,12 @@ const truncateText = (text, length) => {
 // Computed property for paginated news
 const paginatedNews = computed(() => {
   const start = currentPage.value * rowsPerPage.value;
-  return news1.value.slice(start, start + rowsPerPage.value);
+  return news.value.slice(start, start + rowsPerPage.value);
 });
 
 // Computed property for total number of records
-const totalRecords = computed(() => news1.value.length);
+// const totalRecords = computed(() => news1.value.length);
+const totalRecords = computed(() => news.value.length);
 
 // Method to handle page change
 const onPageChange = (event) => {

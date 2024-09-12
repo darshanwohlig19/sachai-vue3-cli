@@ -12,13 +12,15 @@
         </a>
       </div>
       <div class="flex gap-4 items-center justify-center">
-        <div class="hidden lg:flex head-navs">
+        <div class="hidden lg:flex head-navs gap-2">
           <!-- <a href="/">Home</a> -->
+          <img src="../assets/Home.svg" alt="" />
           <RouterLink class="nav-items" active-class="active-link" to="/"
             >Home</RouterLink
           >
         </div>
-        <div class="hidden lg:flex head-navs">
+        <div class="hidden lg:flex head-navs gap-2">
+          <img src="../assets/Astrology.svg" alt="" />
           <RouterLink
             class="nav-items"
             active-class="active-link"
@@ -28,7 +30,8 @@
           <!-- Astrology -->
         </div>
 
-        <div class="hidden lg:flex head-navs">
+        <div class="hidden lg:flex head-navs gap-2">
+          <img src="../assets/Bookmark.svg" alt="" />
           <RouterLink
             class="nav-items"
             active-class="active-link"
@@ -265,7 +268,7 @@
         @click="scrollLeft"
       ></i>
       <div
-        class="flex items-center justify-between space-x-3 px-2 flex-1 overflow-x-auto custom-scrollbar lg:overflow-x-hidden whitespace-nowrap"
+        class="flex items-center justify-between space-x-3 px-2 py-0 flex-1 overflow-x-auto custom-scrollbar lg:overflow-x-hidden whitespace-nowrap"
         ref="categoriesContainer"
       >
         <div
@@ -416,7 +419,6 @@ export default {
             localStorage.removeItem("apiDataToken");
             localStorage.setItem("logoutSuccess", "true");
             isLoggedIn.value = false;
-            router.push("/Login");
 
             // Show success toaster notification
             toast.add({
@@ -435,7 +437,7 @@ export default {
         console.error("Error during logout:", error);
         toast.add({
           severity: "error",
-          summary: "Logged out successfully!",
+          summary: "error",
           group: "error",
           life: 2000,
         });

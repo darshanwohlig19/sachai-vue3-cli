@@ -8,31 +8,46 @@
               <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
               <div class="heads1 capitalize">{{ category.name }}</div>
             </div>
-            <div class="see-all">
-              <a :href="`/categories/${category._id}?category=${category.name}`"
-                >See all →</a
-              >
-            </div>
+            <div class="see-all">See all →</div>
           </div>
           <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
-            <div class="md-max:w-[100%] w-[100%]">
+            <div class="md-max:w-[100%] w-[65%]">
               <div class="flex flex-col gap-5">
-                <div class="flex sm:flex-row flex-col gap-3 h-[80%]">
+                <div class="flex sm:flex-row flex-col gap-3 h-[100%]">
                   <div class="md:w-[70%] w-[100%]">
                     <div
                       v-for="news in category.news.slice(0, 1)"
                       :key="news._id"
-                      @click="navigateToCategoryNews(news._id)"
-                      class="cursor-pointer"
                     >
-                      <div class="relative drop-shadow-lg">
-                        <div class="md:w-[45vw] lg:w-[30vw] sm-max:w-[100%]">
+                      <div
+                        class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden"
+                      >
+                        <div class="relative w-full h-[100%]">
                           <img
+                            class="absolute inset-0 object-cover h-full w-full filter blur-sm"
                             :src="news.imgixUrlHighRes || fallbackImage"
-                            class="rounded-[8px] w-full h-[30vh]"
-                            alt
+                            alt="Background"
+                          />
+                          <div
+                            class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+                          ></div>
+                        </div>
+                        <div
+                          class="absolute inset-0 flex flex-col justify-between text-white"
+                        >
+                          <img
+                            class="object-contain h-full w-full"
+                            :src="news.imgixUrlHighRes || fallbackImage"
+                            alt="Centered Image"
                           />
                         </div>
+                      </div>
+                      <!-- <div class="relative drop-shadow-lg">
+                        <img
+                          :src="news.imgixUrlHighRes || fallbackImage"
+                          class="rounded-[8px] w-full h-[30vh]"
+                          alt=""
+                        />
                         <div
                           class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
                         ></div>
@@ -44,7 +59,7 @@
                             {{ news.headline || "No Headline" }}
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                   <div
@@ -53,15 +68,15 @@
                     <div
                       v-for="news in displayedNews(category.news)"
                       :key="news._id"
+                      class=""
                     >
-                      <div
-                        class="flex flex-row gap-2 items-center cursor-pointer"
-                        @click="navigateToCategoryNews(news._id)"
-                      >
+                      <div class="flex flex-row gap-2 items-center">
                         <div class="w-[15px]">
-                          <img src="../assets/Group.png" alt />
+                          <img src="../assets/Group.png" alt="" />
                         </div>
-                        <div class="font-14 one-line">{{ news.headline }}</div>
+                        <div class="font-14 one-line">
+                          {{ news.headline }}
+                        </div>
                       </div>
                       <div class="divider-horizontal mt-2"></div>
                     </div>
@@ -71,8 +86,7 @@
                   <div
                     v-for="(news, index) in getDisplayedNews(category.news)"
                     :key="news._id"
-                    class="flex flex-row gap-2 w-[50%] md:w-[30%] cursor-pointer"
-                    @click="navigateToCategoryNews(news._id)"
+                    class="flex flex-row gap-1 w-[50%] md:w-[30%]"
                   >
                     <div class="multiline-truncate1 font-14 w-[100%]">
                       {{ news.headline }}
@@ -87,25 +101,20 @@
             </div>
             <div class="divider-vertical"></div>
             <div
-              class="md-max:w-[100%] flex flex-col justify-between gap-3 sm:gap-3"
+              class="md-max:w-[100%] w-[35%] flex flex-col justify-between gap-3 sm:gap-3"
             >
-              <div
-                v-for="news in slicedNews"
-                :key="news._id"
-                class="cursor-pointer"
-                @click="navigateToCategoryNews(news._id)"
-              >
+              <div v-for="news in category.news.slice(9, 13)" :key="news._id">
                 <div
                   class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
                 >
-                  <div>
+                  <div class="">
                     <img
                       class="rounded-[6px] h-[47px]"
                       :src="news.imgixUrlHighRes"
-                      alt
+                      alt=""
                     />
                   </div>
-                  <div class="font-14 w-[70%] multiline-truncate1">
+                  <div class="font-14 w-[70%] two-line">
                     {{ news.headline }}
                   </div>
                 </div>
@@ -117,11 +126,9 @@
     </div>
   </div>
 </template>
-
 <script>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
-import { useRouter } from "vue-router";
 
 export default {
   props: {
@@ -130,10 +137,17 @@ export default {
       required: true,
     },
   },
+  // data() {
+  //   return {
+  //     SACHAI_NEWS_URL: "https://news.sachai.io/news/",
+  //     // screenWidth: window.innerWidth,
+  //   };
+  // },
   setup() {
     const categories = ref({});
+    const isMobileOrTablet = ref(window.innerWidth < 768);
     const screenWidth = ref(window.innerWidth);
-    const router = useRouter();
+
     const fetchNewsForCategory = async (categoryId) => {
       try {
         const response = await axios.post(
@@ -146,6 +160,12 @@ export default {
         return [];
       }
     };
+
+    const displayedNews = computed(() => {
+      return (news) => {
+        return screenWidth.value > 1600 ? news.slice(1, 5) : news.slice(1, 4);
+      };
+    });
 
     const fetchCategories = async () => {
       try {
@@ -164,6 +184,7 @@ export default {
 
         for (let category of categoriesData) {
           category.news = await fetchNewsForCategory(category._id);
+          // this.categoryNews = category.news;
         }
 
         categories.value = categoriesData;
@@ -172,34 +193,16 @@ export default {
       }
     };
 
-    const handleResize = () => {
-      screenWidth.value = window.innerWidth;
-    };
-
-    const displayedNews = (news) => {
-      return (
-        screenWidth.value >= 1440 ? news.slice(1, 5) : news.slice(1, 4),
-        screenWidth.value >= 2560 ? news.slice(1, 6) : news.slice(1, 5)
-      );
-    };
-
     const getDisplayedNews = (news) => {
       if (!news || !Array.isArray(news)) {
         return [];
       }
-      return screenWidth.value < 768 ? news.slice(5, 7) : news.slice(5, 9);
+      return isMobileOrTablet.value ? news.slice(5, 7) : news.slice(5, 9);
     };
 
-    const slicedNews = computed(() => {
-      if (screenWidth.value >= 2560) {
-        return categories.value[0]?.news.slice(9, 14) || [];
-      } else {
-        return categories.value[0]?.news.slice(9, 13) || [];
-      }
-    });
-
-    const navigateToCategoryNews = (id) => {
-      router.push(`/news/${id}`);
+    const handleResize = () => {
+      isMobileOrTablet.value = window.innerWidth < 768;
+      screenWidth.value = window.innerWidth;
     };
 
     onMounted(() => {
@@ -215,9 +218,7 @@ export default {
       categories,
       getDisplayedNews,
       displayedNews,
-      slicedNews,
       screenWidth,
-      navigateToCategoryNews,
     };
   },
 };
@@ -227,25 +228,32 @@ export default {
 .one-line {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .multiline-truncate1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 3; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.two-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .divider-vertical {
   height: auto;
-  background-color: #e5e7eb;
+  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
   width: 1px;
 }
 .divider-horizontal {
   height: 1px;
-  background-color: #e5e7eb;
+  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
   width: 100%;
 }
 </style>

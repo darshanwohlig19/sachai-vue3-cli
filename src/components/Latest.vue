@@ -54,7 +54,9 @@
               {{ news.summary }}
             </div>
             <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
-              <span class="text-red-500 bold">Politics</span>
+              <span class="text-red-500 bold capitalize">{{
+                news.categories[0].name
+              }}</span>
               <span>
                 <div class="text-[#676767] text-xs">
                   | {{ formatPublishTime(news.publishTime) }}
@@ -97,6 +99,7 @@ const fetchBlogs = async () => {
       ...news,
       bookmarked: localStorage.getItem(`bookmark_${news._id}`) === "Enabled",
     }));
+    console.log("latest", response.data[0].categories[0].name);
   } catch (error) {
     console.error("Error fetching blogs:", error);
   }
