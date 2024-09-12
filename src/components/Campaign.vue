@@ -5,7 +5,7 @@
         <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
         <div class="heads">Campaign</div>
       </div>
-      <div class="see-all">See all →</div>
+      <Button />
     </div>
     <div class="w-[100%] flex flex-col lg:flex-row gap-2 sm:gap-4 mt-3">
       <div class="w-[100%] sm:w-[100%] gap-4 flex justify-between">
@@ -67,8 +67,11 @@ import { ref } from "vue";
 import axios from "axios";
 import { computed, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
-
+import Button from "./ViewAll.vue";
 export default {
+  components: {
+    Button,
+  },
   setup() {
     const screenWidth = ref(window.innerWidth);
     const campaigns = ref([]);
@@ -124,6 +127,7 @@ export default {
       campaigns,
       campaigns1,
       navigateToCampingNews,
+      Button,
     };
   },
 };

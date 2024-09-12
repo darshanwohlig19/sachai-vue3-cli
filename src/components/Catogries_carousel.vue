@@ -25,9 +25,8 @@
                   </div>
                   <a
                     :href="`/categories/${slotProps.data._id}?category=${slotProps.data.name}`"
-                    class="see-all"
                   >
-                    See all →
+                    <Button />
                   </a>
                 </div>
               </template>
@@ -69,6 +68,7 @@ import "primevue/resources/themes/saga-blue/theme.css"; // Theme CSS
 import "primevue/resources/primevue.min.css"; // Core CSS
 import "primeicons/primeicons.css"; // Icons CSS
 import { useRouter } from "vue-router";
+import Button from "./ViewAll.vue";
 
 const categories = ref([]);
 const router = useRouter(); // Use Vue Router
