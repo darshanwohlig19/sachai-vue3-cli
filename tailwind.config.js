@@ -6,6 +6,7 @@ module.exports = {
       fontFamily: {
         lato: ["Lato", "sans-serif"],
         sourcePro: ["'Source Serif Pro Semibold'", "serif"],
+        sourceSerifPro: ["Source Serif Pro"],
       },
       fontSize: {
         "16px": "16px",
@@ -15,6 +16,11 @@ module.exports = {
         "light-gray": "#676767",
         "custom-gray": "#f7f7f4",
         "Old-Burgundy": "#3E3232",
+        Secondary: "#1E0627",
+        "neon-pink": "#FF0053",
+        pink: {
+          10: "#FF0053",
+        },
         gray: {
           5: "#878787",
           10: "#5B5B5B",

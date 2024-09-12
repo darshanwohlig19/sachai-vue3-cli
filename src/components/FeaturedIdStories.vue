@@ -1,8 +1,10 @@
 <template>
-  <div class="bg-white p-3 rounded-lg shadow-md max-w-2xl mx-auto mt-[4%]">
-    <h2 class="text-2xl font-bold mb-4 border-l-4 border-red-500 pl-2">
+  <div class="bg-white p-3 rounded-lg shadow-md mx-auto">
+    <span
+      class="text-2xl font-bold mb-4 border-l-4 text-[#1E0627] border-red-500 pl-2"
+    >
       Featured News
-    </h2>
+    </span>
     <div class="space-y-4">
       <div
         v-for="(item, index) in newsItems"
@@ -93,7 +95,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchBlogs();
+    // this.fetchBlogs();
     console.log("Categories prop:", this.categories);
   },
 };

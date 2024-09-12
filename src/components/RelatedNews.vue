@@ -1,63 +1,71 @@
 <template>
-  <section class="mt-3">
-    <div>
-      <div class="flex justify-between w-full items-center mb-3">
-        <div class="text-[20px] font-bold font-lato">Related News</div>
-        <div class="text-[16px] text-[#FF0053]">See all &nbsp;→</div>
+  <div class="p-3 mt-3">
+    <div class="flex justify-between w-full items-center">
+      <span
+        class="text-[18px] font-bold mb-3 border-l-4 border-red-500 text-[#1E0627] pl-2"
+      >
+        Related News
+      </span>
+      <div class="text-[16px] text-[#FF0053] bg-[#fff0f5]">
+        View all &nbsp;→
       </div>
-      <div class="flex flex-row gap-3 justify-between cursor-pointer">
-        <div
-          v-for="news in slicedData"
-          :key="news._id"
-          class="w-[33%] md-max:w-full"
-        >
-          <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
-            <div class="rounded-[10px]">
-              <img
-                :src="news.imgixUrlHighRes"
-                class="relative z-10 h-[156px] w-full rounded-[10px] object-cover"
-                alt=""
-              />
+    </div>
+    <div
+      class="flex flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
+    >
+      <div
+        v-for="news in slicedData"
+        :key="news._id"
+        class="w-[33%] md-max:w-full"
+      >
+        <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
+          <div class="rounded-[10px]">
+            <img
+              :src="news.imgixUrlHighRes"
+              class="relative z-10 h-[170px] w-full rounded-[10px] object-fill"
+              alt=""
+            />
+          </div>
+          <div class="flex justify-between items-center p-3">
+            <div class="flex gap-1 text-[#676767] text-xs font-medium">
+              <div>{{ news.source }}</div>
+              <div>| {{ formatPublishTime(news.publishTime) }}</div>
             </div>
-            <div class="flex justify-between items-center p-3">
-              <div class="flex gap-1 text-[#676767] text-xs">
-                <div>{{ news.source }}</div>
-                <div>| {{ formatPublishTime(news.publishTime) }}</div>
-              </div>
-              <div class="flex gap-1">
-                <span class="mdi mdi-share-variant text-[19px]"></span>
-                <span
-                  :class="[
-                    'mdi',
-                    news.bookmarked
-                      ? 'mdi-bookmark text-red-500'
-                      : 'mdi-bookmark-outline text-[21px]',
-                  ]"
-                  class="cursor-pointer"
-                  @click="addBookmark(news._id)"
-                ></span>
-              </div>
+            <div class="flex gap-1">
+              <span class="mdi mdi-share-variant text-[19px]"></span>
+              <span
+                :class="[
+                  'mdi',
+                  news.bookmarked
+                    ? 'mdi-bookmark text-red-500'
+                    : 'mdi-bookmark-outline text-[21px]',
+                ]"
+                class="cursor-pointer"
+                @click="addBookmark(news._id)"
+              ></span>
             </div>
-            <div
-              class="pl-3 pr-3 text-[16px] font-semibold"
-              @click="navigateToNewsDetail(news._id)"
+          </div>
+          <div
+            class="pl-3 pr-3 text-[16px] font-semibold"
+            @click="navigateToNewsDetail(news._id)"
+          >
+            <a
+              class="hover:text-current font-semibold multiline-truncate1 text-[#1E0627]"
             >
-              <a class="hover:text-current font-16 multiline-truncate1">
-                {{ news.headline }}
-              </a>
-            </div>
-            <div class="pl-3 pr-3 para multiline-truncate">
-              {{ news.summary }}
-            </div>
-            <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
-              <span class="text-red-500 bold">Politics</span>
-              <span>| 4 min read</span>
-            </div>
+              {{ news?.headline }}
+            </a>
+          </div>
+          <div class="pl-3 pr-3 para multiline-truncate text-[#878787]">
+            {{ news?.summary }}
+          </div>
+          <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
+            <span class="text-neon-pink bold">{{ news?.source }}</span>
+            <span>| 4 min read</span>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup>
