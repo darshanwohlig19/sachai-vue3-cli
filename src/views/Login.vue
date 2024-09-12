@@ -1,259 +1,298 @@
 <template>
-  <!-- Desktop carousel -->
-  <div class="flex justify-center items-center p-[100px] loginnnn">
-    <div class="w-[910px] h-[512px] flex bg-white rounded-[20px]">
-      <div class="w-[50%] p-[5%]">
-        <div class="flex justify-center mt-5">
-          <img
-            src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
-            class="w-[128px] h-[33px] object-cover"
-          />
-        </div>
-        <div id="recaptcha-container" class="justify-center flex"></div>
-
-        <div class="mt-20">
-          <!-- Conditionally render based on showPhoneVerification -->
-          <div v-if="!showPhoneVerification">
-            <div class="text-[32px] font-lato">Hello !</div>
-            <div class="mt-2 text-[18px] font-lato">Login to your account</div>
-
-            <!-- Login Options -->
-            <div class="flex flex-row gap-4 mt-6 w-[100%]">
-              <div
-                class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
-                @click="loginWithGoogle"
-              >
-                <img
-                  src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
-                  class="text-[34px] cursor-pointer"
-                />
-              </div>
-              <div
-                class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
-                @click="signInWithApple"
-              >
-                <img
-                  src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
-                  class="text-[34px] cursor-pointer"
-                />
-              </div>
-              <div
-                class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
-                @click="togglePhoneVerification"
-              >
-                <img
-                  src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
-                  class="text-[34px] cursor-pointer"
-                />
-              </div>
-            </div>
-
-            <div
-              class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
-            >
-              Continue without login
-            </div>
+  <div>
+    <!-- Desktop carousel -->
+    <div class="flex justify-center items-center p-[100px] loginnnn">
+      <div class="w-[910px] h-[512px] flex bg-white rounded-[20px]">
+        <div class="w-[50%] p-[5%]">
+          <div class="flex justify-center mt-5">
+            <img
+              src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
+              class="w-[128px] h-[33px] object-cover"
+            />
           </div>
+          <div id="recaptcha-container" class="justify-center flex"></div>
 
-          <!-- Phone Number Verification UI -->
-          <div v-else>
-            <div v-if="!verificationCodeTab">
-              <input
-                v-model="phoneNumber"
-                type="text"
-                placeholder="Enter your phone number"
-                class="border p-2 mt-2 w-full"
-              />
-              <button
-                @click="handleSendVerificationCode"
-                class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
-              >
-                Send Verification Code
-              </button>
-            </div>
-            <div v-else>
-              <div class="card flex justify-center">
-                <div class="">
-                  <InputOtp
-                    v-model="verificationCode"
-                    class="p-2 mt-2 w-full h-[50%]"
-                    mask
-                  />
-                </div>
+          <div class="mt-20">
+            <!-- Conditionally render based on showPhoneVerification -->
+            <div v-if="!showPhoneVerification">
+              <div class="text-[32px] font-lato">Hello !</div>
+              <div class="mt-2 text-[18px] font-lato">
+                Login to your account
               </div>
-              <button
-                @click="verifyCode"
-                class="bg-[#1E0627] text-white p-2 rounded mt-5 w-full h-[50%]"
-              >
-                Verify Code
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="w-[50%]">
-        <Carousel
-          :value="desktopProducts"
-          :numVisible="1"
-          :numScroll="1"
-          class="carousel login-carousal"
-          showIndicators
-          circular
-          :responsiveOptions="responsiveOptions"
-          :autoplayInterval="2000"
-        >
-          <template #item="slotProps">
-            <div>
-              <div class="rounded-r-[20px]">
-                <div class="relative mx-auto h-[512px] rounded-r-[20px]">
+
+              <!-- Login Options -->
+              <div class="flex flex-row gap-4 mt-6 w-[100%]">
+                <div
+                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
+                  @click="loginWithGoogle"
+                >
                   <img
-                    :src="
-                      slotProps.data.image ||
-                      'https://via.placeholder.com/910x512?text=No+Image'
-                    "
-                    :severity="getSeverity(slotProps.data.inventoryStatus)"
-                    class="w-[100%] h-[100%] object-fill"
+                    src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
+                    class="text-[34px] cursor-pointer"
+                  />
+                </div>
+                <div
+                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
+                  @click="signInWithApple"
+                >
+                  <img
+                    src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
+                    class="text-[34px] cursor-pointer"
+                  />
+                </div>
+                <div
+                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
+                  @click="togglePhoneVerification('Login/phone')"
+                >
+                  <img
+                    src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
+                    class="text-[34px] cursor-pointer"
                   />
                 </div>
               </div>
-            </div>
-          </template>
-        </Carousel>
-      </div>
-    </div>
-  </div>
 
-  <!-- Mobile carousel with login on top -->
-  <div class="relative h-[100%] w-full mobile">
-    <!-- Login Credentials -->
-    <div
-      class="absolute inset-0 flex items-center justify-center p-4 z-10 bg-opacity-75"
-    >
-      <div class="w-full max-w-[360px] p-4 bg-white rounded-lg shadow-lg">
-        <div class="flex justify-center mt-5">
-          <img
-            src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
-            class="w-[128px] h-[33px] object-cover"
-          />
-        </div>
-        <div id="recaptcha-container" class="justify-center flex"></div>
-
-        <div class="mt-2">
-          <!-- Conditionally render based on showPhoneVerification -->
-          <div v-if="!showPhoneVerification">
-            <div class="text-[32px] font-lato text-center">Hello !</div>
-            <div class="mt-2 text-[18px] font-lato text-center">
-              Login to your account
-            </div>
-
-            <!-- Login Options -->
-            <div class="flex flex-row gap-4 mt-6 w-full justify-center">
               <div
-                class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
-                @click="loginWithGoogle"
+                class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
               >
-                <img
-                  src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
-                  class="text-[34px] cursor-pointer"
-                />
-              </div>
-              <div
-                class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
-                @click="signInWithApple"
-              >
-                <img
-                  src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
-                  class="text-[34px] cursor-pointer"
-                />
-              </div>
-              <div
-                class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
-                @click="togglePhoneVerification"
-              >
-                <img
-                  src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
-                  class="text-[34px] cursor-pointer"
-                />
+                <router-link to="/">Continue without login</router-link>
               </div>
             </div>
 
-            <div
-              class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
-            >
-              Continue without login
-            </div>
-          </div>
-
-          <!-- Phone Number Verification UI -->
-          <div v-else>
-            <div v-if="!verificationCodeTab">
-              <input
-                v-model="phoneNumber"
-                type="text"
-                placeholder="Enter your phone number"
-                class="border p-2 mt-2 w-full"
-              />
-              <button
-                @click="handleSendVerificationCode"
-                class="bg-[#1E0627] text-white p-2 rounded mt-2 w-full"
-              >
-                Send Verification Code
-              </button>
-            </div>
+            <!-- Phone Number Verification UI -->
             <div v-else>
-              <div class="card flex justify-center">
-                <div class="">
-                  <InputOtp
-                    v-model="verificationCode"
-                    class="p-2 mt-2 w-full h-[50%]"
-                    mask
+              <div
+                class="text-center text-[#333333] font-lato font-[700] text-[24px]"
+              >
+                Phone Verification
+              </div>
+
+              <div v-if="!verificationCodeTab">
+                <div class="flex justify-center mt-4">
+                  <input
+                    v-model="phoneNumber"
+                    type="text"
+                    placeholder="Phone"
+                    class="border p-2 w-[304px] rounded-[4px]"
+                  />
+                </div>
+                <div class="flex justify-center">
+                  <button
+                    @click="handleSendVerificationCode"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
+                  >
+                    Send Verification Code
+                  </button>
+                </div>
+                <div
+                  @click="showPhoneVerification = false"
+                  class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                >
+                  Want to select other login method?
+                </div>
+              </div>
+              <div v-else>
+                <div class="card flex justify-center">
+                  <div class>
+                    <InputOtp
+                      v-model="value"
+                      :length="6"
+                      integerOnly
+                      class="p-2 mt-4 rounded-[4px]"
+                    />
+                  </div>
+                </div>
+                <div class="flex justify-center">
+                  <button
+                    @click="verifyCode"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
+                  >
+                    Verify OTP
+                  </button>
+                </div>
+                <div class="flex justify-between mt-2">
+                  <div
+                    class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                  >
+                    Edit Phone Number?
+                  </div>
+                  <div
+                    class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                  >
+                    Resend OTP&nbsp;
+                    <span
+                      class="text-center font-lato text-[#BBBBBB] mt-2 cursor-pointer"
+                      >After 30 sec</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-[50%] login">
+          <Carousel
+            :value="desktopProducts"
+            :numVisible="1"
+            :numScroll="1"
+            class="carousel login-carousal"
+            showIndicators
+            circular
+            :responsiveOptions="responsiveOptions"
+            :autoplayInterval="2000"
+          >
+            <template #item="slotProps">
+              <div>
+                <div class="rounded-r-[20px]">
+                  <div class="relative mx-auto h-[512px] rounded-r-[20px]">
+                    <img
+                      :src="
+                        slotProps.data.image ||
+                        'https://via.placeholder.com/910x512?text=No+Image'
+                      "
+                      :severity="getSeverity(slotProps.data.inventoryStatus)"
+                      class="w-[100%] h-[100%] object-fill"
+                    />
+                  </div>
+                </div>
+              </div>
+            </template>
+          </Carousel>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile carousel with login on top -->
+    <div class="relative h-[100%] w-full mobile">
+      <!-- Login Credentials -->
+      <div
+        class="absolute inset-0 flex items-center justify-center p-4 z-10 bg-opacity-75"
+      >
+        <div class="w-full max-w-[360px] p-4 bg-white rounded-lg shadow-lg">
+          <div class="flex justify-center mt-5">
+            <img
+              src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
+              class="w-[128px] h-[33px] object-cover"
+            />
+          </div>
+          <div id="recaptcha-container" class="justify-center flex"></div>
+
+          <div class="mt-2">
+            <!-- Conditionally render based on showPhoneVerification -->
+            <div v-if="!showPhoneVerification">
+              <div class="text-[32px] font-lato text-center">Hello !</div>
+              <div class="mt-2 text-[18px] font-lato text-center">
+                Login to your account
+              </div>
+
+              <!-- Login Options -->
+              <div class="flex flex-row gap-4 mt-6 w-full justify-center">
+                <div
+                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
+                  @click="loginWithGoogle"
+                >
+                  <img
+                    src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
+                    class="text-[34px] cursor-pointer"
+                  />
+                </div>
+                <div
+                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
+                  @click="signInWithApple"
+                >
+                  <img
+                    src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
+                    class="text-[34px] cursor-pointer"
+                  />
+                </div>
+                <div
+                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
+                  @click="togglePhoneVerification"
+                >
+                  <img
+                    src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
+                    class="text-[34px] cursor-pointer"
                   />
                 </div>
               </div>
-              <button
-                @click="verifyCode"
-                class="bg-[#1E0627] text-white p-2 rounded mt-5 w-full h-[50%]"
+
+              <div
+                class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
               >
-                Verify Code
-              </button>
+                Continue without login
+              </div>
+            </div>
+
+            <!-- Phone Number Verification UI -->
+            <div v-else>
+              <div v-if="!verificationCodeTab">
+                <input
+                  v-model="phoneNumber"
+                  type="text"
+                  placeholder="Enter your phone number"
+                  class="border p-2 mt-4 w-full"
+                />
+                <button
+                  @click="handleSendVerificationCode"
+                  class="bg-[#1E0627] text-white p-2 rounded mt-4 w-full"
+                >
+                  Send Verification Code
+                </button>
+              </div>
+              <div v-else>
+                <div class="card flex justify-center">
+                  <div class>
+                    <InputOtp
+                      v-model="verificationCode"
+                      class="p-2 mt-2 w-full h-[50%]"
+                      mask
+                    />
+                  </div>
+                </div>
+                <button
+                  @click="verifyCode"
+                  class="bg-[#1E0627] text-white p-2 rounded mt-5 w-full h-[50%]"
+                >
+                  Verify Code
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Mobile carousel -->
-    <Carousel
-      :value="mobileProducts"
-      :autoplayInterval="2000"
-      :numVisible="1"
-      :numScroll="1"
-      class="carousel login-carousal"
-      showIndicators
-      circular
-      :responsiveOptions="responsiveOptions"
-    >
-      <template #item="slotProps1">
-        <div>
-          <div class="rounded-r-[20px]">
-            <div class="relative mx-auto h-full w-full">
-              <img
-                :src="
-                  slotProps1.data.image ||
-                  'https://via.placeholder.com/910x512?text=No+Image'
-                "
-                :severity="getSeverity(slotProps1.data.inventoryStatus)"
-                class="w-[100%] h-[100%] object-fill"
-              />
+      <!-- Mobile carousel -->
+      <Carousel
+        :value="mobileProducts"
+        :autoplayInterval="2000"
+        :numVisible="1"
+        :numScroll="1"
+        class="carousel login-carousal"
+        showIndicators
+        circular
+        :responsiveOptions="responsiveOptions"
+      >
+        <template #item="slotProps1">
+          <div>
+            <div class="rounded-r-[20px]">
+              <div class="relative mx-auto h-full w-full">
+                <img
+                  :src="
+                    slotProps1.data.image ||
+                    'https://via.placeholder.com/910x512?text=No+Image'
+                  "
+                  :severity="getSeverity(slotProps1.data.inventoryStatus)"
+                  class="w-[100%] h-[100%] object-fill"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </template>
-    </Carousel>
+        </template>
+      </Carousel>
+    </div>
   </div>
 </template>
 
 <script setup>
+import InputOtp from "primevue/inputotp";
 import { ref, onMounted } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
@@ -263,11 +302,12 @@ import { MobileService } from "../assets/service/MobileService";
 import {
   signInWithPopup,
   OAuthProvider,
-  RecaptchaVerifier,
+  // RecaptchaVerifier,
   signInWithPhoneNumber,
   getAuth,
   GoogleAuthProvider,
 } from "firebase/auth";
+
 // Reactive variables for desktop and mobile products
 const router = useRouter();
 const toast = useToast();
@@ -340,23 +380,23 @@ onMounted(async () => {
     // You might also set a state to show an error message or a default view
   }
 });
-const captcha = async () => {
-  console.log("ReCAPTCHA solved:");
-  const auth = getAuth();
+// const captcha = async () => {
+//   console.log("ReCAPTCHA solved:");
+//   const auth = getAuth();
 
-  appVerifier.value = window.recaptchaVerifier = new RecaptchaVerifier(
-    auth,
-    "recaptcha-container",
-    {
-      size: "invisible",
-      callback: (response) => {
-        console.log(response);
-        showPhoneVerification.value = true;
-      },
-    }
-  );
-  sendVerificationCode();
-};
+//   appVerifier.value = window.recaptchaVerifier = new RecaptchaVerifier(
+//     auth,
+//     "recaptcha-container",
+//     {
+//       size: "invisible",
+//       callback: (response) => {
+//         console.log(response);
+//         showPhoneVerification.value = true;
+//       },
+//     }
+//   );
+//   sendVerificationCode();
+// };
 const loginWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider();
@@ -393,7 +433,7 @@ const loginWithGoogle = async () => {
           summary: "Logged in successfully!",
           summary2: "Welcome back!",
           group: "success",
-          life: 2000,
+          life: 3000,
         });
         // Wait for navigation to complete
         setTimeout(() => {
@@ -515,7 +555,7 @@ const sendUserDataToApi = async (name, email, id) => {
 };
 
 const togglePhoneVerification = () => {
-  captcha();
+  // captcha();
   showPhoneVerification.value = true;
 };
 
@@ -557,7 +597,7 @@ const verifyCode = async () => {
   width: 25px !important;
 }
 
-.p-carousel-content {
+.login .p-carousel-content {
   border-radius: 0 20px 20px 0 !important;
 }
 

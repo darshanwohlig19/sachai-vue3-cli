@@ -2,9 +2,8 @@
   <div class="home">
     <Navbarrr />
     <div class="mx-[30px]">
-      <FeaturedNews />
-
       <Trending />
+      <FeaturedNews />
 
       <Latest />
 
