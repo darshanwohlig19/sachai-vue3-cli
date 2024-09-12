@@ -2,7 +2,7 @@
   <div>
     <!-- Desktop carousel -->
     <div class="flex justify-center items-center p-[100px] loginnnn">
-      <div class="w-[910px] h-[512px] flex bg-white rounded-[20px]">
+      <div class="w-[750px] h-[512px] flex bg-white rounded-[20px] main-login">
         <div class="w-[50%] p-[5%]">
           <div class="flex justify-center mt-5">
             <img
@@ -15,15 +15,19 @@
           <div class="mt-20">
             <!-- Conditionally render based on showPhoneVerification -->
             <div v-if="!showPhoneVerification">
-              <div class="text-[32px] font-lato">Hello !</div>
-              <div class="mt-2 text-[18px] font-lato">
+              <div class="text-[32px] font-bold text-[#333333] font-lato">
+                Hello !
+              </div>
+              <div
+                class="mt-2 font-normal text-[18px] text-[#1E0627] font-lato"
+              >
                 Login to your account
               </div>
 
               <!-- Login Options -->
               <div class="flex flex-row gap-4 mt-6 w-[100%]">
                 <div
-                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
+                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[3px]"
                   @click="loginWithGoogle"
                 >
                   <img
@@ -32,7 +36,7 @@
                   />
                 </div>
                 <div
-                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
+                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[3px]"
                   @click="signInWithApple"
                 >
                   <img
@@ -41,7 +45,7 @@
                   />
                 </div>
                 <div
-                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
+                  class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[3px]"
                   @click="togglePhoneVerification('Login/phone')"
                 >
                   <img
@@ -52,7 +56,7 @@
               </div>
 
               <div
-                class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
+                class="text-center font-inter mt-10 text-[18px] font-medium text-[#FF0053] cursor-pointer"
               >
                 <router-link to="/">Continue without login</router-link>
               </div>
@@ -68,6 +72,13 @@
 
               <div v-if="!verificationCodeTab">
                 <div class="flex justify-center mt-4">
+                  <CountryCode
+                    v-model="selectedCountryCode"
+                    class="border p-2 rounded-[4px]"
+                    :default-country="'IN'"
+                    :show-flags="true"
+                    placeholder="Select Country Code"
+                  />
                   <input
                     v-model="phoneNumber"
                     type="text"
@@ -92,9 +103,9 @@
               </div>
               <div v-else>
                 <div class="card flex justify-center">
-                  <div class>
+                  <div>
                     <InputOtp
-                      v-model="value"
+                      v-model="verificationCode"
                       :length="6"
                       integerOnly
                       class="p-2 mt-4 rounded-[4px]"
@@ -109,18 +120,19 @@
                     Verify OTP
                   </button>
                 </div>
-                <div class="flex justify-between mt-2">
+                <div class="flex justify-between">
                   <div
-                    class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                    class="text-center font-lato text-[#5E5E5E] text-[14px] mt-2 cursor-pointer"
+                    @click="verificationCodeTab = false"
                   >
                     Edit Phone Number?
                   </div>
                   <div
-                    class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                    class="text-center text-[14px] font-lato text-[#5E5E5E] mt-2 cursor-pointer"
                   >
                     Resend OTP&nbsp;
                     <span
-                      class="text-center font-lato text-[#BBBBBB] mt-2 cursor-pointer"
+                      class="text-center text-[14px] font-lato text-[#BBBBBB] mt-2 cursor-pointer"
                       >After 30 sec</span
                     >
                   </div>
@@ -140,16 +152,16 @@
             :responsiveOptions="responsiveOptions"
             :autoplayInterval="2000"
           >
-            <template #item="slotProps">
+            <template v-slot:item="{ data }">
               <div>
                 <div class="rounded-r-[20px]">
                   <div class="relative mx-auto h-[512px] rounded-r-[20px]">
                     <img
                       :src="
-                        slotProps.data.image ||
+                        data.image ||
                         'https://via.placeholder.com/910x512?text=No+Image'
                       "
-                      :severity="getSeverity(slotProps.data.inventoryStatus)"
+                      :severity="getSeverity(data.inventoryStatus)"
                       class="w-[100%] h-[100%] object-fill"
                     />
                   </div>
@@ -205,7 +217,7 @@
                 </div>
                 <div
                   class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
-                  @click="togglePhoneVerification"
+                  @click="togglePhoneVerification('Login/phone')"
                 >
                   <img
                     src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
@@ -215,75 +227,109 @@
               </div>
 
               <div
-                class="text-center mt-10 text-[18px] text-[#FF0053] cursor-pointer"
+                class="text-center text-[#FF0053] cursor-pointer mt-10 font-lato text-[18px]"
               >
-                Continue without login
+                <router-link to="/">Continue without login</router-link>
               </div>
             </div>
 
             <!-- Phone Number Verification UI -->
             <div v-else>
+              <div
+                class="text-center text-[#333333] font-lato font-[700] text-[24px]"
+              >
+                Phone Verification
+              </div>
+
               <div v-if="!verificationCodeTab">
-                <input
-                  v-model="phoneNumber"
-                  type="text"
-                  placeholder="Enter your phone number"
-                  class="border p-2 mt-4 w-full"
-                />
-                <button
-                  @click="handleSendVerificationCode"
-                  class="bg-[#1E0627] text-white p-2 rounded mt-4 w-full"
+                <div class="flex justify-center mt-4">
+                  <CountryCode
+                    v-model="selectedCountryCode"
+                    class="border p-2 rounded-[4px]"
+                    :default-country="'IN'"
+                    :show-flags="true"
+                    placeholder="Select Country Code"
+                  />
+                  <input
+                    v-model="phoneNumber"
+                    type="text"
+                    placeholder="Phone"
+                    class="border p-2 w-[304px] rounded-[4px]"
+                  />
+                </div>
+                <div class="flex justify-center mt-4">
+                  <button
+                    @click="handleSendVerificationCode"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] w-full"
+                  >
+                    Send Verification Code
+                  </button>
+                </div>
+                <div
+                  class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                  @click="showPhoneVerification = false"
                 >
-                  Send Verification Code
-                </button>
+                  Want to select other login method?
+                </div>
               </div>
               <div v-else>
                 <div class="card flex justify-center">
-                  <div class>
+                  <div>
                     <InputOtp
                       v-model="verificationCode"
-                      class="p-2 mt-2 w-full h-[50%]"
-                      mask
+                      :length="6"
+                      integerOnly
+                      class="p-2 mt-4 rounded-[4px]"
                     />
                   </div>
                 </div>
-                <button
-                  @click="verifyCode"
-                  class="bg-[#1E0627] text-white p-2 rounded mt-5 w-full h-[50%]"
-                >
-                  Verify Code
-                </button>
+                <div class="flex justify-center mt-4">
+                  <button
+                    @click="verifyCode"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] w-full"
+                  >
+                    Verify OTP
+                  </button>
+                </div>
+                <div class="flex justify-between mt-2">
+                  <div
+                    class="text-center font-lato text-[#5E5E5E] text-[14px] cursor-pointer"
+                    @click="verificationCodeTab = false"
+                  >
+                    Edit Phone Number?
+                  </div>
+                  <div class="text-center text-[#5E5E5E] text-[14px]">
+                    Resend OTP&nbsp;
+                    <span class="text-[#BBBBBB]">After 30 sec</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Mobile carousel -->
+      <!-- Carousel for mobile view -->
       <Carousel
         :value="mobileProducts"
-        :autoplayInterval="2000"
         :numVisible="1"
         :numScroll="1"
-        class="carousel login-carousal"
+        class="carousel mobile-carousel"
         showIndicators
         circular
         :responsiveOptions="responsiveOptions"
+        :autoplayInterval="2000"
       >
-        <template #item="slotProps1">
-          <div>
-            <div class="rounded-r-[20px]">
-              <div class="relative mx-auto h-full w-full">
-                <img
-                  :src="
-                    slotProps1.data.image ||
-                    'https://via.placeholder.com/910x512?text=No+Image'
-                  "
-                  :severity="getSeverity(slotProps1.data.inventoryStatus)"
-                  class="w-[100%] h-[100%] object-fill"
-                />
-              </div>
-            </div>
+        <template v-slot:item="{ data }">
+          <div class="w-full">
+            <img
+              :src="
+                data.image ||
+                'https://via.placeholder.com/910x512?text=No+Image'
+              "
+              :severity="getSeverity(data.inventoryStatus)"
+              class="w-full object-cover"
+            />
           </div>
         </template>
       </Carousel>
@@ -302,7 +348,7 @@ import { MobileService } from "../assets/service/MobileService";
 import {
   signInWithPopup,
   OAuthProvider,
-  // RecaptchaVerifier,
+  RecaptchaVerifier,
   signInWithPhoneNumber,
   getAuth,
   GoogleAuthProvider,
@@ -311,7 +357,7 @@ import {
 // Reactive variables for desktop and mobile products
 const router = useRouter();
 const toast = useToast();
-
+const selectedCountryCode = ref("IN"); // Default to India (IN)
 const phoneNumber = ref("");
 const verificationCode = ref("");
 const showPhoneVerification = ref(false);
@@ -380,23 +426,23 @@ onMounted(async () => {
     // You might also set a state to show an error message or a default view
   }
 });
-// const captcha = async () => {
-//   console.log("ReCAPTCHA solved:");
-//   const auth = getAuth();
+const captcha = async () => {
+  console.log("ReCAPTCHA solved:");
+  const auth = getAuth();
 
-//   appVerifier.value = window.recaptchaVerifier = new RecaptchaVerifier(
-//     auth,
-//     "recaptcha-container",
-//     {
-//       size: "invisible",
-//       callback: (response) => {
-//         console.log(response);
-//         showPhoneVerification.value = true;
-//       },
-//     }
-//   );
-//   sendVerificationCode();
-// };
+  appVerifier.value = window.recaptchaVerifier = new RecaptchaVerifier(
+    auth,
+    "recaptcha-container",
+    {
+      size: "invisible",
+      callback: (response) => {
+        console.log(response);
+        showPhoneVerification.value = true;
+      },
+    }
+  );
+  sendVerificationCode();
+};
 const loginWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider();
@@ -456,8 +502,9 @@ const loginWithGoogle = async () => {
     console.error("Apple login failed:", error);
     toast.add({
       severity: "error",
-      summary: "Login Failed",
-      detail: "There was an error logging in with Apple. Please try again.",
+      summary: "Login Failed!",
+      summary2: "Incorrect username or password. Please try again.",
+      group: "error",
       life: 3000,
     });
   }
@@ -492,8 +539,9 @@ const signInWithApple = async () => {
     // Show a success toast
     toast.add({
       severity: "success",
-      summary: "Successfully Logged In",
-      detail: "Successfully logged in with Apple!",
+      summary: "Logged in successfully!",
+      summary2: "Welcome back!",
+      group: "success",
       life: 3000,
     });
 
@@ -508,8 +556,9 @@ const signInWithApple = async () => {
     // Show an error toast
     toast.add({
       severity: "error",
-      summary: "Login Failed",
-      detail: "There was an error logging in with Apple. Please try again.",
+      summary: "Login Failed!",
+      summary2: "Incorrect username or password. Please try again.",
+      group: "error",
       life: 3000,
     });
   }
@@ -555,7 +604,7 @@ const sendUserDataToApi = async (name, email, id) => {
 };
 
 const togglePhoneVerification = () => {
-  // captcha();
+  captcha();
   showPhoneVerification.value = true;
 };
 
@@ -592,6 +641,9 @@ const verifyCode = async () => {
 };
 </script>
 <style>
+.main-login {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+}
 .login-carousal .p-highlight {
   background-color: red !important;
   width: 25px !important;
