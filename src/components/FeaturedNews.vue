@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <div class="border-1 below-sm:hidden between-sm-md:hidden md:hidden"></div>
+    <div class="border-1 lg:flex hidden"></div>
     <div class="w-[100%] lg:w-[35%] flex flex-col justify-between">
       <div
         v-for="(item, index) in blogs2"

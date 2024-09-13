@@ -50,7 +50,7 @@ module.exports = {
         sm: "576px",
         "sm-max": { max: "576px" },
         "sm-425": { max: "425px" },
-        md: "768px",
+        md: "769px",
         "md-max": { max: "768px" },
         lg: "992px",
         screens: {
