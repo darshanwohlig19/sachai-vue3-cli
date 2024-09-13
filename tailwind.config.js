@@ -7,6 +7,7 @@ module.exports = {
         lato: ["Lato", "sans-serif"],
         sourcePro: ["'Source Serif Pro Semibold'", "serif"],
         sourceSerifPro: ["Source Serif Pro"],
+        "source-serif": ["Source Serif Pro", "serif"],
       },
       fontSize: {
         "16px": "16px",
