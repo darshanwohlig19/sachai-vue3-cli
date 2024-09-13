@@ -6,7 +6,9 @@
         <div class="text-[20px] font-bold font-lato">More News</div>
       </div>
       <div>
-        <Button />
+        <a href="/MoreNews">
+          <Button />
+        </a>
       </div>
     </div>
     <div class="bg-white w-[100%] flex">
@@ -178,5 +180,12 @@ onMounted(fetchNews);
   overflow: hidden;
   text-overflow: ellipsis;
   color: #1e0627;
+}
+.multiline-truncate1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
