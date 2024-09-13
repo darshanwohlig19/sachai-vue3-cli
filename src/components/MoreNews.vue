@@ -6,9 +6,7 @@
         <div class="text-[20px] font-bold font-lato">More News</div>
       </div>
       <div>
-        <router-link to="/MoreNews">
-          <Button />
-        </router-link>
+        <Button />
       </div>
     </div>
     <div class="bg-white w-[100%] flex">
