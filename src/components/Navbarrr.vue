@@ -398,12 +398,8 @@ export default {
         console.error("Error during logout:", error);
         toast.add({
           severity: "error",
-
-          summary: "Error during logout!",
-
           summary: "Logged out Failed!",
           summary2: "Try again after sometime.",
-
           group: "error",
           life: 3000,
         });
