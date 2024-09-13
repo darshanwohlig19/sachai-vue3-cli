@@ -68,7 +68,7 @@
             <!-- Search Results -->
             <div
               v-if="searchResults.length"
-              class="absolute w-full bg-white p-2 border border-gray-300 rounded-md mt-2 z-1"
+              class="absolute w-full bg-white p-2 border border-gray-300 rounded-md mt-2 z-1 h-[300px] overflow-y-auto slim-scrollbar"
             >
               <div
                 @click="navigateToNewsDetail(result._id)"
@@ -566,5 +566,18 @@ export default {
 }
 .border-custom {
   border: 0.4px solid #e2e2e2ce;
+}
+.slim-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.slim-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.slim-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+.slim-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>
