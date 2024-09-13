@@ -2,9 +2,7 @@
   <div class="bg-white rounded-xl p-3">
     <div class="flex flex-row items-center gap-1">
       <div class="bg-[#FF0053] w-[3px] h-[10px] rounded-md"></div>
-      <div class="text-[20px] font-lato text-bold text-[#1E0627]">
-        Hot Topics
-      </div>
+      <div class="heads1">Hot Topics</div>
     </div>
     <div
       v-for="(item, index) in hot"
