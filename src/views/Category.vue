@@ -7,7 +7,7 @@
       >
         <div class="flex flex-row items-center gap-1">
           <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
-          <div class="text-[18px] font-lato text-[700] text-[#1E0627]">
+          <div class="heads1 capitalize">
             {{ categoryName || "Error" }}
           </div>
         </div>

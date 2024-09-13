@@ -19,7 +19,7 @@
             >Home</RouterLink
           >
         </div>
-        <div class="hidden lg:flex head-navs gap-2">
+        <div class="hidden lg:flex head-navs gap-2" v-if="isLoggedIn">
           <img src="../assets/Astrology.svg" alt="" />
           <RouterLink
             class="nav-items"
@@ -242,6 +242,7 @@
           to="/Astrology"
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
           active-class="active-link"
+          v-if="isLoggedIn"
           >Astrology</RouterLink
         >
         <RouterLink

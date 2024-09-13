@@ -8,7 +8,9 @@
               <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
               <div class="heads1 capitalize">{{ category.name }}</div>
             </div>
-            <div class="see-all">See all →</div>
+            <a :href="`/categories/${category._id}?category=${category.name}`">
+              <Button />
+            </a>
           </div>
           <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
             <div class="md-max:w-[100%] w-[65%]">
@@ -75,7 +77,9 @@
                           <img src="../assets/Group.png" alt="" />
                         </div>
                         <div class="font-14 one-line">
-                          {{ news.headline }}
+                          <a :href="`${SACHAI_NEWS_URL}${news._id}`">
+                            {{ news.headline }}
+                          </a>
                         </div>
                       </div>
                       <div class="divider-horizontal mt-2"></div>
@@ -129,6 +133,7 @@
 <script>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
+import Button from "./ViewAll.vue";
 
 export default {
   props: {
@@ -143,6 +148,11 @@ export default {
   //     // screenWidth: window.innerWidth,
   //   };
   // },
+
+  components: {
+    Button,
+  },
+
   setup() {
     const categories = ref({});
     const isMobileOrTablet = ref(window.innerWidth < 768);
@@ -219,6 +229,7 @@ export default {
       getDisplayedNews,
       displayedNews,
       screenWidth,
+      Button,
     };
   },
 };
