@@ -15,20 +15,17 @@
                 class="news-image"
               />
             </div>
-
-            <div class="flex items-center">
-              <span class="text-neon-pink mr-2 capitalize">
+            <div class="flex items-center ml-[1px]">
+              <span class="text-neon-pink mr-1 capitalize">
                 {{ newsItem?.categoriesName[0] }}
               </span>
               <span class="text-light-gray mr-2">|</span>
               <span class="text-light-gray mr-2">
                 {{ newsItem?.source }}
               </span>
-              <!-- <span class="text-light-gray mr-2">|</span>
-              <span class="text-light-gray"> 2 min ago </span> -->
               <div class="ml-auto flex items-center space-x-2">
                 <a
-                  href="https://www.facebook.com"
+                  :href="newsItem?.newsLink"
                   target="_blank"
                   class="flex items-center"
                 >
@@ -39,25 +36,26 @@
                   />
                 </a>
                 <a
-                  href="https://www.twitter.com"
+                  :href="newsItem?.newsLink"
                   target="_blank"
                   class="flex items-center"
                 >
                   <img :src="xLogo" alt="X Logo" class="social-icon" />
                 </a>
                 <a
-                  href="https://www.linkedin.com"
+                  :href="newsItem?.newsLink"
                   target="_blank"
                   class="flex items-center"
                 >
                   <img
+                    :href="newsItem?.newsLink"
                     :src="linkDinLogo"
                     alt="LinkedIn Logo"
                     class="social-icon"
                   />
                 </a>
                 <a
-                  href="https://www.whatsapp.com"
+                  :href="newsItem?.newsLink"
                   target="_blank"
                   class="flex items-center"
                 >
@@ -68,18 +66,18 @@
                   />
                 </a>
                 <i
-                  class="mdi mdi-bookmark-outline text-black sm:h-[40px] sm:w-[40px] sm:text-[22px] h-[30px] mt-[3%]"
+                  class="mdi mdi-bookmark-outline text-black sm:h-[40px] sm:text-[22px] h-[30px] mt-[3%]"
                 ></i>
               </div>
             </div>
 
             <span
-              class="text-lg font-sourceSerifPro text-Secondary font-semibold mb-1"
+              class="text-lg font-sourceSerifPro text-Secondary font-semibold mb-1 ml-[1px]"
             >
               {{ newsItem?.headline }}
             </span>
             <div
-              class="text-[#878787] space-y-4 mb-4 font-lato mt-[1%] text-sm"
+              class="text-[#878787] space-y-4 mb-4 font-lato mt-[1%] text-sm ml-[1px]"
             >
               <p>
                 {{ newsItem?.summary }}
