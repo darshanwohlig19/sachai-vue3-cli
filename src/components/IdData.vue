@@ -17,15 +17,15 @@
             </div>
 
             <div class="flex items-center">
-              <span class="text-neon-pink mr-2">
+              <span class="text-neon-pink mr-2 capitalize">
                 {{ newsItem?.categoriesName[0] }}
               </span>
               <span class="text-light-gray mr-2">|</span>
               <span class="text-light-gray mr-2">
                 {{ newsItem?.source }}
               </span>
-              <span class="text-light-gray mr-2">|</span>
-              <span class="text-light-gray"> 2 min ago </span>
+              <!-- <span class="text-light-gray mr-2">|</span>
+              <span class="text-light-gray"> 2 min ago </span> -->
               <div class="ml-auto flex items-center space-x-2">
                 <a
                   href="https://www.facebook.com"
@@ -74,11 +74,13 @@
             </div>
 
             <span
-              class="text-2xl font-sourceSerifPro text-Secondary font-semibold mb-1"
+              class="text-lg font-sourceSerifPro text-Secondary font-semibold mb-1"
             >
               {{ newsItem?.headline }}
             </span>
-            <div class="text-gray-5 space-y-4 mb-4 font-lato mt-[1%]">
+            <div
+              class="text-[#878787] space-y-4 mb-4 font-lato mt-[1%] text-sm"
+            >
               <p>
                 {{ newsItem?.summary }}
               </p>
@@ -94,7 +96,7 @@
             <ChatBot :category="newsItem" />
           </div>
           <div class="lg:w-1/2">
-            <FeatureNews :category="newsItem" />
+            <FeatureNews :categories="newsItem" />
           </div>
         </div>
       </div>
@@ -165,5 +167,9 @@ onMounted(() => {
   height: 100%;
   object-fit: fill;
   object-position: center;
+}
+.font-semibold {
+  font-family: "Source Serif Pro", serif;
+  font-weight: 600;
 }
 </style>

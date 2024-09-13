@@ -6,9 +6,11 @@
       >
         Related News
       </span>
-      <div class="text-[16px] text-[#FF0053] bg-[#fff0f5]">
+      <button
+        className="text-[#FF0053] bg-[#fff0f5] px-3 py-1  text-sm font-medium flex items-center rounded-md"
+      >
         View all &nbsp;→
-      </div>
+      </button>
     </div>
     <div
       class="flex flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
