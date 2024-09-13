@@ -45,34 +45,51 @@
             {{ isLoggedIn ? "Logout" : "Login" }}
           </a>
         </div>
-        <div class="relative sm-max:hidden">
+        <div class="w-[50%] relative hidden md:block">
+          <!-- @click="expandInput" -->
           <input
             type="text"
             id="fname"
+            ref="searchInput"
+            :class="inputClass"
+            v-model="searchQuery"
+            @input="handleSearch"
             name="fname"
+            autocomplete="off"
             placeholder="Search"
-            class="pr-10 pl-3 py-2 rounded-[100px] text-[14px] w-full border-1"
+            class="pr-10 pl-3 py-2 w-[441px] rounded-[100px] text-[14px] border-1"
           />
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 15 15"
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          <!-- Search Icon -->
+          <img
+            src="../assets/svg-icons/search.svg"
+            class="absolute -right-6 top-1/2 transform -translate-y-1/2 text-gray-500"
+          />
+          <!-- Search Results -->
+          <div
+            v-if="searchResults.length"
+            class="absolute w-[441px] bg-white p-3 border border-gray-300 rounded-md mt-2 z-1"
           >
-            <g clip-path="url(#clip0_2352_4463)">
-              <path
-                d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
-                fill="#ACACAC"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_2352_4463">
-                <rect width="15" height="15" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
+            <div
+              @click="navigateToNewsDetail(result._id)"
+              v-for="(result, index) in searchResults"
+              :key="index"
+              class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100"
+            >
+              <div
+                class="w-[100%] flex flex-row justify-between gap-3 shadow-custom rounded-[8px] p-2"
+              >
+                <div class="w-[15%]">
+                  <img
+                    :src="result.imgixUrlHighRes || fallbackImage"
+                    class="h-[54px] w-[56px] object-cover rounded-[8px]"
+                  />
+                </div>
+                <div class="w-[80%] two_line">
+                  {{ result.headline }}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <router-link class="md:hidden sm-max:block">
           <div
@@ -102,70 +119,6 @@
             </i>
           </div>
         </router-link>
-        <!-- <div class="relative">
-          <div v-if="isInputVisible" class="relative">
-            <input
-              type="text"
-              v-model="searchQuery"
-              @blur="handleSearch"
-              @focus="isInputVisible = true"
-              placeholder="Search"
-              class="pr-10 pl-3 py-2 rounded-[100px] text-[14px] w-full border-1"
-            />
-            <svg
-              @click="handleSearch"
-              width="14"
-              height="14"
-              viewBox="0 0 15 15"
-              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_2352_4463)">
-                <path
-                  d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
-                  fill="#ACACAC"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_2352_4463">
-                  <rect width="15" height="15" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-
-          <div
-            :class="
-              isInputVisible
-                ? 'bg-white'
-                : 'shadow-md h-[34px] w-[34px] rounded-full flex justify-center items-center bg-white'
-            "
-          >
-            <svg
-              v-if="!isInputVisible"
-              @click="toggleSearchInput"
-              width="14"
-              height="14"
-              viewBox="0 0 15 15"
-              class="text-gray-500 cursor-pointer"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_2352_4463)">
-                <path
-                  d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
-                  fill="#ACACAC"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_2352_4463">
-                  <rect width="15" height="15" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-        </div> -->
         <router-link v-if="isLoggedIn">
           <div
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
@@ -324,41 +277,41 @@
 
 <script>
 import axios from "axios";
+import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
-import { ref, onMounted } from "vue";
 import { useToast } from "primevue/usetoast";
 
 export default {
-  components: {},
   setup() {
     const isMenuOpen = ref(false);
     const isDropdownOpen = ref(false);
     const categories = ref([]);
-    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"), true);
+    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
     const showBookmarkLink = ref(true);
     const isPopupVisible = ref(false);
+    const isExpanded = ref(false);
+    const searchInput = ref(null);
     const router = useRouter();
     const toast = useToast();
     const categoriesContainer = ref(null);
     const isLoggingOut = ref(false);
     const isCardDropdownOpen = ref(false);
+    const showSearchDialog = ref(false);
 
     const isInputVisible = ref(false);
     const searchQuery = ref("");
+    const searchResults = ref([]);
 
     const toggleCardDropdown = () => {
       isCardDropdownOpen.value = !isCardDropdownOpen.value;
       console.log("Dropdown is now:", isCardDropdownOpen.value);
     };
-    const toggleLogin = () => {
-      isLoggedIn.value = !isLoggedIn.value;
-    };
 
     const scrollLeft = () => {
       if (categoriesContainer.value) {
         categoriesContainer.value.scrollBy({
-          left: -100, // Adjust the scroll distance as needed
+          left: -100,
           behavior: "smooth",
         });
       }
@@ -367,10 +320,15 @@ export default {
     const scrollRight = () => {
       if (categoriesContainer.value) {
         categoriesContainer.value.scrollBy({
-          left: 100, // Adjust the scroll distance as needed
+          left: 100,
           behavior: "smooth",
         });
       }
+    };
+
+    const navigateToNewsDetail = (id) => {
+      console.log(`Navigating to /news/${id}`);
+      router.push(`/news/${id}`);
     };
 
     const toggleMenu = () => {
@@ -382,14 +340,14 @@ export default {
     };
 
     const handleBackgroundClick = () => {
-      hidePopup(); // Hide the popup when clicking on the background
+      hidePopup();
     };
 
     const handleAuthAction = async () => {
       if (isLoggedIn.value) {
-        showPopup(); // Show popup for confirmation
+        showPopup();
       } else {
-        router.push("/Login"); // Redirect to login page
+        router.push("/Login");
       }
     };
 
@@ -406,11 +364,9 @@ export default {
       isLoggingOut.value = true;
 
       try {
-        // Sign out from Firebase
         const auth = getAuth();
         await signOut(auth);
 
-        // Call logout API
         const apiDataToken = localStorage.getItem("apiDataToken");
         if (apiDataToken) {
           const response = await axios.post(
@@ -425,14 +381,13 @@ export default {
             localStorage.removeItem("apiDataToken");
             localStorage.setItem("logoutSuccess", "true");
             isLoggedIn.value = false;
+            router.push("/");
 
-            // Show success toaster notification
             toast.add({
               severity: "success", // Changed from "error" to "success" since it's a successful logout
               summary: "Logged out successfully!",
-              summary2: "You have been safely logged out.",
-              group: "success",
-              life: 3000,
+              group: "error",
+              life: 2000,
             });
             isCardDropdownOpen.value = !isCardDropdownOpen.value;
           } else {
@@ -443,8 +398,12 @@ export default {
         console.error("Error during logout:", error);
         toast.add({
           severity: "error",
+
+          summary: "Error during logout!",
+
           summary: "Logged out Failed!",
           summary2: "Try again after sometime.",
+
           group: "error",
           life: 3000,
         });
@@ -478,23 +437,66 @@ export default {
       isInputVisible.value = !isInputVisible.value;
     };
 
-    const handleSearch = () => {
-      if (searchQuery.value.trim()) {
-        // Perform the search operation
-        console.log(`Searching for: ${searchQuery.value}`);
+    const handleSearch = async () => {
+      if (searchQuery.value.trim().length >= 4) {
+        try {
+          const response = await axios.post(
+            "https://api-uat.newsshield.io/news/searchNewsFromWeb",
+            {
+              language: "6421a32aa020a23deacecf92",
+              search: searchQuery.value,
+            }
+          );
+          searchResults.value = response.data.slice(0, 3);
+        } catch (error) {
+          console.error("Error fetching search results:", error);
+        }
+      } else {
+        searchResults.value = [];
       }
-      // Reset the input field and show only the icon again
-      isInputVisible.value = false;
-      searchQuery.value = "";
+    };
+
+    const expandInput = () => {
+      isExpanded.value = true;
+    };
+
+    const collapseInput = (event) => {
+      if (searchInput.value && !searchInput.value.contains(event.target)) {
+        isExpanded.value = false;
+        searchResults.value = [];
+        searchQuery.value = ""; // Clear the search input when clicking outside
+      }
     };
 
     onMounted(() => {
+      document.addEventListener("mousedown", collapseInput);
       fetchCategories();
     });
 
+    onBeforeUnmount(() => {
+      document.removeEventListener("mousedown", collapseInput);
+    });
+
+    const inputClass = computed(() =>
+      isExpanded.value
+        ? "w-[441px] py-2 transition-all duration-300"
+        : "w-[220px] py-2 transition-all duration-300"
+    );
+
+    watch(searchQuery, (newValue) => {
+      if (newValue.trim().length >= 4) {
+        handleSearch();
+      } else {
+        searchResults.value = [];
+      }
+    });
+
     return {
+      isExpanded,
+      searchInput,
+      expandInput,
+      inputClass,
       isMenuOpen,
-      toggleLogin,
       isDropdownOpen,
       categories,
       isLoggedIn,
@@ -509,12 +511,15 @@ export default {
       scrollRight,
       scrollLeft,
       categoriesContainer,
-      isCardDropdownOpen,
+      isCardDropdownOpen, // Correctly returned here
       toggleCardDropdown,
       isInputVisible,
       searchQuery,
       toggleSearchInput,
       handleSearch,
+      showSearchDialog,
+      searchResults,
+      navigateToNewsDetail,
     };
   },
 };
@@ -548,5 +553,15 @@ export default {
 }
 .head-cat::-webkit-scrollbar {
   display: none !important;
+}
+.two_line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2 !important; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.shadow-custom {
+  box-shadow: 0px 0px 3.41px 0.71px #0000000d;
 }
 </style>

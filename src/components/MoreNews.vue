@@ -5,7 +5,11 @@
         <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
         <div class="text-[20px] font-bold font-lato">More News</div>
       </div>
-      <Button />
+      <div>
+        <router-link to="/MoreNews">
+          <Button />
+        </router-link>
+      </div>
     </div>
     <div class="bg-white w-[100%] flex">
       <!-- First Column -->
