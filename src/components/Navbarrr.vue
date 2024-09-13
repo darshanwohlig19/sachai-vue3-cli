@@ -11,7 +11,7 @@
           />
         </a>
       </div>
-      <div class="w-[50%]">
+      <div class="w-[60%]">
         <div class="flex gap-4 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
@@ -68,15 +68,16 @@
             <!-- Search Results -->
             <div
               v-if="searchResults.length"
-              class="absolute w-full bg-white p-2 border border-gray-300 rounded-md mt-2 z-1 h-[300px] overflow-y-auto slim-scrollbar"
+              class="absolute w-full bg-white p-2 border border-gray-300 rounded-md mt-2 z-1 h-[370px] overflow-y-auto slim-scrollbar"
             >
               <div
-                @click="navigateToNewsDetail(result._id)"
                 v-for="(result, index) in searchResults"
                 :key="index"
                 class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
+                @click="navigateToNewsDetail(result._id)"
               >
                 <div
+                  @click="navigateToNewsDetail(result._id)"
                   class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
                 >
                   <div class="w-[15%]">
@@ -86,6 +87,7 @@
                     />
                   </div>
                   <div
+                    @click="navigateToNewsDetail(result._id)"
                     class="w-[80%] flex justify-start items-center text-start font-light font-[#1E0627] font-source-serif text-[13px] two_line"
                   >
                     {{ result.headline }}
@@ -331,8 +333,8 @@ export default {
     };
 
     const navigateToNewsDetail = (id) => {
-      console.log(`Navigating to /news/${id}`);
       router.push(`/news/${id}`);
+      console.log("Hello", id);
     };
 
     const toggleMenu = () => {
@@ -438,7 +440,8 @@ export default {
     };
 
     const handleSearch = async () => {
-      if (searchQuery.value.trim().length >= 4) {
+      if (searchQuery.value.trim().length >= 0) {
+        console.log("API CALLED");
         try {
           const response = await axios.post(
             "https://api-uat.newsshield.io/news/searchNewsFromWeb",
@@ -484,7 +487,7 @@ export default {
     );
 
     watch(searchQuery, (newValue) => {
-      if (newValue.trim().length >= 4) {
+      if (newValue.trim().length >= 0) {
         handleSearch();
       } else {
         searchResults.value = [];

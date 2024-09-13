@@ -116,7 +116,7 @@ function formatPublishTime(publishTime) {
 async function fetchBlogs() {
   try {
     const response = await axios.post(
-      "https://api-uat.newsshield.io/news/gettrendingnews",
+      "https://api-uat.newsshield.io/news/getTrendingNews",
       {
         language: languageId.value,
       }
