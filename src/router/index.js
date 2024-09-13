@@ -7,6 +7,7 @@ import Astrology from "../views/Astrology.vue";
 import News from "../components/IdData.vue";
 import Bookmark from "../views/Bookmark.vue";
 import Setting from "../views/Setting.vue";
+import MoreNews from "../views/MoreNews.vue";
 
 const routes = [
   {
@@ -46,6 +47,11 @@ const routes = [
     path: "/Astrology",
     name: "Astrology",
     component: Astrology,
+  },
+  {
+    path: "/MoreNews",
+    name: "MoreNews",
+    component: MoreNews,
   },
 ];
 
