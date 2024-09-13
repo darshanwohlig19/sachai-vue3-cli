@@ -182,7 +182,7 @@
           <div class="flex justify-center mt-3">
             <img
               src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
-              class="w-[128px] h-[33px] object-cover"
+              class="w-[100px] h-[26px] object-cover"
             />
           </div>
           <div id="recaptcha-container" class="justify-center flex"></div>
@@ -191,18 +191,18 @@
             <!-- Conditionally render based on showPhoneVerification -->
             <div v-if="!showPhoneVerification">
               <div class="mt-5">
-                <div class="text-[32px] font-bold text-[#333333] font-lato">
+                <div class="text-[24px] font-bold text-[#333333] font-lato">
                   Hello !
                 </div>
                 <div
-                  class="mt-2 font-normal text-[18px] text-[#1E0627] font-lato"
+                  class="mt-2 font-normal text-[16px] text-[#1E0627] font-lato"
                 >
                   Login to your account
                 </div>
               </div>
 
               <!-- Login Options -->
-              <div class="flex flex-row gap-4 mt-5 w-full justify-center">
+              <div class="flex flex-row gap-4 mt-3 w-full justify-center">
                 <div
                   class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
                   @click="loginWithGoogle"
@@ -233,7 +233,7 @@
               </div>
 
               <div
-                class="text-center text-[#FF0053] cursor-pointer mt-3 font-lato text-[18px]"
+                class="text-center text-[#FF0053] cursor-pointer mt-3 font-lato text-[15px]"
               >
                 <router-link to="/">Continue without login</router-link>
               </div>
@@ -242,7 +242,7 @@
             <!-- Phone Number Verification UI -->
             <div v-else>
               <div
-                class="text-center mt-5 text-[#333333] font-lato font-[700] text-[24px]"
+                class="text-center mt-5 text-[#333333] font-lato font-[700] text-[18px]"
               >
                 Phone Verification
               </div>
@@ -260,7 +260,7 @@
                     v-model="phoneNumber"
                     type="text"
                     placeholder="Phone"
-                    class="border p-2 w-[304px] rounded-[4px]"
+                    class="border p-2 w-[240px] h-[33px] rounded-[4px]"
                   />
                 </div>
                 <div class="flex justify-center">
@@ -273,7 +273,7 @@
                 </div>
                 <div
                   @click="showPhoneVerification = false"
-                  class="text-center font-lato text-[#5E5E5E] mt-3 cursor-pointer"
+                  class="text-center text-[12px] font-lato text-[#5E5E5E] mt-3 cursor-pointer"
                 >
                   Want to select other login method?
                 </div>
