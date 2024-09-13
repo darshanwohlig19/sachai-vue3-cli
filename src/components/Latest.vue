@@ -1,9 +1,12 @@
 <template>
   <section class="mt-3">
-    <div>
+    <div class="bg-white p-3 rounded-[10px]">
       <div class="flex justify-between w-full items-center mb-3">
-        <div class="text-[20px] font-bold font-lato">{{ headingText }}</div>
-        <div class="text-[16px] text-[#FF0053]">See all →</div>
+        <div class="flex flex-row items-center gap-2">
+          <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
+          <div class="text-[20px] font-bold font-lato">Latest News</div>
+        </div>
+        <Button />
       </div>
       <div class="flex flex-row gap-3 justify-between cursor-pointer">
         <div
@@ -11,7 +14,7 @@
           :key="news._id"
           class="w-[33%] md-max:w-full"
         >
-          <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
+          <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
             <div class="rounded-[10px]" @click="navigateToNewsDetail(news._id)">
               <img
                 :src="news.imgixUrlHighRes"
@@ -75,7 +78,7 @@ import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
-
+import Button from "./ViewAll.vue";
 const route = useRoute();
 const router = useRouter();
 

@@ -1,7 +1,17 @@
 <template>
-  <div class="mt-3">
-    <div class="heads">More News</div>
-    <div class="bg-white w-[100%] flex rounded-[10px] p-3 mt-3">
+  <div class="mt-3 bg-white p-3 rounded-[10px]">
+    <div class="flex justify-between w-full items-center">
+      <div class="flex flex-row items-center gap-2">
+        <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
+        <div class="text-[20px] font-bold font-lato">More News</div>
+      </div>
+      <div>
+        <router-link to="/MoreNews">
+          <Button />
+        </router-link>
+      </div>
+    </div>
+    <div class="bg-white w-[100%] flex">
       <!-- First Column -->
       <div
         class="w-[30%] sm-425:w-[100%] sm-max:w-[50%] between-sm-md:w-[50%] below-sm:w-[100%]"
@@ -93,6 +103,7 @@
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import Button from "./ViewAll.vue";
 
 const allNews = ref([]);
 

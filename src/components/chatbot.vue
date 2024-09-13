@@ -1,141 +1,117 @@
 <template>
   <div
-    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card"
+    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card h-[682px] flex flex-col"
   >
-    <div class="bg-[#320A38] text-white p-4">
-      <h2 class="text-xl font-Lato leading-tight">
-        {{ category?.headline }}
-      </h2>
-    </div>
-    <div v-if="!showQuestions" class="h-content-fixed"></div>
-
-    <div
-      class="p-3 bg-gray-100 rounded-lg shadow-md w-[85%] mx-auto h-assist-card mt-[3%] overflow-y-auto"
-    >
-      <h2 class="text-lg font-bold mb-2 text-gray-800">
-        Need any assistance with your queries?
-      </h2>
-      <p class="text-gray-600 mb-2">
-        Our AI chatbot support is always available to provide answers to any
-        questions but to begin with, here are some of our most asked questions
-      </p>
-      <div class="space-y-4 max-h-96">
+    <!-- Chat Header -->
+    <div class="bg-[#320A38] text-white h-[70px]">
+      <div class="text-base font-Lato leading-tight flex items-center">
         <div
-          v-for="(item, index) in category?.suggestedQnA"
-          :key="index"
-          @click="handleQnAClick(item.question, index)"
-          class="bg-white p-2 rounded-lg shadow cursor-pointer"
+          class="h-[2rem] w-[10%] bg-white rounded-full flex items-center justify-center overflow-hidden mt-3 ml-3"
         >
-          <p class="text-gray-800 font-medium text-center">
-            {{ item.question }}
-          </p>
+          <img :src="commentsImg" />
         </div>
-        <div class="flex justify-center mt-2">
+        <span class="ml-2 mt-[10px]">Chat Assistant</span>
+      </div>
+    </div>
+
+    <!-- Chat Body -->
+    <div class="scrollable-container flex-grow overflow-y-auto p-1">
+      <!-- Suggested QnA -->
+      <div
+        v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
+        class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto showQuestions ? 'h-assist-card' : 'h-0 overflow-hidden' mt-[3%]"
+      >
+        <h2 class="text-lg font-bold mb-2 text-[#131314]">
+          Need any assistance with your queries?
+        </h2>
+        <p class="text-[#121212] mb-2">
+          Our AI chatbot support is always available to provide answers to any
+          questions but to begin with, here are some of our most asked questions
+        </p>
+        <div class="space-y-4 max-h-96" v-if="showQuestions">
+          <div
+            v-for="(item, index) in category?.suggestedQnA"
+            :key="index"
+            @click="handleQnAClick(item.question, index)"
+            class="bg-white p-2 rounded-lg shadow cursor-pointer"
+          >
+            <p class="text-[#121212] font-medium text-center">
+              {{ item.question }}
+            </p>
+          </div>
+        </div>
+        <div class="flex justify-center mt-3 text-[#3978E1]">
           <Button variant="outline" @click="toggleQuestionsVisibility">
-            Hide Questions
+            {{ showQuestions ? "Hide Questions" : "Show Questions" }}
           </Button>
         </div>
       </div>
+
+      <!-- Conversation Messages -->
+      <div v-if="conversation.length">
+        <div
+          v-for="(message, index) in conversation"
+          :key="index"
+          :class="{
+            'flex justify-end mt-2 ': message.type === 'user',
+            'text-left mt-2': message.type === 'bot',
+          }"
+        >
+          <div
+            :class="{
+              'bg-blue-100': message.type === 'user',
+              'bg-gray-100': message.type === 'bot',
+            }"
+            class="p-4 rounded-lg"
+          >
+            <p v-if="message.type === 'user'">
+              {{ message.text }}
+            </p>
+            <p v-if="message.type === 'bot'">
+              {{ message.text }}
+            </p>
+            <hr class="mt-1 mb-1" v-if="message.type === 'bot'" />
+            <div
+              class="flex items-center space-x-4"
+              v-if="message.type === 'bot'"
+            >
+              <div class="flex-grow flex items-center space-x-4">
+                <span class="text-gray-500 text-sm">
+                  {{ questionsLeft }} questions left
+                </span>
+                <div class="flex-grow"></div>
+              </div>
+              <button
+                class="p-1 rounded-full bg-gray-100 flex items-center space-x-2"
+                aria-label="Like or Dislike"
+              >
+                <span
+                  :class="[
+                    'p-1 rounded-full w-10 flex items-center justify-center',
+                    thumbsUpSelected ? 'text-green-500' : 'bg-[#D8E7FF]',
+                  ]"
+                  @click.stop="toggleThumbsUp"
+                >
+                  <i class="pi pi-thumbs-up text-xl text-[#1E0627]"></i>
+                </span>
+                <span
+                  :class="[
+                    'p-1 rounded-full w-10 flex items-center justify-center',
+                    thumbsDownSelected ? 'text-red-500' : 'bg-[#D8E7FF]',
+                  ]"
+                  @click.stop="toggleThumbsDown"
+                >
+                  <i class="pi pi-thumbs-down text-xl text-[#1E0627]"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div v-if="conversation.length" class="p-4 space-y-4 h-content-fixed">
-      <div
-        v-for="(message, index) in conversation"
-        :key="index"
-        :class="{
-          'flex justify-end': message.type === 'user',
-          'text-left': message.type === 'bot',
-        }"
-      >
-        <div
-          :class="{
-            'bg-blue-100': message.type === 'user',
-            'bg-gray-100': message.type === 'bot',
-          }"
-          class="p-4 rounded-lg"
-        >
-          <p v-if="message.type === 'user'">
-            {{ message.text }}
-          </p>
-          <p v-if="message.type === 'bot'">
-            {{ message.text }}
-          </p>
-          <hr v-if="message.type === 'bot'" />
-          <div
-            class="flex items-center space-x-4"
-            v-if="message.type === 'bot'"
-          >
-            <div class="flex-grow flex items-center space-x-4">
-              <span class="text-gray-500 text-sm">
-                {{ count }} questions left
-              </span>
-              <div class="flex-grow"></div>
-            </div>
-            <button
-              class="p-1 rounded-full bg-gray-100 flex items-center space-x-2"
-              aria-label="Like or Dislike"
-            >
-              <span
-                :class="[
-                  'p-1 rounded-full w-10 flex items-center justify-center',
-                  thumbsUpSelected ? 'text-green-500' : 'bg-gray-400',
-                ]"
-                @click.stop="toggleThumbsUp"
-              >
-                <i class="pi pi-thumbs-up text-xl text-white"></i>
-              </span>
-              <span
-                :class="[
-                  'p-1 rounded-full w-10 flex items-center justify-center',
-                  thumbsDownSelected ? 'text-red-500' : 'bg-gray-400',
-                ]"
-                @click.stop="toggleThumbsDown"
-              >
-                <i class="pi pi-thumbs-down text-xl text-white"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="content" class="flex items-start space-x-2 overflow-y-auto">
-      <div class="bg-gray-100 rounded-lg p-4 flex-grow h-content-fixed-inner">
-        <p>{{ content }}</p>
-        <hr />
-        <div class="flex items-center space-x-4">
-          <div class="flex-grow flex items-center space-x-4">
-            <span class="text-gray-500 text-sm">
-              {{ questionsLeft }} questions left
-            </span>
-            <div class="flex-grow"></div>
-          </div>
-          <button
-            class="p-1 rounded-full bg-gray-100 flex items-center space-x-2"
-            aria-label="Like or Dislike"
-          >
-            <span
-              :class="[
-                'p-1 rounded-full w-10 flex items-center justify-center',
-                thumbsUpSelected ? 'bg-green-500' : 'bg-gray-400',
-              ]"
-              @click.stop="toggleThumbsUp"
-            >
-              <i class="pi pi-thumbs-up text-xl text-white"></i>
-            </span>
-            <span
-              :class="[
-                'p-1 rounded-full w-10 flex items-center justify-center',
-                thumbsDownSelected ? 'bg-red-500' : 'bg-gray-400',
-              ]"
-              @click.stop="toggleThumbsDown"
-            >
-              <i class="pi pi-thumbs-down text-xl text-white"></i>
-            </span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="bg-gray-100 p-4 mt-input">
+    <!-- Chat Input (Fixed at bottom) -->
+    <div class="bg-gray-100 p-4">
       <div class="flex items-center bg-white rounded overflow-hidden">
         <input
           type="text"
@@ -146,7 +122,7 @@
         />
         <button
           @click="handleChatClick"
-          class="bg-purple-900 text-white p-2 rounded"
+          class="bg-[#320A38] text-white p-2 rounded"
           aria-label="Submit question"
         >
           <img :src="vectorImg" alt="Submit question" />
@@ -157,8 +133,9 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, ref, onMounted } from "vue";
 import vectorImg from "@/assets/png/Vector.png";
+import commentsImg from "@/assets/svg/chatComments.svg";
 import { useRoute } from "vue-router";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
@@ -171,6 +148,8 @@ const props = defineProps({
 });
 
 const route = useRoute();
+const chatsData = ref([]);
+console.log("chatsData", chatsData);
 const userQuestion = ref("");
 const conversation = ref([]);
 const showQuestions = ref(true);
@@ -180,13 +159,13 @@ const thumbsUpSelected = ref(false);
 const thumbsDownSelected = ref(false);
 const newsId = route.params.id;
 
-const toggleQuestionsVisibility = () => {
-  showQuestions.value = !showQuestions.value;
-};
 // const shouldShowQuestions = computed(() => {
 //   return conversation.value.length === 0 && showQuestions.value;
 // });
 
+const toggleQuestionsVisibility = () => {
+  showQuestions.value = !showQuestions.value;
+};
 const handleQnAClick = async (question, index) => {
   selectedQuestionIndex.value = index;
   selectedQuestionAnswers.value = props.category?.suggestedQnA[index]?.answer;
@@ -200,7 +179,7 @@ const handleQnAClick = async (question, index) => {
     conversation.value.push({ type: "bot", text: botMessage });
   }
 
-  const payload = { question: conversation.value[0].value };
+  const payload = { question: question };
   try {
     await apiService.apiCall(
       "post",
@@ -218,7 +197,9 @@ const handleQnAClick = async (question, index) => {
 
 const handleChatClick = async () => {
   if (!userQuestion.value.trim()) return;
+
   conversation.value.push({ type: "user", text: userQuestion.value });
+
   try {
     const payload = { question: userQuestion.value };
     const response = await apiService.apiCall(
@@ -226,16 +207,50 @@ const handleChatClick = async () => {
       `${apiConfig.CHAT_BOT_DATA}/${newsId}`,
       payload
     );
-    const botResponse = response.data.answer;
+
+    const botResponse = typewriterEffect(response.data.answer.answer);
     conversation.value.push({ type: "bot", text: botResponse });
+
+    userQuestion.value = "";
   } catch (error) {
     console.error("Error fetching response:", error);
-    conversation.value.push({
-      type: "bot",
-      text: "Sorry, there was an error processing your request.",
-    });
-  } finally {
+    // conversation.value.push({
+    //   type: "bot",
+    //   text: "Sorry, there was an error processing your request.",
+    // });
+
     userQuestion.value = "";
+  }
+};
+
+const handleFeedbackClick = async (feedbackType) => {
+  try {
+    const payload = { feedback: feedbackType };
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.CHAT_BOT_Feedback}/${newsId}`,
+      payload
+    );
+    console.log("Feedback response:", response);
+  } catch (error) {
+    console.error("Error sending feedback:", error);
+  }
+};
+const chatBotData = async () => {
+  try {
+    const response = await apiService.apiCall(
+      "get",
+      `${apiConfig.GET_CHAT_BOT_DATA}/${newsId}`
+    );
+    chatsData.value = response.data;
+
+    // Populate conversation array with chatsData
+    chatsData.value.forEach((chat) => {
+      conversation.value.push({ type: "user", text: chat.question });
+      conversation.value.push({ type: "bot", text: chat.answer });
+    });
+  } catch (error) {
+    console.error("Error fetching news item:", error);
   }
 };
 
@@ -258,6 +273,7 @@ const toggleThumbsUp = () => {
   thumbsUpSelected.value = !thumbsUpSelected.value;
   if (thumbsUpSelected.value) {
     thumbsDownSelected.value = false;
+    handleFeedbackClick("positive");
   }
 };
 
@@ -265,8 +281,12 @@ const toggleThumbsDown = () => {
   thumbsDownSelected.value = !thumbsDownSelected.value;
   if (thumbsDownSelected.value) {
     thumbsUpSelected.value = false;
+    handleFeedbackClick("negative");
   }
 };
+onMounted(() => {
+  chatBotData();
+});
 </script>
 
 <style scoped>
@@ -277,10 +297,6 @@ const toggleThumbsDown = () => {
 
 .h-assist-card {
   height: 390px;
-}
-
-.mt-input {
-  margin-top: 20px;
 }
 
 .bg-assist-card {
@@ -326,5 +342,9 @@ const toggleThumbsDown = () => {
 
 .text-white {
   color: #ffffff;
+}
+.scrollable-container {
+  height: 100%; /* Set your desired height */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 </style>

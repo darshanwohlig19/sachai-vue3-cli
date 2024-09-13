@@ -19,7 +19,7 @@
             >Home</RouterLink
           >
         </div>
-        <div class="hidden lg:flex head-navs gap-2">
+        <div class="hidden lg:flex head-navs gap-2" v-if="isLoggedIn">
           <img src="../assets/Astrology.svg" alt="" />
           <RouterLink
             class="nav-items"
@@ -195,6 +195,7 @@
           to="/Astrology"
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
           active-class="active-link"
+          v-if="isLoggedIn"
           >Astrology</RouterLink
         >
         <RouterLink
@@ -260,6 +261,7 @@
         <div class="flex flex-col gap-3 justify-center mt-4">
           <div class="flex justify-center items-center">
             <button
+              :disabled="isLoggingOut"
               @click="handleLogout"
               class="bg-[#1E0627] font-lato text-white px-4 h-[52px] w-[200px] py-2 rounded-[18px]"
             >
@@ -293,6 +295,7 @@ export default {
     const router = useRouter();
     const toast = useToast();
     const categoriesContainer = ref(null);
+    const isLoggingOut = ref(false);
     const isCardDropdownOpen = ref(false);
     const showSearchDialog = ref(false);
 
@@ -357,6 +360,9 @@ export default {
     };
 
     const handleLogout = async () => {
+      if (isLoggingOut.value) return; // Prevent multiple clicks
+      isLoggingOut.value = true;
+
       try {
         const auth = getAuth();
         await signOut(auth);
@@ -378,7 +384,7 @@ export default {
             router.push("/");
 
             toast.add({
-              severity: "error",
+              severity: "success", // Changed from "error" to "success" since it's a successful logout
               summary: "Logged out successfully!",
               group: "error",
               life: 2000,
@@ -392,11 +398,17 @@ export default {
         console.error("Error during logout:", error);
         toast.add({
           severity: "error",
+
           summary: "Error during logout!",
+
+          summary: "Logged out Failed!",
+          summary2: "Try again after sometime.",
+
           group: "error",
-          life: 2000,
+          life: 3000,
         });
       } finally {
+        isLoggingOut.value = false; // Re-enable the button once the process is complete
         hidePopup();
         toggleCardDropdown();
       }

@@ -16,5 +16,6 @@ config.PORT_IP = {
 config.ADD_QA_DATA = config.PORT_IP.LOGIN + "/chats/saveClickedSuggestedQnA";
 config.CHAT_BOT_DATA = config.PORT_IP.LOGIN + "/chats/addQnA";
 config.GET_CHAT_BOT_DATA = config.PORT_IP.LOGIN + "/chats/getChatsperUser";
+config.CHAT_BOT_Feedback = config.PORT_IP.LOGIN + "/chats/answerFeedback";
 
 export default config;
