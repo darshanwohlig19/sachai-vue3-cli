@@ -308,7 +308,7 @@
           </div>
         </div>
       </div>
-
+      <div id="sign-in-button"></div>
       <!-- Carousel for mobile view -->
       <Carousel
         :value="mobileProducts"
@@ -338,18 +338,14 @@
 </template>
 
 <script setup>
-import InputOtp from "primevue/inputotp";
 import { ref, onMounted } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
-import { auth } from "@/firebaseConfig";
 import { ProductService } from "../assets/service/ProductService";
 import { MobileService } from "../assets/service/MobileService";
 import {
   signInWithPopup,
   OAuthProvider,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
   getAuth,
   GoogleAuthProvider,
 } from "firebase/auth";
@@ -357,23 +353,18 @@ import {
 // Reactive variables for desktop and mobile products
 const router = useRouter();
 const toast = useToast();
-const selectedCountryCode = ref("IN"); // Default to India (IN)
-const phoneNumber = ref("");
-const verificationCode = ref("");
-const showPhoneVerification = ref(false);
-const appVerifier = ref(null);
-const verificationCodeTab = ref(false);
-// const userName = ref("");
-// const userEmail = ref("");
-// const userId = ref("");
-// const products = ref([]);
 const desktopProducts = ref([]);
 const mobileProducts = ref([]);
-// const phoneNumber = ref("");
-// const verificationCode = ref("");
-// const showPhoneVerification = ref(false);
-// const verificationCodeTab = ref(false);
-
+const auth = getAuth();
+const captcha = async () => {
+  window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
+    size: "invisible",
+    callback: (response) => {
+      // reCAPTCHA solved, allow signInWithPhoneNumber.
+      onSignInSubmit();
+    },
+  });
+};
 const responsiveOptions = ref([
   {
     breakpoint: "1400px",
@@ -416,33 +407,16 @@ onMounted(async () => {
   try {
     // Fetching products for desktop
     const desktopData = await ProductService.getProductsSmall();
-    desktopProducts.value = desktopData.slice(0, 9) || []; // Fallback to empty array if no data
+    desktopProducts.value = desktopData.slice(0, 9) || [];
 
     // Fetching products for mobile
     const mobileData = await MobileService.getProductsSmall();
-    mobileProducts.value = mobileData.slice(0, 9) || []; // Fallback to empty array if no data
+    mobileProducts.value = mobileData.slice(0, 9) || [];
   } catch (error) {
     console.error("Error fetching products:", error);
-    // You might also set a state to show an error message or a default view
   }
 });
-const captcha = async () => {
-  console.log("ReCAPTCHA solved:");
-  const auth = getAuth();
 
-  appVerifier.value = window.recaptchaVerifier = new RecaptchaVerifier(
-    auth,
-    "recaptcha-container",
-    {
-      size: "invisible",
-      callback: (response) => {
-        console.log(response);
-        showPhoneVerification.value = true;
-      },
-    }
-  );
-  sendVerificationCode();
-};
 const loginWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider();
@@ -450,15 +424,7 @@ const loginWithGoogle = async () => {
     const auth = getAuth();
     signInWithPopup(auth, provider)
       .then(async (result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
         const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        console.log(token);
-        console.log(credential);
-        console.log("USER>>>>>>>>>>>");
 
         // Send user data to API
         await sendUserDataToApi(
@@ -467,13 +433,7 @@ const loginWithGoogle = async () => {
           user.providerData[0]?.uid
         );
 
-        // // Show toast notification after navigation
-        // toast.add({
-        //   severity: "success",
-        //   summary: "Successfully Login",
-        //   detail: "Successfully logged in with Google!",
-        //   life: 3000,
-        // });
+        // Show success toast
         toast.add({
           severity: "success",
           summary: "Logged in successfully!",
@@ -481,25 +441,17 @@ const loginWithGoogle = async () => {
           group: "success",
           life: 3000,
         });
-        // Wait for navigation to complete
+
+        // Navigate to home
         setTimeout(() => {
           router.push("/");
         }, 0);
-        // ...
       })
       .catch((error) => {
-        console.log(error);
-        // Handle Errors here.
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // // The email of the user's account used.
-        // const email = error.customData.email;
-        // // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        console.error(error);
       });
   } catch (error) {
-    console.error("Apple login failed:", error);
+    console.error("Google login failed:", error);
     toast.add({
       severity: "error",
       summary: "Login Failed!",
@@ -517,26 +469,16 @@ const signInWithApple = async () => {
 
     const auth = getAuth();
     const result = await signInWithPopup(auth, appleProvider);
-
-    // The signed-in user info
     const user = result.user;
 
-    // Apple credential
-    // const credential = OAuthProvider.credentialFromResult(result);
-    // const accessToken = credential.accessToken;
-    // const idToken = credential.idToken;
-
-    // Sending user data to your API
+    // Send user data to API
     await sendUserDataToApi(
       user.providerData[0]?.displayName,
       user.providerData[0]?.email,
       user.providerData[0]?.uid
     );
 
-    // Log the user info
-    console.log("Apple User Info:", user);
-
-    // Show a success toast
+    // Show success toast
     toast.add({
       severity: "success",
       summary: "Logged in successfully!",
@@ -545,15 +487,12 @@ const signInWithApple = async () => {
       life: 3000,
     });
 
-    // Wait for navigation to complete
+    // Navigate to home
     setTimeout(() => {
       router.push("/");
     }, 0);
   } catch (error) {
-    // Handle errors here
     console.error("Apple login failed:", error);
-
-    // Show an error toast
     toast.add({
       severity: "error",
       summary: "Login Failed!",
@@ -577,7 +516,6 @@ const sendUserDataToApi = async (name, email, id) => {
     },
     type: "google",
   };
-  console.log("payload", payload);
 
   try {
     const response = await fetch(apiUrl, {
@@ -593,53 +531,14 @@ const sendUserDataToApi = async (name, email, id) => {
     }
 
     const responseData = await response.json();
-    console.log("API Response:", responseData);
     const token = responseData.data;
-
     localStorage.setItem("apiDataToken", token);
-    console.log("Stored token:", localStorage.getItem("apiDataToken"));
   } catch (error) {
     console.error("Failed to send data to API:", error);
   }
 };
-
-const togglePhoneVerification = () => {
-  captcha();
-  showPhoneVerification.value = true;
-};
-
-const handleSendVerificationCode = () => {
-  sendVerificationCode();
-  verificationCodeTab.value = true;
-};
-const sendVerificationCode = async () => {
-  try {
-    console.log("Sending OTP to:", phoneNumber.value);
-
-    const confirmationResult = await signInWithPhoneNumber(
-      auth,
-      phoneNumber.value,
-      appVerifier.value
-    );
-
-    console.log("Verification code sent to:", phoneNumber.value);
-    window.confirmationResult = confirmationResult;
-  } catch (error) {
-    console.error("Failed to send verification code:", error.message);
-    console.log(`Error: ${error.message}`);
-  }
-};
-const verifyCode = async () => {
-  try {
-    const confirmationResult = window.confirmationResult;
-    const result = await confirmationResult.confirm(verificationCode.value);
-    console.log("User Info:", result);
-    router.push("/");
-  } catch (error) {
-    console.error("Verification failed:", error);
-  }
-};
 </script>
+
 <style>
 .main-login {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
