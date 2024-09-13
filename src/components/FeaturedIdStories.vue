@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white p-3 rounded-lg shadow-md mx-auto">
+  <div class="bg-white p-3 rounded-lg shadow-md mx-auto h-[682px]">
     <span
-      class="text-2xl font-bold mb-4 border-l-4 text-[#1E0627] border-red-500 pl-2"
+      class="text-lg font-bold mb-4 border-l-4 text-[#1E0627] border-red-500 pl-2"
     >
       Featured News
     </span>

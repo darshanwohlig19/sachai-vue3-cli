@@ -1,17 +1,25 @@
 <template>
   <div
-    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card h-full"
+    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card h-[682px] flex flex-col"
   >
-    <div class="bg-[#320A38] text-white p-4">
-      <h2 class="text-xl font-Lato leading-tight">
-        <!-- {{ category?.headline }} -->
-        Chat Assistant
-      </h2>
+    <!-- Chat Header -->
+    <div class="bg-[#320A38] text-white h-[70px]">
+      <div class="text-base font-Lato leading-tight flex items-center">
+        <div
+          class="h-[2rem] w-[10%] bg-white rounded-full flex items-center justify-center overflow-hidden mt-3 ml-3"
+        >
+          <img :src="commentsImg" />
+        </div>
+        <span class="ml-2 mt-[10px]">Chat Assistant</span>
+      </div>
     </div>
-    <div class="overflow-y-auto h-screen">
+
+    <!-- Chat Body -->
+    <div class="scrollable-container flex-grow overflow-y-auto p-1">
+      <!-- Suggested QnA -->
       <div
         v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
-        class="p-3 bg-gray-100 rounded-lg shadow-md w-[85%] mx-auto showQuestions ? 'h-assist-card' : 'h-0 overflow-hidden' mt-[3%]"
+        class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto showQuestions ? 'h-assist-card' : 'h-0 overflow-hidden' mt-[3%]"
       >
         <h2 class="text-lg font-bold mb-2 text-[#131314]">
           Need any assistance with your queries?
@@ -39,13 +47,14 @@
         </div>
       </div>
 
-      <div v-if="conversation.length" class="p-4 space-y-4">
+      <!-- Conversation Messages -->
+      <div v-if="conversation.length">
         <div
           v-for="(message, index) in conversation"
           :key="index"
           :class="{
-            'flex justify-end': message.type === 'user',
-            'text-left': message.type === 'bot',
+            'flex justify-end mt-2 ': message.type === 'user',
+            'text-left mt-2': message.type === 'bot',
           }"
         >
           <div
@@ -61,7 +70,7 @@
             <p v-if="message.type === 'bot'">
               {{ message.text }}
             </p>
-            <hr v-if="message.type === 'bot'" />
+            <hr class="mt-1 mb-1" v-if="message.type === 'bot'" />
             <div
               class="flex items-center space-x-4"
               v-if="message.type === 'bot'"
@@ -79,20 +88,20 @@
                 <span
                   :class="[
                     'p-1 rounded-full w-10 flex items-center justify-center',
-                    thumbsUpSelected ? 'text-green-500' : 'bg-gray-400',
+                    thumbsUpSelected ? 'text-green-500' : 'bg-[#D8E7FF]',
                   ]"
                   @click.stop="toggleThumbsUp"
                 >
-                  <i class="pi pi-thumbs-up text-xl text-white"></i>
+                  <i class="pi pi-thumbs-up text-xl text-[#1E0627]"></i>
                 </span>
                 <span
                   :class="[
                     'p-1 rounded-full w-10 flex items-center justify-center',
-                    thumbsDownSelected ? 'text-red-500' : 'bg-gray-400',
+                    thumbsDownSelected ? 'text-red-500' : 'bg-[#D8E7FF]',
                   ]"
                   @click.stop="toggleThumbsDown"
                 >
-                  <i class="pi pi-thumbs-down text-xl text-white"></i>
+                  <i class="pi pi-thumbs-down text-xl text-[#1E0627]"></i>
                 </span>
               </button>
             </div>
@@ -101,7 +110,8 @@
       </div>
     </div>
 
-    <div class="bg-gray-100 p-4 mt-input">
+    <!-- Chat Input (Fixed at bottom) -->
+    <div class="bg-gray-100 p-4">
       <div class="flex items-center bg-white rounded overflow-hidden">
         <input
           type="text"
@@ -125,6 +135,7 @@
 <script setup>
 import { defineProps, ref, onMounted } from "vue";
 import vectorImg from "@/assets/png/Vector.png";
+import commentsImg from "@/assets/svg/chatComments.svg";
 import { useRoute } from "vue-router";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
@@ -137,7 +148,8 @@ const props = defineProps({
 });
 
 const route = useRoute();
-const newsItem = ref(null);
+const chatsData = ref([]);
+console.log("chatsData", chatsData);
 const userQuestion = ref("");
 const conversation = ref([]);
 const showQuestions = ref(true);
@@ -167,7 +179,7 @@ const handleQnAClick = async (question, index) => {
     conversation.value.push({ type: "bot", text: botMessage });
   }
 
-  const payload = { question: conversation.value };
+  const payload = { question: question };
   try {
     await apiService.apiCall(
       "post",
@@ -202,10 +214,10 @@ const handleChatClick = async () => {
     userQuestion.value = "";
   } catch (error) {
     console.error("Error fetching response:", error);
-    conversation.value.push({
-      type: "bot",
-      text: "Sorry, there was an error processing your request.",
-    });
+    // conversation.value.push({
+    //   type: "bot",
+    //   text: "Sorry, there was an error processing your request.",
+    // });
 
     userQuestion.value = "";
   }
@@ -230,11 +242,18 @@ const chatBotData = async () => {
       "get",
       `${apiConfig.GET_CHAT_BOT_DATA}/${newsId}`
     );
-    newsItem.value = response.data;
+    chatsData.value = response.data;
+
+    // Populate conversation array with chatsData
+    chatsData.value.forEach((chat) => {
+      conversation.value.push({ type: "user", text: chat.question });
+      conversation.value.push({ type: "bot", text: chat.answer });
+    });
   } catch (error) {
     console.error("Error fetching news item:", error);
   }
 };
+
 const typewriterEffect = (text, delay = 50) => {
   const message = ref("");
   let index = 0;
@@ -254,7 +273,7 @@ const toggleThumbsUp = () => {
   thumbsUpSelected.value = !thumbsUpSelected.value;
   if (thumbsUpSelected.value) {
     thumbsDownSelected.value = false;
-    handleFeedbackClick("positive"); // Send positive feedback
+    handleFeedbackClick("positive");
   }
 };
 
@@ -262,7 +281,7 @@ const toggleThumbsDown = () => {
   thumbsDownSelected.value = !thumbsDownSelected.value;
   if (thumbsDownSelected.value) {
     thumbsUpSelected.value = false;
-    handleFeedbackClick("negative"); // Send negative feedback
+    handleFeedbackClick("negative");
   }
 };
 onMounted(() => {
@@ -278,10 +297,6 @@ onMounted(() => {
 
 .h-assist-card {
   height: 390px;
-}
-
-.mt-input {
-  margin-top: 20px;
 }
 
 .bg-assist-card {
@@ -327,5 +342,9 @@ onMounted(() => {
 
 .text-white {
   color: #ffffff;
+}
+.scrollable-container {
+  height: 100%; /* Set your desired height */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 </style>

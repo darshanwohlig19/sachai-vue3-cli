@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-3 justify-between bg-white rounded-[10px] mt-3"
+    class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-4 justify-between bg-white rounded-[10px]"
   >
     <div
       class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col cursor-pointer"
@@ -9,27 +9,12 @@
         class="relative drop-shadow-lg"
         @click="navigateToCategory(blogs[0]?._id)"
       >
-        <div
-          class="relative h-[234px] bg-white rounded-lg shadow-lg overflow-hidden"
-        >
-          <div class="relative w-[100%] h-[100%]">
-            <img
-              class="absolute inset-0 object-cover h-full w-full filter blur-sm"
-              :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
-            />
-            <div
-              class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
-            ></div>
-          </div>
-          <div
-            class="absolute inset-0 flex flex-col justify-between text-white"
-          >
-            <img
-              class="object-contain h-full w-[100%]"
-              :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
-            />
-          </div>
-        </div>
+        <img
+          :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
+          class="rounded-[8px] h-[234px] w-full"
+          r
+          alt=""
+        />
         <div
           class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
         ></div>
@@ -49,7 +34,7 @@
         </div>
       </div>
 
-      <div class="flex flex-row gap-10 mt-3 cursor-pointer leading-tight">
+      <div class="flex flex-row gap-10 mt-5 cursor-pointer">
         <div
           class="font-14 multiline-truncate1"
           @click="navigateToCategory(blogs[1]?._id)"
@@ -65,7 +50,9 @@
         </div>
       </div>
     </div>
-    <div class="w-[100%] between-sm-md:w-[100%] lg:w-[25%] flex flex-col gap-2">
+    <div
+      class="w-[100%] between-sm-md:w-[100%] lg:w-[30%] flex flex-col justify-between"
+    >
       <div v-for="blog in blogs1" :key="blog" class="below-sm:mt-4">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
@@ -86,7 +73,7 @@
     </div>
     <div class="border-1 below-sm:hidden between-sm-md:hidden"></div>
     <div
-      class="w-[100%] between-sm-md:w-[100%] lg:w-[40%] flex flex-col justify-between"
+      class="w-[100%] between-sm-md:w-[100%] lg:w-[35%] flex flex-col justify-between"
     >
       <div
         v-for="(item, index) in blogs2"
