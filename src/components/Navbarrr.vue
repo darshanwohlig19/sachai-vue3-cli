@@ -59,12 +59,10 @@
               placeholder="Search"
               class="pr-10 pl-3 py-2 w-full font-[#1E0627] rounded-[100px] text-[12px] font-lato border-1"
             />
-            <!-- Search Icon -->
             <img
               src="../assets/svg-icons/search.svg"
               class="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-500"
             />
-            <!-- Search Results -->
             <div
               v-if="searchResults.length"
               class="absolute w-full bg-white p-2 border border-gray-300 rounded-md mt-2 z-1 h-[370px] overflow-y-auto slim-scrollbar"
@@ -73,11 +71,10 @@
                 v-for="(result, index) in searchResults"
                 :key="index"
                 class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
-                @click="navigateToNewsDetail(result._id)"
               >
                 <div
-                  @click="navigateToNewsDetail(result._id)"
                   class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
+                  @click="navigateToNewsDetail(result._id)"
                 >
                   <div class="w-[15%]">
                     <img
@@ -95,6 +92,12 @@
               </div>
             </div>
           </div>
+          <!-- <AutoComplete
+            v-model="searchQuery"
+            :suggestions="searchResults"
+            @complete="handleSearch"
+            class="w-[200px] border-1 h-[full]"
+          /> -->
           <router-link class="md:hidden sm-max:block">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
@@ -332,8 +335,8 @@ export default {
     };
 
     const navigateToNewsDetail = (id) => {
+      console.log("Navigate: " + id);
       router.push(`/news/${id}`);
-      console.log("Hello", id);
     };
 
     const toggleMenu = () => {
@@ -439,7 +442,10 @@ export default {
     };
 
     const handleSearch = async () => {
-      if (searchQuery.value.trim().length >= 0) {
+      if (
+        searchQuery.value.trim().length >= 4 &&
+        searchQuery.value.trim().length % 4 === 0
+      ) {
         console.log("API CALLED");
         try {
           const response = await axios.post(
@@ -453,7 +459,7 @@ export default {
         } catch (error) {
           console.error("Error fetching search results:", error);
         }
-      } else {
+      } else if (searchQuery.value.trim().length < 4) {
         searchResults.value = [];
       }
     };
@@ -462,21 +468,21 @@ export default {
       isExpanded.value = true;
     };
 
-    const collapseInput = (event) => {
-      if (searchInput.value && !searchInput.value.contains(event.target)) {
-        isExpanded.value = false;
-        searchResults.value = [];
-        searchQuery.value = ""; // Clear the search input when clicking outside
-      }
-    };
+    // const collapseInput = (event) => {
+    //   if (searchInput.value && !searchInput.value.contains(event.target)) {
+    //     isExpanded.value = false;
+    //     searchResults.value = [];
+    //     searchQuery.value = ""; // Clear the search input when clicking outside
+    //   }
+    // };
 
     onMounted(() => {
-      document.addEventListener("mousedown", collapseInput);
+      // document.addEventListener("mousedown", collapseInput);
       fetchCategories();
     });
 
     onBeforeUnmount(() => {
-      document.removeEventListener("mousedown", collapseInput);
+      // document.removeEventListener("mousedown", collapseInput);
     });
 
     const inputClass = computed(() =>
@@ -486,9 +492,10 @@ export default {
     );
 
     watch(searchQuery, (newValue) => {
-      if (newValue.trim().length >= 0) {
+      // Check if the length is a multiple of 4 and >= 4
+      if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
         handleSearch();
-      } else {
+      } else if (newValue.trim().length < 4) {
         searchResults.value = [];
       }
     });
