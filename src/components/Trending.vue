@@ -1,8 +1,8 @@
 <template>
   <div
-    class="w-full md-max:!block flex justify-between mt-3 relative bg-white p-3 rounded-[10px]"
+    class="w-full md-max:!block flex sm:flex-row lg:flex-row flex-wrap justify-between mt-3 relative bg-white p-3 rounded-[10px]"
   >
-    <div class="relative w-[30%]">
+    <div class="relative w-[100%] lg:w-[30%] md:w-[48%]">
       <div class="trendingCarousel">
         <Carousel
           :value="blogs"
@@ -92,7 +92,9 @@
       </div>
     </div>
 
-    <div class="xl-max:w-[100%] w-[35%] flex flex-col gap-1">
+    <div
+      class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 md:mt-0 lg:mt-0 flex flex-col gap-3"
+    >
       <div
         @click="navigateToTrending(item._id)"
         v-for="(item, index) in news.slice(0, 3)"
@@ -112,7 +114,9 @@
     <div class="w-[1%] xl-max:!hidden flex justify-center">
       <div class="divider11"></div>
     </div>
-    <div class="w-[30%] flex flex-col justify-between">
+    <div
+      class="w-[100%] lg:w-[30%] md:w-[100%] lg:mt-0 mt-3 flex flex-col justify-between"
+    >
       <div
         @click="navigateToTrending(blog._id)"
         v-for="(blog, index) in blogs.slice(0, 4)"
@@ -270,7 +274,7 @@ export default {
 }
 .trendingCarousel .p-carousel {
   position: relative;
-  width: 28vw !important;
+  width: 100% !important;
 }
 .image-small {
   height: 10px;

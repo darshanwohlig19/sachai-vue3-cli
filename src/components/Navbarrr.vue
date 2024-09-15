@@ -40,7 +40,6 @@
               >Bookmark</RouterLink
             >
           </div>
-
           <div class="hidden lg:flex head-navs">
             <a href="#" class="nav-items" @click="handleAuthAction">
               {{ isLoggedIn ? "Logout" : "Login" }}

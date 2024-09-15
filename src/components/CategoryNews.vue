@@ -13,7 +13,7 @@
             </a>
           </div>
           <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
-            <div class="md-max:w-[100%] w-[65%]">
+            <div class="w-[100%] lg:w-[65%]">
               <div class="flex flex-col gap-5">
                 <div class="flex sm:flex-row flex-col gap-3 h-[100%]">
                   <div class="md:w-[70%] w-[100%]">
@@ -105,7 +105,7 @@
             </div>
             <div class="divider-vertical"></div>
             <div
-              class="md-max:w-[100%] w-[35%] flex flex-col justify-between gap-3 sm:gap-3"
+              class="w-[100%] lg:w-[35%] flex flex-col justify-between gap-3 sm:gap-3"
             >
               <div v-for="news in category.news.slice(9, 13)" :key="news._id">
                 <div
