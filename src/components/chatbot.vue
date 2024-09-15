@@ -53,8 +53,8 @@
           v-for="(message, index) in conversation"
           :key="index"
           :class="{
-            'flex justify-end mt-2 ': message.type === 'user',
-            'flex justify-start mt-2': message.type === 'bot',
+            'flex justify-end mt-2 font-medium ': message.type === 'user',
+            'flex justify-start mt-2 font-medium': message.type === 'bot',
           }"
         >
           <!-- Message Box for both User and Bot -->
@@ -64,7 +64,7 @@
                 message.type === 'user',
               'bg-gray-100 text-gray-800': message.type === 'bot',
             }"
-            class="p-4 rounded-lg max-w-[22rem] shadow"
+            class="p-3 rounded-lg max-w-[22rem] shadow"
           >
             <!-- Message Text -->
             <p v-if="message.type === 'user'">{{ message.text }}</p>

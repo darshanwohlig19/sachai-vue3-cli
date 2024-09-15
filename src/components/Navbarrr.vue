@@ -74,10 +74,9 @@
                 v-for="(result, index) in searchResults"
                 :key="index"
                 class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
-                @click="navigateToNewsDetail(result._id)"
+                @click="navigateToNewsDetail(result_id)"
               >
                 <div
-                  @click="navigateToNewsDetail(result._id)"
                   class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
                 >
                   <div class="w-[15%]">
@@ -87,7 +86,6 @@
                     />
                   </div>
                   <div
-                    @click="navigateToNewsDetail(result._id)"
                     class="w-[80%] flex justify-start items-center text-start font-light font-[#1E0627] font-source-serif text-[13px] two_line"
                   >
                     {{ result.headline }}
@@ -332,11 +330,6 @@ export default {
       }
     };
 
-    const navigateToNewsDetail = (id) => {
-      router.push(`/news/${id}`);
-      console.log("Hello", id);
-    };
-
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
     };
@@ -364,7 +357,10 @@ export default {
     const hidePopup = () => {
       isPopupVisible.value = false;
     };
-
+    const navigateToNewsDetail = (id) => {
+      router.push(`/news/${id}`);
+      console.log("Navigating to news detail with ID:", id);
+    };
     const handleLogout = async () => {
       if (isLoggingOut.value) return; // Prevent multiple clicks
       isLoggingOut.value = true;

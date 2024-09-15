@@ -1,91 +1,219 @@
 <template>
-  <div class="bg-white p-3 rounded-lg shadow-md mx-auto h-[682px]">
-    <div class="flex justify-between w-full items-center mb-3">
+  <div class="p-2">
+    <div class="flex justify-between w-full items-center">
       <span
-        class="text-[18px] font-bold mb-1 border-l-4 border-red-500 text-[#1E0627] pl-2"
+        class="text-[18px] font-bold mb-3 border-l-4 border-red-500 text-[#1E0627] pl-2"
       >
-        Featured News
+        Related Newss
       </span>
       <button
-        className="text-[#FF0053] bg-[#fff0f5] px-3 py-1 rounded-md text-sm font-medium flex items-center"
+        className="text-[#FF0053] bg-[#fff0f5] px-3 py-1  text-sm font-medium flex items-center rounded-md"
       >
         View all &nbsp;→
       </button>
     </div>
-    <div class="space-y-4">
+    <div
+      class="flex flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
+    >
       <div
-        v-for="(item, index) in newsItems.slice(0, 7)"
-        :key="index"
-        class="flex items-start space-x-4 bg-white rounded-[10px] drop-shadow-md p-1 leading-none"
+        v-for="news in slicedData"
+        :key="news._id"
+        class="w-[33%] md-max:w-full h-[303px]"
       >
-        <img
-          :src="item.imgixUrlHighRes"
-          alt="News thumbnail"
-          class="w-24 h-16 object-cover rounded-lg"
-        />
-        <div class="flex-1">
-          <span class="font-semibold multiline-truncate1 text-sm mb-1">{{
-            item.headline
-          }}</span>
+        <div
+          class="flex flex-col bg-white rounded-[10px] drop-shadow-sm h-[324px]"
+        >
+          <div class="rounded-[10px]">
+            <img
+              :src="news.imgixUrlHighRes"
+              class="relative z-10 h-40 w-full rounded-[10px] object-fill"
+              alt=""
+            />
+          </div>
+          <div class="flex justify-between items-center p-1">
+            <div class="flex gap-1 text-[#676767] text-xs font-medium pl-[4%]">
+              <div>{{ news.source }}</div>
+              <div>| {{ formatPublishTime(news.publishTime) }}</div>
+            </div>
+            <div class="flex gap-1">
+              <span class="mdi mdi-share-variant text-[19px]"></span>
+              <span
+                :class="[
+                  'mdi',
+                  news.bookmarked
+                    ? 'mdi-bookmark text-red-500'
+                    : 'mdi-bookmark-outline text-[21px]',
+                ]"
+                class="cursor-pointer"
+                @click="addBookmark(news._id)"
+              ></span>
+            </div>
+          </div>
+          <div
+            class="pl-3 pr-3 text-[16px] font-semibold"
+            @click="navigateToNewsDetail(news._id)"
+          >
+            <a
+              class="hover:text-current font-semibold text-base multiline-truncate1 text-[#1E0627]"
+            >
+              {{ news?.headline }}
+            </a>
+          </div>
+          <div class="pl-3 pr-3 para multiline-truncate text-[#878787]">
+            {{ news?.summary }}
+          </div>
+          <div class="px-3 pb-3 text-[12px] flex gap-1">
+            <span class="text-neon-pink bold">{{ news?.source }}</span>
+            <span>| 4 min read</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount, computed, defineProps } from "vue";
 import axios from "axios";
+import moment from "moment";
+import { useRoute, useRouter } from "vue-router";
 
-export default {
-  props: {
-    categories: {
-      type: Array,
-      required: true,
-    },
+const props = defineProps({
+  category: {
+    type: Object,
+    required: true,
   },
-  data() {
-    return {
-      newsItems: [], // Initialize newsItems
-    };
-  },
-  methods: {
-    async fetchBlogs() {
-      try {
-        const languageId = "6421a32aa020a23deacecf92";
-        // const categoryData = this.categories?.categoriesId?.length
-        //   ? this.categories.categoriesId[0]
-        //   : null;
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
-          { categoryId: "63d90e4098d783ac0cbe2310", languageId: languageId }
-        );
-        console.log("Fetched blogs:", response.data);
-        this.newsItems = response.data;
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
-    },
-  },
-  mounted() {
-    this.fetchBlogs();
-    console.log("Categories prop:", this.categories);
-  },
+});
+console.log("category", props);
+
+const route = useRoute();
+const router = useRouter();
+
+const blogs = ref([]);
+console.log("blogs", blogs);
+const screenWidth = ref(window.innerWidth);
+const newsId = ref(route.params.id || "");
+
+const fetchBlogs = async () => {
+  try {
+    const languageId = "6421a32aa020a23deacecf92";
+    // const categoryData = this.categories?.categoriesId?.length
+    //   ? this.categories.categoriesId[0]
+    //   : null;
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb`,
+      { categoryId: "63d90e4098d783ac0cbe2310", languageId: languageId }
+    );
+    blogs.value = response.data.map((news) => ({
+      ...news,
+      bookmarked: false, // Initialize with 'false'
+    }));
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+  }
 };
+
+const formatPublishTime = (publishTime) => {
+  return moment(publishTime).fromNow();
+};
+
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
+
+const navigateToNewsDetail = (id) => {
+  router.push(`/news/${id}`);
+};
+const addBookmark = async (id) => {
+  try {
+    const token = localStorage.getItem("apiDataToken");
+    if (!token) {
+      throw new Error("No authentication token found");
+    }
+
+    // Find the news item to check its current bookmark status
+    const newsItem = blogs.value.find((news) => news._id === id);
+
+    // Toggle the status between "Enabled" and "Disabled"
+    const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
+
+    const res = await axios.post(
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${newsId.value}`,
+      { status: newStatus },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+    console.log("hiii", res);
+
+    // Update the local state to reflect the new bookmark status
+    newsItem.bookmarked = !newsItem.bookmarked;
+
+    console.log(
+      `News item ${id} bookmark status updated successfully to ${newStatus}`
+    );
+  } catch (error) {
+    if (error.response) {
+      console.error(
+        `Error updating bookmark status for news item ${id}:`,
+        error.response.data
+      );
+    } else if (error.request) {
+      console.error(
+        `Error updating bookmark status for news item ${id}: No response received`,
+        error.request
+      );
+    } else {
+      console.error(
+        `Error updating bookmark status for news item ${id}:`,
+        error.message
+      );
+    }
+  }
+};
+
+const checkRouteParam = () => {
+  newsId.value = route.params.id || "";
+};
+
+const slicedData = computed(() => {
+  if (screenWidth.value < 640) {
+    // Mobile devices
+    return blogs.value.slice(0, 1);
+  } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
+    // Tablets
+    return blogs.value.slice(0, 3);
+  } else {
+    // Desktop and larger devices
+    return blogs.value.slice(0, 3);
+  }
+});
+onMounted(() => {
+  fetchBlogs();
+  checkRouteParam();
+  window.addEventListener("resize", updateScreenWidth);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateScreenWidth);
+});
 </script>
 
-<style>
-.fontCustom {
-  font-family: "source-serif-pro-semibold";
+<style scoped>
+.multiline-truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .multiline-truncate1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.font-semibold {
-  font-family: "Source Serif Pro", serif;
-  font-weight: 600;
 }
 </style>

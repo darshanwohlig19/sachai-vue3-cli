@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
-.font-12{
+.font-12 {
   font-family: "Lato", sans-serif;
   font-size: 12px;
   font-weight: 700;
@@ -115,7 +115,27 @@
   display: none;
 }
 
-.custom-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* Hide scrollbar by default */
+.slim-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.slim-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slim-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.slim-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Show scrollbar when scrolled */
+.show-scrollbar::-webkit-scrollbar {
+  opacity: 1;
 }
