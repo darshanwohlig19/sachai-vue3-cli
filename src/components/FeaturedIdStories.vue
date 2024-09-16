@@ -1,10 +1,10 @@
 <template>
-  <div class="p-2">
+  <div class="p-1">
     <div class="flex justify-between w-full items-center">
       <span
         class="text-[18px] font-bold mb-3 border-l-4 border-red-500 text-[#1E0627] pl-2"
       >
-        Related Newss
+        Related News
       </span>
       <button
         className="text-[#FF0053] bg-[#fff0f5] px-3 py-1  text-sm font-medium flex items-center rounded-md"
@@ -60,7 +60,7 @@
             </a>
           </div>
           <div class="pl-3 pr-3 para multiline-truncate text-[#878787]">
-            {{ news?.summary }}
+            hellooooooooooooooooooooooooooooooooo
           </div>
           <div class="px-3 pb-3 text-[12px] flex gap-1">
             <span class="text-neon-pink bold">{{ news?.source }}</span>
@@ -97,12 +97,9 @@ const newsId = ref(route.params.id || "");
 const fetchBlogs = async () => {
   try {
     const languageId = "6421a32aa020a23deacecf92";
-    // const categoryData = this.categories?.categoriesId?.length
-    //   ? this.categories.categoriesId[0]
-    //   : null;
     const response = await axios.post(
-      `https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb`,
-      { categoryId: "63d90e4098d783ac0cbe2310", languageId: languageId }
+      `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`,
+      { languageId: languageId }
     );
     blogs.value = response.data.map((news) => ({
       ...news,

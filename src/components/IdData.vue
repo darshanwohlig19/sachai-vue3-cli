@@ -5,7 +5,7 @@
       <!-- Main Content -->
       <div class="flex-grow flex flex-col h-full max-w-[66%]">
         <div
-          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-72 w-[913px] flex"
+          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-[22rem] w-[913px] flex"
         >
           <!-- Combined content -->
           <div class="w-full flex p-2.5">
@@ -27,7 +27,7 @@
               >
                 {{ newsItem?.headline }}
               </span>
-              <div class="flex items-center ml-[1px]">
+              <div class="flex items-center ml-[1px] text-xs">
                 <span class="text-neon-pink mr-1 capitalize">
                   {{ newsItem?.categoriesName[0] }}
                 </span>
@@ -83,7 +83,7 @@
                 </div>
               </div>
               <div
-                class="text-[#878787] space-y-4 font-lato mt-[1%] text-sm ml-[1px] overflow-y-auto slim-scrollbar"
+                class="text-[#878787] space-y-4 font-lato mt-[1%] text-sm ml-[1px]"
               >
                 <p>
                   {{ newsItem?.summary }}
@@ -96,7 +96,7 @@
         <div
           class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-96 w-[913px] flex mt-[1%]"
         >
-          <FeatureNews :category="newsItem" />
+          <FeatureNews />
         </div>
       </div>
 
@@ -107,15 +107,15 @@
       </div>
     </div>
 
-    <div class="mt-1 bg-white shadow-lg rounded-lg">
-      <RelatedNewsData />
+    <div class="mt-1 bg-white shadow-lg rounded-lg" v-if="newsItem?._id">
+      <RelatedNewsData :category="newsItem" />
     </div>
   </div>
   <Footer />
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import Footer from "@/components/Footer.vue";
@@ -139,12 +139,14 @@ const fetchNewsItem = async () => {
       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${newsId}`
     );
     newsItem.value = response.data;
+    console.log(" newsItem.value----", newsItem.value);
   } catch (error) {
     console.error("Error fetching news item:", error);
   }
 };
 
-onMounted(() => {
+onBeforeMount(() => {
+  console.log("parent---");
   if (newsId) {
     fetchNewsItem();
   }

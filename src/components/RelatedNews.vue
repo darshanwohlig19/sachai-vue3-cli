@@ -4,7 +4,7 @@
       <span
         class="text-[18px] font-bold mb-3 border-l-4 border-red-500 text-[#1E0627] pl-2"
       >
-        Related News
+        Featured News
       </span>
       <button
         className="text-[#FF0053] bg-[#fff0f5] px-3 py-1  text-sm font-medium flex items-center rounded-md"
@@ -16,7 +16,7 @@
       class="flex flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
     >
       <div
-        v-for="news in slicedData"
+        v-for="news in featuredNewsItem.slice(0, 4)"
         :key="news._id"
         class="w-[33%] md-max:w-full"
       >
@@ -71,30 +71,56 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+import {
+  ref,
+  onMounted,
+  onBeforeUnmount,
+  computed,
+  defineProps,
+  // toRefs,
+} from "vue";
 import axios from "axios";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
+const featuredNewsItem = ref([]);
+const props = defineProps(
+  ["category"]
+  //   {category: {
+  //     type: Object,
+  //     required: true,
+  //   },
+  // }
+);
+console.log("props", props, props.category);
 
+const categoryId = computed(() => {
+  console.log("props---", props.value);
+  console.log("props?.category--", props?.category);
+  console.log("props?.category?.categoriesId", props?.category?.categoriesId);
+  return props?.category?.categoriesId[0];
+});
 const blogs = ref([]);
 console.log("blogs", blogs);
 const screenWidth = ref(window.innerWidth);
 const newsId = ref(route.params.id || "");
-
 const fetchBlogs = async () => {
+  const payload = {
+    categoryId: categoryId.value,
+  };
+  console.log("payload", payload);
   try {
     const response = await axios.post(
-      `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`,
-      {
-        language: "6421a32aa020a23deacecf92",
-      }
+      `https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb`,
+      payload
     );
+    featuredNewsItem.value = response.data;
+    console.log(" featuredNewsItem.value----", featuredNewsItem.value);
     blogs.value = response.data.map((news) => ({
       ...news,
-      bookmarked: false, // Initialize with 'false'
+      bookmarked: false,
     }));
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -166,22 +192,23 @@ const checkRouteParam = () => {
   newsId.value = route.params.id || "";
 };
 
-const slicedData = computed(() => {
-  if (screenWidth.value < 640) {
-    // Mobile devices
-    return blogs.value.slice(0, 1);
-  } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
-    // Tablets
-    return blogs.value.slice(0, 3);
-  } else {
-    // Desktop and larger devices
-    return blogs.value.slice(0, 4);
-  }
-});
+// const slicedData = computed(() => {
+//   if (screenWidth.value < 640) {
+//     // Mobile devices
+//     return blogs.value.slice(0, 1);
+//   } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
+//     // Tablets
+//     return blogs.value.slice(0, 3);
+//   } else {
+//     // Desktop and larger devices
+//     return blogs.value.slice(0, 4);
+//   }
+// });
 
-onMounted(() => {
-  fetchBlogs();
-  checkRouteParam();
+onMounted(async () => {
+  console.log("children----", categoryId);
+  await checkRouteParam();
+  await fetchBlogs();
   window.addEventListener("resize", updateScreenWidth);
 });
 
