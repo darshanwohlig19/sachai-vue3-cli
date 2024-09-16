@@ -46,7 +46,7 @@
                 </div>
                 <div
                   class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[3px]"
-                  @click="togglePhoneVerification('Login/phone')"
+                  @click="startPhoneVerification"
                 >
                   <img
                     src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
@@ -70,7 +70,7 @@
                 Phone Verification
               </div>
 
-              <div v-if="!verificationCodeTab">
+              <div v-if="!showOtpInput">
                 <div class="flex justify-center mt-4">
                   <CountryCode
                     v-model="selectedCountryCode"
@@ -88,7 +88,7 @@
                 </div>
                 <div class="flex justify-center">
                   <button
-                    @click="handleSendVerificationCode"
+                    @click="loginWithPhone"
                     class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
                   >
                     Send Verification Code
@@ -101,11 +101,11 @@
                   Want to select other login method?
                 </div>
               </div>
-              <div v-else>
+              <div v-if="showOtpInput">
                 <div class="card flex justify-center">
                   <div>
                     <InputOtp
-                      v-model="verificationCode"
+                      v-model="otp"
                       :length="6"
                       integerOnly
                       class="p-2 mt-4 rounded-[4px]"
@@ -114,7 +114,7 @@
                 </div>
                 <div class="flex justify-center">
                   <button
-                    @click="verifyCode"
+                    @click="verifyOtp"
                     class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
                   >
                     Verify OTP
@@ -123,7 +123,7 @@
                 <div class="flex justify-between">
                   <div
                     class="text-center font-lato text-[#5E5E5E] text-[14px] mt-2 cursor-pointer"
-                    @click="verificationCodeTab = false"
+                    @click="showOtpInput = false"
                   >
                     Edit Phone Number?
                   </div>
@@ -217,7 +217,7 @@
                 </div>
                 <div
                   class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
-                  @click="togglePhoneVerification('Login/phone')"
+                  @click="startPhoneVerification"
                 >
                   <img
                     src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
@@ -241,7 +241,7 @@
                 Phone Verification
               </div>
 
-              <div v-if="!verificationCodeTab">
+              <div v-if="!showOtpInput">
                 <div class="flex justify-center mt-4">
                   <CountryCode
                     v-model="selectedCountryCode"
@@ -257,50 +257,55 @@
                     class="border p-2 w-[304px] rounded-[4px]"
                   />
                 </div>
-                <div class="flex justify-center mt-4">
+                <div class="flex justify-center">
                   <button
-                    @click="handleSendVerificationCode"
-                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] w-full"
+                    @click="loginWithPhone"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
                   >
                     Send Verification Code
                   </button>
                 </div>
                 <div
-                  class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
                   @click="showPhoneVerification = false"
+                  class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
                 >
                   Want to select other login method?
                 </div>
               </div>
-              <div v-else>
+              <div v-if="showOtpInput">
                 <div class="card flex justify-center">
                   <div>
                     <InputOtp
-                      v-model="verificationCode"
+                      v-model="otp"
                       :length="6"
                       integerOnly
                       class="p-2 mt-4 rounded-[4px]"
                     />
                   </div>
                 </div>
-                <div class="flex justify-center mt-4">
+                <div class="flex justify-center">
                   <button
-                    @click="verifyCode"
-                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] w-full"
+                    @click="verifyOtp"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
                   >
                     Verify OTP
                   </button>
                 </div>
-                <div class="flex justify-between mt-2">
+                <div class="flex justify-between">
                   <div
-                    class="text-center font-lato text-[#5E5E5E] text-[14px] cursor-pointer"
-                    @click="verificationCodeTab = false"
+                    class="text-center font-lato text-[#5E5E5E] text-[14px] mt-2 cursor-pointer"
+                    @click="showOtpInput = false"
                   >
                     Edit Phone Number?
                   </div>
-                  <div class="text-center text-[#5E5E5E] text-[14px]">
+                  <div
+                    class="text-center text-[14px] font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                  >
                     Resend OTP&nbsp;
-                    <span class="text-[#BBBBBB]">After 30 sec</span>
+                    <span
+                      class="text-center text-[14px] font-lato text-[#BBBBBB] mt-2 cursor-pointer"
+                      >After 30 sec</span
+                    >
                   </div>
                 </div>
               </div>
@@ -348,24 +353,156 @@ import {
   OAuthProvider,
   getAuth,
   GoogleAuthProvider,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
 } from "firebase/auth";
 
 // Reactive variables for desktop and mobile products
+const showPhoneVerification = ref(false);
+
 const router = useRouter();
 const toast = useToast();
 const desktopProducts = ref([]);
 const mobileProducts = ref([]);
+// const auth = getAuth();
+const selectedCountryCode = ref("+91");
+const phoneNumber = ref("");
+const otp = ref("");
+let confirmationResult1 = null;
+const showOtpInput = ref(false);
 const auth = getAuth();
-const captcha = async () => {
-  window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
-    size: "invisible",
-    callback: (response) => {
-      // reCAPTCHA solved, allow signInWithPhoneNumber.
-    },
-  });
+
+const getPhoneNumberFromUserInput = () => {
+  const countryCode = selectedCountryCode.value;
+  const number = phoneNumber.value;
+  return `${countryCode}${number}`;
 };
-const phoneNumber = getPhoneNumberFromUserInput();
-const appVerifier = captcha();
+
+const loginWithPhone = async () => {
+  // const fullPhoneNumber = getPhoneNumberFromUserInput();
+  // if (!fullPhoneNumber) {
+  //   toast.add({
+  //     severity: "error",
+  //     summary: "Phone Number Required!",
+  //     summary2: "Please enter your phone number.",
+  //     group: "error",
+  //     life: 3000,
+  //   });
+  //   return;
+  // }
+
+  try {
+    // const appVerifier = window.recaptchaVerifier;
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
+      size: "invisible",
+      callback: (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        // onSignInSubmit();
+        console.log(response);
+      },
+    });
+    const phoneNumber = getPhoneNumberFromUserInput();
+    const appVerifier = window.recaptchaVerifier;
+
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult;
+        confirmationResult1 = window.confirmationResult;
+        toast.add({
+          severity: "success",
+          summary: "OTP Sent!",
+          summary2: "Please check your phone for the OTP.",
+          group: "success",
+          life: 3000,
+        });
+        showOtpInput.value = true;
+        // ...
+      })
+      .catch((error) => {
+        // Error; SMS not sent
+        // ...
+        toast.add({
+          severity: "error",
+          summary: "Login Failed!",
+          summary2:
+            "An error occurred while sending OTP. Please try again." + error,
+          group: "error",
+          life: 3000,
+        });
+      });
+    // confirmationResult = await signInWithPhoneNumber(
+    //   auth,
+    //   fullPhoneNumber,
+    //   appVerifier
+    // );
+    // showOtpInput.value = true; // Show OTP input after sending OTP
+  } catch (error) {
+    console.error("Phone login failed:", error);
+    toast.add({
+      severity: "error",
+      summary: "Login Failed!",
+      summary2:
+        "An error occurred while sending OTP. Please try again." + error,
+      group: "error",
+      life: 3000,
+    });
+  }
+};
+
+const verifyOtp = async () => {
+  if (!otp.value) {
+    toast.add({
+      severity: "error",
+      summary: "OTP Required!",
+      summary2: "Please enter the OTP you received.",
+      group: "error",
+      life: 3000,
+    });
+    return;
+  }
+
+  toast.add({
+    severity: "success" + otp.value,
+    summary: "OTP Sent!",
+    summary2: "Please check your phone for the OTP.",
+    group: "success",
+    life: 3000,
+  });
+
+  confirmationResult1
+    .confirm(otp.value)
+    .then((result) => {
+      // User signed in successfully.
+      const user = result.user;
+      // console.log(user);
+      toast.add({
+        severity: "success ",
+        summary: "OTP Sent!",
+        summary2: "Success full signUp" + user,
+        group: "success",
+        life: 3000,
+      });
+      router.push("/");
+      console.log(result.user + "USER");
+      // var credential = auth.PhoneAuthProvider.credential(
+      //   confirmationResult1.verificationId,
+      //   otp.value
+      // );
+    })
+    .catch((error) => {
+      // User couldn't sign in (bad verification code?)
+      // ...
+      toast.add({
+        severity: "error",
+        summary: "OTP Required!",
+        summary2: "Please enter the OTP you received." + error,
+        group: "error",
+        life: 3000,
+      });
+    });
+};
 const responsiveOptions = ref([
   {
     breakpoint: "1400px",
@@ -503,11 +640,10 @@ const signInWithApple = async () => {
     });
   }
 };
-
+const startPhoneVerification = () => {
+  showPhoneVerification.value = true;
+};
 const sendUserDataToApi = async (name, email, id) => {
-  console.log("name", name);
-  console.log("email", email);
-  console.log("id", id);
   const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
   const payload = {
     auth0: {
@@ -515,7 +651,7 @@ const sendUserDataToApi = async (name, email, id) => {
       email: email,
       id: id,
     },
-    type: "google",
+    type: "google", // This should be dynamically set based on the provider
   };
 
   try {
