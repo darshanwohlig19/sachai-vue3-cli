@@ -25,8 +25,6 @@
             <div class="flex justify-between items-center p-3">
               <div class="flex gap-1 text-[#676767] text-xs">
                 <div>{{ news.source }}</div>
-                <!-- <div>|</div>
-                <div>{{ formatPublishTime(news.publishTime) }}</div> -->
               </div>
               <div class="flex gap-1">
                 <span class="mdi mdi-share-variant text-[19px]"></span>
@@ -57,14 +55,18 @@
               {{ news.summary }}
             </div>
             <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
-              <span class="text-red-500 bold capitalize">{{
-                news.categories[0].name
-              }}</span>
+              <span class="text-red-500 bold capitalize">
+                {{
+                  news.categories[0].name.toLowerCase() === "ai"
+                    ? news.categories[0].name.toUpperCase()
+                    : news.categories[0].name.replace(/-/g, " ")
+                }}
+              </span>
               <span>
                 <div class="text-[#676767] text-xs">
                   | {{ formatPublishTime(news.publishTime) }}
-                </div></span
-              >
+                </div>
+              </span>
             </div>
           </div>
         </div>
@@ -79,6 +81,7 @@ import axios from "axios";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+
 const route = useRoute();
 const router = useRouter();
 
@@ -138,6 +141,7 @@ const updateScreenWidth = () => {
 const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
 };
+
 const addBookmark = async (id) => {
   try {
     const token = localStorage.getItem("apiDataToken");

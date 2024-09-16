@@ -176,10 +176,10 @@
     <div class="relative h-[100%] w-full mobile">
       <!-- Login Credentials -->
       <div
-        class="absolute inset-0 flex items-center justify-center p-4 z-10 bg-opacity-75"
+        class="absolute w-[350px] inset-0 flex items-center justify-center p-3 z-10 bg-opacity-75"
       >
-        <div class="w-full max-w-[360px] p-4 bg-white rounded-lg shadow-lg">
-          <div class="flex justify-center mt-3">
+        <div class="w-full p-3 bg-white rounded-lg shadow-lg h-[260px]">
+          <div class="flex justify-center mt-2">
             <img
               src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
               class="w-[100px] h-[26px] object-cover"
@@ -187,16 +187,14 @@
           </div>
           <div id="recaptcha-container" class="justify-center flex"></div>
 
-          <div class="mt-2">
+          <div class="">
             <!-- Conditionally render based on showPhoneVerification -->
             <div v-if="!showPhoneVerification">
-              <div class="mt-5">
+              <div class="mt-3">
                 <div class="text-[24px] font-bold text-[#333333] font-lato">
                   Hello !
                 </div>
-                <div
-                  class="mt-2 font-normal text-[16px] text-[#1E0627] font-lato"
-                >
+                <div class="font-normal text-[16px] text-[#1E0627] font-lato">
                   Login to your account
                 </div>
               </div>
@@ -233,7 +231,7 @@
               </div>
 
               <div
-                class="text-center text-[#FF0053] cursor-pointer mt-3 font-lato text-[15px]"
+                class="text-center text-[#FF0053] cursor-pointer mt-2 font-lato text-[15px]"
               >
                 <router-link to="/">Continue without login</router-link>
               </div>
@@ -242,13 +240,13 @@
             <!-- Phone Number Verification UI -->
             <div v-else>
               <div
-                class="text-center mt-5 text-[#333333] font-lato font-[700] text-[18px]"
+                class="text-center mt-3 text-[#333333] font-lato font-[700] text-[18px]"
               >
                 Phone Verification
               </div>
 
               <div v-if="!verificationCodeTab">
-                <div class="flex justify-center mt-4">
+                <div class="flex justify-center mt-3">
                   <CountryCode
                     v-model="selectedCountryCode"
                     class="border p-2 rounded-[4px]"
@@ -266,7 +264,7 @@
                 <div class="flex justify-center">
                   <button
                     @click="handleSendVerificationCode"
-                    class="bg-[#1E0627] font-lato text-center text-[12px] text-[#FFFFFF] p-2 rounded-[10px] mt-3 w-[240px] h-[34px]"
+                    class="bg-[#1E0627] font-lato text-center text-[12px] text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[240px] h-[34px]"
                   >
                     Send Verification Code
                   </button>
