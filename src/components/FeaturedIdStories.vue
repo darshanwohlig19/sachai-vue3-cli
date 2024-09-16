@@ -1,8 +1,8 @@
 <template>
-  <div class="p-1">
+  <div class="p-2">
     <div class="flex justify-between w-full items-center">
       <span
-        class="text-[18px] font-bold mb-3 border-l-4 border-red-500 text-[#1E0627] pl-2"
+        class="text-[18px] p-2 font-bold mb-3 border-l-4 border-red-500 text-[#1E0627] pl-2"
       >
         Related News
       </span>
@@ -13,59 +13,33 @@
       </button>
     </div>
     <div
-      class="flex flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
+      class="flex flex-wrap gap-3 justify-between cursor-pointer drop-shadow-lg"
     >
       <div
-        v-for="news in slicedData"
-        :key="news._id"
-        class="w-[33%] md-max:w-full h-[303px]"
+        v-for="(blog, index) in blogs.slice(0, 4)"
+        :key="index"
+        class="shadow-md w-[48%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer"
       >
-        <div
-          class="flex flex-col bg-white rounded-[10px] drop-shadow-sm h-[324px]"
-        >
-          <div class="rounded-[10px]">
-            <img
-              :src="news.imgixUrlHighRes"
-              class="relative z-10 h-40 w-full rounded-[10px] object-fill"
-              alt=""
-            />
+        <div class="flex-shrink-0">
+          <img
+            class="h-[100%] w-[78px] object-cover rounded-[8px]"
+            :src="blog.imgixUrlHighRes || fallbackImage"
+            alt="Blog Image"
+          />
+        </div>
+        <div class="font-14 p-1">
+          <span class="text-neon-pink mr-1 capitalize">
+            {{ blog?.source }}
+          </span>
+          <span class="text-light-gray mr-2">|</span>
+          <span class="text-light-gray mr-2">
+            {{ formatPublishTime(blog.publishTime) }}
+          </span>
+          <div class="headline-tuncate">
+            {{ blog.headline || "-" }}
           </div>
-          <div class="flex justify-between items-center p-1">
-            <div class="flex gap-1 text-[#676767] text-xs font-medium pl-[4%]">
-              <div>{{ news.source }}</div>
-              <div>| {{ formatPublishTime(news.publishTime) }}</div>
-            </div>
-            <div class="flex gap-1">
-              <span class="mdi mdi-share-variant text-[19px]"></span>
-              <span
-                :class="[
-                  'mdi',
-                  news.bookmarked
-                    ? 'mdi-bookmark text-red-500'
-                    : 'mdi-bookmark-outline text-[21px]',
-                ]"
-                class="cursor-pointer"
-                @click="addBookmark(news._id)"
-              ></span>
-            </div>
-          </div>
-          <div
-            class="pl-3 pr-3 text-[16px] font-semibold"
-            @click="navigateToNewsDetail(news._id)"
-          >
-            <a
-              class="hover:text-current font-semibold text-base multiline-truncate1 text-[#1E0627]"
-            >
-              {{ news?.headline }}
-            </a>
-          </div>
-          <div class="pl-3 pr-3 para multiline-truncate text-[#878787]">
-            hellooooooooooooooooooooooooooooooooo
-          </div>
-          <div class="px-3 pb-3 text-[12px] flex gap-1">
-            <span class="text-neon-pink bold">{{ news?.source }}</span>
-            <span>| 4 min read</span>
-          </div>
+          <span class="text-neon-pink bold">{{ news?.source }}</span>
+          <span class="text-[#1E0627]">| 4 min read</span>
         </div>
       </div>
     </div>
@@ -73,10 +47,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed, defineProps } from "vue";
+import { ref, onMounted, onBeforeUnmount, defineProps } from "vue";
 import axios from "axios";
 import moment from "moment";
-import { useRoute, useRouter } from "vue-router";
+// import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
 const props = defineProps({
   category: {
@@ -87,7 +62,7 @@ const props = defineProps({
 console.log("category", props);
 
 const route = useRoute();
-const router = useRouter();
+// const router = useRouter();
 
 const blogs = ref([]);
 console.log("blogs", blogs);
@@ -118,75 +93,75 @@ const updateScreenWidth = () => {
   screenWidth.value = window.innerWidth;
 };
 
-const navigateToNewsDetail = (id) => {
-  router.push(`/news/${id}`);
-};
-const addBookmark = async (id) => {
-  try {
-    const token = localStorage.getItem("apiDataToken");
-    if (!token) {
-      throw new Error("No authentication token found");
-    }
+// const navigateToNewsDetail = (id) => {
+//   router.push(`/news/${id}`);
+// };
+// const addBookmark = async (id) => {
+//   try {
+//     const token = localStorage.getItem("apiDataToken");
+//     if (!token) {
+//       throw new Error("No authentication token found");
+//     }
 
-    // Find the news item to check its current bookmark status
-    const newsItem = blogs.value.find((news) => news._id === id);
+//     // Find the news item to check its current bookmark status
+//     const newsItem = blogs.value.find((news) => news._id === id);
 
-    // Toggle the status between "Enabled" and "Disabled"
-    const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
+//     // Toggle the status between "Enabled" and "Disabled"
+//     const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
 
-    const res = await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${newsId.value}`,
-      { status: newStatus },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
-    console.log("hiii", res);
+//     const res = await axios.post(
+//       `https://api-uat.newsshield.io/bookmark/addBookmark/${newsId.value}`,
+//       { status: newStatus },
+//       {
+//         headers: {
+//           Authorization: `${token}`,
+//         },
+//       }
+//     );
+//     console.log("hiii", res);
 
-    // Update the local state to reflect the new bookmark status
-    newsItem.bookmarked = !newsItem.bookmarked;
+//     // Update the local state to reflect the new bookmark status
+//     newsItem.bookmarked = !newsItem.bookmarked;
 
-    console.log(
-      `News item ${id} bookmark status updated successfully to ${newStatus}`
-    );
-  } catch (error) {
-    if (error.response) {
-      console.error(
-        `Error updating bookmark status for news item ${id}:`,
-        error.response.data
-      );
-    } else if (error.request) {
-      console.error(
-        `Error updating bookmark status for news item ${id}: No response received`,
-        error.request
-      );
-    } else {
-      console.error(
-        `Error updating bookmark status for news item ${id}:`,
-        error.message
-      );
-    }
-  }
-};
+//     console.log(
+//       `News item ${id} bookmark status updated successfully to ${newStatus}`
+//     );
+//   } catch (error) {
+//     if (error.response) {
+//       console.error(
+//         `Error updating bookmark status for news item ${id}:`,
+//         error.response.data
+//       );
+//     } else if (error.request) {
+//       console.error(
+//         `Error updating bookmark status for news item ${id}: No response received`,
+//         error.request
+//       );
+//     } else {
+//       console.error(
+//         `Error updating bookmark status for news item ${id}:`,
+//         error.message
+//       );
+//     }
+//   }
+// };
 
 const checkRouteParam = () => {
   newsId.value = route.params.id || "";
 };
 
-const slicedData = computed(() => {
-  if (screenWidth.value < 640) {
-    // Mobile devices
-    return blogs.value.slice(0, 1);
-  } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
-    // Tablets
-    return blogs.value.slice(0, 3);
-  } else {
-    // Desktop and larger devices
-    return blogs.value.slice(0, 3);
-  }
-});
+// const slicedData = computed(() => {
+//   if (screenWidth.value < 640) {
+//     // Mobile devices
+//     return blogs.value.slice(0, 1);
+//   } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
+//     // Tablets
+//     return blogs.value.slice(0, 3);
+//   } else {
+//     // Desktop and larger devices
+//     return blogs.value.slice(0, 3);
+//   }
+// });
 onMounted(() => {
   fetchBlogs();
   checkRouteParam();
@@ -199,6 +174,13 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.headline-tuncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2 !important; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .multiline-truncate {
   display: -webkit-box;
   -webkit-box-orient: vertical;

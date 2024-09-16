@@ -232,4 +232,11 @@ onBeforeUnmount(() => {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.headline-tuncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1 !important; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>

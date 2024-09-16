@@ -5,7 +5,7 @@
       <!-- Main Content -->
       <div class="flex-grow flex flex-col h-full max-w-[66%]">
         <div
-          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-[22rem] w-[913px] flex"
+          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-[21rem] w-[913px] flex"
         >
           <!-- Combined content -->
           <div class="w-full flex p-2.5">
@@ -27,14 +27,21 @@
               >
                 {{ newsItem?.headline }}
               </span>
-              <div class="flex items-center ml-[1px] text-xs">
+              <div class="flex items-center ml-[1px] text-xs w-full pb-2">
+                <!-- Categories Name -->
                 <span class="text-neon-pink mr-1 capitalize">
                   {{ newsItem?.categoriesName[0] }}
                 </span>
+
+                <!-- Separator -->
                 <span class="text-light-gray mr-2">|</span>
+
+                <!-- Source Name -->
                 <span class="text-light-gray mr-2">
                   {{ newsItem?.source }}
                 </span>
+
+                <!-- Social Icons -->
                 <div class="ml-auto flex items-center space-x-2">
                   <a
                     :href="newsItem?.newsLink"
@@ -60,7 +67,6 @@
                     class="flex items-center"
                   >
                     <img
-                      :href="newsItem?.newsLink"
                       :src="linkDinLogo"
                       alt="LinkedIn Logo"
                       class="social-icon"
@@ -77,11 +83,13 @@
                       class="social-icon"
                     />
                   </a>
+                  <!-- Bookmark Icon -->
                   <i
-                    class="mdi mdi-bookmark-outline text-black sm:h-[40px] sm:text-[22px] h-[30px] mt-[3%]"
+                    class="mdi mdi-bookmark-outline text-black sm:text-[22px] mt-0"
                   ></i>
                 </div>
               </div>
+
               <div
                 class="text-[#878787] space-y-4 font-lato mt-[1%] text-sm ml-[1px]"
               >
@@ -94,7 +102,7 @@
         </div>
 
         <div
-          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-96 w-[913px] flex mt-[1%]"
+          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-[19rem] w-[913px] flex mt-[1%]"
         >
           <FeatureNews />
         </div>
