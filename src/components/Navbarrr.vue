@@ -335,7 +335,7 @@ export default {
     };
 
     const navigateToNewsDetail = (id) => {
-      console.log("Navigate: " + id);
+      console.log("Navigating to news detail with ID:", id);
       router.push(`/news/${id}`);
     };
 
