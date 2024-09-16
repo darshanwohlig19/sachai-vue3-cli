@@ -98,3 +98,12 @@ button.p-carousel-next.p-link {
   height: 52px;
   width: 39px;
 }
+
+@media screen and (max-width:425px) {
+  .p-inputotp-input{
+    border: .5px solid #CDCDCD !important;
+    background-color: #EFEEEE !important;
+    height: 40px;
+    width: 30px;
+  }
+}
