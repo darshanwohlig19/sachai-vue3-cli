@@ -361,10 +361,11 @@ const captcha = async () => {
     size: "invisible",
     callback: (response) => {
       // reCAPTCHA solved, allow signInWithPhoneNumber.
-      onSignInSubmit();
     },
   });
 };
+const phoneNumber = getPhoneNumberFromUserInput();
+const appVerifier = captcha();
 const responsiveOptions = ref([
   {
     breakpoint: "1400px",
