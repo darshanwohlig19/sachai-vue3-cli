@@ -27,7 +27,7 @@
             alt="Blog Image"
           />
         </div>
-        <div class="font-14 p-1">
+        <div class="font-14">
           <span class="text-neon-pink mr-1 capitalize">
             {{ blog?.source }}
           </span>
