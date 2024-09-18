@@ -387,7 +387,8 @@ export default {
             toast.add({
               severity: "success", // Changed from "error" to "success" since it's a successful logout
               summary: "Logged out successfully!",
-              group: "error",
+              summary2: "You have been safely logged out.",
+              group: "success",
               life: 2000,
             });
             isCardDropdownOpen.value = !isCardDropdownOpen.value;
