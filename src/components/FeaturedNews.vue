@@ -1,5 +1,21 @@
 <template>
+  <!-- Loader -->
+  <div v-if="loading" class="flex justify-center items-center h-full">
+    <!-- Loader component or spinner -->
+    <div class="text-center py-5">Loading...</div>
+  </div>
+
+  <!-- No News Message -->
   <div
+    v-else-if="!blogs.length"
+    class="flex justify-center items-center h-full text-center py-5"
+  >
+    <div>No News Available</div>
+  </div>
+
+  <!-- Main Content -->
+  <div
+    v-else
     class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-4 mt-3 justify-between bg-white rounded-[10px]"
   >
     <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col cursor-pointer">
@@ -10,7 +26,6 @@
         <img
           :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
           class="rounded-[8px] h-[234px] w-full"
-          r
           alt=""
         />
         <div
@@ -49,7 +64,7 @@
       </div>
     </div>
     <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col justify-between">
-      <div v-for="blog in blogs1" :key="blog" class="below-sm:mt-4">
+      <div v-for="blog in blogs1" :key="blog._id" class="below-sm:mt-4">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
           @click="navigateToCategory(blog._id)"
@@ -91,8 +106,9 @@
     </div>
   </div>
 </template>
+
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "axios";
 import moment from "moment";
 import { useRouter } from "vue-router";
@@ -100,9 +116,13 @@ import { useRouter } from "vue-router";
 const blogs = ref([]);
 const blogs1 = ref([]);
 const blogs2 = ref([]);
+const loading = ref(true);
+const error = ref(false);
 const router = useRouter(); // Use Vue Router
 
 const languageId = ref("6421a32aa020a23deacecf92");
+const fallbackImage = "path/to/your/fallback-image.jpg"; // Define fallback image
+
 function formatPublishTime(publishTime) {
   return moment(publishTime).fromNow();
 }
@@ -115,25 +135,36 @@ async function fetchBlogs() {
         language: languageId.value,
       }
     );
-    console.log("Trending " + response.data);
     blogs.value = response.data.slice(0, 4);
     blogs1.value = response.data.slice(4, 8);
     blogs2.value = response.data.slice(8, 11);
+    if (!blogs.value.length) {
+      error.value = true;
+    }
   } catch (error) {
     console.error("Error fetching blogs:", error);
+    error.value = true;
+  } finally {
+    loading.value = false;
   }
 }
+
 function navigateToCategory(id) {
   if (id) {
     router.push(`/news/${id}`);
   }
 }
-fetchBlogs();
+
+onMounted(() => {
+  fetchBlogs();
+});
 </script>
+
 <style scoped>
 .fontCustom {
   font-family: "source-serif-pro-semibold";
 }
+
 .multiline-truncate {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -141,6 +172,7 @@ fetchBlogs();
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .multiline-truncate1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -148,6 +180,7 @@ fetchBlogs();
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .multiline-truncate3 {
   display: -webkit-box;
   -webkit-box-orient: vertical;

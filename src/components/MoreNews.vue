@@ -11,7 +11,10 @@
         </a>
       </div>
     </div>
-    <div class="bg-white w-[100%] flex">
+
+    <div v-if="loading" class="text-center py-5">Loading...</div>
+    <div v-else-if="error" class="text-center py-5">No News Available</div>
+    <div v-else class="bg-white w-[100%] flex">
       <!-- First Column -->
       <div
         class="w-[30%] sm-425:w-[100%] sm-max:w-[50%] between-sm-md:w-[50%] below-sm:w-[100%]"
@@ -98,7 +101,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
@@ -106,6 +108,8 @@ import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
 
 const allNews = ref([]);
+const loading = ref(true);
+const error = ref(false);
 
 const leftColumnNews = computed(() => allNews.value.slice(0, 3));
 const middleColumnNews = computed(() => allNews.value.slice(3, 6));
@@ -125,11 +129,13 @@ const fetchNews = async () => {
         page: 9,
       }
     );
-    console.log("data", response.data);
-
     allNews.value = response.data.slice(0, 9);
-  } catch (error) {
-    console.error("Error fetching news:", error);
+    error.value = allNews.value.length === 0;
+  } catch (e) {
+    console.error("Error fetching news:", e);
+    error.value = true;
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -137,7 +143,6 @@ const router = useRouter();
 
 onMounted(fetchNews);
 </script>
-
 <style scoped>
 .small-img {
   height: 10px;
