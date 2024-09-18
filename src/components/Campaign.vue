@@ -1,5 +1,6 @@
 <template>
   <div class="bg-white mt-3 rounded-[10px] p-3">
+    <!-- Heading and Button -->
     <div class="w-[100%] flex justify-between">
       <div class="flex flex-row items-center gap-2">
         <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
@@ -7,7 +8,25 @@
       </div>
       <Button />
     </div>
-    <div class="w-[100%] flex flex-col lg:flex-row gap-2 sm:gap-4 mt-3">
+
+    <!-- Loader -->
+    <div v-if="isLoading" class="text-center py-5">
+      <span>Loading...</span>
+    </div>
+
+    <!-- No Data Message -->
+    <div
+      v-if="!isLoading && campaigns.length === 0 && campaigns1.length === 0"
+      class="text-center py-5"
+    >
+      <span>No News Available</span>
+    </div>
+
+    <!-- News Content -->
+    <div
+      v-if="!isLoading && (campaigns.length > 0 || campaigns1.length > 0)"
+      class="w-[100%] flex flex-col lg:flex-row gap-2 sm:gap-4 mt-3"
+    >
       <div class="w-[100%] sm:w-[100%] gap-4 flex justify-between">
         <div
           v-for="campaignNews in displayedNews(campaigns)"
@@ -32,9 +51,13 @@
           </div>
         </div>
       </div>
+
+      <!-- Divider -->
       <div class="flex justify-center">
         <div class="divider1"></div>
       </div>
+
+      <!-- Campaigns List -->
       <div
         class="w-[100%] sm:w-[100%] sm:gap-2 md-max:w-[100%] flex flex-col justify-between md-max:gap-5"
       >
@@ -62,12 +85,14 @@
     </div>
   </div>
 </template>
+
 <script>
 import { ref } from "vue";
 import axios from "axios";
 import { computed, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+
 export default {
   components: {
     Button,
@@ -76,13 +101,12 @@ export default {
     const screenWidth = ref(window.innerWidth);
     const campaigns = ref([]);
     const campaigns1 = ref([]);
-    const languageId = ref("6421a32aa020a23deacecf92"); // Assuming you have a languageId, adjust this as needed
-    // function formatPublishTime(publishTime) {
-    //   return moment(publishTime).fromNow();
-    // }
+    const isLoading = ref(true); // Loader state
+    const languageId = ref("6421a32aa020a23deacecf92");
     const router = useRouter();
 
     async function fetchBlogs() {
+      isLoading.value = true; // Start loading
       try {
         const response = await axios.post(
           `https://api-uat.newsshield.io/news/getAllBlogsForWeb`,
@@ -92,13 +116,13 @@ export default {
           }
         );
         campaigns.value = response?.data?.slice(0, 3);
-        console.log(campaigns?.value[0]);
         campaigns1.value = response?.data?.slice(3, 8);
       } catch (error) {
         console.error("Error fetching blogs:", error);
+      } finally {
+        isLoading.value = false; // Stop loading
       }
     }
-    console.log("Camping Data", campaigns);
 
     const displayedNews = computed(() => {
       return (news) => {
@@ -110,9 +134,11 @@ export default {
     const handleResize = () => {
       screenWidth.value = window.innerWidth;
     };
+
     const navigateToCampingNews = (id) => {
       router.push(`/news/${id}`);
     };
+
     onMounted(() => {
       fetchBlogs();
       window.addEventListener("resize", handleResize);
@@ -121,46 +147,30 @@ export default {
     onBeforeUnmount(() => {
       window.removeEventListener("resize", handleResize);
     });
+
     return {
       fetchBlogs,
       displayedNews,
       campaigns,
       campaigns1,
       navigateToCampingNews,
+      isLoading, // Expose loader
       Button,
     };
   },
 };
 </script>
+
 <style scoped>
-.divider {
-  height: 1px;
-  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
-  width: 100%;
-}
 .divider1 {
   height: 100%;
-  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
+  background-color: #e5e7eb;
   width: 1px;
 }
 .lines2 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; /* Number of lines to display */
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.multiline-truncate1 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Number of lines to display */
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.multiline-truncate3 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }

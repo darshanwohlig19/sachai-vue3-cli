@@ -40,7 +40,8 @@
               >Bookmark</RouterLink
             >
           </div>
-          <div class="hidden lg:flex head-navs">
+          <div class="hidden lg:flex head-navs gap-2">
+            <img src="../assets/Login.svg" alt="" />
             <a href="#" class="nav-items" @click="handleAuthAction">
               {{ isLoggedIn ? "Logout" : "Login" }}
             </a>
@@ -257,7 +258,7 @@
       class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
       @click="handleBackgroundClick"
     >
-      <div class="bg-white p-6 rounded-[18px] shadow-lg" @click.stop>
+      <div class="bg-white p-5 sm:p-6 rounded-[18px] shadow-lg" @click.stop>
         <p class="mt-2 text-[#121212] font-lato font-bold font-[24px]">
           Are you sure you want to logout?
         </p>
@@ -389,7 +390,7 @@ export default {
               summary: "Logged out successfully!",
               summary2: "You have been safely logged out.",
               group: "success",
-              life: 2000,
+              life: 3000,
             });
             isCardDropdownOpen.value = !isCardDropdownOpen.value;
           } else {
