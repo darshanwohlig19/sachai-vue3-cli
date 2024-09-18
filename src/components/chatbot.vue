@@ -19,7 +19,7 @@
       <!-- Suggested QnA -->
       <div
         v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
-        class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto showQuestions ? 'h-assist-card' : 'h-0 overflow-hidden' mt-[3%]"
+        class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto mt-[3%]"
       >
         <h2 class="text-lg font-bold mb-2 text-[#131314]">
           Need any assistance with your queries?
@@ -40,6 +40,7 @@
             </p>
           </div>
         </div>
+
         <div class="flex justify-center mt-3 text-[#3978E1]">
           <Button variant="outline" @click="toggleQuestionsVisibility">
             {{ showQuestions ? "Hide Questions" : "Show Questions" }}
@@ -53,15 +54,14 @@
           v-for="(message, index) in conversation"
           :key="index"
           :class="{
-            'flex justify-end mt-2 font-medium ': message.type === 'user',
+            'flex justify-end mt-2 font-medium': message.type === 'user',
             'flex justify-start mt-2 font-medium': message.type === 'bot',
           }"
         >
           <!-- Message Box for both User and Bot -->
           <div
             :class="{
-              'bg-blue-100 text-blue-900 rounded-b-sm ':
-                message.type === 'user',
+              'bg-blue-100 text-blue-900 rounded-b-sm': message.type === 'user',
               'bg-gray-100 text-gray-800': message.type === 'bot',
             }"
             class="p-3 rounded-lg max-w-[22rem] shadow"
@@ -72,12 +72,19 @@
 
             <!-- Bot-specific Feedback Section -->
             <div v-if="message.type === 'bot'">
-              <hr class="my-2" />
+              <hr
+                class="my-2"
+                v-if="
+                  !category?.suggestedQnA || category.suggestedQnA.length === 0
+                "
+              />
               <div
                 class="flex items-center justify-between text-sm text-gray-500"
+                v-if="
+                  !category?.suggestedQnA || category.suggestedQnA.length === 0
+                "
               >
                 <span>{{ questionsLeft }} questions left</span>
-
                 <!-- Feedback Thumbs Up / Down -->
                 <div class="flex space-x-2">
                   <!-- Thumbs Up Button -->
@@ -154,29 +161,23 @@ const props = defineProps({
 
 const route = useRoute();
 const chatsData = ref([]);
-console.log("chatsDatachatsData", chatsData);
 const userQuestion = ref("");
 const conversation = ref([]);
 console.log("conversationconversation", conversation);
+
 const showQuestions = ref(true);
-console.log("showQuestionsshowQuestions", showQuestions);
+console.log("showQuestions", showQuestions);
 const selectedQuestionIndex = ref(null);
 const selectedQuestionAnswers = ref([]);
-console.log(
-  "selectedQuestionAnswersselectedQuestionAnswers",
-  selectedQuestionAnswers
-);
+console.log("selectedQuestionAnswers", selectedQuestionAnswers);
 const thumbsUpSelected = ref(false);
 const thumbsDownSelected = ref(false);
 const newsId = route.params.id;
 
-// const shouldShowQuestions = computed(() => {
-//   return conversation.value.length === 0 && showQuestions.value;
-// });
-
 const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
 };
+
 const handleQnAClick = async (question, index) => {
   selectedQuestionIndex.value = index;
   selectedQuestionAnswers.value = props.category?.suggestedQnA[index]?.answer;
@@ -238,6 +239,7 @@ const handleFeedbackClick = async (feedbackType) => {
     console.error("Error sending feedback:", error);
   }
 };
+
 const chatBotData = async () => {
   try {
     const response = await apiService.apiCall(
@@ -271,6 +273,7 @@ const typewriterEffect = (text, delay = 50) => {
   type();
   return message;
 };
+
 const toggleThumbsUp = () => {
   thumbsUpSelected.value = !thumbsUpSelected.value;
   if (thumbsUpSelected.value) {
@@ -286,6 +289,7 @@ const toggleThumbsDown = () => {
     handleFeedbackClick("negative");
   }
 };
+
 onMounted(() => {
   chatBotData();
 });
@@ -345,8 +349,9 @@ onMounted(() => {
 .text-white {
   color: #ffffff;
 }
+
 .scrollable-container {
-  height: 100%; /* Set your desired height */
-  overflow-y: auto; /* Enable vertical scrolling */
+  height: 100%;
+  overflow-y: auto;
 }
 </style>
