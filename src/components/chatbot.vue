@@ -1,6 +1,6 @@
 <template>
   <div
-    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card h-[682px] flex flex-col"
+    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card h-[648px] flex flex-col w-screen"
   >
     <!-- Chat Header -->
     <div class="bg-[#320A38] text-white h-[70px]">
@@ -53,57 +53,62 @@
           v-for="(message, index) in conversation"
           :key="index"
           :class="{
-            'flex justify-end mt-2 ': message.type === 'user',
-            'text-left mt-2': message.type === 'bot',
+            'flex justify-end mt-2 font-medium ': message.type === 'user',
+            'flex justify-start mt-2 font-medium': message.type === 'bot',
           }"
         >
+          <!-- Message Box for both User and Bot -->
           <div
             :class="{
-              'bg-blue-100': message.type === 'user',
-              'bg-gray-100': message.type === 'bot',
+              'bg-blue-100 text-blue-900 rounded-b-sm ':
+                message.type === 'user',
+              'bg-gray-100 text-gray-800': message.type === 'bot',
             }"
-            class="p-4 rounded-lg"
+            class="p-3 rounded-lg max-w-[22rem] shadow"
           >
-            <p v-if="message.type === 'user'">
-              {{ message.text }}
-            </p>
-            <p v-if="message.type === 'bot'">
-              {{ message.text }}
-            </p>
-            <hr class="mt-1 mb-1" v-if="message.type === 'bot'" />
-            <div
-              class="flex items-center space-x-4"
-              v-if="message.type === 'bot'"
-            >
-              <div class="flex-grow flex items-center space-x-4">
-                <span class="text-gray-500 text-sm">
-                  {{ questionsLeft }} questions left
-                </span>
-                <div class="flex-grow"></div>
-              </div>
-              <button
-                class="p-1 rounded-full bg-gray-100 flex items-center space-x-2"
-                aria-label="Like or Dislike"
+            <!-- Message Text -->
+            <p v-if="message.type === 'user'">{{ message.text }}</p>
+            <p v-if="message.type === 'bot'">{{ message.text }}</p>
+
+            <!-- Bot-specific Feedback Section -->
+            <div v-if="message.type === 'bot'">
+              <hr class="my-2" />
+              <div
+                class="flex items-center justify-between text-sm text-gray-500"
               >
-                <span
-                  :class="[
-                    'p-1 rounded-full w-10 flex items-center justify-center',
-                    thumbsUpSelected ? 'text-green-500' : 'bg-[#D8E7FF]',
-                  ]"
-                  @click.stop="toggleThumbsUp"
-                >
-                  <i class="pi pi-thumbs-up text-xl text-[#1E0627]"></i>
-                </span>
-                <span
-                  :class="[
-                    'p-1 rounded-full w-10 flex items-center justify-center',
-                    thumbsDownSelected ? 'text-red-500' : 'bg-[#D8E7FF]',
-                  ]"
-                  @click.stop="toggleThumbsDown"
-                >
-                  <i class="pi pi-thumbs-down text-xl text-[#1E0627]"></i>
-                </span>
-              </button>
+                <span>{{ questionsLeft }} questions left</span>
+
+                <!-- Feedback Thumbs Up / Down -->
+                <div class="flex space-x-2">
+                  <!-- Thumbs Up Button -->
+                  <button
+                    class="p-1 rounded-full bg-blue-100 text-gray-700 hover:bg-blue-200"
+                    aria-label="Thumbs up"
+                    @click.stop="toggleThumbsUp"
+                  >
+                    <i
+                      :class="
+                        thumbsUpSelected ? 'text-green-500' : 'text-[#1E0627]'
+                      "
+                      class="pi pi-thumbs-up"
+                    ></i>
+                  </button>
+
+                  <!-- Thumbs Down Button -->
+                  <button
+                    class="p-1 rounded-full bg-blue-100 text-gray-700 hover:bg-blue-200"
+                    aria-label="Thumbs down"
+                    @click.stop="toggleThumbsDown"
+                  >
+                    <i
+                      :class="
+                        thumbsDownSelected ? 'text-red-500' : 'text-[#1E0627]'
+                      "
+                      class="pi pi-thumbs-down"
+                    ></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -149,12 +154,18 @@ const props = defineProps({
 
 const route = useRoute();
 const chatsData = ref([]);
-console.log("chatsData", chatsData);
+console.log("chatsDatachatsData", chatsData);
 const userQuestion = ref("");
 const conversation = ref([]);
+console.log("conversationconversation", conversation);
 const showQuestions = ref(true);
+console.log("showQuestionsshowQuestions", showQuestions);
 const selectedQuestionIndex = ref(null);
 const selectedQuestionAnswers = ref([]);
+console.log(
+  "selectedQuestionAnswersselectedQuestionAnswers",
+  selectedQuestionAnswers
+);
 const thumbsUpSelected = ref(false);
 const thumbsDownSelected = ref(false);
 const newsId = route.params.id;
@@ -188,10 +199,6 @@ const handleQnAClick = async (question, index) => {
     );
   } catch (error) {
     console.error("Error fetching response:", error);
-    conversation.value.push({
-      type: "bot",
-      text: "Sorry, there was an error processing your request.",
-    });
   }
 };
 
@@ -214,11 +221,6 @@ const handleChatClick = async () => {
     userQuestion.value = "";
   } catch (error) {
     console.error("Error fetching response:", error);
-    // conversation.value.push({
-    //   type: "bot",
-    //   text: "Sorry, there was an error processing your request.",
-    // });
-
     userQuestion.value = "";
   }
 };

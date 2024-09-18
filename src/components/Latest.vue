@@ -1,70 +1,90 @@
 <template>
   <section class="mt-3">
     <div class="bg-white p-3 rounded-[10px]">
+      <!-- Heading and Button -->
       <div class="flex justify-between w-full items-center mb-3">
         <div class="flex flex-row items-center gap-2">
           <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
-          <div class="text-[20px] font-bold font-lato">Latest News</div>
+          <div class="text-[20px] font-bold font-lato">{{ headingText }}</div>
         </div>
         <Button />
       </div>
-      <div class="flex flex-row gap-3 justify-between cursor-pointer">
-        <div
-          v-for="news in slicedData"
-          :key="news._id"
-          class="w-[33%] md-max:w-full"
-        >
-          <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
-            <div class="rounded-[10px]" @click="navigateToNewsDetail(news._id)">
-              <img
-                :src="news.imgixUrlHighRes"
-                class="relative z-10 h-[156px] w-full rounded-[10px] object-cover"
-                alt=""
-              />
-            </div>
-            <div class="flex justify-between items-center p-3">
-              <div class="flex gap-1 text-[#676767] text-xs">
-                <div>{{ news.source }}</div>
-                <!-- <div>|</div>
-                <div>{{ formatPublishTime(news.publishTime) }}</div> -->
-              </div>
-              <div class="flex gap-1">
-                <span class="mdi mdi-share-variant text-[19px]"></span>
-                <span
-                  :class="[
-                    'mdi',
-                    news.bookmarked
-                      ? 'mdi-bookmark text-[#FF0053] text-[21px]'
-                      : 'mdi-bookmark-outline text-[21px]',
-                  ]"
-                  class="cursor-pointer"
-                  @click="addBookmark(news._id)"
-                ></span>
-              </div>
-            </div>
-            <div
-              class="pl-3 pr-3 text-[16px] font-semibold"
-              @click="navigateToNewsDetail(news._id)"
-            >
-              <a class="hover:text-current font-16 multiline-truncate1">
-                {{ news.headline }}
-              </a>
-            </div>
-            <div
-              class="pl-3 pr-3 para multiline-truncate"
-              @click="navigateToNewsDetail(news._id)"
-            >
-              {{ news.summary }}
-            </div>
-            <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
-              <span class="text-red-500 bold capitalize">{{
-                news.categories[0].name
-              }}</span>
-              <span>
-                <div class="text-[#676767] text-xs">
-                  | {{ formatPublishTime(news.publishTime) }}
-                </div></span
+
+      <!-- Loader -->
+      <div v-if="isLoading" class="text-center py-5">
+        <span>Loading...</span>
+      </div>
+
+      <!-- No News Message -->
+      <div v-if="!isLoading && blogs.length === 0" class="text-center py-5">
+        <span>No News Available</span>
+      </div>
+
+      <!-- News Content -->
+      <div v-if="!isLoading && blogs.length > 0">
+        <div class="flex flex-row gap-3 justify-between cursor-pointer">
+          <div
+            v-for="news in slicedData"
+            :key="news._id"
+            class="w-[33%] md-max:w-full"
+          >
+            <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
+              <div
+                class="rounded-[10px]"
+                @click="navigateToNewsDetail(news._id)"
               >
+                <img
+                  :src="news.imgixUrlHighRes"
+                  class="relative z-10 h-[156px] w-full rounded-[10px] object-cover"
+                  alt=""
+                />
+              </div>
+              <div class="flex justify-between items-center p-3">
+                <div class="flex gap-1 text-[#676767] text-xs">
+                  <div>{{ news.source }}</div>
+                </div>
+                <div class="flex gap-1">
+                  <span class="mdi mdi-share-variant text-[19px]"></span>
+                  <span
+                    :class="[
+                      'mdi',
+                      news.bookmarked
+                        ? 'mdi-bookmark text-[#FF0053] text-[21px]'
+                        : 'mdi-bookmark-outline text-[21px]',
+                    ]"
+                    class="cursor-pointer"
+                    @click="addBookmark(news._id)"
+                  ></span>
+                </div>
+              </div>
+              <div
+                class="pl-3 pr-3 text-[16px] font-semibold"
+                @click="navigateToNewsDetail(news._id)"
+              >
+                <a class="hover:text-current font-16 multiline-truncate1">
+                  {{ news.headline }}
+                </a>
+              </div>
+              <div
+                class="pl-3 pr-3 para multiline-truncate"
+                @click="navigateToNewsDetail(news._id)"
+              >
+                {{ news.summary }}
+              </div>
+              <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
+                <span class="text-red-500 bold capitalize">
+                  {{
+                    news.categories[0].name.toLowerCase() === "ai"
+                      ? news.categories[0].name.toUpperCase()
+                      : news.categories[0].name.replace(/-/g, " ")
+                  }}
+                </span>
+                <span>
+                  <div class="text-[#676767] text-xs">
+                    | {{ formatPublishTime(news.publishTime) }}
+                  </div>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -72,13 +92,13 @@
     </div>
   </section>
 </template>
-
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+
 const route = useRoute();
 const router = useRouter();
 
@@ -88,8 +108,10 @@ const screenWidth = ref(window.innerWidth);
 const headingText = ref("Latest News");
 const isRelatedNews = ref(false);
 const newsId = ref(route.params.id || "");
+const isLoading = ref(true); // New state for loader
 
 const fetchBlogs = async () => {
+  isLoading.value = true; // Start loading
   try {
     const response = await axios.post(
       "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
@@ -105,11 +127,14 @@ const fetchBlogs = async () => {
     console.log("latest", response.data[0].categories[0].name);
   } catch (error) {
     console.error("Error fetching blogs:", error);
+  } finally {
+    isLoading.value = false; // Stop loading
   }
 };
 
 const fetchRelatedNews = async () => {
   if (!newsId.value) return;
+  isLoading.value = true; // Start loading
   try {
     const response = await axios.post(
       `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`,
@@ -124,6 +149,8 @@ const fetchRelatedNews = async () => {
     }));
   } catch (error) {
     console.error("Error fetching related news:", error);
+  } finally {
+    isLoading.value = false; // Stop loading
   }
 };
 
@@ -138,6 +165,7 @@ const updateScreenWidth = () => {
 const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
 };
+
 const addBookmark = async (id) => {
   try {
     const token = localStorage.getItem("apiDataToken");
@@ -145,10 +173,7 @@ const addBookmark = async (id) => {
       throw new Error("No authentication token found");
     }
 
-    // Find the news item to check its current bookmark status
     const newsItem = blogs.value.find((news) => news._id === id);
-
-    // Toggle the status between "Enabled" and "Disabled"
     const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
 
     await axios.post(
@@ -161,7 +186,6 @@ const addBookmark = async (id) => {
       }
     );
 
-    // Update the local state and local storage to reflect the new bookmark status
     newsItem.bookmarked = !newsItem.bookmarked;
     localStorage.setItem(
       `bookmark_${id}`,
@@ -191,13 +215,10 @@ const checkRouteParam = () => {
 
 const slicedData = computed(() => {
   if (screenWidth.value < 640) {
-    // Mobile devices
     return blogs.value.slice(0, 1);
   } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
-    // Tablets
     return blogs.value.slice(0, 3);
   } else {
-    // Desktop and larger devices
     return blogs.value.slice(0, 4);
   }
 });

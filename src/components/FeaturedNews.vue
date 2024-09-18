@@ -2,9 +2,7 @@
   <div
     class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-4 mt-3 justify-between bg-white rounded-[10px]"
   >
-    <div
-      class="w-[100%] between-sm-md:w-[45%] lg:w-[30%] flex flex-col cursor-pointer"
-    >
+    <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col cursor-pointer">
       <div
         class="relative drop-shadow-lg"
         @click="navigateToCategory(blogs[0]?._id)"
@@ -50,9 +48,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="w-[100%] between-sm-md:w-[100%] lg:w-[30%] flex flex-col justify-between"
-    >
+    <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col justify-between">
       <div v-for="blog in blogs1" :key="blog" class="below-sm:mt-4">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
@@ -71,10 +67,8 @@
         </div>
       </div>
     </div>
-    <div class="border-1 below-sm:hidden between-sm-md:hidden"></div>
-    <div
-      class="w-[100%] between-sm-md:w-[100%] lg:w-[35%] flex flex-col justify-between"
-    >
+    <div class="border-1 lg:flex hidden"></div>
+    <div class="w-[100%] lg:w-[35%] flex flex-col justify-between">
       <div
         v-for="(item, index) in blogs2"
         :key="item._id"

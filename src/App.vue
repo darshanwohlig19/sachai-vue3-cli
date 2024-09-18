@@ -3,8 +3,18 @@
     <nav>
       <router-link to="/"></router-link>
     </nav>
+
     <router-view :key="routeKey" />
     <Toast position="top-right" group="success" @close="onClose">
+
+    <router-view />
+    <Toast
+      position="top-right"
+      class="sm-max:w-[95%] sm-max:right-1 sm-max:left-2"
+      group="success"
+      @close="onClose"
+    >
+
       <template #message="slotProps">
         <div class="flex flex-row gap-3">
           <div>
@@ -31,7 +41,12 @@
         </div>
       </template>
     </Toast>
-    <Toast position="top-right" group="error" @close="onClose">
+    <Toast
+      position="top-right"
+      group="error"
+      class="sm-max:w-[95%] sm-max:right-1 sm-max:left-2"
+      @close="onClose"
+    >
       <template #message="slotProps">
         <div class="flex flex-row gap-3">
           <div>
@@ -71,4 +86,4 @@ const route = useRoute();
 const routeKey = computed(() => route.fullPath);
 </script>
 
-<style></style>
+<style scoped></style>

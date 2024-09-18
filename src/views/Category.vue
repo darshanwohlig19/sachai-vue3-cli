@@ -86,9 +86,13 @@
                 </a>
               </div>
               <div class="text-[8px] lg:text-[12px] flex gap-3 mb-3">
-                <span class="text-red-500 capitalize">{{
-                  item.categories[0].name
-                }}</span>
+                <span class="text-red-500 capitalize">
+                  {{
+                    item.categories[0].name.toLowerCase() === "ai"
+                      ? item.categories[0].name.toUpperCase()
+                      : item.categories[0].name.replace(/-/g, " ")
+                  }}
+                </span>
               </div>
             </div>
           </div>
@@ -122,15 +126,13 @@ import Navbarrr from "@/components/Navbarrr.vue";
 
 // Refs for storing news and pagination state
 const news = ref([]);
-// const news1 = ref([]);
 const currentPage = ref(0);
 const rowsPerPage = ref(5);
-// const newStatus = ref("disable");
 const route = useRoute();
 const categoryId = route.params.slugOrId;
 const categoryName = route.query.category;
+const fallbackImage = "path/to/fallback/image.jpg"; // Replace with your fallback image URL
 
-console.log("categoryName", categoryName);
 // Fetching news based on category ID
 const fetchNews = async () => {
   const token = localStorage.getItem("apiDataToken");
@@ -157,27 +159,19 @@ const fetchNews = async () => {
   }
 
   try {
-    console.log("category", response);
     news.value = response.data;
-    console.log("newsssss", news);
-    // console.log(news.value); // news.value = response.data.slice(4, response.data.length - 1);
   } catch (error) {
     console.error("Error fetching news:", error);
   }
 };
+
 const getBookmarkColor = (isBookmarked) => {
-  console.log(isBookmarked);
   return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
 };
-
-// const getBookmarkColor = computed((isBookmarked) =>
-//   isBookmarked ? "text-red-500" : "text-gray-500"
-// );
 
 const addBookmark = async (news) => {
   const token = localStorage.getItem("apiDataToken");
   try {
-    console.log(news.isBookmarked);
     const currentStatus =
       news.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
 
@@ -193,15 +187,11 @@ const addBookmark = async (news) => {
       }
     );
     news.isBookmarked = currentStatus;
-    console.log("bookmark  " + news.isBookmarked);
-
     return response.data;
   } catch (error) {
     console.error("Error adding bookmark:", error);
   }
 };
-
-// Truncate text helper function
 
 // Computed property for paginated news
 const paginatedNews = computed(() => {
@@ -210,7 +200,6 @@ const paginatedNews = computed(() => {
 });
 
 // Computed property for total number of records
-// const totalRecords = computed(() => news1.value.length);
 const totalRecords = computed(() => news.value.length);
 
 // Method to handle page change

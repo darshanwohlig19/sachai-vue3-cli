@@ -1,115 +1,129 @@
 <template>
   <Navbarrr />
   <div class="max-w-[1400px] mx-auto mt-2">
-    <div class="flex flex-col lg:flex-row lg:space-x-4">
+    <div class="flex flex-col lg:flex-row">
       <!-- Main Content -->
-      <div class="flex-grow flex flex-col h-full">
+      <div class="flex-grow flex flex-col h-full max-w-[66%]">
         <div
-          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-[682px]"
+          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-[21rem] w-[913px] flex"
         >
-          <div class="p-2">
-            <div class="image-container">
-              <img
-                :src="newsItem?.imgixUrlHighRes"
-                alt="News image"
-                class="news-image"
-              />
-            </div>
-            <div class="flex items-center ml-[1px]">
-              <span class="text-neon-pink mr-1 capitalize">
-                {{ newsItem?.categoriesName[0] }}
-              </span>
-              <span class="text-light-gray mr-2">|</span>
-              <span class="text-light-gray mr-2">
-                {{ newsItem?.source }}
-              </span>
-              <div class="ml-auto flex items-center space-x-2">
-                <a
-                  :href="newsItem?.newsLink"
-                  target="_blank"
-                  class="flex items-center"
-                >
-                  <img
-                    :src="faceBookLogo"
-                    alt="Facebook Logo"
-                    class="social-icon"
-                  />
-                </a>
-                <a
-                  :href="newsItem?.newsLink"
-                  target="_blank"
-                  class="flex items-center"
-                >
-                  <img :src="xLogo" alt="X Logo" class="social-icon" />
-                </a>
-                <a
-                  :href="newsItem?.newsLink"
-                  target="_blank"
-                  class="flex items-center"
-                >
-                  <img
-                    :href="newsItem?.newsLink"
-                    :src="linkDinLogo"
-                    alt="LinkedIn Logo"
-                    class="social-icon"
-                  />
-                </a>
-                <a
-                  :href="newsItem?.newsLink"
-                  target="_blank"
-                  class="flex items-center"
-                >
-                  <img
-                    :src="whatsappLogo"
-                    alt="WhatsApp Logo"
-                    class="social-icon"
-                  />
-                </a>
-                <i
-                  class="mdi mdi-bookmark-outline text-black sm:h-[40px] sm:text-[22px] h-[30px] mt-[3%]"
-                ></i>
+          <!-- Combined content -->
+          <div class="w-full flex p-2.5">
+            <!-- Left side for the image -->
+            <div class="w-1/2">
+              <div class="image-container h-full">
+                <img
+                  :src="newsItem?.imgixUrlHighRes"
+                  alt="News image"
+                  class="news-image w-full h-full object-cover"
+                />
               </div>
             </div>
 
-            <span
-              class="text-lg font-sourceSerifPro text-Secondary font-semibold mb-1 ml-[1px]"
-            >
-              {{ newsItem?.headline }}
-            </span>
-            <div
-              class="text-[#878787] space-y-4 mb-4 font-lato mt-[1%] text-sm ml-[1px]"
-            >
-              <p>
-                {{ newsItem?.summary }}
-              </p>
+            <!-- Right side for the content -->
+            <div class="w-1/2 p-2 flex flex-col">
+              <span
+                class="text-lg font-source-serif text-Secondary font-semibold ml-[1px]"
+              >
+                {{ newsItem?.headline }}
+              </span>
+              <div class="flex items-center ml-[1px] text-xs w-full pb-2">
+                <!-- Categories Name -->
+                <span class="text-neon-pink mr-1 capitalize">
+                  {{ formatCategoryName(newsItem?.categoriesName[0]) }}
+                </span>
+
+                <!-- Separator -->
+                <span class="text-light-gray mr-2">|</span>
+
+                <!-- Source Name -->
+                <span class="text-light-gray mr-2">
+                  {{ newsItem?.source }}
+                </span>
+
+                <!-- Social Icons -->
+                <div class="ml-auto flex items-center space-x-2">
+                  <a
+                    :href="newsItem?.newsLink"
+                    target="_blank"
+                    class="flex items-center"
+                  >
+                    <img
+                      :src="faceBookLogo"
+                      alt="Facebook Logo"
+                      class="social-icon"
+                    />
+                  </a>
+                  <a
+                    :href="newsItem?.newsLink"
+                    target="_blank"
+                    class="flex items-center"
+                  >
+                    <img :src="xLogo" alt="X Logo" class="social-icon" />
+                  </a>
+                  <a
+                    :href="newsItem?.newsLink"
+                    target="_blank"
+                    class="flex items-center"
+                  >
+                    <img
+                      :src="linkDinLogo"
+                      alt="LinkedIn Logo"
+                      class="social-icon"
+                    />
+                  </a>
+                  <a
+                    :href="newsItem?.newsLink"
+                    target="_blank"
+                    class="flex items-center"
+                  >
+                    <img
+                      :src="whatsappLogo"
+                      alt="WhatsApp Logo"
+                      class="social-icon"
+                    />
+                  </a>
+                  <!-- Bookmark Icon -->
+                  <i
+                    class="mdi mdi-bookmark-outline text-black sm:text-[22px] mt-0"
+                  ></i>
+                </div>
+              </div>
+
+              <div
+                class="text-[#878787] space-y-4 font-lato mt-[1%] text-sm ml-[1px]"
+              >
+                <p>
+                  {{ newsItem?.summary }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
+
+        <div
+          class="bg-white shadow-lg rounded-lg overflow-hidden flex-grow h-[19rem] w-[913px] flex mt-[1%]"
+        >
+          <FeatureNews />
+        </div>
       </div>
 
-      <!-- Sidebar -->
-      <div class="lg:w-1/2 mt-8 lg:mt-0 flex-shrink-0">
-        <div class="flex flex-col lg:flex-row lg:space-x-4">
-          <div class="lg:w-1/2">
-            <ChatBot :category="newsItem" />
-          </div>
-          <div class="lg:w-1/2">
-            <FeatureNews :categories="newsItem" />
-          </div>
+      <div class="flex flex-col lg:flex-row">
+        <div class="lg:w-[100%]">
+          <ChatBot :category="newsItem" />
         </div>
       </div>
     </div>
 
-    <!-- Latest News -->
-    <div class="mt-1 bg-white shadow-lg rounded-lg">
-      <RelatedNewsData />
+    <div class="mt-1 bg-white shadow-lg rounded-lg" v-if="newsItem?._id">
+      <RelatedNewsData :category="newsItem" />
     </div>
   </div>
   <Footer />
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import Footer from "@/components/Footer.vue";
@@ -117,10 +131,10 @@ import Navbarrr from "@/components/Navbarrr.vue";
 import FeatureNews from "@/components/FeaturedIdStories.vue";
 import RelatedNewsData from "@/components/RelatedNews.vue";
 import ChatBot from "@/components/chatbot.vue";
-import faceBookLogo from "@/assets/png/facebook.png";
-import xLogo from "@/assets/png/x.png";
-import linkDinLogo from "@/assets/png/linkDin.png";
-import whatsappLogo from "@/assets/png/whatsapp.png";
+import faceBookLogo from "@/assets/facebook.svg";
+import xLogo from "@/assets/X.svg";
+import linkDinLogo from "@/assets/linkedin.svg";
+import whatsappLogo from "@/assets/whatsapp.svg";
 
 const route = useRoute();
 const newsItem = ref(null);
@@ -134,10 +148,12 @@ const fetchNewsItem = async () => {
       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${newsId}`
     );
     newsItem.value = response.data;
+    console.log(" newsItem.value----", newsItem.value);
   } catch (error) {
     console.error("Error fetching news item:", error);
   }
 };
+
 
 // const updateNews = async (to, from, next) => {
 //   // await fetchNewsItem(to.params.id);
@@ -153,6 +169,17 @@ const fetchNewsItem = async () => {
 // };
 
 onMounted(() => {
+
+const formatCategoryName = (name) => {
+  if (!name) return ""; // Return an empty string if name is null or undefined
+  return name.toLowerCase() === "ai"
+    ? name.toUpperCase()
+    : name.replace(/-/g, " ");
+};
+
+onBeforeMount(() => {
+  console.log("parent---");
+
   if (newsId) {
     fetchNewsItem();
   }
@@ -172,8 +199,8 @@ onMounted(() => {
 }
 .image-container {
   position: relative;
-  width: 100%;
-  padding-top: 56.25%;
+  width: 427px;
+  height: 248px; /* Set a fixed height */
   overflow: hidden;
   border-radius: 0.5rem;
 }
@@ -184,9 +211,27 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover; /* This will maintain the aspect ratio */
   object-position: center;
 }
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 327px; /* Set a fixed height */
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.news-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This will maintain the aspect ratio */
+  object-position: center;
+}
+
 .font-semibold {
   font-family: "Source Serif Pro", serif;
   font-weight: 600;

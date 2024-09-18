@@ -12,7 +12,7 @@
         </a>
       </div>
       <div class="w-[60%]">
-        <div class="flex gap-4 items-center justify-end">
+        <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
             <img src="../assets/Home.svg" alt="" />
@@ -40,7 +40,8 @@
               >Bookmark</RouterLink
             >
           </div>
-          <div class="hidden lg:flex head-navs">
+          <div class="hidden lg:flex head-navs gap-2">
+            <img src="../assets/Login.svg" alt="" />
             <a href="#" class="nav-items" @click="handleAuthAction">
               {{ isLoggedIn ? "Logout" : "Login" }}
             </a>
@@ -72,6 +73,8 @@
                 v-for="(result, index) in searchResults"
                 :key="index"
                 class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
+
+                @click="navigateToNewsDetail(result_id)"
               >
                 <div
                   class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
@@ -84,7 +87,6 @@
                     />
                   </div>
                   <div
-                    @click="navigateToNewsDetail(result._id)"
                     class="w-[80%] flex justify-start items-center text-start font-light font-[#1E0627] font-source-serif text-[13px] two_line"
                   >
                     {{ result.headline }}
@@ -204,7 +206,7 @@
       class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
       @click="handleBackgroundClick"
     >
-      <div class="bg-white p-6 rounded-[18px] shadow-lg" @click.stop>
+      <div class="bg-white p-5 sm:p-6 rounded-[18px] shadow-lg" @click.stop>
         <p class="mt-2 text-[#121212] font-lato font-bold font-[24px]">
           Are you sure you want to logout?
         </p>
@@ -275,9 +277,11 @@ export default {
       }
     };
 
+
     const navigateToNewsDetail = (id) => {
       router.push(`/news/${id}`);
     };
+
 
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
@@ -306,7 +310,10 @@ export default {
     const hidePopup = () => {
       isPopupVisible.value = false;
     };
-
+    const navigateToNewsDetail = (id) => {
+      router.push(`/news/${id}`);
+      console.log("Navigating to news detail with ID:", id);
+    };
     const handleLogout = async () => {
       if (isLoggingOut.value) return;
       isLoggingOut.value = true;
@@ -334,8 +341,9 @@ export default {
             toast.add({
               severity: "success",
               summary: "Logged out successfully!",
-              group: "error",
-              life: 2000,
+              summary2: "You have been safely logged out.",
+              group: "success",
+              life: 3000,
             });
             isCardDropdownOpen.value = !isCardDropdownOpen.value;
           } else {

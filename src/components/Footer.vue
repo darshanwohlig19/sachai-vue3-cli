@@ -43,10 +43,19 @@
           </div>
         </div>
         <div class="flex mt-4 gap-3">
-          <i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i>
-          <i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i>
-          <i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i>
-          <i class="mdi mdi-github text-[#52525B] text-[19px]"></i>
+          <a href=""
+            ><i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i
+          ></a>
+          <a href=""
+            ><i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/sachai.io/?igshid=MzRlODBiNWFlZA%3D%3D"
+            ><i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i
+          ></a>
+          <a href=""
+            ><i class="mdi mdi-github text-[#52525B] text-[19px]"></i
+          ></a>
         </div>
       </div>
 
@@ -176,10 +185,19 @@
           </div>
         </div>
         <div class="flex mt-4 gap-3">
-          <i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i>
-          <i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i>
-          <i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i>
-          <i class="mdi mdi-github text-[#52525B] text-[19px]"></i>
+          <a href=""
+            ><i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i
+          ></a>
+          <a href=""
+            ><i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/sachai.io/?igshid=MzRlODBiNWFlZA%3D%3D"
+            ><i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i
+          ></a>
+          <a href=""
+            ><i class="mdi mdi-github text-[#52525B] text-[19px]"></i
+          ></a>
         </div>
       </div>
 
