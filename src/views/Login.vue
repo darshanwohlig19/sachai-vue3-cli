@@ -231,7 +231,7 @@
               </div>
 
               <div
-                class="text-center text-[#FF0053] cursor-pointer mt-2 font-lato text-[15px]"
+                class="text-center text-[#FF0053] cursor-pointer mt-3 font-lato text-[15px]"
               >
                 <router-link to="/">Continue without login</router-link>
               </div>
