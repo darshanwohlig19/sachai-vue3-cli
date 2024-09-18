@@ -34,7 +34,7 @@ const routes = [
   },
   { path: "/login", component: Login, meta: { requiresAuth: false } },
   {
-    path: "/AboutUs",
+    path: "/About-us",
     name: "About",
     component: Aboutus,
   },

@@ -150,9 +150,11 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import axios from "axios";
 import moment from "moment";
 import { ProductService } from "../../src/assets/service/ProductService";
+const languageId = ref("6421a32aa020a23deacecf92");
 
 export default {
   data() {
@@ -214,12 +216,12 @@ export default {
       this.error = false;
       try {
         const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
+          "https://api-uat.newsshield.io/news/getTrendingNews",
           {
-            language: "6421a32aa020a23deacecf92",
-            categoryId: "63d90e4098d783ac0cbe2310",
+            language: languageId.value,
           }
         );
+
         if (response.data.length === 0) {
           this.error = true;
         } else {

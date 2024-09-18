@@ -114,7 +114,7 @@
             <div class="footer-heads text-sm">Help</div>
             <ul>
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">About us</a>
+                <a class="capitalize" href="/About-us">About us</a>
               </li>
               <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize line">Customer Support</a>
@@ -243,7 +243,7 @@
               <div class="footer-heads text-sm">Help</div>
               <ul>
                 <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">About us</a>
+                  <a class="capitalize" href="/About-us">About us</a>
                 </li>
                 <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Customer Support</a>

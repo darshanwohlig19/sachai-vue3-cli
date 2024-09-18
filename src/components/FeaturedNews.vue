@@ -123,7 +123,6 @@ const loading = ref(true);
 const error = ref(false);
 const router = useRouter(); // Use Vue Router
 
-const languageId = ref("6421a32aa020a23deacecf92");
 const fallbackImage = "path/to/your/fallback-image.jpg"; // Define fallback image
 
 function formatPublishTime(publishTime) {
@@ -133,11 +132,13 @@ function formatPublishTime(publishTime) {
 async function fetchBlogs() {
   try {
     const response = await axios.post(
-      "https://api-uat.newsshield.io/news/getTrendingNews",
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
       {
-        language: languageId.value,
+        language: "6421a32aa020a23deacecf92",
+        categoryId: "63d90e4098d783ac0cbe2310",
       }
     );
+
     blogs.value = response.data.slice(0, 4);
     blogs1.value = response.data.slice(4, 8);
     blogs2.value = response.data.slice(8, 11);

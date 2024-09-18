@@ -1,5 +1,5 @@
 <template>
-  <SiteHeader />
+  <Navbarrr />
   <div class="mb-40">
     <div class="w-full h-full">
       <img src="../assets/Ellipse 62.png" alt="" />
@@ -72,7 +72,7 @@
   <Footer />
 </template>
 <script setup>
-import SiteHeader from "@/components/SiteHeader.vue";
+import Navbarrr from "@/components/Navbarrr.vue";
 import Footer from "@/components/Footer.vue";
 import Card from "primevue/card";
 </script>
