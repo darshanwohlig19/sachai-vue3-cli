@@ -142,6 +142,7 @@ console.log("newsItem", newsItem);
 const newsId = route.params.id;
 console.log("newsId", newsId);
 const fetchNewsItem = async () => {
+  console.log("Fetching News Data: " + newsId);
   try {
     const response = await axios.get(
       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${newsId}`
@@ -153,6 +154,22 @@ const fetchNewsItem = async () => {
   }
 };
 
+
+// const updateNews = async (to, from, next) => {
+//   // await fetchNewsItem(to.params.id);
+//   try {
+//     const response = await axios.get(
+//       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${to.params.id}`
+//     );
+//     newsItem.value = response.data;
+//   } catch (error) {
+//     console.error("Error fetching news item:", error);
+//   }
+//   next();
+// };
+
+onMounted(() => {
+
 const formatCategoryName = (name) => {
   if (!name) return ""; // Return an empty string if name is null or undefined
   return name.toLowerCase() === "ai"
@@ -162,10 +179,18 @@ const formatCategoryName = (name) => {
 
 onBeforeMount(() => {
   console.log("parent---");
+
   if (newsId) {
     fetchNewsItem();
   }
 });
+
+// watch(
+//   () => route.params.id,
+//   (newId) => {
+//     // updateNews({ params: { id: newId } }, null, () => {});
+//   }
+// );
 </script>
 
 <style>

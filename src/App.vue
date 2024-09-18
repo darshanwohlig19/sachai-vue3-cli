@@ -3,6 +3,10 @@
     <nav>
       <router-link to="/"></router-link>
     </nav>
+
+    <router-view :key="routeKey" />
+    <Toast position="top-right" group="success" @close="onClose">
+
     <router-view />
     <Toast
       position="top-right"
@@ -10,6 +14,7 @@
       group="success"
       @close="onClose"
     >
+
       <template #message="slotProps">
         <div class="flex flex-row gap-3">
           <div>
@@ -73,6 +78,12 @@
   </div>
   <!-- <Button @click="showTemplate" label="View" /> -->
 </template>
-<script setup></script>
+<script setup>
+import { useRoute } from "vue-router";
+import { computed } from "vue";
+
+const route = useRoute();
+const routeKey = computed(() => route.fullPath);
+</script>
 
 <style scoped></style>
