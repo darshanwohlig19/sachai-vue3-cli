@@ -72,13 +72,15 @@
 
               <div v-if="!showOtpInput">
                 <div class="flex justify-center mt-4">
-                  <CountryCode
+                  <Dropdown
                     v-model="selectedCountryCode"
-                    class="border p-2 rounded-[4px]"
-                    :default-country="'IN'"
-                    :show-flags="true"
-                    placeholder="Select Country Code"
+                    :options="countryCodes"
+                    optionLabel="label"
+                    optionValue="value"
+                    placeholder="+91"
+                    class="!w-[70px] md:w-14rem"
                   />
+
                   <input
                     v-model="phoneNumber"
                     type="text"
@@ -243,13 +245,6 @@
 
               <div v-if="!showOtpInput">
                 <div class="flex justify-center mt-4">
-                  <CountryCode
-                    v-model="selectedCountryCode"
-                    class="border p-2 rounded-[4px]"
-                    :default-country="'IN'"
-                    :show-flags="true"
-                    placeholder="Select Country Code"
-                  />
                   <input
                     v-model="phoneNumber"
                     type="text"
@@ -275,6 +270,13 @@
               <div v-if="showOtpInput">
                 <div class="card flex justify-center">
                   <div>
+                    <Dropdown
+                      v-model="selectedCity"
+                      :options="cities"
+                      optionLabel="name"
+                      placeholder="Select a City"
+                      class="w-[40px] md:w-14rem"
+                    />
                     <InputOtp
                       v-model="otp"
                       :length="6"
@@ -356,7 +358,7 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-
+import { countries } from "country-data";
 // Reactive variables for desktop and mobile products
 const showPhoneVerification = ref(false);
 
@@ -365,13 +367,25 @@ const toast = useToast();
 const desktopProducts = ref([]);
 const mobileProducts = ref([]);
 // const auth = getAuth();
-const selectedCountryCode = ref("+91");
+
 const phoneNumber = ref("");
 const otp = ref("");
 let confirmationResult1 = null;
 const showOtpInput = ref(false);
 const auth = getAuth();
 
+let selectedCountryCode = ref(null);
+const countryCodes = ref([]);
+const getCountryCodes = () => {
+  countryCodes.value = countries.all
+    .filter((country) => country.countryCallingCodes.length > 0) // Include only countries with calling codes
+    .map((country) => ({
+      label: `${country.name} (${country.countryCallingCodes[0]})`, // Display full name and calling code in options
+      value: country.countryCallingCodes[0], // Store only the country code as the value
+      selectedCountryCode: country.countryCallingCodes[0],
+    }));
+  console.log(countryCodes.value + "COUNTRY CODES");
+};
 const getPhoneNumberFromUserInput = () => {
   const countryCode = selectedCountryCode.value;
   const number = phoneNumber.value;
@@ -403,22 +417,25 @@ const loginWithPhone = async () => {
     });
     const phoneNumber = getPhoneNumberFromUserInput();
     const appVerifier = window.recaptchaVerifier;
-
+    console.log(phoneNumber);
+    console.log("numberrrr", phoneNumber);
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
+
         window.confirmationResult = confirmationResult;
         confirmationResult1 = window.confirmationResult;
+
+        showOtpInput.value = true;
+        // ...
         toast.add({
           severity: "success",
-          summary: "OTP Sent!",
-          summary2: "Please check your phone for the OTP.",
+          summary: "OTP Sent",
+
           group: "success",
           life: 3000,
         });
-        showOtpInput.value = true;
-        // ...
       })
       .catch((error) => {
         // Error; SMS not sent
@@ -432,6 +449,7 @@ const loginWithPhone = async () => {
           life: 3000,
         });
       });
+
     // confirmationResult = await signInWithPhoneNumber(
     //   auth,
     //   fullPhoneNumber,
@@ -463,28 +481,28 @@ const verifyOtp = async () => {
     return;
   }
 
-  toast.add({
-    severity: "success" + otp.value,
-    summary: "OTP Sent!",
-    summary2: "Please check your phone for the OTP.",
-    group: "success",
-    life: 3000,
-  });
-
   confirmationResult1
     .confirm(otp.value)
     .then((result) => {
       // User signed in successfully.
       const user = result.user;
+
+      // Extract user detailsx
+      const uid = user.uid;
+
+      console.log(uid);
+      sendUserDataToApi(uid);
       // console.log(user);
       toast.add({
         severity: "success ",
-        summary: "OTP Sent!",
-        summary2: "Success full signUp" + user,
+        summary: "login Successfull",
+
         group: "success",
         life: 3000,
       });
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+      }, 0);
       console.log(result.user + "USER");
       // var credential = auth.PhoneAuthProvider.credential(
       //   confirmationResult1.verificationId,
@@ -553,6 +571,7 @@ onMounted(async () => {
   } catch (error) {
     console.error("Error fetching products:", error);
   }
+  getCountryCodes();
 });
 
 const loginWithGoogle = async () => {
@@ -722,7 +741,9 @@ const sendUserDataToApi = async (name, email, id) => {
 .p-carousel-next .p-link {
   display: none !important;
 }
-
+.p-dropdown-trigger {
+  display: none;
+}
 /* Desktop styles */
 .loginnnn {
   display: flex;
