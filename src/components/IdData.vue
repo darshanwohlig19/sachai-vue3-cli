@@ -138,37 +138,18 @@ import whatsappLogo from "@/assets/whatsapp.svg";
 
 const route = useRoute();
 const newsItem = ref(null);
-console.log("newsItem", newsItem);
 const newsId = route.params.id;
-console.log("newsId", newsId);
+
 const fetchNewsItem = async () => {
-  console.log("Fetching News Data: " + newsId);
   try {
     const response = await axios.get(
       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${newsId}`
     );
     newsItem.value = response.data;
-    console.log(" newsItem.value----", newsItem.value);
   } catch (error) {
     console.error("Error fetching news item:", error);
   }
 };
-
-
-// const updateNews = async (to, from, next) => {
-//   // await fetchNewsItem(to.params.id);
-//   try {
-//     const response = await axios.get(
-//       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${to.params.id}`
-//     );
-//     newsItem.value = response.data;
-//   } catch (error) {
-//     console.error("Error fetching news item:", error);
-//   }
-//   next();
-// };
-
-onMounted(() => {
 
 const formatCategoryName = (name) => {
   if (!name) return ""; // Return an empty string if name is null or undefined
@@ -178,19 +159,10 @@ const formatCategoryName = (name) => {
 };
 
 onBeforeMount(() => {
-  console.log("parent---");
-
   if (newsId) {
     fetchNewsItem();
   }
 });
-
-// watch(
-//   () => route.params.id,
-//   (newId) => {
-//     // updateNews({ params: { id: newId } }, null, () => {});
-//   }
-// );
 </script>
 
 <style>

@@ -73,8 +73,7 @@
                 v-for="(result, index) in searchResults"
                 :key="index"
                 class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
-
-                @click="navigateToNewsDetail(result_id)"
+                @click="navigateToNewsDetail(result._id)"
               >
                 <div
                   class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
@@ -276,12 +275,6 @@ export default {
         });
       }
     };
-
-
-    const navigateToNewsDetail = (id) => {
-      router.push(`/news/${id}`);
-    };
-
 
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
