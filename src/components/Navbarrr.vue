@@ -12,7 +12,7 @@
         </a>
       </div>
       <div class="w-[60%]">
-        <div class="flex gap-4 items-center justify-end">
+        <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
             <img src="../assets/Home.svg" alt="" />
