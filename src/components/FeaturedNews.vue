@@ -1,6 +1,9 @@
 <template>
   <!-- Loader -->
-  <div v-if="loading" class="flex justify-center items-center h-full">
+  <div
+    v-if="loading"
+    class="flex justify-center items-center h-full bg-white rounded-[10px] mt-3"
+  >
     <!-- Loader component or spinner -->
     <div class="text-center py-5">Loading...</div>
   </div>
@@ -8,7 +11,7 @@
   <!-- No News Message -->
   <div
     v-else-if="!blogs.length"
-    class="flex justify-center items-center h-full text-center py-5"
+    class="flex justify-center items-center h-full text-center py-5 bg-white rounded-[10px] mt-3"
   >
     <div>No News Available</div>
   </div>

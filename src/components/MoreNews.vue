@@ -5,7 +5,8 @@
         <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
         <div class="text-[20px] font-bold font-lato">More News</div>
       </div>
-      <div>
+      <!-- Conditionally render button based on loading and error states -->
+      <div v-if="!loading && !error">
         <a href="/MoreNews">
           <Button />
         </a>
@@ -101,6 +102,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
@@ -143,6 +145,7 @@ const router = useRouter();
 
 onMounted(fetchNews);
 </script>
+
 <style scoped>
 .small-img {
   height: 10px;
@@ -170,6 +173,7 @@ onMounted(fetchNews);
 .para {
   color: #6b7280;
 }
+
 .summary {
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -178,6 +182,7 @@ onMounted(fetchNews);
   text-overflow: ellipsis;
   color: #6b7280;
 }
+
 .more_headline {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -186,6 +191,7 @@ onMounted(fetchNews);
   text-overflow: ellipsis;
   color: #1e0627;
 }
+
 .multiline-truncate1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
