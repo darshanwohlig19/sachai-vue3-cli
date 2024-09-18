@@ -3,92 +3,101 @@
     class="w-full md-max:!block flex sm:flex-row lg:flex-row flex-wrap justify-between mt-3 relative bg-white p-3 rounded-[10px]"
   >
     <div class="relative w-[100%] lg:w-[30%] md:w-[48%]">
-      <div class="trendingCarousel">
-        <Carousel
-          :value="blogs"
-          :numVisible="1"
-          :numScroll="1"
-          :responsiveOptions="responsiveOptions"
-          class="carousel w-full h-full custom-carousal-custom"
-          showIndicators
-          circular
-        >
-          <template #item="slotProps">
-            <div
-              class="relative rounded-[10px] overflow-hidden h-[234px] md-max:h-[300px] bg-gradient-to-t from-black via-black/60"
-            >
+      <div v-if="loading" class="text-center py-5 bg-white rounded-[10px]">
+        Loading...
+      </div>
+      <div v-else-if="error" class="text-center py-5 bg-white rounded-[10px]">
+        No News Available
+      </div>
+
+      <div v-else>
+        <div class="trendingCarousel">
+          <Carousel
+            :value="blogs"
+            :numVisible="1"
+            :numScroll="1"
+            :responsiveOptions="responsiveOptions"
+            class="carousel w-full h-full custom-carousal-custom"
+            showIndicators
+            circular
+          >
+            <template #item="slotProps">
               <div
-                class="relative bg-white rounded-lg shadow-lg overflow-hidden"
+                class="relative rounded-[10px] overflow-hidden h-[234px] md-max:h-[300px] bg-gradient-to-t from-black via-black/60"
               >
-                <div class="relative h-[234px] w-[100%]">
-                  <img
-                    class="absolute inset-0 object-cover h-full w-full filter blur-sm"
-                    :src="slotProps.data.imgixUrlHighRes"
-                  />
+                <div
+                  class="relative bg-white rounded-lg shadow-lg overflow-hidden"
+                >
+                  <div class="relative h-[234px] w-[100%]">
+                    <img
+                      class="absolute inset-0 object-cover h-full w-full filter blur-sm"
+                      :src="slotProps.data.imgixUrlHighRes"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+                    ></div>
+                  </div>
                   <div
-                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
-                  ></div>
+                    class="absolute inset-0 flex flex-col justify-between text-white"
+                  >
+                    <img
+                      class="object-contain h-full w-[100%]"
+                      :src="slotProps.data.imgixUrlHighRes"
+                    />
+                  </div>
+                </div>
+                <Tag
+                  :value="slotProps.data.inventoryStatus"
+                  :severity="getSeverity(slotProps.data.inventoryStatus)"
+                  class="absolute top-4 left-4"
+                />
+                <div
+                  class="absolute top-2 right-4 p-2 text-black flex flex-row gap-2 justify-around"
+                >
+                  <div>
+                    <i
+                      class="mdi mdi-share-variant text-black bg-white rounded-[50%] sm:h-[23.63px] sm:w-[23.63px] sm:text-[12px] h-[23.63px] w-[23.63px] text-[14px] flex justify-center items-center icon-black"
+                      style="color: black"
+                    ></i>
+                  </div>
+                  <div>
+                    <i
+                      class="mdi mdi-bookmark-outline text-black bg-white rounded-[50%] sm:h-[23.63px] sm:w-[23.63px] sm:text-[12px] h-[23.63px] w-[23.63px] text-[14px] flex justify-center items-center"
+                    ></i>
+                  </div>
                 </div>
                 <div
-                  class="absolute inset-0 flex flex-col justify-between text-white"
+                  class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
                 >
-                  <img
-                    class="object-contain h-full w-[100%]"
-                    :src="slotProps.data.imgixUrlHighRes"
-                  />
-                </div>
-              </div>
-              <Tag
-                :value="slotProps.data.inventoryStatus"
-                :severity="getSeverity(slotProps.data.inventoryStatus)"
-                class="absolute top-4 left-4"
-              />
-              <div
-                class="absolute top-2 right-4 p-2 text-black flex flex-row gap-2 justify-around"
-              >
-                <div>
-                  <i
-                    class="mdi mdi-share-variant text-black bg-white rounded-[50%] sm:h-[23.63px] sm:w-[23.63px] sm:text-[12px] h-[23.63px] w-[23.63px] text-[14px] flex justify-center items-center icon-black"
-                    style="color: black"
-                  ></i>
-                </div>
-                <div>
-                  <i
-                    class="mdi mdi-bookmark-outline text-black bg-white rounded-[50%] sm:h-[23.63px] sm:w-[23.63px] sm:text-[12px] h-[23.63px] w-[23.63px] text-[14px] flex justify-center items-center"
-                  ></i>
-                </div>
-              </div>
-              <div
-                class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
-              >
-                <div class="gap-1 text-white text-xs ml-3 mb-2">
-                  <div class="leading-3 sm:w-full md:w-full">
-                    <a
-                      :href="`${SACHAI_NEWS_URL}${slotProps.data._id}`"
-                      style="line-height: 1.2"
-                      class="hover:text-current text-[14px] sm:text-[16px] md:text-[16px] fontCustom text-white"
-                    >
-                      {{ slotProps.data.headline }}
-                    </a>
-                  </div>
-                  <div class="flex flex-row gap-3 mt-3 mb-1">
-                    <div
-                      class="text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"
-                    >
-                      {{ slotProps.data.source }}
+                  <div class="gap-1 text-white text-xs ml-3 mb-2">
+                    <div class="leading-3 sm:w-full md:w-full">
+                      <a
+                        :href="`${SACHAI_NEWS_URL}${slotProps.data._id}`"
+                        style="line-height: 1.2"
+                        class="hover:text-current text-[14px] sm:text-[16px] md:text-[16px] fontCustom text-white"
+                      >
+                        {{ slotProps.data.headline }}
+                      </a>
                     </div>
-                    <div class="text-[16px]">|</div>
-                    <div
-                      class="text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"
-                    >
-                      {{ formatPublishTime(slotProps.data.publishTime) }}
+                    <div class="flex flex-row gap-3 mt-3 mb-1">
+                      <div
+                        class="text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"
+                      >
+                        {{ slotProps.data.source }}
+                      </div>
+                      <div class="text-[16px]">|</div>
+                      <div
+                        class="text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"
+                      >
+                        {{ formatPublishTime(slotProps.data.publishTime) }}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </template>
-        </Carousel>
+            </template>
+          </Carousel>
+        </div>
       </div>
     </div>
 
@@ -139,12 +148,12 @@
     </div>
   </div>
 </template>
+
 <script>
 import axios from "axios";
-import { ref } from "vue";
 import moment from "moment";
 import { ProductService } from "../../src/assets/service/ProductService";
-const blogs = ref([]);
+
 export default {
   data() {
     return {
@@ -176,6 +185,8 @@ export default {
           numScroll: 1,
         },
       ],
+      loading: true,
+      error: false,
     };
   },
   computed: {
@@ -199,6 +210,8 @@ export default {
   },
   methods: {
     async fetchBlogs() {
+      this.loading = true;
+      this.error = false;
       try {
         const response = await axios.post(
           "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
@@ -207,12 +220,16 @@ export default {
             categoryId: "63d90e4098d783ac0cbe2310",
           }
         );
-        this.blogs = response.data.slice(0, 3);
-        this.news = response.data.slice(6, 12);
-        console.log(response.data, "blogs-news");
-        console.log(blogs);
+        if (response.data.length === 0) {
+          this.error = true;
+        } else {
+          this.blogs = response.data.slice(0, 3);
+          this.news = response.data.slice(6, 12);
+        }
       } catch (error) {
-        console.error("Error fetching blogs:", error);
+        this.error = true;
+      } finally {
+        this.loading = false;
       }
     },
     truncateText(text, maxLength) {
@@ -229,7 +246,7 @@ export default {
     },
     navigateToTrending(id) {
       if (id) {
-        this.$router.push(`/news/${id}`); //
+        this.$router.push(`/news/${id}`);
       }
     },
     getSeverity(status) {
@@ -247,6 +264,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .p-carousel-content {
   border-radius: 0 10px 10px 0 !important;

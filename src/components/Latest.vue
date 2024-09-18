@@ -7,7 +7,10 @@
           <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
           <div class="text-[20px] font-bold font-lato">{{ headingText }}</div>
         </div>
-        <Button />
+        <!-- Conditionally render button based on loading state and data -->
+        <div v-if="!isLoading && blogs.length > 0">
+          <Button />
+        </div>
       </div>
 
       <!-- Loader -->
@@ -92,6 +95,7 @@
     </div>
   </section>
 </template>
+
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
@@ -241,6 +245,7 @@ onBeforeUnmount(() => {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .multiline-truncate1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;

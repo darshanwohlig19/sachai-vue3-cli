@@ -6,7 +6,10 @@
         <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
         <div class="heads">Campaign</div>
       </div>
-      <Button />
+      <!-- Conditionally render button based on loading state -->
+      <div v-if="!isLoading && campaigns.length > 0 && campaigns1.length > 0">
+        <Button />
+      </div>
     </div>
 
     <!-- Loader -->
@@ -111,12 +114,12 @@ export default {
         const response = await axios.post(
           `https://api-uat.newsshield.io/topic/apiForTopicsForWeb/65e17ea9842874dab8c45010`,
           {
-            language: languageId?.value,
+            language: languageId.value,
             page: 1,
           }
         );
-        campaigns.value = response?.data?.slice(0, 3);
-        campaigns1.value = response?.data?.slice(3, 8);
+        campaigns.value = response.data.slice(0, 3);
+        campaigns1.value = response.data.slice(3, 8);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       } finally {
@@ -126,8 +129,8 @@ export default {
 
     const displayedNews = computed(() => {
       return (news) => {
-        if (screenWidth.value <= 425) return news?.slice(0, 1);
-        return screenWidth.value > 1024 ? news : news?.slice(0, 2);
+        if (screenWidth.value <= 425) return news.slice(0, 1);
+        return screenWidth.value > 1024 ? news : news.slice(0, 2);
       };
     });
 
@@ -167,6 +170,7 @@ export default {
   background-color: #e5e7eb;
   width: 1px;
 }
+
 .lines2 {
   display: -webkit-box;
   -webkit-box-orient: vertical;

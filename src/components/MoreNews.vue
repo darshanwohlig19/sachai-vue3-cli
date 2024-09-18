@@ -5,13 +5,17 @@
         <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
         <div class="text-[20px] font-bold font-lato">More News</div>
       </div>
-      <div>
+      <!-- Conditionally render button based on loading and error states -->
+      <div v-if="!loading && !error">
         <a href="/MoreNews">
           <Button />
         </a>
       </div>
     </div>
-    <div class="bg-white w-[100%] flex">
+
+    <div v-if="loading" class="text-center py-5">Loading...</div>
+    <div v-else-if="error" class="text-center py-5">No News Available</div>
+    <div v-else class="bg-white w-[100%] flex">
       <!-- First Column -->
       <div
         class="w-[30%] sm-425:w-[100%] sm-max:w-[50%] between-sm-md:w-[50%] below-sm:w-[100%]"
@@ -106,6 +110,8 @@ import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
 
 const allNews = ref([]);
+const loading = ref(true);
+const error = ref(false);
 
 const leftColumnNews = computed(() => allNews.value.slice(0, 3));
 const middleColumnNews = computed(() => allNews.value.slice(3, 6));
@@ -125,11 +131,13 @@ const fetchNews = async () => {
         page: 9,
       }
     );
-    console.log("data", response.data);
-
     allNews.value = response.data.slice(0, 9);
-  } catch (error) {
-    console.error("Error fetching news:", error);
+    error.value = allNews.value.length === 0;
+  } catch (e) {
+    console.error("Error fetching news:", e);
+    error.value = true;
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -165,6 +173,7 @@ onMounted(fetchNews);
 .para {
   color: #6b7280;
 }
+
 .summary {
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -173,6 +182,7 @@ onMounted(fetchNews);
   text-overflow: ellipsis;
   color: #6b7280;
 }
+
 .more_headline {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -181,6 +191,7 @@ onMounted(fetchNews);
   text-overflow: ellipsis;
   color: #1e0627;
 }
+
 .multiline-truncate1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
