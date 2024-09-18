@@ -112,7 +112,7 @@ export default {
       isLoading.value = true; // Start loading
       try {
         const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
+          `https://api-uat.newsshield.io/topic/apiForTopicsForWeb/65e17ea9842874dab8c45010`,
           {
             language: languageId.value,
             page: 1,

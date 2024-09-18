@@ -138,16 +138,14 @@ import whatsappLogo from "@/assets/whatsapp.svg";
 
 const route = useRoute();
 const newsItem = ref(null);
-console.log("newsItem", newsItem);
 const newsId = route.params.id;
-console.log("newsId", newsId);
+
 const fetchNewsItem = async () => {
   try {
     const response = await axios.get(
       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${newsId}`
     );
     newsItem.value = response.data;
-    console.log(" newsItem.value----", newsItem.value);
   } catch (error) {
     console.error("Error fetching news item:", error);
   }
@@ -161,7 +159,6 @@ const formatCategoryName = (name) => {
 };
 
 onBeforeMount(() => {
-  console.log("parent---");
   if (newsId) {
     fetchNewsItem();
   }
