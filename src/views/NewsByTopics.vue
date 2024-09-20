@@ -7,9 +7,7 @@
       >
         <div class="flex flex-row items-center gap-1">
           <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
-          <div class="heads1 capitalize">
-            {{ categoryName || "Error" }}
-          </div>
+          <div class="heads1 capitalize">{{ categoryName || "Error" }}</div>
         </div>
         <div
           v-for="(item, index) in paginatedNews"
@@ -42,7 +40,7 @@
             </div>
             <div class="w-[60%] ml-4 mr-2 flex flex-col justify-evenly">
               <div class="flex justify-between items-center mt-1">
-                <div class="flex gap-1 text-[##1E0627] medium">
+                <div class="flex gap-1 text-[#1E0627] medium">
                   <div class="text-[8px] lg:text-[12px] font-lato">
                     {{ item?.source || "No source" }}
                   </div>
@@ -61,8 +59,7 @@
                       getBookmarkColor(item.isBookmarked),
                     ]"
                     @click="addBookmark(item)"
-                  >
-                  </span>
+                  ></span>
                 </div>
               </div>
               <div
@@ -117,8 +114,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { useRoute } from "vue-router";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import moment from "moment";
 
@@ -133,8 +129,8 @@ const currentPage = ref(0);
 const rowsPerPage = ref(5);
 const route = useRoute();
 const router = useRouter();
-const categoryId = route.params.slugOrId;
-const categoryName = route.query.category;
+const topic = route.params.topic;
+const categoryName = topic;
 const fallbackImage = "path/to/fallback/image.jpg"; // Replace with your fallback image URL
 
 const navigateToMoreNews = (id) => {
@@ -142,34 +138,20 @@ const navigateToMoreNews = (id) => {
 };
 
 // Fetching news based on category ID
-const fetchNews = async () => {
-  const token = localStorage.getItem("apiDataToken");
-  var response;
-  if (token == null) {
-    response = await axios.post(
-      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-      {
-        categoryId,
-      }
-    );
-  } else {
-    response = await axios.post(
-      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-      {
-        categoryId,
-      },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
-  }
-
+const fetchNewsByTopic = async () => {
   try {
-    news.value = response.data;
+    const response = await axios.post(
+      "https://api-uat.newsshield.io/news/searchNewsFromWeb",
+      {
+        language: "6421a32aa020a23deacecf92",
+        search: topic,
+      }
+    );
+    news.value = response.data; // Assign fetched data to news
+    console.log("API Response:", response.data); // Log the response
   } catch (error) {
     console.error("Error fetching news:", error);
+    news.value = []; // Clear the news in case of an error
   }
 };
 
@@ -177,14 +159,14 @@ const getBookmarkColor = (isBookmarked) => {
   return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
 };
 
-const addBookmark = async (news) => {
+const addBookmark = async (newsItem) => {
   const token = localStorage.getItem("apiDataToken");
   try {
     const currentStatus =
-      news.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
+      newsItem.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
 
     const response = await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${news._id}`,
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${newsItem._id}`,
       {
         status: currentStatus,
       },
@@ -194,7 +176,7 @@ const addBookmark = async (news) => {
         },
       }
     );
-    news.isBookmarked = currentStatus;
+    newsItem.isBookmarked = currentStatus;
     return response.data;
   } catch (error) {
     console.error("Error adding bookmark:", error);
@@ -218,9 +200,7 @@ const onPageChange = (event) => {
 
 // Fetch news when the component is mounted
 onMounted(() => {
-  if (categoryId) {
-    fetchNews();
-  }
+  fetchNewsByTopic();
 });
 </script>
 

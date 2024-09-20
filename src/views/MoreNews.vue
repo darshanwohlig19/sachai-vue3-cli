@@ -78,9 +78,11 @@
               <div class="text-[8px] lg:text-[12px] flex gap-3 mb-3">
                 <span class="text-red-500 capitalize">
                   {{
-                    item.categories[0].name.toLowerCase() === "ai"
-                      ? item.categories[0].name.toUpperCase()
-                      : item.categories[0].name.replace(/-/g, " ")
+                    item.categories &&
+                    item.categories.length > 0 &&
+                    item.categories[0].name
+                      ? item.categories[0].name.replace(/-/g, " ")
+                      : item.categories.name
                   }}
                 </span>
               </div>

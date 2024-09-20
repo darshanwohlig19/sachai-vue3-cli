@@ -140,6 +140,8 @@ const route = useRoute();
 const newsItem = ref(null);
 const newsId = route.params.id;
 
+console.log("ID DATA :" + route.params.id);
+
 const fetchNewsItem = async () => {
   try {
     const response = await axios.get(

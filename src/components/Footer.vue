@@ -102,7 +102,9 @@
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="item in hotOnTheWeb" :key="item.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">{{ item }}</a>
+                <a :href="`/NewsByTopics/${item}`">
+                  <div class="cursor-pointer capitalize">{{ item }}</div>
+                </a>
               </li>
             </ul>
           </div>
@@ -133,7 +135,9 @@
                 :key="news.id"
                 class="footer-links text-[#52525B] text-sm pt-3"
               >
-                <a class="capitalize">{{ news }}</a>
+                <a :href="`/NewsByTopics/${news}`">
+                  <div class="cursor-pointer capitalize">{{ news }}</div>
+                </a>
               </li>
             </ul>
           </div>
@@ -142,7 +146,7 @@
             <div class="footer-heads text-sm">Help</div>
             <ul>
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">About us</a>
+                <a href="/AboutUs" class="capitalize">About us</a>
               </li>
               <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize line">Customer Support</a>
@@ -165,7 +169,7 @@
                 Loading...
               </p>
             </div>
-            <div v-if="trendingTopics.length == 0">
+            <div v-else-if="trendingTopics.length == 0">
               <p class="footer-links text-[#52525B] text-[14px] pt-3">
                 No Headline Availabe
               </p>
@@ -174,7 +178,9 @@
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="topic in trendingTopics" :key="topic.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">{{ topic }}</a>
+                <a :href="`/NewsByTopics/${topic}`">
+                  <div class="cursor-pointer capitalize">{{ topic }}</div>
+                </a>
               </li>
             </ul>
           </div>
@@ -290,7 +296,9 @@
                   :key="news.id"
                   class="footer-links text-[#52525B] text-sm pt-3"
                 >
-                  <a class="capitalize">{{ news }}</a>
+                  <a :href="`/NewsByTopics/${news}`">
+                    <div class="cursor-pointer capitalize">{{ news }}</div>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -330,7 +338,9 @@
               <div class="grid grid-cols-2 pt-2">
                 <ul v-for="item in hotOnTheWeb" :key="item.id">
                   <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
-                    <a class="capitalize">{{ item }}</a>
+                    <a :href="`/NewsByTopics/${item}`">
+                      <div class="cursor-pointer capitalize">{{ item }}</div>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -367,7 +377,9 @@
               <div class="grid grid-cols-2 pt-2">
                 <ul v-for="item in trendingTopics" :key="item.id">
                   <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
-                    <a class="capitalize">{{ item }}</a>
+                    <a :href="`/NewsByTopics/${item}`">
+                      <div class="cursor-pointer capitalize">{{ item }}</div>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -393,6 +405,7 @@ export default {
   setup() {
     const categories = ref([]);
     const latestNews = ref([]);
+    console.log(latestNews, "LatestNews");
     const hotOnTheWeb = ref([]);
     const trendingTopics = ref([]);
     const loading = ref(true);
@@ -441,6 +454,10 @@ export default {
 
     console.log("trending topics", trendingTopics);
 
+    const LatestNews = () => {
+      console.log("News", latestNews);
+    };
+
     onMounted(() => {
       fetchCategories();
       fetchNewsTopics();
@@ -453,6 +470,7 @@ export default {
       trendingTopics,
       loading,
       hasError,
+      LatestNews,
     };
   },
 };
