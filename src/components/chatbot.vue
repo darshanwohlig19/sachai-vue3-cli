@@ -15,7 +15,10 @@
     </div>
 
     <!-- Chat Body -->
-    <div class="scrollable-container flex-grow overflow-y-auto p-1">
+    <div
+      ref="chatBodyRef"
+      class="scrollable-container flex-grow overflow-y-auto p-1"
+    >
       <!-- Suggested QnA -->
       <div>
         <!-- <vue-markdown :content="MarkDownContent" /> -->
@@ -149,7 +152,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from "vue";
+import { defineProps, ref, onMounted, nextTick } from "vue";
 import vectorImg from "@/assets/png/Vector.png";
 import commentsImg from "@/assets/svg/chatComments.svg";
 import { useRoute } from "vue-router";
@@ -177,9 +180,17 @@ console.log("selectedQuestionAnswers", selectedQuestionAnswers);
 const thumbsUpSelected = ref(false);
 const thumbsDownSelected = ref(false);
 const newsId = route.params.id;
+const chatBodyRef = ref(null);
 
 const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
+};
+const scrollToBottom = () => {
+  nextTick(() => {
+    if (chatBodyRef.value) {
+      chatBodyRef.value.scrollTop = chatBodyRef.value.scrollHeight;
+    }
+  });
 };
 
 const handleQnAClick = async (question, index) => {
@@ -193,6 +204,8 @@ const handleQnAClick = async (question, index) => {
   if (suggestedAnswer) {
     const botMessage = typewriterEffect(suggestedAnswer);
     conversation.value.push({ type: "bot", text: botMessage });
+    await nextTick(); // Wait for DOM update
+    scrollToBottom();
   }
 
   const payload = { question: question };
@@ -222,7 +235,8 @@ const handleChatClick = async () => {
 
     const botResponse = typewriterEffect(response.data.answer.answer);
     conversation.value.push({ type: "bot", text: botResponse });
-
+    await nextTick(); // Wait for DOM update
+    scrollToBottom();
     userQuestion.value = "";
   } catch (error) {
     console.error("Error fetching response:", error);

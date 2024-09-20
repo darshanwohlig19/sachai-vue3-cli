@@ -87,7 +87,7 @@
       </div>
 
       <!-- ChatBot Section -->
-      <div class="hidden lg:block ml-2">
+      <div class="hidden lg:block ml-2 h-[85.5vh]">
         <ChatBot :category="newsItem" />
       </div>
     </div>
