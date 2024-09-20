@@ -18,7 +18,7 @@
       <div
         v-for="(blog, index) in blogs.slice(0, 4)"
         :key="index"
-        class="shadow-md w-[48%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer"
+        class="shadow-md lg:w-[48%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer"
       >
         <div class="flex-shrink-0">
           <img
@@ -39,7 +39,7 @@
             {{ blog.headline || "-" }}
           </div>
           <span class="text-neon-pink bold">{{ news?.source }}</span>
-          <span class="text-[#1E0627]">| 4 min read</span>
+          <span class="text-[#1E0627]">| 5 min read</span>
         </div>
       </div>
     </div>

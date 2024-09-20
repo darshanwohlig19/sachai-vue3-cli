@@ -7,18 +7,18 @@
         Featured News
       </span>
       <button
-        className="text-[#FF0053] bg-[#fff0f5] px-3 py-1  text-sm font-medium flex items-center rounded-md"
+        class="text-[#FF0053] bg-[#fff0f5] px-3 py-1 text-sm font-medium flex items-center rounded-md"
       >
         View all &nbsp;→
       </button>
     </div>
     <div
-      class="flex flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
+      class="flex flex-col lg:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
     >
       <div
         v-for="news in featuredNewsItem.slice(0, 4)"
         :key="news._id"
-        class="w-[33%] md-max:w-full"
+        class="w-full lg:w-[33%] sm:w-[48%] md:w-[32%]"
       >
         <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
           <div class="rounded-[10px]">
@@ -26,9 +26,13 @@
               :src="news.imgixUrlHighRes"
               class="relative z-10 h-[170px] w-full rounded-[10px] object-fill"
               alt=""
+              @click="navigateToFeaturedDetail(news._id)"
             />
           </div>
-          <div class="flex justify-between items-center p-3">
+          <div
+            class="flex justify-between items-center p-3"
+            @click="navigateToFeaturedDetail(news._id)"
+          >
             <div class="flex gap-1 text-[#676767] text-xs font-medium">
               <div>{{ news.source }}</div>
               <div>| {{ formatPublishTime(news.publishTime) }}</div>
@@ -44,7 +48,8 @@
                 ]"
                 class="cursor-pointer"
                 @click="addBookmark(news._id)"
-              ></span>
+              >
+              </span>
             </div>
           </div>
           <div
@@ -69,6 +74,8 @@
     </div>
   </div>
 </template>
+
+<!-- The rest of your code remains unchanged -->
 
 <script setup>
 import {
@@ -127,6 +134,9 @@ const fetchBlogs = async () => {
   }
 };
 
+const navigateToFeaturedDetail = (id) => {
+  router.push(`/news/${id}`);
+};
 const formatPublishTime = (publishTime) => {
   return moment(publishTime).fromNow();
 };

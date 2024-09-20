@@ -17,6 +17,9 @@
     <!-- Chat Body -->
     <div class="scrollable-container flex-grow overflow-y-auto p-1">
       <!-- Suggested QnA -->
+      <div>
+        <!-- <vue-markdown :content="MarkDownContent" /> -->
+      </div>
       <div
         v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
         class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto mt-[3%]"
@@ -24,6 +27,7 @@
         <h2 class="text-lg font-bold mb-2 text-[#131314]">
           Need any assistance with your queries?
         </h2>
+
         <p class="text-[#121212] mb-2">
           Our AI chatbot support is always available to provide answers to any
           questions but to begin with, here are some of our most asked questions
@@ -151,6 +155,7 @@ import commentsImg from "@/assets/svg/chatComments.svg";
 import { useRoute } from "vue-router";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
+// import VueMarkdown from "vue-markdown-render";
 
 const props = defineProps({
   category: {
@@ -164,7 +169,6 @@ const chatsData = ref([]);
 const userQuestion = ref("");
 const conversation = ref([]);
 console.log("conversationconversation", conversation);
-
 const showQuestions = ref(true);
 console.log("showQuestions", showQuestions);
 const selectedQuestionIndex = ref(null);
