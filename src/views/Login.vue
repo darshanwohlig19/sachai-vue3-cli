@@ -72,15 +72,29 @@
 
               <div v-if="!showOtpInput">
                 <div class="flex justify-center mt-4">
-                  <Dropdown
-                    v-model="selectedCountryCode"
-                    :options="countryCodes"
-                    optionLabel="label"
-                    optionValue="value"
-                    placeholder="+91"
-                    class="!w-[70px] md:w-14rem"
-                  />
-
+                  <div class="relative inline-block text-left">
+                    <button
+                      @click="toggleDropdown"
+                      class="bg-white-200 text-gray-800 px-2 py-2 border border-gray-300"
+                    >
+                      {{ formattedCountryCode }}
+                    </button>
+                    <div
+                      v-if="isOpen"
+                      class="absolute mt-2 !w-[200px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-[300px] overflow-y-auto"
+                    >
+                      <ul class="list-none m-0 p-0">
+                        <li
+                          v-for="country in countries"
+                          :key="country.code"
+                          @click="selectCode(country.code)"
+                          class="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                        >
+                          {{ country.label }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                   <input
                     v-model="phoneNumber"
                     type="text"
@@ -88,21 +102,30 @@
                     class="border p-2 w-[304px] rounded-[4px]"
                   />
                 </div>
+
                 <div class="flex justify-center">
                   <button
                     @click="loginWithPhone"
                     class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
+                    :disabled="isLoading"
                   >
-                    Send Verification Code
+                    <span v-if="!isLoading">Send Verification Code</span>
                   </button>
                 </div>
+
+                <div v-if="isLoading" class="flex justify-center mt-4">
+                  <!-- Basic spinner -->
+                  <div class="loader"></div>
+                </div>
+
                 <div
                   @click="showPhoneVerification = false"
                   class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
                 >
-                  Want to select other login method?
+                  Want to select another login method?
                 </div>
               </div>
+
               <div v-if="showOtpInput">
                 <div class="card flex justify-center">
                   <div>
@@ -114,6 +137,7 @@
                     />
                   </div>
                 </div>
+
                 <div class="flex justify-center">
                   <button
                     @click="verifyOtp"
@@ -122,6 +146,7 @@
                     Verify OTP
                   </button>
                 </div>
+
                 <div class="flex justify-between">
                   <div
                     class="text-center font-lato text-[#5E5E5E] text-[14px] mt-2 cursor-pointer"
@@ -245,6 +270,29 @@
 
               <div v-if="!showOtpInput">
                 <div class="flex justify-center mt-4">
+                  <div class="relative inline-block text-left">
+                    <button
+                      @click="toggleDropdown"
+                      class="bg-white-200 text-gray-800 px-2 py-2 border border-gray-300"
+                    >
+                      {{ formattedCountryCode }}
+                    </button>
+                    <div
+                      v-if="isOpen"
+                      class="absolute mt-2 !w-[200px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-[300px] overflow-y-auto"
+                    >
+                      <ul class="list-none m-0 p-0">
+                        <li
+                          v-for="country in countries"
+                          :key="country.code"
+                          @click="selectCode(country.code)"
+                          class="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                        >
+                          {{ country.label }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                   <input
                     v-model="phoneNumber"
                     type="text"
@@ -252,31 +300,35 @@
                     class="border p-2 w-[304px] rounded-[4px]"
                   />
                 </div>
+
                 <div class="flex justify-center">
                   <button
                     @click="loginWithPhone"
                     class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
+                    :disabled="isLoading"
                   >
-                    Send Verification Code
+                    <span v-if="!isLoading">Send Verification Code</span>
+                    <span v-else>Sending...</span>
                   </button>
                 </div>
+
+                <div v-if="isLoading" class="flex justify-center mt-4">
+                  <!-- Add your loader component or a simple spinner here -->
+                  <div class="loader"></div>
+                  <!-- Example loader -->
+                </div>
+
                 <div
                   @click="showPhoneVerification = false"
                   class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
                 >
-                  Want to select other login method?
+                  Want to select another login method?
                 </div>
               </div>
+
               <div v-if="showOtpInput">
                 <div class="card flex justify-center">
                   <div>
-                    <Dropdown
-                      v-model="selectedCity"
-                      :options="cities"
-                      optionLabel="name"
-                      placeholder="Select a City"
-                      class="w-[40px] md:w-14rem"
-                    />
                     <InputOtp
                       v-model="otp"
                       :length="6"
@@ -285,6 +337,7 @@
                     />
                   </div>
                 </div>
+
                 <div class="flex justify-center">
                   <button
                     @click="verifyOtp"
@@ -293,6 +346,7 @@
                     Verify OTP
                   </button>
                 </div>
+
                 <div class="flex justify-between">
                   <div
                     class="text-center font-lato text-[#5E5E5E] text-[14px] mt-2 cursor-pointer"
@@ -345,7 +399,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, defineEmits } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 import { ProductService } from "../assets/service/ProductService";
@@ -358,8 +412,34 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-import { countries } from "country-data";
+import codes from "country-calling-code";
 // Reactive variables for desktop and mobile products
+const emit = defineEmits(["code-selected"]);
+const isOpen = ref(false);
+const selectedCountryCode = ref("91");
+const countries = computed(() => {
+  if (!codes || !Array.isArray(codes)) {
+    console.error("Error: `codes` is not an array");
+    return [];
+  }
+  return codes.map((country) => ({
+    label: `${country.country} (${country.countryCodes[0]})`,
+    code: country.countryCodes[0],
+  }));
+});
+const formattedCountryCode = computed(() => {
+  return selectedCountryCode.value ? `+${selectedCountryCode.value}` : "+91";
+});
+function toggleDropdown() {
+  isOpen.value = !isOpen.value;
+}
+
+function selectCode(code) {
+  selectedCountryCode.value = code; // Update selected country code
+  isOpen.value = false;
+  // Emit event to parent
+  emit("code-selected", code);
+}
 const showPhoneVerification = ref(false);
 
 const router = useRouter();
@@ -370,41 +450,21 @@ const mobileProducts = ref([]);
 
 const phoneNumber = ref("");
 const otp = ref("");
+const isLoading = ref(false);
 let confirmationResult1 = null;
 const showOtpInput = ref(false);
 const auth = getAuth();
 
-let selectedCountryCode = ref(null);
-const countryCodes = ref([]);
-const getCountryCodes = () => {
-  countryCodes.value = countries.all
-    .filter((country) => country.countryCallingCodes.length > 0) // Include only countries with calling codes
-    .map((country) => ({
-      label: `${country.name} (${country.countryCallingCodes[0]})`, // Display full name and calling code in options
-      value: country.countryCallingCodes[0], // Store only the country code as the value
-      selectedCountryCode: country.countryCallingCodes[0],
-    }));
-  console.log(countryCodes.value + "COUNTRY CODES");
-};
 const getPhoneNumberFromUserInput = () => {
   const countryCode = selectedCountryCode.value;
+
   const number = phoneNumber.value;
-  return `${countryCode}${number}`;
+  return `+${countryCode}${number}`;
 };
-
+console.log("1", isLoading.value);
 const loginWithPhone = async () => {
-  // const fullPhoneNumber = getPhoneNumberFromUserInput();
-  // if (!fullPhoneNumber) {
-  //   toast.add({
-  //     severity: "error",
-  //     summary: "Phone Number Required!",
-  //     summary2: "Please enter your phone number.",
-  //     group: "error",
-  //     life: 3000,
-  //   });
-  //   return;
-  // }
-
+  isLoading.value = true;
+  console.log("2", isLoading.value);
   try {
     // const appVerifier = window.recaptchaVerifier;
     window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
@@ -466,6 +526,8 @@ const loginWithPhone = async () => {
       group: "error",
       life: 3000,
     });
+  } finally {
+    isLoading.value = false; // Stop loader after OTP is sent or error occurs
   }
 };
 
@@ -571,7 +633,6 @@ onMounted(async () => {
   } catch (error) {
     console.error("Error fetching products:", error);
   }
-  getCountryCodes();
 });
 
 const loginWithGoogle = async () => {
@@ -696,6 +757,23 @@ const sendUserDataToApi = async (name, email, id) => {
 </script>
 
 <style>
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #1e0627;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .main-login {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
 }
