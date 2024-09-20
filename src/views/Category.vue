@@ -11,101 +11,118 @@
             {{ categoryName || "Error" }}
           </div>
         </div>
+
+        <!-- Loading message -->
+        <div v-if="loading" class="flex justify-center items-center h-[400px]">
+          <p class="text-lg font-bold">Loading...</p>
+        </div>
+
+        <!-- No News Available message -->
         <div
-          v-for="(item, index) in paginatedNews"
-          :key="index"
-          class="w-full h-[170px] bg-white drop-shadow-md flex rounded-lg"
+          v-else-if="!news.length"
+          class="flex justify-center items-center h-[400px]"
         >
-          <div class="w-full bg-white flex gap-0 rounded-lg">
-            <div class="w-[40%] h-full items-center">
-              <div
-                class="relative h-full bg-white rounded-lg shadow-lg overflow-hidden"
-              >
-                <div class="relative w-[100%] h-[100%]">
-                  <img
-                    class="absolute inset-0 object-cover h-full w-full filter blur-sm"
-                    :src="item?.imgixUrlHighRes || fallbackImage"
-                  />
-                  <div
-                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
-                  ></div>
-                </div>
+          <p class="text-lg font-bold">No News Available</p>
+        </div>
+
+        <!-- Display news when available -->
+        <div>
+          <div
+            v-for="(item, index) in paginatedNews"
+            :key="index"
+            class="w-full mt-3 h-[170px] bg-white drop-shadow-md flex rounded-lg"
+          >
+            <div class="w-full bg-white flex gap-0 rounded-lg">
+              <div class="w-[40%] h-full items-center">
                 <div
-                  class="absolute inset-0 flex flex-col justify-between text-white"
+                  class="relative h-full bg-white rounded-lg shadow-lg overflow-hidden"
                 >
-                  <img
-                    class="object-contain h-full w-[100%]"
-                    :src="item?.imgixUrlHighRes || fallbackImage"
-                  />
+                  <div class="relative w-[100%] h-[100%]">
+                    <img
+                      class="absolute inset-0 object-cover h-full w-full filter blur-sm"
+                      :src="item?.imgixUrlHighRes || fallbackImage"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+                    ></div>
+                  </div>
+                  <div
+                    class="absolute inset-0 flex flex-col justify-between text-white"
+                  >
+                    <img
+                      class="object-contain h-full w-[100%]"
+                      :src="item?.imgixUrlHighRes || fallbackImage"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="w-[60%] ml-4 mr-2 flex flex-col justify-evenly">
-              <div class="flex justify-between items-center mt-1">
-                <div class="flex gap-1 text-[##1E0627] medium">
-                  <div class="text-[8px] lg:text-[12px] font-lato">
-                    {{ item?.source || "No source" }}
+              <div class="w-[60%] ml-4 mr-2 flex flex-col justify-evenly">
+                <div class="flex justify-between items-center mt-1">
+                  <div class="flex gap-1 text-[##1E0627] medium">
+                    <div class="text-[8px] lg:text-[12px] font-lato">
+                      {{ item?.source || "No source" }}
+                    </div>
+                    <div class="text-[8px] lg:text-[12px]">
+                      | {{ moment(item?.publishTime || new Date()).fromNow() }}
+                    </div>
                   </div>
-                  <div class="text-[8px] lg:text-[12px]">
-                    | {{ moment(item?.publishTime || new Date()).fromNow() }}
+                  <div class="flex gap-1">
+                    <span
+                      class="mdi mdi-share-variant text-[11px] lg:text-[17px]"
+                    ></span>
+                    <span
+                      :class="[
+                        'mdi',
+                        'mdi-bookmark text-[11px] lg:text-[17px] cursor-pointer',
+                        getBookmarkColor(item.isBookmarked),
+                      ]"
+                      @click="addBookmark(item)"
+                    >
+                    </span>
                   </div>
                 </div>
-                <div class="flex gap-1">
-                  <span
-                    class="mdi mdi-share-variant text-[11px] lg:text-[17px]"
-                  ></span>
-                  <span
-                    :class="[
-                      'mdi',
-                      'mdi-bookmark text-[11px] lg:text-[17px] cursor-pointer',
-                      getBookmarkColor(item.isBookmarked),
-                    ]"
-                    @click="addBookmark(item)"
+                <div
+                  class="text-[12px] lg:text-[16px] fontCustom leading-1 bold mr-1 mt-1"
+                >
+                  <div
+                    @click="navigateToMoreNews(item._id)"
+                    class="cursor-pointer multiline-truncate1"
                   >
+                    {{ item?.headline || "No Headline" }}
+                  </div>
+                </div>
+                <div
+                  class="text-[10px] lg:text-[12px] text-[#878787] font-lato leading-1 mr-1 mt-1 mb-1"
+                >
+                  <div
+                    @click="navigateToMoreNews(item._id)"
+                    class="cursor-pointer multiline-truncate"
+                  >
+                    {{ item?.summary || "No summary" }}
+                  </div>
+                </div>
+                <div class="text-[8px] lg:text-[12px] flex gap-3 mb-3">
+                  <span class="text-red-500 capitalize">
+                    {{
+                      item.categories &&
+                      item.categories.length > 0 &&
+                      item.categories[0].name
+                        ? item.categories[0].name.replace(/-/g, " ")
+                        : item.categories.name
+                    }}
                   </span>
                 </div>
               </div>
-              <div
-                class="text-[12px] lg:text-[16px] fontCustom leading-1 bold mr-1 mt-1"
-              >
-                <div
-                  @click="navigateToMoreNews(item._id)"
-                  class="cursor-pointer multiline-truncate1"
-                >
-                  {{ item?.headline || "No Headline" }}
-                </div>
-              </div>
-              <div
-                class="text-[10px] lg:text-[12px] text-[#878787] font-lato leading-1 mr-1 mt-1 mb-1"
-              >
-                <div
-                  @click="navigateToMoreNews(item._id)"
-                  class="cursor-pointer multiline-truncate"
-                >
-                  {{ item?.summary || "No summary" }}
-                </div>
-              </div>
-              <div class="text-[8px] lg:text-[12px] flex gap-3 mb-3">
-                <span class="text-red-500 capitalize">
-                  {{
-                    item.categories &&
-                    item.categories.length > 0 &&
-                    item.categories[0].name
-                      ? item.categories[0].name.replace(/-/g, " ")
-                      : item.categories.name
-                  }}
-                </span>
-              </div>
             </div>
           </div>
-        </div>
 
-        <Paginator
-          :rows="rowsPerPage"
-          :totalRecords="totalRecords"
-          :page="currentPage"
-          @page="onPageChange"
-        />
+          <Paginator
+            :rows="rowsPerPage"
+            :totalRecords="totalRecords"
+            :page="currentPage"
+            @page="onPageChange"
+          />
+        </div>
       </div>
       <div class="w-[100%] lg:w-[38%]">
         <HotTopics />
@@ -129,6 +146,7 @@ import Navbarrr from "@/components/Navbarrr.vue";
 
 // Refs for storing news and pagination state
 const news = ref([]);
+const loading = ref(true); // Add loading state
 const currentPage = ref(0);
 const rowsPerPage = ref(5);
 const route = useRoute();
@@ -143,33 +161,37 @@ const navigateToMoreNews = (id) => {
 
 // Fetching news based on category ID
 const fetchNews = async () => {
-  const token = localStorage.getItem("apiDataToken");
-  var response;
-  if (token == null) {
-    response = await axios.post(
-      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-      {
-        categoryId,
-      }
-    );
-  } else {
-    response = await axios.post(
-      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-      {
-        categoryId,
-      },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
-  }
-
   try {
-    news.value = response.data;
+    loading.value = true; // Set loading to true before fetching news
+    const token = localStorage.getItem("apiDataToken");
+    let response;
+
+    if (token == null) {
+      response = await axios.post(
+        "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+        {
+          categoryId,
+        }
+      );
+    } else {
+      response = await axios.post(
+        "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+        {
+          categoryId,
+        },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+    }
+    news.value = response.data; // Set the news data
   } catch (error) {
     console.error("Error fetching news:", error);
+    news.value = []; // If there's an error, set news to an empty array
+  } finally {
+    loading.value = false; // Set loading to false after fetching is complete
   }
 };
 
