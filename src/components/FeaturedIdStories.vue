@@ -25,6 +25,7 @@
             class="h-[100%] w-[78px] object-cover rounded-[8px]"
             :src="blog.imgixUrlHighRes || fallbackImage"
             alt="Blog Image"
+            @click="navigateToFeaturedDetail(blog._id)"
           />
         </div>
         <div class="font-14">
@@ -35,11 +36,14 @@
           <span class="text-light-gray mr-2">
             {{ formatPublishTime(blog.publishTime) }}
           </span>
-          <div class="headline-tuncate">
+          <div
+            class="headline-tuncate"
+            @click="navigateToFeaturedDetail(blog._id)"
+          >
             {{ blog.headline || "-" }}
           </div>
           <span class="text-neon-pink bold">{{ news?.source }}</span>
-          <span class="text-[#1E0627]">| 5 min read</span>
+          <!-- <span class="text-[#1E0627]">| 5 min read</span> -->
         </div>
       </div>
     </div>
@@ -51,7 +55,9 @@ import { ref, onMounted, onBeforeUnmount, defineProps } from "vue";
 import axios from "axios";
 import moment from "moment";
 // import { useRoute, useRouter } from "vue-router";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+
+const router = useRouter();
 
 const props = defineProps({
   category: {
@@ -92,7 +98,9 @@ const formatPublishTime = (publishTime) => {
 const updateScreenWidth = () => {
   screenWidth.value = window.innerWidth;
 };
-
+const navigateToFeaturedDetail = (id) => {
+  router.push(`/news/${id}`);
+};
 // const navigateToNewsDetail = (id) => {
 //   router.push(`/news/${id}`);
 // };

@@ -147,13 +147,6 @@ const fetchNewsItem = async () => {
   }
 };
 
-const formatCategoryName = (name) => {
-  if (!name) return ""; // Return an empty string if name is null or undefined
-  return name.toLowerCase() === "ai"
-    ? name.toUpperCase()
-    : name.replace(/-/g, " ");
-};
-
 onBeforeMount(() => {
   if (newsId) {
     fetchNewsItem();
