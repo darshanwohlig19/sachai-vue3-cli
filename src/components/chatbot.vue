@@ -1,6 +1,6 @@
 <template>
   <div
-    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card h-[648px] flex flex-col w-screen"
+    class="lg:max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card h-full flex flex-col w-screen"
   >
     <!-- Chat Header -->
     <div class="bg-[#320A38] text-white h-[70px]">

@@ -14,9 +14,11 @@
       <div
         v-for="news in featuredNewsItem.slice(0, 4)"
         :key="news._id"
-        class="w-full lg:w-[33%] sm:w-[48%] md:w-[32%]"
+        class="w-full lg:w-[33%] sm:w-[48%] md:w-[32%] h-[340px]"
       >
-        <div class="flex flex-col bg-white rounded-[10px] drop-shadow-sm">
+        <div
+          class="flex flex-col bg-white rounded-[10px] h-full drop-shadow-sm"
+        >
           <div class="rounded-[10px]">
             <img
               :src="news.imgixUrlHighRes"
@@ -25,13 +27,14 @@
               @click="navigateToFeaturedDetail(news._id)"
             />
           </div>
-          <div
-            class="flex justify-between items-center p-3"
-            @click="navigateToFeaturedDetail(news._id)"
-          >
+          <div class="flex justify-between items-center p-3 py-0 !pt-[3%]">
             <div class="flex gap-1 text-[#676767] text-xs font-medium">
-              <div>{{ news.source }}</div>
-              <div>| {{ formatPublishTime(news.publishTime) }}</div>
+              <div @click="navigateToFeaturedDetail(news._id)">
+                {{ news.source }}
+              </div>
+              <div @click="navigateToFeaturedDetail(news._id)">
+                | {{ formatPublishTime(news.publishTime) }}
+              </div>
             </div>
             <div class="flex gap-1">
               <span class="mdi mdi-share-variant text-[19px]"></span>
@@ -48,21 +51,19 @@
               </span>
             </div>
           </div>
-          <div
-            class="pl-3 pr-3 text-[16px] font-semibold"
-            @click="navigateToNewsDetail(news._id)"
-          >
+          <div class="p-3 py-0 text-[16px] font-semibold">
             <a
+              @click="navigateToNewsDetail(news._id)"
               class="hover:text-current font-semibold multiline-truncate1 text-[#1E0627]"
             >
               {{ news?.headline }}
             </a>
           </div>
-          <div class="pl-3 pr-3 para multiline-truncate text-[#878787]">
+          <div
+            class="p-3 para multiline-truncate py-0 !pt-[2%] text-[#878787]"
+            @click="navigateToNewsDetail(news._id)"
+          >
             {{ news?.summary }}
-          </div>
-          <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
-            <span class="text-neon-pink bold">{{ news?.source }}</span>
           </div>
         </div>
       </div>

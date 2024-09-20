@@ -6,20 +6,20 @@
         class="flex-grow flex flex-col h-full max-w-full sm:max-w-[90%] lg:max-w-[66%]"
       >
         <div
-          class="shadow-lg rounded-lg overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[21rem] bg-white"
+          class="shadow-lg rounded-lg overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[16rem] bg-white"
         >
-          <div class="relative w-full md:w-1/2 overflow-hidden rounded-lg p-2">
+          <div class="relative w-full md:w-1/2 overflow-hidden p-2">
             <div class="image-container">
               <img
                 :src="newsItem?.imgixUrlHighRes"
                 alt="News image"
-                class="news-image w-full h-full object-cover"
+                class="news-image w-full h-64 object-fill rounded-xl"
               />
             </div>
           </div>
           <div class="w-full md:w-1/2 p-2 flex flex-col">
             <span
-              class="text-lg font-source-serif text-secondary font-semibold ml-1"
+              class="text-lg font-source-serif text-secondary font-semibold ml-1 pb-[5px]"
             >
               {{ newsItem?.headline }}
             </span>
@@ -87,15 +87,16 @@
       </div>
 
       <!-- ChatBot Section -->
-      <div class="lg:w-[33%] ml-2">
-        <div class="hidden lg:block">
-          <ChatBot :category="newsItem" />
-        </div>
+      <div class="hidden lg:block ml-2">
+        <ChatBot :category="newsItem" />
       </div>
     </div>
   </div>
 
-  <div class="mt-1 bg-white shadow-lg rounded-lg" v-if="newsItem?._id">
+  <div
+    class="mt-1 bg-white shadow-lg rounded-lg mx-[10px]"
+    v-if="newsItem?._id"
+  >
     <RelatedNewsData :category="newsItem" />
   </div>
   <Footer />
@@ -144,7 +145,7 @@ onBeforeMount(() => {
 .image-container {
   position: relative;
   width: 100%;
-  height: 327px; /* Set a fixed height */
+  height: 256px;
   overflow: hidden;
   border-radius: 0.5rem;
   padding: 16px; /* Adjust padding as needed */
@@ -158,14 +159,6 @@ onBeforeMount(() => {
   height: calc(100% - 32px); /* Adjust for padding */
   object-fit: cover; /* This will maintain the aspect ratio */
   object-position: center;
-}
-
-.image-container {
-  position: relative;
-  width: 100%;
-  height: 327px; /* Set a fixed height */
-  overflow: hidden;
-  border-radius: 0.5rem;
 }
 
 .news-image {

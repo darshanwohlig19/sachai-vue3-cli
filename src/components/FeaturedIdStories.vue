@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2">
+  <div class="p-2 lg:h-[365px]">
     <div class="flex justify-between w-full items-center">
       <span
         class="text-[18px] p-2 font-bold mb-3 border-l-4 border-red-500 text-[#1E0627] pl-2"
@@ -7,43 +7,56 @@
         Related News
       </span>
       <button
-        className="text-[#FF0053] bg-[#fff0f5] px-3 py-1  text-sm font-medium flex items-center rounded-md"
+        class="text-[#FF0053] bg-[#fff0f5] px-3 py-1 text-sm font-medium flex items-center rounded-md"
       >
         View all &nbsp;→
       </button>
     </div>
     <div
-      class="flex flex-wrap gap-3 justify-between cursor-pointer drop-shadow-lg"
+      class="flex flex-wrap lg:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
     >
       <div
         v-for="(blog, index) in blogs.slice(0, 4)"
         :key="index"
-        class="shadow-md lg:w-[48%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer"
+        class="shadow-md lg:w-[48%] flex flex-row md:flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer h-[130px]"
       >
-        <div class="flex-shrink-0">
-          <img
-            class="h-[100%] w-[78px] object-cover rounded-[8px]"
-            :src="blog.imgixUrlHighRes || fallbackImage"
-            alt="Blog Image"
-            @click="navigateToFeaturedDetail(blog._id)"
-          />
-        </div>
-        <div class="font-14">
-          <span class="text-neon-pink mr-1 capitalize">
-            {{ blog?.source }}
-          </span>
-          <span class="text-light-gray mr-2">|</span>
-          <span class="text-light-gray mr-2">
-            {{ formatPublishTime(blog.publishTime) }}
-          </span>
+        <img
+          class="h-full w-[106px] object-cover rounded-[8px]"
+          :src="blog.imgixUrlHighRes || fallbackImage"
+          alt="Blog Image"
+          @click="navigateToFeaturedDetail(blog._id)"
+        />
+        <div>
+          <div class="flex justify-between items-center text-xs">
+            <div class="flex gap-1">
+              <span class="text-neon-pink capitalize font-lato">
+                {{ blog?.source }}
+              </span>
+              <span> | </span>
+              <span class="text-light-gray font-lato">
+                {{ formatPublishTime(blog.publishTime) }}
+              </span>
+            </div>
+            <div class="flex flex-row gap-2 pt-1">
+              <div>
+                <i
+                  class="mdi mdi-share-variant text-black rounded-[50%] text-[19px]"
+                ></i>
+              </div>
+              <div>
+                <i
+                  class="mdi mdi-bookmark-outline text-black rounded-[50%] text-[21px]"
+                ></i>
+              </div>
+            </div>
+          </div>
+
           <div
-            class="headline-tuncate"
+            class="headline-tuncate font-semibold text-base font-source-serif text-[#1E0627] cursor-pointer"
             @click="navigateToFeaturedDetail(blog._id)"
           >
             {{ blog.headline || "-" }}
           </div>
-          <span class="text-neon-pink bold">{{ news?.source }}</span>
-          <!-- <span class="text-[#1E0627]">| 5 min read</span> -->
         </div>
       </div>
     </div>
@@ -200,6 +213,13 @@ onBeforeUnmount(() => {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate-one-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }
