@@ -199,6 +199,7 @@
         </div>
       </div>
     </div>
+    <button id="sign-in-button" class="hidden"></button>
     <!-- Mobile carousel with login on top -->
     <div class="relative h-[100%] w-full mobile">
       <!-- Login Credentials -->
@@ -517,6 +518,7 @@ const loginWithPhone = async () => {
     // );
     // showOtpInput.value = true; // Show OTP input after sending OTP
   } catch (error) {
+    window.recaptchaVerifier.clear();
     console.error("Phone login failed:", error);
     toast.add({
       severity: "error",
