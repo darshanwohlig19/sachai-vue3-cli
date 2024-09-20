@@ -92,7 +92,7 @@
                     item.categories.length > 0 &&
                     item.categories[0].name
                       ? item.categories[0].name.replace(/-/g, " ")
-                      : "No Category Available"
+                      : item.categories
                   }}
                 </span>
               </div>

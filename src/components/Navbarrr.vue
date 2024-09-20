@@ -43,7 +43,11 @@
           </div>
 
           <div class="hidden lg:flex head-navs gap-2">
-            <img v-if="isActive" src="../assets/active_bookmark.svg" alt="" />
+            <img
+              v-if="isBookmarkActive"
+              src="../assets/active_bookmark.svg"
+              alt=""
+            />
             <img v-else src="../assets/Bookmark.svg" alt="" />
             <RouterLink
               class="nav-items"
