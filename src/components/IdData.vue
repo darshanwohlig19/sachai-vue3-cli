@@ -1,15 +1,14 @@
 <template>
   <Navbarrr />
-  <div class="max-w-[1400px] mx-auto mt-2">
+  <div class="mx-[10px] mt-3">
     <div class="flex flex-col lg:flex-row">
-      <!-- Main Content -->
       <div
         class="flex-grow flex flex-col h-full max-w-full sm:max-w-[90%] lg:max-w-[66%]"
       >
         <div
-          class="shadow-lg rounded-lg overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[21rem] max-w-full md:max-w-[913px] bg-white"
+          class="shadow-lg rounded-lg overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[21rem] bg-white"
         >
-          <div class="relative w-full overflow-hidden rounded-lg p-2">
+          <div class="relative w-full md:w-1/2 overflow-hidden rounded-lg p-2">
             <div class="image-container">
               <img
                 :src="newsItem?.imgixUrlHighRes"
@@ -20,25 +19,17 @@
           </div>
           <div class="w-full md:w-1/2 p-2 flex flex-col">
             <span
-              class="text-lg font-source-serif text-Secondary font-semibold ml-[1px]"
+              class="text-lg font-source-serif text-secondary font-semibold ml-1"
             >
               {{ newsItem?.headline }}
             </span>
-            <div class="flex items-center ml-[1px] text-xs w-full pb-2">
+            <div class="flex items-center ml-1 text-xs w-full pb-2">
               <!-- Categories Name -->
               <span class="text-neon-pink mr-1 capitalize">
                 {{ newsItem?.categoriesName[0] }}
               </span>
-
-              <!-- Separator -->
               <span class="text-light-gray mr-2">|</span>
-
-              <!-- Source Name -->
-              <span class="text-light-gray mr-2">
-                {{ newsItem?.source }}
-              </span>
-
-              <!-- Social Icons -->
+              <span class="text-light-gray mr-2">{{ newsItem?.source }}</span>
               <div class="ml-auto flex items-center space-x-2">
                 <a
                   :href="newsItem?.newsLink"
@@ -80,40 +71,32 @@
                     class="social-icon"
                   />
                 </a>
-                <!-- Bookmark Icon -->
                 <i
-                  class="mdi mdi-bookmark-outline text-black sm:text-[22px] mt-0"
+                  class="mdi mdi-bookmark-outline text-black sm:text-[22px]"
                 ></i>
               </div>
             </div>
-
-            <div
-              class="text-[#878787] space-y-4 font-lato mt-[1%] text-sm ml-[1px]"
-            >
-              <p>
-                {{ newsItem?.summary }}
-              </p>
+            <div class="text-[#878787] space-y-4 font-lato mt-1 text-sm ml-1">
+              <p>{{ newsItem?.summary }}</p>
             </div>
           </div>
         </div>
-        <div
-          class="bg-white shadow-lg rounded-lg overflow-hidden mt-[1%] max-w-full md:max-w-[913px]"
-        >
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden mt-2">
           <FeatureNews />
         </div>
-        <!-- Feature News Section -->
       </div>
 
-      <div class="lg:w-[100%] ml-[1%]">
+      <!-- ChatBot Section -->
+      <div class="lg:w-[33%] ml-2">
         <div class="hidden lg:block">
           <ChatBot :category="newsItem" />
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="mt-1 bg-white shadow-lg rounded-lg" v-if="newsItem?._id">
-      <RelatedNewsData :category="newsItem" />
-    </div>
+  <div class="mt-1 bg-white shadow-lg rounded-lg" v-if="newsItem?._id">
+    <RelatedNewsData :category="newsItem" />
   </div>
   <Footer />
 </template>

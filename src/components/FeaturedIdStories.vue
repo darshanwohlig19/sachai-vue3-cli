@@ -18,7 +18,7 @@
       <div
         v-for="(blog, index) in blogs.slice(0, 4)"
         :key="index"
-        class="shadow-md lg:w-[48%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer"
+        class="shadow-md lg:w-[48%]flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer"
       >
         <div class="flex-shrink-0">
           <img
