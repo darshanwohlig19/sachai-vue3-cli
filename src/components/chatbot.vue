@@ -285,6 +285,8 @@ const typewriterEffect = (text, delay = 50) => {
       message.value += text[index];
       index++;
       setTimeout(type, delay);
+    } else {
+      scrollToBottom();
     }
   };
 
