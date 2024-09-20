@@ -127,30 +127,34 @@ import Navbarrr from "@/components/Navbarrr.vue";
 import FeatureNews from "@/components/FeaturedIdStories.vue";
 import RelatedNewsData from "@/components/RelatedNews.vue";
 import ChatBot from "@/components/chatbot.vue";
-import faceBookLogo from "@/assets/png/facebook.png";
-import xLogo from "@/assets/png/x.png";
-import linkDinLogo from "@/assets/png/linkDin.png";
-import whatsappLogo from "@/assets/png/whatsapp.png";
+import faceBookLogo from "@/assets/facebook.svg";
+import xLogo from "@/assets/X.svg";
+import linkDinLogo from "@/assets/linkedin.svg";
+import whatsappLogo from "@/assets/whatsapp.svg";
 
 const route = useRoute();
 const newsItem = ref(null);
-console.log("newsItem", newsItem);
 const newsId = route.params.id;
-console.log("newsId", newsId);
+
 const fetchNewsItem = async () => {
   try {
     const response = await axios.get(
       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${newsId}`
     );
     newsItem.value = response.data;
-    console.log(" newsItem.value----", newsItem.value);
   } catch (error) {
     console.error("Error fetching news item:", error);
   }
 };
 
+const formatCategoryName = (name) => {
+  if (!name) return ""; // Return an empty string if name is null or undefined
+  return name.toLowerCase() === "ai"
+    ? name.toUpperCase()
+    : name.replace(/-/g, " ");
+};
+
 onBeforeMount(() => {
-  console.log("parent---");
   if (newsId) {
     fetchNewsItem();
   }
