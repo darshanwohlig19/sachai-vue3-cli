@@ -13,7 +13,7 @@
               <img
                 :src="newsItem?.imgixUrlHighRes"
                 alt="News image"
-                class="news-image w-full h-64 object-fill rounded-xl"
+                class="news-image object-contain w-full h-64 rounded-xl"
               />
             </div>
           </div>
@@ -71,9 +71,15 @@
                     class="social-icon"
                   />
                 </a>
-                <i
-                  class="mdi mdi-bookmark-outline text-black sm:text-[22px]"
-                ></i>
+                <span
+                  :class="[
+                    'mdi',
+                    'mdi-bookmark text-[11px] lg:text-[17px] cursor-pointer',
+                    getBookmarkColor(newsItem.bookmark),
+                  ]"
+                  @click="addBookmark(newsItem)"
+                >
+                </span>
               </div>
             </div>
             <div class="text-[#878787] space-y-4 font-lato mt-1 text-sm ml-1">
@@ -87,7 +93,7 @@
       </div>
 
       <!-- ChatBot Section -->
-      <div class="hidden lg:block ml-2">
+      <div class="hidden lg:block ml-2 h-[40rem]">
         <ChatBot :category="newsItem" />
       </div>
     </div>
@@ -130,7 +136,31 @@ const fetchNewsItem = async () => {
     console.error("Error fetching news item:", error);
   }
 };
+const getBookmarkColor = (bookmark) => {
+  return bookmark === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
+};
+const addBookmark = async (news) => {
+  const token = localStorage.getItem("apiDataToken");
+  try {
+    const currentStatus = news.bookmark === "Enabled" ? "Disabled" : "Enabled";
 
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${news._id}`,
+      {
+        status: currentStatus,
+      },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+    news.isBookmarked = currentStatus;
+    return response.data;
+  } catch (error) {
+    console.error("Error adding bookmark:", error);
+  }
+};
 onBeforeMount(() => {
   if (newsId) {
     fetchNewsItem();
