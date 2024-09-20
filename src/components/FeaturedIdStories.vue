@@ -1,16 +1,12 @@
 <template>
   <div class="p-2 lg:h-[365px]">
-    <div class="flex justify-between w-full items-center">
+    <div class="flex justify-between items-center w-full mb-3">
       <span
-        class="text-[18px] p-2 font-bold mb-3 border-l-4 border-red-500 text-[#1E0627] pl-2"
+        class="text-[18px] font-bold border-l-4 border-red-500 text-[#1E0627] pl-2"
       >
         Related News
       </span>
-      <button
-        class="text-[#FF0053] bg-[#fff0f5] px-3 py-1 text-sm font-medium flex items-center rounded-md"
-      >
-        View all &nbsp;→
-      </button>
+      <Button />
     </div>
     <div
       class="flex flex-wrap lg:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
@@ -69,6 +65,7 @@ import axios from "axios";
 import moment from "moment";
 // import { useRoute, useRouter } from "vue-router";
 import { useRoute, useRouter } from "vue-router";
+import Button from "./ViewAll.vue";
 
 const router = useRouter();
 

@@ -1,13 +1,14 @@
 <template>
   <div class="p-3 mt-3">
-    <div class="flex justify-between w-full items-center">
+    <div class="flex justify-between items-center w-full mb-3">
       <span
-        class="text-[18px] font-bold mb-3 border-l-4 border-red-500 text-[#1E0627] pl-2"
+        class="text-[18px] font-bold border-l-4 border-red-500 text-[#1E0627] pl-2"
       >
         Featured News
       </span>
       <Button />
     </div>
+
     <div
       class="flex flex-col lg:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
     >
