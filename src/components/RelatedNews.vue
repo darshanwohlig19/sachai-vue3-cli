@@ -63,7 +63,6 @@
           </div>
           <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
             <span class="text-neon-pink bold">{{ news?.source }}</span>
-            <span>| 4 min read</span>
           </div>
         </div>
       </div>
