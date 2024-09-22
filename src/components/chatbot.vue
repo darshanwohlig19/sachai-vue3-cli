@@ -35,7 +35,13 @@
           Our AI chatbot support is always available to provide answers to any
           questions but to begin with, here are some of our most asked questions
         </p>
-        <div class="space-y-4 max-h-96" v-if="showQuestions">
+        <div
+          class="space-y-4 max-h-96"
+          v-if="
+            (showQuestions && conversation.length === 0) ||
+            (!showQuestions && conversation.length !== 0)
+          "
+        >
           <div
             v-for="(item, index) in category?.suggestedQnA"
             :key="index"
@@ -50,7 +56,15 @@
 
         <div class="flex justify-center mt-3 text-[#3978E1]">
           <Button variant="outline" @click="toggleQuestionsVisibility">
-            {{ showQuestions ? "Hide Questions" : "Show Questions" }}
+            {{
+              showQuestions && conversation.length === 0
+                ? "Hide Questions"
+                : !showQuestions && conversation.length !== 0
+                ? "Hide Questions"
+                : showQuestions
+                ? "Show Questions"
+                : "Show Questions"
+            }}
           </Button>
         </div>
       </div>
