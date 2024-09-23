@@ -65,17 +65,17 @@
             <!-- Phone Number Verification UI -->
             <div v-else>
               <div
-                class="text-center text-[#333333] font-lato font-[700] text-[24px]"
+                class="text-center text-[#333333] font-lato font-[600] text-[20px]"
               >
                 Phone Verification
               </div>
 
               <div v-if="!showOtpInput">
-                <div class="flex justify-center mt-4">
+                <div class="flex justify-center mt-5">
                   <div class="relative inline-block text-left">
                     <button
                       @click="toggleDropdown"
-                      class="bg-white-200 text-gray-800 px-2 py-2 border border-gray-300"
+                      class="bg-white-200 text-gray-800 px-2 py-2 border border-gray-300 rounded-l-[4px]"
                     >
                       {{ formattedCountryCode }}
                     </button>
@@ -99,14 +99,14 @@
                     v-model="phoneNumber"
                     type="text"
                     placeholder="Phone"
-                    class="border p-2 w-[304px] rounded-[4px]"
+                    class="border p-2 w-[304px] rounded-r-[4px]"
                   />
                 </div>
 
                 <div class="flex justify-center">
                   <button
                     @click="loginWithPhone"
-                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[4px] mt-4 w-[304px] h-[44px]"
                     :disabled="isLoading"
                   >
                     <span v-if="!isLoading">Send Verification Code</span>
@@ -120,7 +120,7 @@
 
                 <div
                   @click="showPhoneVerification = false"
-                  class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                  class="text-center font-lato text-[#878787] mt-2 cursor-pointer text-[14px] font-[400]"
                 >
                   Want to select another login method?
                 </div>
@@ -141,7 +141,7 @@
                 <div class="flex justify-center">
                   <button
                     @click="verifyOtp"
-                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[4px] mt-2 w-[304px] h-[44px]"
                   >
                     Verify OTP
                   </button>
@@ -149,20 +149,20 @@
 
                 <div class="flex justify-between">
                   <div
-                    class="text-center font-lato text-[#5E5E5E] text-[14px] mt-2 cursor-pointer"
+                    class="text-center font-lato text-[#878787] text-[14px] mt-2 cursor-pointer"
                     @click="showOtpInput = false"
                   >
                     Edit Phone Number?
                   </div>
-                  <div
-                    class="text-center text-[14px] font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                  <button
+                    @click="resendOtp"
+                    :disabled="!resendEnabled"
+                    class="text-[14px] mt-2"
+                    :class="resendEnabled ? 'text-[#000]' : 'text-[#878787]'"
                   >
-                    Resend OTP&nbsp;
-                    <span
-                      class="text-center text-[14px] font-lato text-[#BBBBBB] mt-2 cursor-pointer"
-                      >After 30 sec</span
-                    >
-                  </div>
+                    Resend OTP
+                    {{ resendEnabled ? "" : `After ${resendCountdown}sec` }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -255,7 +255,7 @@
               </div>
 
               <div
-                class="text-center text-[#FF0053] cursor-pointer mt-10 font-lato text-[18px]"
+                class="text-center text-[#FF0053] cursor-pointer mt-4 font-lato text-[16px]"
               >
                 <router-link to="/">Continue without login</router-link>
               </div>
@@ -264,13 +264,13 @@
             <!-- Phone Number Verification UI -->
             <div v-else>
               <div
-                class="text-center text-[#333333] font-lato font-[700] text-[24px]"
+                class="text-center text-[#333333] font-lato font-[600] text-[18px] mt-5"
               >
                 Phone Verification
               </div>
 
               <div v-if="!showOtpInput">
-                <div class="flex justify-center mt-4">
+                <div class="flex justify-center mt-5">
                   <div class="relative inline-block text-left">
                     <button
                       @click="toggleDropdown"
@@ -294,18 +294,18 @@
                       </ul>
                     </div>
                   </div>
-                  <input
+                  <InputText
                     v-model="phoneNumber"
                     type="text"
                     placeholder="Phone"
-                    class="border p-2 w-[304px] rounded-[4px]"
+                    class="p-2 w-[304px] rounded-[4px] !focus:border-black"
                   />
                 </div>
 
                 <div class="flex justify-center">
                   <button
                     @click="loginWithPhone"
-                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[8px] mt-4 w-[304px] h-[44px]"
                     :disabled="isLoading"
                   >
                     <span v-if="!isLoading">Send Verification Code</span>
@@ -321,7 +321,7 @@
 
                 <div
                   @click="showPhoneVerification = false"
-                  class="text-center font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                  class="text-center font-lato text-[#878787] mt-2 cursor-pointer text-[12px]"
                 >
                   Want to select another login method?
                 </div>
@@ -342,7 +342,7 @@
                 <div class="flex justify-center">
                   <button
                     @click="verifyOtp"
-                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[304px] h-[44px]"
+                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[8px] mt-3 w-[304px] h-[44px]"
                   >
                     Verify OTP
                   </button>
@@ -350,20 +350,20 @@
 
                 <div class="flex justify-between">
                   <div
-                    class="text-center font-lato text-[#5E5E5E] text-[14px] mt-2 cursor-pointer"
+                    class="text-center font-lato text-[#5E5E5E] text-[12px] mt-2 cursor-pointer"
                     @click="showOtpInput = false"
                   >
                     Edit Phone Number?
                   </div>
-                  <div
-                    class="text-center text-[14px] font-lato text-[#5E5E5E] mt-2 cursor-pointer"
+                  <button
+                    @click="resendOtp"
+                    :disabled="!resendEnabled"
+                    class="text-[10px] mt-2"
+                    :class="resendEnabled ? 'text-[#000]' : 'text-[#878787]'"
                   >
-                    Resend OTP&nbsp;
-                    <span
-                      class="text-center text-[14px] font-lato text-[#BBBBBB] mt-2 cursor-pointer"
-                      >After 30 sec</span
-                    >
-                  </div>
+                    Resend OTP
+                    {{ resendEnabled ? "" : `After${resendCountdown}sec` }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -442,13 +442,16 @@ function selectCode(code) {
   emit("code-selected", code);
 }
 const showPhoneVerification = ref(false);
+let appVerifier;
 
 const router = useRouter();
 const toast = useToast();
 const desktopProducts = ref([]);
 const mobileProducts = ref([]);
 // const auth = getAuth();
-
+let resendTimer = null;
+const resendCountdown = ref(0); // Timer for resend button
+const resendEnabled = computed(() => resendCountdown.value === 0);
 const phoneNumber = ref("");
 const otp = ref("");
 const isLoading = ref(false);
@@ -462,22 +465,23 @@ const getPhoneNumberFromUserInput = () => {
   const number = phoneNumber.value;
   return `+${countryCode}${number}`;
 };
-console.log("1", isLoading.value);
+
 const loginWithPhone = async () => {
   isLoading.value = true;
-  console.log("2", isLoading.value);
   try {
     // const appVerifier = window.recaptchaVerifier;
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
-      size: "invisible",
-      callback: (response) => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // onSignInSubmit();
-        console.log(response);
-      },
-    });
+    if (appVerifier == null) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
+        size: "invisible",
+        callback: (response) => {
+          // reCAPTCHA solved, allow signInWithPhoneNumber.
+          // onSignInSubmit();
+          console.log(response);
+        },
+      });
+      appVerifier = window.recaptchaVerifier;
+    }
     const phoneNumber = getPhoneNumberFromUserInput();
-    const appVerifier = window.recaptchaVerifier;
 
     console.log("numberrrr", phoneNumber);
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
@@ -497,10 +501,13 @@ const loginWithPhone = async () => {
           group: "success",
           life: 3000,
         });
+        startResendCountdown();
       })
+
       .catch((error) => {
         // Error; SMS not sent
         // ...
+
         toast.add({
           severity: "error",
           summary: "Login Failed!",
@@ -532,6 +539,26 @@ const loginWithPhone = async () => {
     isLoading.value = false; // Stop loader after OTP is sent or error occurs
   }
 };
+// Function to resend OTP
+const resendOtp = () => {
+  if (resendEnabled.value) {
+    loginWithPhone(); // Resend OTP
+  }
+};
+
+// Start the 30-second countdown for the resend button
+const startResendCountdown = () => {
+  resendCountdown.value = 30;
+  clearInterval(resendTimer); // Clear previous timer if any
+
+  resendTimer = setInterval(() => {
+    if (resendCountdown.value > 0) {
+      resendCountdown.value -= 1;
+    } else {
+      clearInterval(resendTimer);
+    }
+  }, 1000);
+};
 
 const verifyOtp = async () => {
   if (!otp.value) {
@@ -557,6 +584,9 @@ const verifyOtp = async () => {
       console.log(uid);
       sendUserDataToApi(uid);
       // console.log(user);
+      setTimeout(() => {
+        router.push("/");
+      }, 0);
       toast.add({
         severity: "success ",
         summary: "login Successfull",
@@ -564,9 +594,7 @@ const verifyOtp = async () => {
         group: "success",
         life: 3000,
       });
-      setTimeout(() => {
-        router.push("/");
-      }, 0);
+
       console.log(result.user + "USER");
       // var credential = auth.PhoneAuthProvider.credential(
       //   confirmationResult1.verificationId,
@@ -584,6 +612,9 @@ const verifyOtp = async () => {
         life: 3000,
       });
     });
+};
+const startPhoneVerification = () => {
+  showPhoneVerification.value = true;
 };
 const responsiveOptions = ref([
   {
@@ -722,9 +753,7 @@ const signInWithApple = async () => {
     });
   }
 };
-const startPhoneVerification = () => {
-  showPhoneVerification.value = true;
-};
+
 const sendUserDataToApi = async (name, email, id) => {
   const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
   const payload = {
