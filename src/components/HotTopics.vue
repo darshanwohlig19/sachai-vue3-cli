@@ -4,6 +4,16 @@
       <div class="bg-[#FF0053] w-[3px] h-[10px] rounded-md"></div>
       <div class="heads1">Hot Topics</div>
     </div>
+    <div v-if="loading" class="flex justify-center items-center h-[400px]">
+      <p class="text-lg font-bold">Loading...</p>
+    </div>
+
+    <div
+      v-else-if="!hot.length"
+      class="flex justify-center items-center h-[400px]"
+    >
+      <p class="text-lg font-bold">No Topics Available</p>
+    </div>
     <div
       v-for="(item, index) in hot"
       :key="index"
@@ -36,13 +46,16 @@ export default {
   data() {
     return {
       hot: [],
+      loading: true, // Add loading state
       SACHAI_NEWS_URL: "https://news.sachai.io/news/",
       languageId: "6421a32aa020a23deacecf92",
     };
   },
+
   methods: {
     async fetchBlogs() {
       try {
+        this.loading = true; // Set loading to true when starting the API call
         const response = await axios.post(
           "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
           {
@@ -50,15 +63,20 @@ export default {
             page: 1,
           }
         );
-        this.hot = response.data.slice(0, 10);
+        this.hot = response.data.slice(0, 10); // Assign the fetched blogs to 'hot'
       } catch (error) {
         console.error("Error fetching blogs:", error);
+        this.hot = []; // Set hot to empty array in case of an error
+      } finally {
+        this.loading = false; // Set loading to false when API call is done
       }
     },
+
     formatPublishTime(publishTime) {
       return moment(publishTime).fromNow();
     },
   },
+
   mounted() {
     this.fetchBlogs();
   },

@@ -3,7 +3,6 @@
     <div
       class="h-full w-full flex flex-col md:flex-row gap-6 md:gap-10 mob_des bg-white mt-10 p-6"
     >
-      <!-- Info Section -->
       <div class="info w-full md:w-[30%] mb-4">
         <div>
           <img
@@ -58,11 +57,19 @@
           ></a>
         </div>
       </div>
-
-      <!-- Popular Categories and Hot on the Web -->
       <div class="pop_hot w-full md:w-[35%] flex flex-col justify-between">
         <div>
           <div class="footer-heads ml-[-10px] text-sm">Popular Categories</div>
+          <div v-if="loading">
+            <p class="footer-links text-[#52525B] text-[14px] pt-3">
+              Loading...
+            </p>
+          </div>
+          <div v-else-if="categories.length == 0">
+            <p class="footer-links text-[#52525B] text-[14px] pt-3">
+              No Catogries Availabe
+            </p>
+          </div>
           <div
             class="grid grid-cols-2 xl:grid-cols-4 md:grid-cols-3 pt-2"
             style="column-gap: 17px"
@@ -80,41 +87,66 @@
         </div>
         <div class="mt-5">
           <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
+          <div>
+            <div v-if="loading">
+              <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                Loading...
+              </p>
+            </div>
+            <div v-else-if="hotOnTheWeb.length == 0">
+              <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                No Headline Availabe
+              </p>
+            </div>
+          </div>
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="item in hotOnTheWeb" :key="item.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">{{ item }}</a>
+                <a :href="`/NewsByTopics/${item}`">
+                  <div class="cursor-pointer capitalize">{{ item }}</div>
+                </a>
               </li>
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- Latest News, Help, and Trending Topics -->
       <div
         class="let_hlp_trend w-full md:w-[30%] flex flex-col justify-between"
       >
         <div class="flex gap-5 justify-around mt-6 ml-[-10px] md:mt-0">
-          <!-- Latest News -->
           <div class="let w-full md:w-auto">
             <div class="footer-heads text-sm">Latest News</div>
+            <div>
+              <div v-if="loading">
+                <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                  Loading...
+                </p>
+              </div>
+              <div v-else-if="latestNews.length == 0">
+                <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                  No Headline Availabe
+                </p>
+              </div>
+            </div>
             <ul>
               <li
                 v-for="news in latestNews"
                 :key="news.id"
                 class="footer-links text-[#52525B] text-sm pt-3"
               >
-                <a class="capitalize">{{ news }}</a>
+                <a :href="`/NewsByTopics/${news}`">
+                  <div class="cursor-pointer capitalize">{{ news }}</div>
+                </a>
               </li>
             </ul>
           </div>
 
-          <!-- Help -->
           <div class="hlp w-full md:w-auto">
             <div class="footer-heads text-sm">Help</div>
             <ul>
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">About us</a>
+                <a href="/AboutUs" class="capitalize">About us</a>
               </li>
               <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a class="capitalize line">Customer Support</a>
@@ -129,13 +161,26 @@
           </div>
         </div>
 
-        <!-- Trending Topics -->
         <div class="trend">
           <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
+          <div>
+            <div v-if="loading">
+              <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                Loading...
+              </p>
+            </div>
+            <div v-else-if="trendingTopics.length == 0">
+              <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                No Headline Availabe
+              </p>
+            </div>
+          </div>
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="topic in trendingTopics" :key="topic.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">{{ topic }}</a>
+                <a :href="`/NewsByTopics/${topic}`">
+                  <div class="cursor-pointer capitalize">{{ topic }}</div>
+                </a>
               </li>
             </ul>
           </div>
@@ -202,6 +247,14 @@
       </div>
 
       <div class="">
+        <div v-if="loading">
+          <p class="footer-links text-[#52525B] text-[14px] pt-3">Loading...</p>
+        </div>
+        <div v-else-if="categories.length == 0">
+          <p class="footer-links text-[#52525B] text-[14px] pt-3">
+            No Catogries Availabe
+          </p>
+        </div>
         <div class="pop_hot lex flex-col gap-6">
           <div>
             <div class="footer-heads ml-[-10px] text-sm">
@@ -221,11 +274,21 @@
           </div>
         </div>
 
-        <!-- Latest News, Help, and Hot on the Web -->
         <div class="let_hlp_trend flex flex-col gap-6">
           <div class="flex mt-5 ml-[-10px] gap-7">
-            <!-- Latest News -->
             <div class="let">
+              <div>
+                <div v-if="loading">
+                  <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                    Loading...
+                  </p>
+                </div>
+                <div v-else-if="latestNews.length == 0">
+                  <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                    No Headline Availabe
+                  </p>
+                </div>
+              </div>
               <div class="footer-heads text-sm">Latest News</div>
               <ul>
                 <li
@@ -233,17 +296,18 @@
                   :key="news.id"
                   class="footer-links text-[#52525B] text-sm pt-3"
                 >
-                  <a class="capitalize">{{ news.name }}</a>
+                  <a :href="`/NewsByTopics/${news}`">
+                    <div class="cursor-pointer capitalize">{{ news }}</div>
+                  </a>
                 </li>
               </ul>
             </div>
 
-            <!-- Help -->
             <div class="hlp">
               <div class="footer-heads text-sm">Help</div>
               <ul>
                 <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">About us</a>
+                  <a class="capitalize" href="/About-us">About us</a>
                 </li>
                 <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a class="capitalize">Customer Support</a>
@@ -256,39 +320,66 @@
                 </li>
               </ul>
             </div>
+            <div>
+              <div v-if="loading">
+                <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                  Loading...
+                </p>
+              </div>
+              <div v-else-if="hotOnTheWeb.length == 0">
+                <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                  No Headline Availabe
+                </p>
+              </div>
+            </div>
 
-            <!-- Hot on the Web -->
             <div>
               <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
               <div class="grid grid-cols-2 pt-2">
                 <ul v-for="item in hotOnTheWeb" :key="item.id">
                   <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
-                    <a class="capitalize">{{ item.name }}</a>
+                    <a :href="`/NewsByTopics/${item}`">
+                      <div class="cursor-pointer capitalize">{{ item }}</div>
+                    </a>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <!-- Trending Topics -->
           <div>
-            <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
-            <div class="grid grid-cols-2 pt-2 md:flex md:gap-6">
+            <!-- <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
+            <div class="grid grid-cols-2 pt-2">
               <div>
                 <ul v-for="topic in trendingTopics" :key="topic.id">
-                  <li
-                    class="footer-links text-[#52525B] text-sm pt-3 multiline-truncate1"
-                  >
-                    <a class="capitalize">{{ topic.name }}</a>
+                  <li class="footer-links text-[#52525B] text-sm pt-3">
+                    <a class="capitalize">{{ topic }}</a>
                   </li>
                 </ul>
               </div>
+              <div></div>
+            </div> -->
+
+            <div>
+              <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
               <div>
-                <ul v-for="topic in trendingTopics.slice(4, 8)" :key="topic.id">
-                  <li
-                    class="footer-links text-[#52525B] text-sm pt-3 multiline-truncate1"
-                  >
-                    <a class="capitalize">{{ topic.name }}</a>
+                <div v-if="loading">
+                  <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                    Loading...
+                  </p>
+                </div>
+                <div v-if="trendingTopics.length == 0">
+                  <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                    No Headline Availabe
+                  </p>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 pt-2">
+                <ul v-for="item in trendingTopics" :key="item.id">
+                  <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
+                    <a :href="`/NewsByTopics/${item}`">
+                      <div class="cursor-pointer capitalize">{{ item }}</div>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -297,7 +388,6 @@
         </div>
       </div>
     </div>
-    <!-- Bottom Section -->
     <div
       class="bg-[#fff] text-[#52525B] text-lato text-[15px] text-center py-4 px-4 md:px-6"
     >
@@ -315,8 +405,11 @@ export default {
   setup() {
     const categories = ref([]);
     const latestNews = ref([]);
+    console.log(latestNews, "LatestNews");
     const hotOnTheWeb = ref([]);
     const trendingTopics = ref([]);
+    const loading = ref(true);
+    const hasError = ref(false);
 
     const fetchCategories = async () => {
       try {
@@ -334,6 +427,9 @@ export default {
         }));
       } catch (error) {
         console.error("Error fetching categories:", error);
+        hasError.value = true;
+      } finally {
+        loading.value = false;
       }
     };
     console.log("Catogries", categories.value);
@@ -343,17 +439,24 @@ export default {
         const response = await axios.get(
           "https://api-uat.newsshield.io/news/getTrendingTopics"
         );
-        console.log(response.data); // Check what the API is returning
+        console.log(response.data);
         latestNews.value = response.data.slice(0, 4);
-        hotOnTheWeb.value = response.data.slice(5, 13);
-        trendingTopics.value = response.data.slice(13, 20);
+        hotOnTheWeb.value = response.data.slice(5, 12);
+        trendingTopics.value = response.data.slice(12, 20);
         console.log("latest", latestNews);
       } catch (error) {
         console.error("Error fetching footer news:", error);
+        hasError.value = true;
+      } finally {
+        loading.value = false;
       }
     };
 
     console.log("trending topics", trendingTopics);
+
+    const LatestNews = () => {
+      console.log("News", latestNews);
+    };
 
     onMounted(() => {
       fetchCategories();
@@ -365,6 +468,9 @@ export default {
       latestNews,
       hotOnTheWeb,
       trendingTopics,
+      loading,
+      hasError,
+      LatestNews,
     };
   },
 };
