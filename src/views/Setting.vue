@@ -2,20 +2,19 @@
   <div>
     <Navbarrr />
   </div>
-  <div class="flex min-h-screen bg-gray-100">
+  <div class="flex min-h-screen bg-gray-100 pt-2 mx-2 space-x-2">
     <!-- Sidebar -->
-    <div class="w-64 bg-white shadow-md">
-      <div class="p-6">
-        <h1 class="text-2xl font-bold mb-6">Settings</h1>
-        <p class="text-sm text-gray-600 mb-6">Manage your account settings</p>
+    <div class="w-80 bg-white shadow-md rounded-lg">
+      <div class="p-4">
+        <h1 class="text-2xl font-bold mb-1">Settings</h1>
+        <p class="text-sm text-gray-600 mb-3">Manage your account settings</p>
         <nav>
           <ul class="space-y-2">
             <li
               v-for="(item, index) in menuItems"
               :key="index"
-              :class="{
-                'border-l-4 border-purple-600 bg-purple-50': item.active,
-              }"
+              :class="{ 'border-purple-600': item.active }"
+              @click="selectLanguage(item.label)"
             >
               <a
                 href="#"
@@ -28,43 +27,62 @@
           </ul>
         </nav>
       </div>
-      <div class="p-6 border-t">
-        <Button label="Logout" severity="secondary" class="w-full mb-4" />
-        <a href="#" class="text-sm text-gray-600 hover:underline"
-          >Delete Account</a
-        >
-      </div>
-      <div class="p-6 border-t">
-        <h2 class="text-lg font-semibold mb-2">Don't miss out.</h2>
-        <p class="text-sm text-gray-600 mb-4">
-          Sign up for our newsletter to stay in the loop.
-        </p>
+      <button class="w-full bg-[#1E0627] text-white py-2 rounded-md mb-3">
+        Logout
+      </button>
+      <button class="w-full text-gray-600 hover:text-gray-900 mb-3">
+        Delete Account
+      </button>
+      <div class="bg-[#FFFFFF] p-1 mx-2 drop-shadow-xl rounded-lg h-36">
+        <div class="flex items-center space-x-2 mb-2">
+          <div class="rounded-full flex items-center justify-center text-white">
+            <img :src="icon" alt="Icon" class="w-10 h-10" />
+          </div>
+          <div>
+            <h3 class="font-bold">Don't miss out.</h3>
+            <p class="text-sm text-gray-600">
+              Sign up for our newsletter to stay in the loop.
+            </p>
+          </div>
+        </div>
         <div class="flex">
-          <InputText placeholder="EMAIL ADDRESS" class="flex-grow mr-2" />
-          <Button label="SUBSCRIBE" severity="secondary" />
+          <input
+            v-model="email"
+            type="email"
+            placeholder="Email Address"
+            class="flex-grow p-1 rounded-l-md border-t border-b border-l w-0"
+          />
+          <button
+            @click="subscribe"
+            class="bg-[#1E0627] text-white px-4 rounded-r-md"
+          >
+            Subscribe
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Main Content -->
-    <div class="flex-grow p-8">
-      <div class="bg-white shadow-md rounded-lg p-6">
-        <h2 class="text-2xl font-bold mb-6">Select a Language</h2>
-        <div class="grid grid-cols-3 gap-4">
+    <div class="flex-grow p-2 bg-white shadow-md rounded-lg">
+      <div class="p-2">
+        <h2 class="text-2xl font-bold mb-4">Select a Language</h2>
+        <div class="flex space-x-4">
           <div
             v-for="(lang, index) in languages"
             :key="index"
-            class="border rounded-lg p-4 flex items-center cursor-pointer"
+            class="border rounded-lg p-2 pb-0 flex items-center cursor-pointer space-x-2 w-48"
             :class="{ 'border-purple-600': lang.selected }"
+            @click="selectLanguage(lang.name)"
           >
-            <img :src="lang.image" :alt="lang.name" class="w-12 h-12 mr-4" />
+            <Checkbox v-model="lang.selected" :binary="true" class="mb-2" />
             <div>
               <h3 class="font-semibold">{{ lang.name }}</h3>
               <p class="text-sm text-gray-600">{{ lang.nativeName }}</p>
             </div>
-            <Checkbox v-model="lang.selected" :binary="true" class="ml-auto" />
+            <img :src="lang.image" :alt="lang.name" />
           </div>
         </div>
+
         <div class="mt-6 text-right">
           <Button label="Save" severity="primary" />
         </div>
@@ -79,11 +97,14 @@
 <script setup>
 import { ref } from "vue";
 import { Button } from "primevue/button";
-import { InputText } from "primevue/inputtext";
 import { Checkbox } from "primevue/checkbox";
 import Navbarrr from "@/components/Navbarrr.vue";
 import Footer from "@/components/Footer.vue";
-
+import Lang1 from "@/assets/svg/settinglang1.svg";
+import Lang2 from "@/assets/svg/settinglang2.svg";
+import Lang3 from "@/assets/svg/settinglang3.svg";
+import icon from "@/assets/svg/settingicon.svg";
+const email = ref("");
 const menuItems = ref([
   { label: "Language", icon: "pi pi-globe", active: true },
   { label: "My Categories", icon: "pi pi-list" },
@@ -97,27 +118,34 @@ const menuItems = ref([
 const languages = ref([
   {
     name: "English",
-    nativeName: "English",
-    image: "/placeholder.svg?height=48&width=48",
+    nativeName: "(English)",
+    image: Lang1,
     selected: true,
   },
   {
     name: "Hindi",
-    nativeName: "हिन्दी",
-    image: "/placeholder.svg?height=48&width=48",
+    nativeName: "(हिन्दी)",
+    image: Lang2,
     selected: false,
   },
   {
     name: "Gujarati",
-    nativeName: "ગુજરાતી",
-    image: "/placeholder.svg?height=48&width=48",
+    nativeName: "(ગુજરાતી)",
+    image: Lang3,
     selected: false,
   },
 ]);
-</script>
 
-<style>
-@import "primevue/resources/themes/saga-blue/theme.css";
-@import "primevue/resources/primevue.min.css";
-@import "primeicons/primeicons.css";
-</style>
+const selectLanguage = (langName) => {
+  console.log("Selected language:", langName);
+  languages.value.forEach((lang) => {
+    lang.selected = lang.name === langName;
+  });
+};
+
+const subscribe = () => {
+  // Handle newsletter subscription
+  console.log("Subscribed:", email.value);
+  email.value = "";
+};
+</script>

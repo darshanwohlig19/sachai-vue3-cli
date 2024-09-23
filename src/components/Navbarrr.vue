@@ -110,6 +110,7 @@
           <router-link v-if="isLoggedIn">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+              @click="navigateToSettings"
             >
               <img src="../assets/Settings.svg" alt="" />
             </div>
@@ -257,6 +258,9 @@ export default {
     const toggleCardDropdown = () => {
       isCardDropdownOpen.value = !isCardDropdownOpen.value;
     };
+    const navigateToSettings = () => {
+      router.push("/Setting");
+    };
 
     const scrollLeft = () => {
       if (categoriesContainer.value) {
@@ -292,7 +296,11 @@ export default {
       if (isLoggedIn.value) {
         showPopup();
       } else {
-        router.push("/Login");
+        try {
+          await router.push("/Login");
+        } catch (error) {
+          console.error("Navigation error:", error);
+        }
       }
     };
 
@@ -445,6 +453,7 @@ export default {
     });
 
     return {
+      navigateToSettings,
       isExpanded,
       searchInput,
       expandInput,
