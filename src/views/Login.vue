@@ -478,7 +478,7 @@ const loginWithPhone = async () => {
     });
     const phoneNumber = getPhoneNumberFromUserInput();
     const appVerifier = window.recaptchaVerifier;
-    console.log(phoneNumber);
+
     console.log("numberrrr", phoneNumber);
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
