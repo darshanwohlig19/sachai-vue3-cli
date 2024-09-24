@@ -173,7 +173,7 @@
       </div>
     </div>
     <!-- Mobile carousel with login on top -->
-    <div class="relative h-[100%] w-full mobile">
+    <div class="relative h-[100%] !overflow-hidden w-full mobile">
       <!-- Login Credentials -->
       <div
         class="absolute w-[350px] inset-0 flex items-center justify-center p-3 z-10 bg-opacity-75"
@@ -323,7 +323,7 @@
         :value="mobileProducts"
         :numVisible="1"
         :numScroll="1"
-        class="carousel login-carousel"
+        class="carousel"
         showIndicators
         circular
         :responsiveOptions="responsiveOptions"

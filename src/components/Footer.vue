@@ -152,10 +152,12 @@
                 <a class="capitalize line">Customer Support</a>
               </li>
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize line">Terms & Conditions</a>
+                <a href="/Terms&Condition" class="capitalize line"
+                  >Terms & Conditions</a
+                >
               </li>
               <li class="footer-links text-[#52525B] text-sm pt-3">
-                <a class="capitalize">Privacy Policy</a>
+                <a href="/PrivacyPolicy" class="capitalize">Privacy Policy</a>
               </li>
             </ul>
           </div>
@@ -313,10 +315,12 @@
                   <a class="capitalize">Customer Support</a>
                 </li>
                 <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Terms & Conditions</a>
+                  <a class="capitalize" href="/Terms&Condition"
+                    >Terms & Conditions</a
+                  >
                 </li>
                 <li class="footer-links text-[#52525B] text-sm pt-3">
-                  <a class="capitalize">Privacy Policy</a>
+                  <a href="/PrivacyPolicy" class="capitalize">Privacy Policy</a>
                 </li>
               </ul>
             </div>
