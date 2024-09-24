@@ -184,7 +184,7 @@ export default {
           "https://api-uat.newsshield.io/category/getAllCat",
           { langauge: languageId }
         );
-        const categoriesData = response.data.slice(0, 6).map((category) => ({
+        const categoriesData = response.data.slice(0, 16).map((category) => ({
           ...category,
           name:
             category.name.toLowerCase() === "ai"
@@ -194,7 +194,14 @@ export default {
 
         for (let category of categoriesData) {
           category.news = await fetchNewsForCategory(category._id);
-          // this.categoryNews = category.news;
+          if (category.news && category.news.length > 0) {
+            localStorage.setItem(
+              `news-${category._id}`,
+              JSON.stringify(category.news.slice(0, 5))
+            );
+          } else {
+            console.warn(`No news items found for category: ${category._id}`);
+          }
         }
 
         categories.value = categoriesData;

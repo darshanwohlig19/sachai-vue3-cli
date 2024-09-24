@@ -139,3 +139,15 @@
 .show-scrollbar::-webkit-scrollbar {
   opacity: 1;
 }
+
+.category-head {
+  color: #878787;
+  font-size: 14px;
+  font-family: lato;
+}
+
+.category-heading {
+  font-size: 14px;
+  color: #1e0627;
+  font-family: "source-serif-pro-semibold";
+}

@@ -15,24 +15,13 @@
         <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
-            <img
-              v-if="isHomeActive"
-              src="../assets/active_home.svg"
-              alt="Home"
-            />
-            <img v-else src="../assets/Home.svg" alt="Home" />
+            <img src="../assets/Home.svg" alt="" />
             <RouterLink class="nav-items" active-class="active-link" to="/"
               >Home</RouterLink
             >
           </div>
           <div class="hidden lg:flex head-navs gap-2" v-if="isLoggedIn">
-            <img
-              v-if="isAstrologyActive"
-              src="../assets/active_astrology.svg"
-              alt=""
-            />
-            <img v-else src="../assets/Astrology.svg" alt="" />
-
+            <img src="../assets/Astrology.svg" alt="" />
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -42,13 +31,149 @@
             <!-- Astrology -->
           </div>
 
+          <div
+            class="relative flex gap-2"
+            @mouseover="showDropdown = true"
+            @mouseleave="hideDropdown"
+          >
+            <img src="../assets/svg/category.svg" />
+            <div class="nav-items" active-class="active-link">Category</div>
+            <div
+              v-if="showDropdown"
+              @mouseover="showDropdown = true"
+              @mouseleave="hideDropdown"
+              class="absolute mt-4 bg-white border w-[537px] h-auto border-gray-300 rounded shadow-lg z-3"
+            >
+              <div class="w-[100%] flex">
+                <div
+                  class="w-[30%] shadow-lg capitalize category-head rounded-r-lg"
+                  @mouseover="fetchCategoryFromLocalStorage"
+                >
+                  <ul>
+                    <li
+                      class="mt-3 ml-3"
+                      v-for="category in categories"
+                      :key="category._id"
+                      @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                    >
+                      {{ category.name }} >
+                    </li>
+                  </ul>
+                </div>
+                <div class="w-[70%]">
+                  <div class="h-[203px] relative p-2">
+                    <img
+                      class="h-[100%] w-full object-cover rounded-[10px]"
+                      :src="newsItems[0]?.imgixUrlHighRes"
+                    />
+                    <div
+                      class="absolute top-0 bottom-0 w-full h-full flex items-end justify-start"
+                    >
+                      <div class="text-white p-2 rounded-md">
+                        {{ newsItems[0]?.headline }}
+                        <div>Time</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-[100%] p-2 flex flex-col justify-between">
+                    <div class="below-sm:mt-4">
+                      <div
+                        class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                      >
+                        <div class="w-[20%]">
+                          <img
+                            :src="newsItems[1]?.imgixUrlHighRes"
+                            class="rounded-[6px] h-[65px] w-[65px]"
+                            alt=""
+                          />
+                        </div>
+                        <div class="flex flex-col w-[70%]">
+                          <div
+                            class="category-heading w-[100%] multiline-truncate"
+                          >
+                            {{ newsItems[1]?.headline }}
+                          </div>
+                          <div class="multiline-truncate-one-liner w-[100%]">
+                            {{ newsItems[1]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-[100%] p-2 flex flex-col justify-between">
+                    <div class="below-sm:mt-4">
+                      <div
+                        class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                      >
+                        <div class="w-[20%]">
+                          <img
+                            :src="newsItems[2]?.imgixUrlHighRes"
+                            class="rounded-[6px] h-[65px] w-[65px]"
+                            alt=""
+                          />
+                        </div>
+                        <div class="flex flex-col w-[70%]">
+                          <div
+                            class="category-heading w-[100%] multiline-truncate"
+                          >
+                            {{ newsItems[2]?.headline }}
+                          </div>
+                          <div class="multiline-truncate-one-liner w-[100%]">
+                            {{ newsItems[2]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-[100%] p-2 flex flex-col justify-between">
+                    <div class="mt-4 md:mt-4 lg:mt-0 cursor-pointer">
+                      <div class="flex flex-row gap-2">
+                        <div class="w-[5%] mt-2">
+                          <img src="../assets/Group.png" alt="" />
+                        </div>
+                        <div class="flex flex-col w-[100%]">
+                          <div class="font-16 multi-line-2">
+                            {{ newsItems[3]?.headline }}
+                          </div>
+                          <div class="para multiline-truncate1">
+                            {{ newsItems[3]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-[100%] p-2 flex flex-col justify-between">
+                    <div class="mt-0 cursor-pointer">
+                      <div class="flex flex-row gap-2">
+                        <div class="w-[5%] mt-2">
+                          <img src="../assets/Group.png" alt="" />
+                        </div>
+                        <div class="flex flex-col w-[100%]">
+                          <div class="font-16 multi-line-2">
+                            {{ newsItems[4]?.headline }}
+                          </div>
+                          <div class="para multiline-truncate1">
+                            {{ newsItems[4]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <ul class="list-none">
+                  v-for="item in itemsData"
+                  :key="item.label"
+                  class="hover:bg-gray-100 p-2 cursor-pointer"
+                >
+                  {{ item.label }}
+                </li>
+              </ul> -->
+            </div>
+          </div>
+
           <div class="hidden lg:flex head-navs gap-2">
-            <img
-              v-if="isBookmarkActive"
-              src="../assets/active_bookmark.svg"
-              alt=""
-            />
-            <img v-else src="../assets/Bookmark.svg" alt="" />
+            <img src="../assets/Bookmark.svg" alt="" />
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -126,7 +251,6 @@
           <router-link v-if="isLoggedIn">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
-              @click="navigateToSettings"
             >
               <img src="../assets/Settings.svg" alt="" />
             </div>
@@ -243,273 +367,277 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { useToast } from "primevue/usetoast";
-import { useRoute } from "vue-router";
-export default {
-  setup() {
-    const isMenuOpen = ref(false);
-    const isDropdownOpen = ref(false);
-    const categories = ref([]);
-    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
-    const showBookmarkLink = ref(true);
-    const isPopupVisible = ref(false);
-    const isExpanded = ref(false);
-    const searchInput = ref(null);
-    const searchResultsDropdown = ref(null);
-    const router = useRouter();
-    const toast = useToast();
-    const categoriesContainer = ref(null);
-    const isLoggingOut = ref(false);
-    const isCardDropdownOpen = ref(false);
-    const route = useRoute();
-    const isInputVisible = ref(false);
-    const searchQuery = ref("");
-    const searchResults = ref([]);
 
-    const isHomeActive = computed(() => route.path === "/");
-    const isAstrologyActive = computed(() => route.path === "/Astrology");
-    const isBookmarkActive = computed(() => route.path === "/Bookmark");
-    // const isSettingsActive = computed(() => route.path === "/");
-    // const isAccountsActive = computed(() => route.path === "/");
+// const isMenuOpen = ref(false);
+// const isDropdownOpen = ref(false);
+const categories = ref([]);
+const newsItems = ref([]);
+const categoryWise = ref([]);
+console.log("hiiǐ", categoryWise);
+const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
+// const showBookmarkLink = ref(true);
+const isPopupVisible = ref(false);
+const isExpanded = ref(false);
+const searchInput = ref(null);
+const searchResultsDropdown = ref(null);
+const router = useRouter();
+const toast = useToast();
+const categoriesContainer = ref(null);
+const isLoggingOut = ref(false);
+const isCardDropdownOpen = ref(false);
+const categoryId = "63d90f8aaabaf4bf0169c2b0";
+// const isInputVisible = ref(false);
+const searchQuery = ref("");
+const searchResults = ref([]);
 
-    const toggleCardDropdown = () => {
-      isCardDropdownOpen.value = !isCardDropdownOpen.value;
-    };
-    const navigateToSettings = () => {
-      router.push("/Setting");
-    };
+const showDropdown = ref(false);
 
-    const scrollLeft = () => {
-      if (categoriesContainer.value) {
-        categoriesContainer.value.scrollBy({
-          left: -100,
-          behavior: "smooth",
-        });
-      }
-    };
+const hideDropdown = () => {
+  setTimeout(() => {
+    if (
+      // !document.querySelector(".relative:hover") &&
+      !document.querySelector(".absolute:hover")
+    ) {
+      showDropdown.value = false;
+    }
+  }, 10);
+};
 
-    const scrollRight = () => {
-      if (categoriesContainer.value) {
-        categoriesContainer.value.scrollBy({
-          left: 100,
-          behavior: "smooth",
-        });
-      }
-    };
+// const itemsData = [
+//   { label: "Item 1" },
+//   { label: "Item 2" },
+//   { label: "Item 3" },
+// ];
+const toggleCardDropdown = () => {
+  isCardDropdownOpen.value = !isCardDropdownOpen.value;
+};
 
-    const toggleMenu = () => {
-      isMenuOpen.value = !isMenuOpen.value;
-    };
+const scrollLeft = () => {
+  if (categoriesContainer.value) {
+    categoriesContainer.value.scrollBy({
+      left: -100,
+      behavior: "smooth",
+    });
+  }
+};
 
-    const toggleDropdown = () => {
-      isDropdownOpen.value = !isDropdownOpen.value;
-    };
+const scrollRight = () => {
+  if (categoriesContainer.value) {
+    categoriesContainer.value.scrollBy({
+      left: 100,
+      behavior: "smooth",
+    });
+  }
+};
 
-    const handleBackgroundClick = () => {
-      hidePopup();
-    };
+// const toggleMenu = () => {
+//   isMenuOpen.value = !isMenuOpen.value;
+// };
 
-    const handleAuthAction = async () => {
-      if (isLoggedIn.value) {
-        showPopup();
-      } else {
-        try {
-          await router.push("/Login");
-        } catch (error) {
-          console.error("Navigation error:", error);
+// const toggleDropdown = () => {
+//   isDropdownOpen.value = !isDropdownOpen.value;
+// };
+
+const handleBackgroundClick = () => {
+  hidePopup();
+};
+
+const handleAuthAction = async () => {
+  if (isLoggedIn.value) {
+    showPopup();
+  } else {
+    router.push("/Login");
+  }
+};
+
+const showPopup = () => {
+  isPopupVisible.value = true;
+};
+
+const hidePopup = () => {
+  isPopupVisible.value = false;
+};
+
+const navigateToNewsDetail = (id) => {
+  router.push(`/news/${id}`);
+  console.log("Navigating to news detail with ID:", id);
+};
+
+const handleLogout = async () => {
+  if (isLoggingOut.value) return;
+  isLoggingOut.value = true;
+
+  try {
+    const auth = getAuth();
+    await signOut(auth);
+
+    const apiDataToken = localStorage.getItem("apiDataToken");
+    if (apiDataToken) {
+      const response = await axios.post(
+        "https://api-uat.newsshield.io/user/logoutEvent",
+        {},
+        {
+          headers: { Authorization: `${apiDataToken}` },
         }
-      }
-    };
+      );
 
-    const showPopup = () => {
-      isPopupVisible.value = true;
-    };
+      if (response.status === 200) {
+        localStorage.removeItem("apiDataToken");
+        localStorage.setItem("logoutSuccess", "true");
+        isLoggedIn.value = false;
+        router.push("/");
 
-    const hidePopup = () => {
-      isPopupVisible.value = false;
-    };
-    const navigateToNewsDetail = (id) => {
-      router.push(`/news/${id}`);
-      console.log("Navigating to news detail with ID:", id);
-    };
-    const handleLogout = async () => {
-      if (isLoggingOut.value) return;
-      isLoggingOut.value = true;
-
-      try {
-        const auth = getAuth();
-        await signOut(auth);
-
-        const apiDataToken = localStorage.getItem("apiDataToken");
-        if (apiDataToken) {
-          const response = await axios.post(
-            "https://api-uat.newsshield.io/user/logoutEvent",
-            {},
-            {
-              headers: { Authorization: `${apiDataToken}` },
-            }
-          );
-
-          if (response.status === 200) {
-            localStorage.removeItem("apiDataToken");
-            localStorage.setItem("logoutSuccess", "true");
-            isLoggedIn.value = false;
-            router.push("/");
-
-            toast.add({
-              severity: "success",
-              summary: "Logged out successfully!",
-              summary2: "You have been safely logged out.",
-              group: "success",
-              life: 3000,
-            });
-            isCardDropdownOpen.value = !isCardDropdownOpen.value;
-          } else {
-            throw new Error("Failed to logout, unexpected response status");
-          }
-        }
-      } catch (error) {
-        console.error("Error during logout:", error);
         toast.add({
-          severity: "error",
-          summary: "Logged out Failed!",
-          summary2: "Try again after sometime.",
-          group: "error",
+          severity: "success",
+          summary: "Logged out successfully!",
+          summary2: "You have been safely logged out.",
+          group: "success",
           life: 3000,
         });
-      } finally {
-        isLoggingOut.value = false;
-        hidePopup();
-        toggleCardDropdown();
+        isCardDropdownOpen.value = !isCardDropdownOpen.value;
+      } else {
+        throw new Error("Failed to logout, unexpected response status");
       }
-    };
-
-    const fetchCategories = async () => {
-      try {
-        const languageId = "6421a32aa020a23deacecf92";
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/category/getAllCat",
-          { langauge: languageId }
-        );
-        categories.value = response.data.map((category) => ({
-          ...category,
-          name:
-            category.name.toLowerCase() === "ai"
-              ? category.name.toUpperCase()
-              : category.name.replace(/-/g, " "),
-        }));
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    const toggleSearchInput = () => {
-      isInputVisible.value = !isInputVisible.value;
-    };
-
-    const handleSearch = async () => {
-      if (
-        searchQuery.value.trim().length >= 4 &&
-        searchQuery.value.trim().length % 4 === 0
-      ) {
-        try {
-          const response = await axios.post(
-            "https://api-uat.newsshield.io/news/searchNewsFromWeb",
-            {
-              language: "6421a32aa020a23deacecf92",
-              search: searchQuery.value,
-            }
-          );
-          searchResults.value = response.data;
-        } catch (error) {
-          console.error("Error fetching search results:", error);
-        }
-      } else if (searchQuery.value.trim().length < 4) {
-        searchResults.value = [];
-      }
-    };
-
-    const expandInput = () => {
-      isExpanded.value = true;
-    };
-
-    const collapseInput = (event) => {
-      if (
-        searchResultsDropdown.value &&
-        !searchResultsDropdown.value.contains(event.target) &&
-        searchInput.value &&
-        !searchInput.value.contains(event.target)
-      ) {
-        isExpanded.value = false;
-        searchResults.value = [];
-        searchQuery.value = "";
-      }
-    };
-
-    onMounted(() => {
-      fetchCategories();
-      document.addEventListener("mousedown", collapseInput);
+    }
+  } catch (error) {
+    console.error("Error during logout:", error);
+    toast.add({
+      severity: "error",
+      summary: "Logged out Failed!",
+      summary2: "Try again after sometime.",
+      group: "error",
+      life: 3000,
     });
-
-    onBeforeUnmount(() => {
-      document.removeEventListener("mousedown", collapseInput);
-    });
-
-    const inputClass = computed(() =>
-      isExpanded.value
-        ? "w-[441px] py-2 transition-all duration-300"
-        : "w-[220px] py-2 transition-all duration-300"
-    );
-
-    watch(searchQuery, (newValue) => {
-      if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
-        handleSearch();
-      } else if (newValue.trim().length < 4) {
-        searchResults.value = [];
-      }
-    });
-
-    return {
-      navigateToSettings,
-      isExpanded,
-      searchInput,
-      expandInput,
-      inputClass,
-      isMenuOpen,
-      isDropdownOpen,
-      categories,
-      isLoggedIn,
-      showBookmarkLink,
-      isPopupVisible,
-      toggleMenu,
-      toggleDropdown,
-      handleAuthAction,
-      handleBackgroundClick,
-      hidePopup,
-      handleLogout,
-      scrollRight,
-      scrollLeft,
-      categoriesContainer,
-      isCardDropdownOpen,
-      toggleCardDropdown,
-      isInputVisible,
-      searchQuery,
-      toggleSearchInput,
-      handleSearch,
-      searchResults,
-      navigateToNewsDetail,
-      searchResultsDropdown,
-      isHomeActive,
-      isAstrologyActive,
-      isBookmarkActive,
-    };
-  },
+  } finally {
+    isLoggingOut.value = false;
+    hidePopup();
+    toggleCardDropdown();
+  }
 };
+const fetchNavbarCategory = async () => {
+  try {
+    const res = await axios.post(
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+      { categoryId }
+    );
+    categoryWise.value = res.data;
+  } catch (error) {
+    return [];
+  }
+};
+const fetchCategories = async () => {
+  try {
+    const languageId = "6421a32aa020a23deacecf92";
+    const response = await axios.post(
+      "https://api-uat.newsshield.io/category/getAllCat",
+      { langauge: languageId }
+    );
+    categories.value = response.data.map((category) => ({
+      ...category,
+    }));
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+  }
+};
+
+// const toggleSearchInput = () => {
+//   isInputVisible.value = !isInputVisible.value;
+// };
+
+const handleSearch = async () => {
+  if (
+    searchQuery.value.trim().length >= 4 &&
+    searchQuery.value.trim().length % 4 === 0
+  ) {
+    try {
+      const response = await axios.post(
+        "https://api-uat.newsshield.io/news/searchNewsFromWeb",
+        {
+          language: "6421a32aa020a23deacecf92",
+          search: searchQuery.value,
+        }
+      );
+      searchResults.value = response.data;
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  } else if (searchQuery.value.trim().length < 4) {
+    searchResults.value = [];
+  }
+};
+
+// const expandInput = () => {
+//   isExpanded.value = true;
+// };
+
+const collapseInput = (event) => {
+  if (
+    searchResultsDropdown.value &&
+    !searchResultsDropdown.value.contains(event.target) &&
+    searchInput.value &&
+    !searchInput.value.contains(event.target)
+  ) {
+    isExpanded.value = false;
+    searchResults.value = [];
+    searchQuery.value = "";
+  }
+};
+
+onMounted(() => {
+  fetchCategories();
+  document.addEventListener("mousedown", collapseInput);
+  fetchNavbarCategory();
+  const categoryId = "63d90e4098d783ac0cbe2310";
+  const storedNews = localStorage.getItem(`news-${categoryId}`);
+
+  if (storedNews) {
+    newsItems.value = JSON.parse(storedNews);
+    console.log("Fetched news items:", newsItems.value);
+  } else {
+    console.log(
+      "No news found in local storage for category:",
+      "news-" + categoryId
+    );
+  }
+});
+
+const fetchCategoryFromLocalStorage = (categoryId) => {
+  const storedNews = localStorage.getItem(`news-${categoryId}`);
+
+  if (storedNews) {
+    newsItems.value = JSON.parse(storedNews);
+    console.log("Fetched news items:", newsItems.value); // Verify the fetched items
+  } else {
+    console.log(
+      "No news found in local storage for category:",
+      `news-${categoryId}`
+    );
+  }
+};
+
+onBeforeUnmount(() => {
+  document.removeEventListener("mousedown", collapseInput);
+});
+
+const inputClass = computed(() =>
+  isExpanded.value
+    ? "w-[441px] py-2 transition-all duration-300"
+    : "w-[220px] py-2 transition-all duration-300"
+);
+
+watch(searchQuery, (newValue) => {
+  if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
+    handleSearch();
+  } else if (newValue.trim().length < 4) {
+    searchResults.value = [];
+  }
+});
 </script>
 
 <style scoped>
@@ -566,5 +694,19 @@ export default {
 }
 .slim-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+.multi-line-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate-one-liner {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
