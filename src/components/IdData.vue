@@ -30,6 +30,11 @@
               </span>
               <span class="text-light-gray mr-2">|</span>
               <span class="text-light-gray mr-2">{{ newsItem?.source }}</span>
+              <span class="text-light-gray mr-2">|</span>
+              <span class="text-light-gray mr-2">
+                {{ formattedPublishTime }}
+              </span>
+
               <div class="ml-auto flex items-center space-x-2">
                 <a
                   :href="newsItem?.newsLink"
@@ -71,9 +76,16 @@
                     class="social-icon"
                   />
                 </a>
-                <i
-                  class="mdi mdi-bookmark-outline text-black sm:text-[22px]"
-                ></i>
+                <span
+                  :class="[
+                    'mdi',
+                    newsItem && newsItem.bookmark
+                      ? 'mdi-bookmark text-[#FF0053] text-[21px]'
+                      : 'mdi-bookmark-outline text-[21px]',
+                  ]"
+                  class="cursor-pointer"
+                  @click.stop="addBookmark(newsItem._id)"
+                ></span>
               </div>
             </div>
             <div class="text-[#878787] space-y-4 font-lato mt-1 text-sm ml-1">
@@ -103,9 +115,12 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, computed } from "vue";
 import { useRoute } from "vue-router";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import axios from "axios";
+import moment from "moment"; // Import moment
 import Footer from "@/components/Footer.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
 import FeatureNews from "@/components/FeaturedIdStories.vue";
@@ -120,12 +135,28 @@ const route = useRoute();
 const newsItem = ref(null);
 const newsId = route.params.id;
 
+const formattedPublishTime = computed(() => {
+  return newsItem.value?.publishTime
+    ? moment(newsItem.value.publishTime).fromNow()
+    : "";
+});
+const addBookmark = async (id) => {
+  const newStatus = newsItem.value.bookmark ? "Disabled" : "Enabled";
+  const payload = { status: newStatus };
+  try {
+    await apiService.apiCall("post", `${apiConfig.BOOKMARK}/${id}`, payload);
+    newsItem.value.bookmark = !newsItem.value.bookmark;
+  } catch (error) {
+    console.error("Error fetching response:", error);
+  }
+};
+
 const fetchNewsItem = async () => {
   try {
     const response = await axios.get(
       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${newsId}`
     );
-    newsItem.value = response.data;
+    newsItem.value = response.data[0];
   } catch (error) {
     console.error("Error fetching news item:", error);
   }
