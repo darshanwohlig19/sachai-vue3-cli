@@ -15,13 +15,24 @@
         <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
-            <img src="../assets/Home.svg" alt="" />
+            <img
+              v-if="isHomeActive"
+              src="../assets/active_home.svg"
+              alt="Home"
+            />
+            <img v-else src="../assets/Home.svg" alt="Home" />
             <RouterLink class="nav-items" active-class="active-link" to="/"
               >Home</RouterLink
             >
           </div>
           <div class="hidden lg:flex head-navs gap-2" v-if="isLoggedIn">
-            <img src="../assets/Astrology.svg" alt="" />
+            <img
+              v-if="isAstrologyActive"
+              src="../assets/active_astrology.svg"
+              alt=""
+            />
+            <img v-else src="../assets/Astrology.svg" alt="" />
+
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -32,7 +43,12 @@
           </div>
 
           <div class="hidden lg:flex head-navs gap-2">
-            <img src="../assets/Bookmark.svg" alt="" />
+            <img
+              v-if="isBookmarkActive"
+              src="../assets/active_bookmark.svg"
+              alt=""
+            />
+            <img v-else src="../assets/Bookmark.svg" alt="" />
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -233,7 +249,7 @@ import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { useToast } from "primevue/usetoast";
-
+import { useRoute } from "vue-router";
 export default {
   setup() {
     const isMenuOpen = ref(false);
@@ -250,10 +266,16 @@ export default {
     const categoriesContainer = ref(null);
     const isLoggingOut = ref(false);
     const isCardDropdownOpen = ref(false);
-
+    const route = useRoute();
     const isInputVisible = ref(false);
     const searchQuery = ref("");
     const searchResults = ref([]);
+
+    const isHomeActive = computed(() => route.path === "/");
+    const isAstrologyActive = computed(() => route.path === "/Astrology");
+    const isBookmarkActive = computed(() => route.path === "/Bookmark");
+    // const isSettingsActive = computed(() => route.path === "/");
+    // const isAccountsActive = computed(() => route.path === "/");
 
     const toggleCardDropdown = () => {
       isCardDropdownOpen.value = !isCardDropdownOpen.value;
@@ -482,6 +504,9 @@ export default {
       searchResults,
       navigateToNewsDetail,
       searchResultsDropdown,
+      isHomeActive,
+      isAstrologyActive,
+      isBookmarkActive,
     };
   },
 };

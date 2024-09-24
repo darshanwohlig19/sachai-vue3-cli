@@ -9,10 +9,24 @@
           <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
           <div class="heads1 capitalize">More News</div>
         </div>
+
+        <!-- Loading Message -->
+        <div v-if="loading" class="text-center py-4 text-lg">Loading...</div>
+
+        <!-- No News Available Message -->
         <div
+          v-else-if="hasError || !news.length"
+          class="text-center py-4 text-lg"
+        >
+          No News Available
+        </div>
+
+        <!-- News List -->
+        <div
+          v-else
           v-for="(item, index) in paginatedNews"
           :key="index"
-          class="w-full h-[170px] bg-white drop-shadow-md flex rounded-lg"
+          class="w-full mt-3 h-[170px] bg-white drop-shadow-md flex rounded-lg"
         >
           <div class="w-full bg-white flex gap-0 rounded-lg">
             <div class="w-[40%] h-full items-center">
@@ -78,9 +92,11 @@
               <div class="text-[8px] lg:text-[12px] flex gap-3 mb-3">
                 <span class="text-red-500 capitalize">
                   {{
-                    item.categories[0].name.toLowerCase() === "ai"
-                      ? item.categories[0].name.toUpperCase()
-                      : item.categories[0].name.replace(/-/g, " ")
+                    item.categories &&
+                    item.categories.length > 0 &&
+                    item.categories[0].name
+                      ? item.categories[0].name.replace(/-/g, " ")
+                      : item.categories.name
                   }}
                 </span>
               </div>
@@ -89,6 +105,7 @@
         </div>
 
         <Paginator
+          v-if="!loading && !hasError && news.length"
           :rows="rowsPerPage"
           :totalRecords="totalRecords"
           :page="currentPage"
@@ -116,6 +133,8 @@ import Navbarrr from "@/components/Navbarrr.vue";
 
 // Refs for storing news and pagination state
 const news = ref([]);
+const loading = ref(true);
+const hasError = ref(false);
 const currentPage = ref(0);
 const rowsPerPage = ref(5);
 const router = useRouter();
@@ -128,35 +147,43 @@ const navigateToMoreNews = (id) => {
 const fetchNews = async () => {
   const token = localStorage.getItem("apiDataToken");
   var response;
-  if (token == null) {
-    response = await axios.post(
-      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
-      {
-        language: "6421a32aa020a23deacecf92",
-        categoryId: "63d90e4098d783ac0cbe2310",
-        page: 9,
-      }
-    );
-  } else {
-    response = await axios.post(
-      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
-      {
-        language: "6421a32aa020a23deacecf92",
-        categoryId: "63d90e4098d783ac0cbe2310",
-        page: 9,
-      },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
-  }
-
   try {
-    news.value = response.data;
+    if (token == null) {
+      response = await axios.post(
+        "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
+        {
+          language: "6421a32aa020a23deacecf92",
+          categoryId: "63d90e4098d783ac0cbe2310",
+          page: 9,
+        }
+      );
+    } else {
+      response = await axios.post(
+        "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
+        {
+          language: "6421a32aa020a23deacecf92",
+          categoryId: "63d90e4098d783ac0cbe2310",
+          page: 9,
+        },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+    }
+
+    // Check if the response has news data
+    if (response.data && response.data.length > 0) {
+      news.value = response.data;
+    } else {
+      hasError.value = true;
+    }
   } catch (error) {
     console.error("Error fetching news:", error);
+    hasError.value = true;
+  } finally {
+    loading.value = false;
   }
 };
 

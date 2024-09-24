@@ -8,6 +8,7 @@ import News from "../components/IdData.vue";
 import Bookmark from "../views/Bookmark.vue";
 import Setting from "../views/Setting.vue";
 import MoreNews from "../views/MoreNews.vue";
+import NewsByTopics from "../views/NewsByTopics.vue";
 
 const routes = [
   {
@@ -52,6 +53,11 @@ const routes = [
     path: "/MoreNews",
     name: "MoreNews",
     component: MoreNews,
+  },
+  {
+    path: "/NewsByTopics/:topic",
+    name: "NewsByTopics",
+    component: NewsByTopics,
   },
 ];
 
