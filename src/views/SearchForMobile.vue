@@ -18,7 +18,7 @@
           name="fname"
           autocomplete="off"
           placeholder="Search"
-          class="pr-10 pl-3 py-2 w-full font-[#1E0627] rounded-[100px] text-[12px] font-lato border-1"
+          class="pr-10 pl-3 py-2 w-full rounded-[100px] text-[12px] font-lato border-1"
         />
         <img
           src="../assets/svg-icons/search.svg"

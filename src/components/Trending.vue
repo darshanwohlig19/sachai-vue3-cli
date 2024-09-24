@@ -20,6 +20,7 @@
             class="carousel w-full h-full custom-carousal-custom"
             showIndicators
             circular
+            :autoplayInterval="2000"
           >
             <template #item="slotProps">
               <div
