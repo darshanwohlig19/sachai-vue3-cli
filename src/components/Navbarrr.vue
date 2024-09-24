@@ -116,7 +116,7 @@
             @complete="handleSearch"
             class="w-[200px] border-1 h-[full]"
           /> -->
-          <router-link class="md:hidden sm-max:block">
+          <router-link class="md:hidden sm-max:block" to="/Search">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >

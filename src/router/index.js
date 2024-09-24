@@ -9,7 +9,7 @@ import Bookmark from "../views/Bookmark.vue";
 import Setting from "../views/Setting.vue";
 import MoreNews from "../views/MoreNews.vue";
 import NewsByTopics from "../views/NewsByTopics.vue";
-
+import SearchForMobile from "@/views/SearchForMobile.vue";
 const routes = [
   {
     path: "/",
@@ -58,6 +58,11 @@ const routes = [
     path: "/NewsByTopics/:topic",
     name: "NewsByTopics",
     component: NewsByTopics,
+  },
+  {
+    path: "/Search",
+    name: "Search",
+    component: SearchForMobile,
   },
 ];
 
