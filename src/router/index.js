@@ -10,6 +10,7 @@ import Setting from "../views/Setting.vue";
 import MoreNews from "../views/MoreNews.vue";
 import NewsByTopics from "../views/NewsByTopics.vue";
 import SearchForMobile from "@/views/SearchForMobile.vue";
+import Campaign from "@/views/CampaignPage.vue";
 const routes = [
   {
     path: "/",
@@ -63,6 +64,11 @@ const routes = [
     path: "/Search",
     name: "Search",
     component: SearchForMobile,
+  },
+  {
+    path: "/Campaign",
+    name: "Campaign",
+    component: Campaign,
   },
 ];
 

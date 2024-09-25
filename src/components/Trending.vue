@@ -115,15 +115,21 @@
           <img class="image-small" src="../assets/Group.png" />
         </div>
         <div>
-          <div class="font-16 headline-tuncate">{{ item.headline }}</div>
+          <!-- Show Skeleton if loading, otherwise show the headline -->
+          <div class="font-16 headline-tuncate">
+            <Skeleton v-if="loading" width="5rem" class="mb-2"></Skeleton>
+            <span v-else>{{ item.headline }}</span>
+          </div>
           <div class="font-133 summary-tuncate">{{ item.summary }}</div>
           <div v-if="index < 2" class="border-1 sm-max:mt-3 mt-2"></div>
         </div>
       </div>
     </div>
+
     <div class="w-[1%] xl-max:!hidden flex justify-center">
       <div class="divider11"></div>
     </div>
+
     <div
       class="w-[100%] lg:w-[30%] md:w-[100%] lg:mt-0 mt-3 flex flex-col justify-between"
     >
@@ -142,7 +148,8 @@
         </div>
         <div class="font-14 p-2 h">
           <div class="headline-tuncate">
-            {{ blog.headline || "headline" }}
+            <Skeleton v-if="loading" width="5rem" class="mb-2"></Skeleton>
+            <span v-else>{{ blog.headline || "headline" }}</span>
           </div>
         </div>
       </div>
