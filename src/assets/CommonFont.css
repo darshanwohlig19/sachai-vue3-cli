@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
-.font-12{
+.font-12 {
   font-family: "Lato", sans-serif;
   font-size: 12px;
   font-weight: 700;
@@ -115,7 +115,55 @@
   display: none;
 }
 
-.custom-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* Hide scrollbar by default */
+.slim-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.slim-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slim-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.slim-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Show scrollbar when scrolled */
+.show-scrollbar::-webkit-scrollbar {
+  opacity: 1;
+}
+
+.category-head {
+  color: #878787;
+  font-size: 14px;
+  font-family: lato;
+}
+
+.category-heading {
+  font-size: 14px;
+  color: #1e0627;
+  font-family: "source-serif-pro-semibold";
+}
+.category-head-head {
+  font-size: 14px;
+  color: #878787;
+  font-family: lato;
+}
+
+.sub_category_head {
+  color: #ffffff;
+  font-family: "source-serif-pro-semibold";
+  font-size: 16px;
+}
+.sub_category_summary {
+  color: #ffffff;
+  font-family: lato;
+  font-size: 12px;
 }

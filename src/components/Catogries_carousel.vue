@@ -1,7 +1,20 @@
 <template>
   <div class="mt-3">
     <div class="carousel_card">
+      <!-- Loader -->
+      <div v-if="loading" class="text-center py-5">Loading...</div>
+
+      <!-- No News Message -->
+      <div
+        v-if="!loading && !categories.length"
+        class="bg-white p-3 rounded-[10px] text-center py-5"
+      >
+        No News Available
+      </div>
+
+      <!-- Carousel -->
       <Carousel
+        v-else
         :value="categories"
         :numVisible="4"
         :numScroll="4"
@@ -25,9 +38,8 @@
                   </div>
                   <a
                     :href="`/categories/${slotProps.data._id}?category=${slotProps.data.name}`"
-                    class="see-all"
                   >
-                    See all →
+                    <Button />
                   </a>
                 </div>
               </template>
@@ -42,8 +54,8 @@
                     <img
                       :src="news.imgixUrlHighRes"
                       class="w-[67px] h-[67px] object-cover rounded"
+                      alt="News image"
                     />
-
                     <p
                       class="text-[14px] text-[#1E0627] multiline-truncate fontCustom"
                     >
@@ -69,13 +81,17 @@ import "primevue/resources/themes/saga-blue/theme.css"; // Theme CSS
 import "primevue/resources/primevue.min.css"; // Core CSS
 import "primeicons/primeicons.css"; // Icons CSS
 import { useRouter } from "vue-router";
+import Button from "./ViewAll.vue";
 
 const categories = ref([]);
+const loading = ref(true);
+const noNews = ref(false); // Optional: Use this if you need to track if no news is found
 const router = useRouter(); // Use Vue Router
 
 const navigateToCategoryDetail = (id) => {
   router.push(`/news/${id}`);
 };
+
 const fetchNewsForCategory = async (categoryId) => {
   try {
     const { data } = await axios.post(
@@ -110,8 +126,11 @@ const fetchCategories = async () => {
     }
 
     categories.value = categoriesData;
+    noNews.value = categoriesData.every((cat) => cat.news.length === 0);
   } catch (error) {
     console.error("Error fetching categories:", error);
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -139,6 +158,12 @@ onMounted(() => {
 </script>
 
 <style>
+.loader {
+  text-align: center;
+  font-size: 1.5em;
+  margin: 2em 0;
+}
+
 .custom-carousel .p-carousel .p-carousel-item {
   flex: 1 0 auto;
 }

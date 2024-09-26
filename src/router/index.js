@@ -7,6 +7,8 @@ import Astrology from "../views/Astrology.vue";
 import News from "../components/IdData.vue";
 import Bookmark from "../views/Bookmark.vue";
 import Setting from "../views/Setting.vue";
+import MoreNews from "../views/MoreNews.vue";
+import NewsByTopics from "../views/NewsByTopics.vue";
 
 const routes = [
   {
@@ -47,6 +49,16 @@ const routes = [
     name: "Astrology",
     component: Astrology,
   },
+  {
+    path: "/MoreNews",
+    name: "MoreNews",
+    component: MoreNews,
+  },
+  {
+    path: "/NewsByTopics/:topic",
+    name: "NewsByTopics",
+    component: NewsByTopics,
+  },
 ];
 
 const router = createRouter({
@@ -56,7 +68,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isLoggedIn = !!localStorage.getItem("apiDataToken");
-
   // Check if the route requires authentication
   if (to.meta.requiresAuth && !isLoggedIn) {
     // Redirect to login if not authenticated

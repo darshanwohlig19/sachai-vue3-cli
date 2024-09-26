@@ -8,10 +8,12 @@
               <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
               <div class="heads1 capitalize">{{ category.name }}</div>
             </div>
-            <div class="see-all">See all →</div>
+            <a :href="`/categories/${category._id}?category=${category.name}`">
+              <Button />
+            </a>
           </div>
           <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
-            <div class="md-max:w-[100%] w-[65%]">
+            <div class="w-[100%] lg:w-[65%]">
               <div class="flex flex-col gap-5">
                 <div class="flex sm:flex-row flex-col gap-3 h-[100%]">
                   <div class="md:w-[70%] w-[100%]">
@@ -75,7 +77,9 @@
                           <img src="../assets/Group.png" alt="" />
                         </div>
                         <div class="font-14 one-line">
-                          {{ news.headline }}
+                          <a :href="`${SACHAI_NEWS_URL}${news._id}`">
+                            {{ news.headline }}
+                          </a>
                         </div>
                       </div>
                       <div class="divider-horizontal mt-2"></div>
@@ -101,7 +105,7 @@
             </div>
             <div class="divider-vertical"></div>
             <div
-              class="md-max:w-[100%] w-[35%] flex flex-col justify-between gap-3 sm:gap-3"
+              class="w-[100%] lg:w-[35%] flex flex-col justify-between gap-3 sm:gap-3"
             >
               <div v-for="news in category.news.slice(9, 13)" :key="news._id">
                 <div
@@ -129,6 +133,7 @@
 <script>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
+import Button from "./ViewAll.vue";
 
 export default {
   props: {
@@ -143,6 +148,11 @@ export default {
   //     // screenWidth: window.innerWidth,
   //   };
   // },
+
+  components: {
+    Button,
+  },
+
   setup() {
     const categories = ref({});
     const isMobileOrTablet = ref(window.innerWidth < 768);
@@ -174,7 +184,7 @@ export default {
           "https://api-uat.newsshield.io/category/getAllCat",
           { langauge: languageId }
         );
-        const categoriesData = response.data.slice(0, 6).map((category) => ({
+        const categoriesData = response.data.slice(0, 16).map((category) => ({
           ...category,
           name:
             category.name.toLowerCase() === "ai"
@@ -184,7 +194,18 @@ export default {
 
         for (let category of categoriesData) {
           category.news = await fetchNewsForCategory(category._id);
-          // this.categoryNews = category.news;
+          if (category.news && category.news.length > 0) {
+            console.log(
+              "CATEGORY DATA STORED GLOBALLY",
+              category.news.slice(0, 5)
+            );
+            localStorage.setItem(
+              `news-${category._id}`,
+              JSON.stringify(category.news.slice(0, 5))
+            );
+          } else {
+            console.warn(`No news items found for category: ${category._id}`);
+          }
         }
 
         categories.value = categoriesData;
@@ -219,6 +240,7 @@ export default {
       getDisplayedNews,
       displayedNews,
       screenWidth,
+      Button,
     };
   },
 };

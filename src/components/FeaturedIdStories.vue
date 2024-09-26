@@ -1,64 +1,79 @@
 <template>
-  <div class="bg-white p-3 rounded-lg shadow-md mx-auto">
-    <span
-      class="text-2xl font-bold mb-4 border-l-4 text-[#1E0627] border-red-500 pl-2"
+  <div class="p-2 lg:h-full">
+    <div class="flex justify-between items-center w-full mb-2 rounded-2xl">
+      <div class="flex items-center">
+        <span
+          class="border-l-4 border-[#FF0053] h-[13px] rounded-2xl mr-1"
+        ></span>
+        <span class="text-lg font-bold text-[#1E0627] font-Lato ml-0"
+          >Related News</span
+        >
+      </div>
+
+      <Button />
+    </div>
+
+    <div
+      class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg"
     >
-      Featured News
-    </span>
-    <div class="space-y-4">
       <div
-        v-for="(item, index) in newsItems"
+        v-for="(blog, index) in slicedData"
         :key="index"
-        class="flex items-start space-x-4"
+        class="shadow-md between-Laptop-small:w-[100%] between-644-1024:!w-[100%] sm:w-[48%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px]"
       >
         <img
-          :src="item.image"
-          alt="News thumbnail"
-          class="w-24 h-24 object-cover rounded-lg"
+          class="w-[106px] object-contain rounded-[8px]"
+          :src="blog.imgixUrlHighRes || fallbackImage"
+          alt="Blog Image"
+          @click="navigateToFeaturedDetail(blog._id)"
         />
-        <div class="flex-1">
-          <div class="flex items-center justify-between mb-1">
-            <div class="flex items-center space-x-2">
-              <img
-                src="/toi-logo.png"
-                alt="Times of India"
-                class="w-6 h-6 rounded-full"
-              />
-              <span class="text-sm text-gray-600">
-                Times of India | {{ item.time }}
+        <div>
+          <div
+            class="flex flex-wrap items-center justify-between text-xs w-full mb-1"
+          >
+            <div class="flex gap-1 mb-[1px]">
+              <span class="text-[#1E0627] capitalize font-lato">
+                {{ blog?.source }}
+              </span>
+              <span class="text-[#1E0627]"> | </span>
+              <span class="text-[#1E0627] font-lato">
+                {{ formatPublishTime(blog.publishTime) }}
               </span>
             </div>
-            <div class="flex space-x-2">
-              <button class="text-gray-400 hover:text-gray-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"
-                  />
-                </svg>
-              </button>
-              <button class="text-gray-400 hover:text-gray-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
-                </svg>
-              </button>
+            <div
+              class="flex-row gap-1 pt-1 ml-auto flex items-center space-x-2"
+            >
+              <div>
+                <i
+                  class="mdi mdi-share-variant text-black rounded-[50%] text-[19px]"
+                ></i>
+              </div>
+              <div>
+                <span
+                  :class="[
+                    'mdi',
+                    blogs && blog.bookmark
+                      ? 'mdi-bookmark text-[#FF0053] text-[21px]'
+                      : 'mdi-bookmark-outline text-[21px]',
+                  ]"
+                  class="cursor-pointer"
+                  @click.stop="addBookmark(blog._id)"
+                ></span>
+              </div>
             </div>
           </div>
-          <h3 class="font-semibold text-lg mb-1">{{ item.title }}</h3>
-          <div class="flex items-center text-sm">
-            <span class="text-red-500 font-medium mr-2">{{
-              item.category
-            }}</span>
-            <span class="text-gray-500">{{ item.readTime }}</span>
+
+          <div
+            class="headline-tuncate font-semibold text-base font-source-serif text-[#1E0627] cursor-pointer mb-[1px]"
+            @click="navigateToFeaturedDetail(blog._id)"
+          >
+            {{ blog.headline || "-" }}
+          </div>
+          <div
+            class="headline-truncate-single-line pt-[1px] font-normal text-base font-source-serif text-[#1E0627] cursor-pointer mb-[1px]"
+            @click="navigateToFeaturedDetail(blog._id)"
+          >
+            {{ blog.summary || "-" }}
           </div>
         </div>
       </div>
@@ -66,43 +81,144 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount, defineProps, computed } from "vue";
 import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
+import moment from "moment";
+// import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import Button from "./ViewAll.vue";
 
-export default {
-  props: {
-    categories: {
-      type: Array,
-      required: true,
-    },
+const router = useRouter();
+
+const props = defineProps({
+  category: {
+    type: Object,
+    required: true,
   },
-  data() {
-    return {};
-  },
-  methods: {
-    async fetchBlogs() {
-      try {
-        const languageId = "6421a32aa020a23deacecf92";
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
-          { categoryId: "63d90fa9aabaf4bf0169c2b6", languageId: languageId }
-        );
-        console.log("Fetched blogs:", response.data);
-        // Handle response.data as needed
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
-    },
-  },
-  mounted() {
-    // this.fetchBlogs();
-    console.log("Categories prop:", this.categories);
-  },
+});
+console.log("category", props);
+
+const route = useRoute();
+// const router = useRouter();
+
+const blogs = ref([]);
+console.log("blogs", blogs);
+const screenWidth = ref(window.innerWidth);
+const newsId = ref(route.params.id || "");
+
+const fetchBlogs = async () => {
+  try {
+    const languageId = "6421a32aa020a23deacecf92";
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`,
+      { languageId: languageId }
+    );
+    blogs.value = response.data.map((news) => ({
+      ...news,
+      bookmarked: false, // Initialize with 'false'
+    }));
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+  }
 };
+const addBookmark = async (id) => {
+  const newStatus = blogs.value.bookmark ? "Disabled" : "Enabled";
+  const payload = { status: newStatus };
+  try {
+    await apiService.apiCall("post", `${apiConfig.BOOKMARK}/${id}`, payload);
+    blogs.value.bookmark = !blogs.value.bookmark;
+  } catch (error) {
+    console.error("Error fetching response:", error);
+  }
+};
+
+const formatPublishTime = (publishTime) => {
+  return moment(publishTime).fromNow();
+};
+
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
+const navigateToFeaturedDetail = (id) => {
+  router.push(`/news/${id}`);
+};
+
+const checkRouteParam = () => {
+  newsId.value = route.params.id || "";
+};
+
+const slicedData = computed(() => {
+  if (screenWidth.value < 640) {
+    // Mobile devices
+    return blogs.value.slice(0, 2);
+  } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
+    // Tablets
+    return blogs.value.slice(0, 4);
+  } else if (screenWidth.value >= 640 && screenWidth.value < 1025) {
+    // Width between 640 and 1024
+    return blogs.value.slice(0, 2);
+  } else if (screenWidth.value >= 1024 && screenWidth.value < 860) {
+    // Tablets
+    return blogs.value.slice(0, 3);
+  } else if (screenWidth.value >= 1024 && screenWidth.value <= 1600) {
+    // Tablets
+    return blogs.value.slice(0, 4);
+  } else if (screenWidth.value >= 1601) {
+    // Tablets
+    return blogs.value.slice(0, 8);
+  } else {
+    // Desktop and larger devices
+    return blogs.value.slice(0, 6);
+  }
+});
+onMounted(() => {
+  fetchBlogs();
+  checkRouteParam();
+  window.addEventListener("resize", updateScreenWidth);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateScreenWidth);
+});
 </script>
 
-<style>
-.fontCustom {
-  font-family: "source-serif-pro-semibold";
+<style scoped>
+.headline-tuncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2 !important; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.headline-truncate-single-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2 !important; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate-one-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

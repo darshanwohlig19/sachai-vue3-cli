@@ -1,9 +1,9 @@
 <template>
   <div>
     <div
-      class="w-[100%] h-[67px] bg-white rounded-b-[20px] shadow-[0px_4px_6px_rgba(240,0,0,0.2)] flex justify-between items-center pl-4 pr-4"
+      class="w-[100%] h-[67px] bg-white rounded-b-[20px] shadow-[0px_4px_6px_rgba(240,0,0,0.2)] justify-between flex items-center pl-4 pr-4"
     >
-      <div>
+      <div class="">
         <a href="/">
           <img
             class="h-[20px] w-[78px] object-cover"
@@ -11,219 +11,405 @@
           />
         </a>
       </div>
-      <div class="flex gap-4 items-center justify-center">
-        <div class="hidden lg:flex head-navs gap-2">
-          <!-- <a href="/">Home</a> -->
-          <img src="../assets/Home.svg" alt="" />
-          <RouterLink class="nav-items" active-class="active-link" to="/"
-            >Home</RouterLink
-          >
-        </div>
-        <div class="hidden lg:flex head-navs gap-2">
-          <img src="../assets/Astrology.svg" alt="" />
-          <RouterLink
-            class="nav-items"
-            active-class="active-link"
-            to="/Astrology"
-            >Astrology</RouterLink
-          >
-          <!-- Astrology -->
-        </div>
-
-        <div class="hidden lg:flex head-navs gap-2">
-          <img src="../assets/Bookmark.svg" alt="" />
-          <RouterLink
-            class="nav-items"
-            active-class="active-link"
-            to="/Bookmark"
-            >Bookmark</RouterLink
-          >
-        </div>
-
-        <div class="hidden lg:flex head-navs">
-          <a href="#" class="nav-items" @click="handleAuthAction">
-            {{ isLoggedIn ? "Logout" : "Login" }}
-          </a>
-        </div>
-        <div class="relative sm-max:hidden">
-          <input
-            type="text"
-            id="fname"
-            name="fname"
-            placeholder="Search"
-            class="pr-10 pl-3 py-2 rounded-[100px] text-[14px] w-full border-1"
-          />
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 15 15"
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clip-path="url(#clip0_2352_4463)">
-              <path
-                d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
-                fill="#ACACAC"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_2352_4463">
-                <rect width="15" height="15" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
-        <router-link class="md:hidden sm-max:block">
-          <div
-            class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
-          >
-            <i>
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 15 15"
-                class="right-3 text-gray-500"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clip-path="url(#clip0_2352_4463)">
-                  <path
-                    d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
-                    fill="#ACACAC"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_2352_4463">
-                    <rect width="15" height="15" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-            </i>
+      <div class="w-[70%]">
+        <div class="flex gap-3 items-center justify-end">
+          <div class="hidden lg:flex head-navs gap-2">
+            <!-- <a href="/">Home</a> -->
+            <img src="../assets/Home.svg" alt="" />
+            <RouterLink class="nav-items" active-class="active-link" to="/"
+              >Home</RouterLink
+            >
           </div>
-        </router-link>
-        <!-- <div class="relative">
-          <div v-if="isInputVisible" class="relative">
+          <div class="hidden lg:flex head-navs gap-2" v-if="isLoggedIn">
+            <img src="../assets/Astrology.svg" alt="" />
+            <RouterLink
+              class="nav-items"
+              active-class="active-link"
+              to="/Astrology"
+              >Astrology</RouterLink
+            >
+            <!-- Astrology -->
+          </div>
+
+          <div
+            class="relative lg-max:!hidden flex gap-2 cursor-pointer"
+            @mouseover="showDropdown = true"
+            @mouseleave="hideDropdown"
+          >
+            <img src="../assets/svg/category.svg" />
+            <RouterLink
+              class="nav-items hover:text-[var(--hover-color)]"
+              to=""
+              :style="{
+                '--hover-color': '#FF0053',
+              }"
+              >Category</RouterLink
+            >
+            <!-- <div class="nav-items" active-class="active-link">Category</div> -->
+            <div
+              v-if="showDropdown"
+              @mouseover="showDropdown = true"
+              @mouseleave="hideDropdown"
+              class="absolute mt-4 bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
+            >
+              <div class="w-[100%] flex">
+                <!--  First Div  -->
+                <div
+                  class="shadow-[2px_0px_5px_rgba(240,0,0,0.2)] capitalize category-head rounded-r-lg w-[150px]"
+                >
+                  <ul>
+                    <li
+                      class="mt-1 p-2 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                      v-for="category in categories"
+                      :key="category._id"
+                      @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                      :style="{
+                        '--hover-color': '#FF0053',
+                        '--hover-bg-color': '#FFF2F6',
+                      }"
+                    >
+                      <div class="flex items-center space-x-2">
+                        <a
+                          :href="`/categories/${category._id}?category=${category.name}`"
+                          class="flex items-center"
+                        >
+                          <span>{{ category.name }}</span>
+                          <div class="flex justify-center items-center">
+                            <img
+                              src="../assets/svg/triangle_arrow.svg"
+                              class="ml-1"
+                            />
+                          </div>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <!--   Second Div  -->
+
+                <div v-if="newsItems.length > 0" class="p-3 w-[385px]">
+                  <div
+                    class="h-[203px] relative"
+                    @click="navigateToTrending(newsItems[0]?._id)"
+                  >
+                    <img
+                      class="h-[100%] w-full object-cover rounded-[10px]"
+                      :src="newsItems[0]?.imgixUrlHighRes"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
+                    ></div>
+                    <div
+                      class="absolute top-0 bottom-0 w-full h-full flex items-end justify-start"
+                    >
+                      <div class="text-white p-2 rounded-md w-[100%]">
+                        <div
+                          class="sub_category_head multiline-truncate-tow-tow-liner"
+                        >
+                          {{ newsItems[0]?.headline }}
+                        </div>
+                        <div class="flex flex-row gap-2 sub_category_summary">
+                          <div>{{ newsItems[0]?.source }}</div>
+                          <div>|</div>
+                          <div>
+                            {{ formatPublishTime(newsItems[0]?.publishTime) }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100%] flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[1]?._id)"
+                  >
+                    <div class="mt-3">
+                      <div
+                        class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                      >
+                        <div class="w-[20%]">
+                          <img
+                            :src="newsItems[1]?.imgixUrlHighRes"
+                            class="rounded-[6px] h-[65px] w-[65px]"
+                            alt=""
+                          />
+                        </div>
+                        <div class="flex flex-col w-[70%]">
+                          <div
+                            class="category-heading w-[100%] multiline-truncate-tow-tow-liner"
+                          >
+                            {{ newsItems[1]?.headline }}
+                          </div>
+                          <div
+                            class="multiline-truncate-one-liner category-head-head w-[100%]"
+                          >
+                            {{ newsItems[1]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100%] flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[2]?._id)"
+                  >
+                    <div class="mt-3">
+                      <div
+                        class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                      >
+                        <div class="w-[20%]">
+                          <img
+                            :src="newsItems[2]?.imgixUrlHighRes"
+                            class="rounded-[6px] h-[65px] w-[65px]"
+                            alt=""
+                          />
+                        </div>
+                        <div class="flex flex-col w-[70%]">
+                          <div
+                            class="category-heading w-[100%] multiline-truncate-tow-tow-liner"
+                          >
+                            {{ newsItems[2]?.headline }}
+                          </div>
+                          <div
+                            class="multiline-truncate-one-liner category-head-head w-[100%]"
+                          >
+                            {{ newsItems[2]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100%] mt-3 flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[3]?._id)"
+                  >
+                    <div class="mt-4 md:mt-4 lg:mt-0 cursor-pointer">
+                      <div class="flex flex-row gap-2">
+                        <div class="w-[5%] mt-2">
+                          <img src="../assets/Group.png" alt="" />
+                        </div>
+                        <div class="flex flex-col w-[100%]">
+                          <div class="font-16 multi-line-2">
+                            {{ newsItems[3]?.headline }}
+                          </div>
+                          <div class="para multiline-truncate-tow-tow-liner">
+                            {{ newsItems[3]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100%] mt-3 flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[4]?._id)"
+                  >
+                    <div class="mt-0 cursor-pointer">
+                      <div class="flex flex-row gap-2">
+                        <div class="w-[5%] mt-2">
+                          <img src="../assets/Group.png" alt="" />
+                        </div>
+                        <div class="flex flex-col w-[100%]">
+                          <div class="font-16 multi-line-2">
+                            {{ newsItems[4]?.headline }}
+                          </div>
+                          <div class="para multiline-truncate-tow-tow-liner">
+                            {{ newsItems[4]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hidden lg:flex head-navs gap-2">
+            <img src="../assets/Bookmark.svg" alt="" />
+            <RouterLink
+              class="nav-items"
+              active-class="active-link"
+              to="/Bookmark"
+              >Bookmark</RouterLink
+            >
+          </div>
+          <div class="hidden lg:flex head-navs gap-2">
+            <img src="../assets/Login.svg" alt="" />
+            <a href="#" class="nav-items" @click="handleAuthAction">
+              {{ isLoggedIn ? "Logout" : "Login" }}
+            </a>
+          </div>
+          <div class="w-[421px] relative block lg-max:!hidden">
+            <!-- @click="expandInput" -->
             <input
               type="text"
+              id="fname"
+              ref="searchInput"
+              :class="inputClass"
               v-model="searchQuery"
-              @blur="handleSearch"
-              @focus="isInputVisible = true"
+              @input="handleSearch"
+              name="fname"
+              autocomplete="off"
               placeholder="Search"
-              class="pr-10 pl-3 py-2 rounded-[100px] text-[14px] w-full border-1"
+              class="pr-10 pl-3 py-2 w-full font-[#1E0627] rounded-[100px] text-[12px] font-lato border-1"
             />
-            <svg
-              @click="handleSearch"
-              width="14"
-              height="14"
-              viewBox="0 0 15 15"
-              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <img
+              src="../assets/svg-icons/search.svg"
+              class="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-500"
+            />
+            <div
+              v-if="searchResults.length"
+              ref="searchResultsDropdown"
+              class="absolute w-full bg-white p-2 border border-gray-300 rounded-md mt-2 z-10 h-[370px] overflow-y-auto slim-scrollbar"
             >
-              <g clip-path="url(#clip0_2352_4463)">
-                <path
-                  d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
-                  fill="#ACACAC"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_2352_4463">
-                  <rect width="15" height="15" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
+              <div
+                v-for="(result, index) in searchResults"
+                :key="index"
+                class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
+                @click="navigateToNewsDetail(result._id)"
+              >
+                <div
+                  class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
+                  @click="navigateToNewsDetail(result._id)"
+                >
+                  <div class="w-[15%]">
+                    <img
+                      :src="result.imgixUrlHighRes || fallbackImage"
+                      class="h-[54px] w-[56px] object-cover rounded-[8px]"
+                    />
+                  </div>
+                  <div
+                    class="w-[80%] flex justify-start items-center text-start font-light font-[#1E0627] font-source-serif text-[13px] two_line"
+                  >
+                    {{ result.headline }}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <!-- <AutoComplete
+            v-model="searchQuery"
+            :suggestions="searchResults"
+            @complete="handleSearch"
+            class="w-[200px] border-1 h-[full]"
+          /> -->
+          <a class="block lg:hidden">
+            <div
+              @click="visibleRight = true"
+              class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+            >
+              <img src="../assets/svg/category.svg" />
+            </div>
+            <Sidebar
+              class="w-[30%] sm-425:w-[40%] h-[100%] rounded-l-[20px] block lg:hidden"
+              v-model:visible="visibleRight"
+              position="right"
+              :closeIcon="true"
+            >
+              <div class="capitalize category-head rounded-l-lg w-[150px]">
+                <ul>
+                  <li
+                    class="mt-1 p-2 ml-3 text-black hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                    v-for="category in categories"
+                    :key="category._id"
+                    @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                    :style="{
+                      '--hover-color': '#FF0053',
+                      '--hover-bg-color': '#FFF2F6',
+                    }"
+                  >
+                    <div class="flex items-center space-x-2">
+                      <a
+                        :href="`/categories/${category._id}?category=${category.name}`"
+                        class="flex items-center"
+                      >
+                        <span>{{ category.name }}</span>
+                        <img
+                          src="../assets/svg/triangle_arrow.svg"
+                          class="ml-1"
+                        />
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </Sidebar>
+            <!-- <div
+              class="relative flex gap-2 cursor-pointer"
+              @mouseover="showDropdown = true"
+              @mouseleave="hideDropdown"
+            >
+              <div
+                class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+              >
+                <img src="../assets/svg/category.svg" />
+              </div>
+
+              <div
+                v-if="showDropdown"
+                @mouseover="showDropdown = true"
+                @mouseleave="hideDropdown"
+                class="absolute mt-5 flex justify-end bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
+              >
+                <div class="w-[100%] flex">
+                  <div class="capitalize category-head rounded-l-lg w-[150px]">
+                    <ul>
+                      <li
+                        class="mt-3 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                        v-for="category in categories"
+                        :key="category._id"
+                        @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                        :style="{
+                          '--hover-color': '#FF0053',
+                          '--hover-bg-color': '#FF005333',
+                        }"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <a
+                            :href="`/categories/${category._id}?category=${category.name}`"
+                            class="flex items-center"
+                          >
+                            <span>{{ category.name }}</span>
+                            <img
+                              src="../assets/svg/triangle_arrow.svg"
+                              class="ml-1"
+                            />
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </a>
+          <router-link class="lg:hidden block">
+            <div
+              class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+            >
+              <img src="../assets/search.svg" alt="" />
+            </div>
+          </router-link>
+          <router-link v-if="isLoggedIn">
+            <div
+              class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+            >
+              <img src="../assets/Settings.svg" alt="" />
+            </div>
+          </router-link>
+          <router-link v-if="isLoggedIn">
+            <div
+              class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+            >
+              <img src="../assets/Accounts.svg" alt="" />
+            </div>
+          </router-link>
 
           <div
-            :class="
-              isInputVisible
-                ? 'bg-white'
-                : 'shadow-md h-[34px] w-[34px] rounded-full flex justify-center items-center bg-white'
-            "
+            class="h-[34px] w-[34px] flex justify-center items-center lg:hidden"
+            @click="toggleCardDropdown"
           >
-            <svg
-              v-if="!isInputVisible"
-              @click="toggleSearchInput"
-              width="14"
-              height="14"
-              viewBox="0 0 15 15"
-              class="text-gray-500 cursor-pointer"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clip-path="url(#clip0_2352_4463)">
-                <path
-                  d="M14.8577 14.1839L10.9849 10.3731C11.9991 9.27122 12.6222 7.81401 12.6222 6.21051C12.6217 2.78032 9.79636 0 6.31085 0C2.82535 0 0 2.78032 0 6.21051C0 9.6407 2.82535 12.421 6.31085 12.421C7.81683 12.421 9.19808 11.9001 10.283 11.0341L14.1708 14.86C14.3603 15.0466 14.6678 15.0466 14.8572 14.86C15.0471 14.6734 15.0471 14.3705 14.8577 14.1839ZM6.31085 11.4655C3.36173 11.4655 0.971014 9.11277 0.971014 6.21051C0.971014 3.30825 3.36173 0.955524 6.31085 0.955524C9.26 0.955524 11.6507 3.30825 11.6507 6.21051C11.6507 9.11277 9.26 11.4655 6.31085 11.4655Z"
-                  fill="#ACACAC"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_2352_4463">
-                  <rect width="15" height="15" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
+            <i class="pi pi-bars"></i>
           </div>
-        </div> -->
-        <router-link v-if="isLoggedIn">
-          <div
-            class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
-          >
-            <i>
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7.75095 1.2776e-06C7.95675 1.2776e-06 8.14085 0.128101 8.21015 0.319901L8.70435 1.6898C8.88145 1.7339 9.03335 1.778 9.16215 1.8242C9.30285 1.8746 9.48415 1.9509 9.70815 2.0552L10.8589 1.4462C10.9529 1.39644 11.0604 1.37847 11.1654 1.39501C11.2704 1.41154 11.3673 1.46168 11.4414 1.5379L12.4535 2.5844C12.5879 2.7237 12.6258 2.9274 12.5501 3.1052L12.0105 4.3701C12.1 4.5346 12.1715 4.6753 12.2261 4.7929C12.2849 4.921 12.3577 5.0974 12.4445 5.3249L13.7023 5.8639C13.8913 5.9444 14.0083 6.1334 13.9957 6.3357L13.9033 7.7882C13.8969 7.88256 13.8631 7.973 13.8058 8.04828C13.7486 8.12356 13.6705 8.18039 13.5813 8.2117L12.3898 8.6352C12.3555 8.7997 12.3199 8.9404 12.2821 9.0594C12.2211 9.24318 12.1515 9.42398 12.0735 9.6012L12.672 10.9242C12.7142 11.0172 12.7256 11.1212 12.7044 11.2211C12.6832 11.321 12.6307 11.4115 12.5544 11.4793L11.4162 12.4957C11.3412 12.5624 11.2477 12.6045 11.1481 12.6165C11.0485 12.6285 10.9476 12.6098 10.8589 12.5629L9.68575 11.9413C9.5022 12.0385 9.31284 12.1243 9.11875 12.1982L8.60635 12.39L8.15135 13.65C8.11763 13.7423 8.05681 13.8222 7.97686 13.8793C7.89691 13.9364 7.80157 13.968 7.70335 13.9699L6.37335 14C6.27252 14.0026 6.17336 13.974 6.08949 13.9179C6.00563 13.8619 5.94119 13.7813 5.90505 13.6871L5.36885 12.2682C5.1859 12.2057 5.00476 12.138 4.82565 12.0652C4.67915 12.0018 4.53487 11.9334 4.39305 11.8601L3.06305 12.4285C2.97542 12.4659 2.8788 12.477 2.78497 12.4605C2.69114 12.4439 2.60413 12.4005 2.53455 12.3354L1.55035 11.4121C1.47708 11.3437 1.42717 11.2539 1.4077 11.1556C1.38823 11.0572 1.40018 10.9552 1.44185 10.864L2.01375 9.618C1.93769 9.47042 1.86718 9.32005 1.80235 9.1672C1.72668 8.98011 1.65665 8.79079 1.59235 8.5995L0.339351 8.218C0.237501 8.18722 0.148667 8.12366 0.0866438 8.03721C0.0246206 7.95076 -0.00712016 7.84624 -0.00364902 7.7399L0.045351 6.3952C0.0488388 6.30746 0.0762466 6.22235 0.124611 6.14906C0.172974 6.07578 0.240454 6.01711 0.319751 5.9794L1.63435 5.348C1.69525 5.1247 1.74845 4.9511 1.79535 4.8244C1.86139 4.65517 1.93472 4.48888 2.01515 4.326L1.44535 3.122C1.40211 3.03057 1.38898 2.92778 1.40784 2.82841C1.42671 2.72904 1.47661 2.63822 1.55035 2.569L2.53315 1.6408C2.60205 1.57582 2.68825 1.53214 2.78139 1.515C2.87453 1.49786 2.97064 1.508 3.05815 1.5442L4.38675 2.093C4.53375 1.995 4.66675 1.9159 4.78715 1.8522C4.93065 1.7759 5.12245 1.6961 5.36395 1.61L5.82595 0.321301C5.86011 0.226989 5.92254 0.145518 6.00473 0.088013C6.08691 0.0305079 6.18484 -0.000228376 6.28515 1.2776e-06H7.75095ZM7.01315 4.9133C5.84625 4.9133 4.90055 5.8478 4.90055 7.0014C4.90055 8.155 5.84625 9.0902 7.01315 9.0902C8.17935 9.0902 9.12505 8.155 9.12505 7.0014C9.12505 5.8478 8.18005 4.9133 7.01315 4.9133Z"
-                  fill="#A5A5A5"
-                />
-              </svg>
-            </i>
-          </div>
-        </router-link>
-        <router-link v-if="isLoggedIn">
-          <div
-            class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
-          >
-            <i>
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 13 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2.7918 13.9994C1.59961 13.9994 0.631641 13.0342 0.628906 11.842C0.628906 11.5111 0.705469 11.183 0.850391 10.8849C2.48281 7.59002 6.475 6.24471 9.76719 7.8744C11.0742 8.51971 12.1297 9.57791 12.7777 10.8849C13.3055 11.9541 12.8652 13.2502 11.7961 13.7779C11.498 13.9256 11.1699 14.0021 10.8391 13.9994H2.7918Z"
-                  fill="#A5A5A5"
-                />
-                <path
-                  d="M10.8427 13.8353C12.322 13.8353 13.2927 12.2822 12.6364 10.9561C11.045 7.74316 7.15126 6.43066 3.9411 8.02207C2.66689 8.65371 1.63603 9.68457 1.00712 10.9561C0.348135 12.2822 1.31884 13.8353 2.79814 13.8353H10.8427Z"
-                  fill="#A5A5A5"
-                />
-                <path
-                  d="M6.81875 6.33232C8.56751 6.33232 9.98516 4.91468 9.98516 3.16592C9.98516 1.41716 8.56751 -0.000488281 6.81875 -0.000488281C5.06999 -0.000488281 3.65234 1.41716 3.65234 3.16592C3.65234 4.91468 5.06999 6.33232 6.81875 6.33232Z"
-                  fill="#A5A5A5"
-                />
-                <path
-                  d="M6.81484 6.16826C8.47299 6.16826 9.81719 4.82407 9.81719 3.16592C9.81719 1.50777 8.47299 0.163574 6.81484 0.163574C5.1567 0.163574 3.8125 1.50777 3.8125 3.16592C3.8125 4.82407 5.1567 6.16826 6.81484 6.16826Z"
-                  fill="#A5A5A5"
-                />
-              </svg>
-            </i>
-          </div>
-        </router-link>
-
-        <div
-          class="h-[34px] w-[34px] flex justify-center items-center lg:hidden"
-          @click="toggleCardDropdown"
-        >
-          <i class="pi pi-bars"></i>
         </div>
       </div>
     </div>
@@ -242,6 +428,7 @@
           to="/Astrology"
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 nav-items"
           active-class="active-link"
+          v-if="isLoggedIn"
           >Astrology</RouterLink
         >
         <RouterLink
@@ -259,10 +446,9 @@
         </a>
       </div>
     </div>
-    <div
+    <!-- <div
       class="w-full h-[67px] mt-1 flex justify-between bg-white items-center relative lg:overflow-x-hidden"
     >
-      <!-- Icons for mobile and tablet screens -->
       <i
         class="pi pi-angle-left ml-2 cursor-pointer block md:hidden"
         @click="scrollLeft"
@@ -292,7 +478,7 @@
         class="pi pi-angle-right mr-2 cursor-pointer block md:hidden"
         @click="scrollRight"
       ></i>
-    </div>
+    </div> -->
 
     <!-- Popup Confirmation -->
     <div
@@ -300,7 +486,7 @@
       class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
       @click="handleBackgroundClick"
     >
-      <div class="bg-white p-6 rounded-[18px] shadow-lg" @click.stop>
+      <div class="bg-white p-5 sm:p-6 rounded-[18px] shadow-lg" @click.stop>
         <p class="mt-2 text-[#121212] font-lato font-bold font-[24px]">
           Are you sure you want to logout?
         </p>
@@ -321,202 +507,283 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
+import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
-import { ref, onMounted } from "vue";
 import { useToast } from "primevue/usetoast";
+import moment from "moment"; // Import moment.js
 
-export default {
-  components: {},
-  setup() {
-    const isMenuOpen = ref(false);
-    const isDropdownOpen = ref(false);
-    const categories = ref([]);
-    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"), true);
-    const showBookmarkLink = ref(true);
-    const isPopupVisible = ref(false);
-    const router = useRouter();
-    const toast = useToast();
-    const categoriesContainer = ref(null);
-    const isLoggingOut = ref(false);
-    const isCardDropdownOpen = ref(false);
+// const isMenuOpen = ref(false);
+// const isDropdownOpen = ref(false);
+const categories = ref([]);
+const visibleRight = ref(false);
+const newsItems = ref([]);
+const categoryWise = ref([]);
+console.log("hiiǐ", categoryWise);
+const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
+// const showBookmarkLink = ref(true);
+const isPopupVisible = ref(false);
+const isExpanded = ref(false);
+const searchInput = ref(null);
+const searchResultsDropdown = ref(null);
+const router = useRouter();
+const toast = useToast();
+// const categoriesContainer = ref(null);
+const isLoggingOut = ref(false);
+const isCardDropdownOpen = ref(false);
+const categoryId = "63d90f8aaabaf4bf0169c2b0";
+// const isInputVisible = ref(false);
+const searchQuery = ref("");
+const searchResults = ref([]);
 
-    const isInputVisible = ref(false);
-    const searchQuery = ref("");
+const showDropdown = ref(false);
 
-    const toggleCardDropdown = () => {
-      isCardDropdownOpen.value = !isCardDropdownOpen.value;
-      console.log("Dropdown is now:", isCardDropdownOpen.value);
-    };
-    const toggleLogin = () => {
-      isLoggedIn.value = !isLoggedIn.value;
-    };
+const hideDropdown = () => {
+  setTimeout(() => {
+    if (
+      // !document.querySelector(".relative:hover") &&
+      !document.querySelector(".absolute:hover")
+    ) {
+      showDropdown.value = false;
+      newsItems.value = [];
+    }
+  }, 10);
+};
+const toggleCardDropdown = () => {
+  isCardDropdownOpen.value = !isCardDropdownOpen.value;
+};
+const formatPublishTime = (publishTime) => {
+  return moment(publishTime).fromNow();
+};
+// const scrollLeft = () => {
+//   if (categoriesContainer.value) {
+//     categoriesContainer.value.scrollBy({
+//       left: -100,
+//       behavior: "smooth",
+//     });
+//   }
+// };
 
-    const scrollLeft = () => {
-      if (categoriesContainer.value) {
-        categoriesContainer.value.scrollBy({
-          left: -100, // Adjust the scroll distance as needed
-          behavior: "smooth",
-        });
-      }
-    };
+// const scrollRight = () => {
+//   if (categoriesContainer.value) {
+//     categoriesContainer.value.scrollBy({
+//       left: 100,
+//       behavior: "smooth",
+//     });
+//   }
+// };
 
-    const scrollRight = () => {
-      if (categoriesContainer.value) {
-        categoriesContainer.value.scrollBy({
-          left: 100, // Adjust the scroll distance as needed
-          behavior: "smooth",
-        });
-      }
-    };
+// const toggleMenu = () => {
+//   isMenuOpen.value = !isMenuOpen.value;
+// };
 
-    const toggleMenu = () => {
-      isMenuOpen.value = !isMenuOpen.value;
-    };
+// const toggleDropdown = () => {
+//   isDropdownOpen.value = !isDropdownOpen.value;
+// };
 
-    const toggleDropdown = () => {
-      isDropdownOpen.value = !isDropdownOpen.value;
-    };
+const handleBackgroundClick = () => {
+  hidePopup();
+};
 
-    const handleBackgroundClick = () => {
-      hidePopup(); // Hide the popup when clicking on the background
-    };
+const handleAuthAction = async () => {
+  if (isLoggedIn.value) {
+    showPopup();
+  } else {
+    router.push("/Login");
+  }
+};
 
-    const handleAuthAction = async () => {
-      if (isLoggedIn.value) {
-        showPopup(); // Show popup for confirmation
-      } else {
-        router.push("/Login"); // Redirect to login page
-      }
-    };
+const showPopup = () => {
+  isPopupVisible.value = true;
+};
 
-    const showPopup = () => {
-      isPopupVisible.value = true;
-    };
+const hidePopup = () => {
+  isPopupVisible.value = false;
+};
 
-    const hidePopup = () => {
-      isPopupVisible.value = false;
-    };
+const navigateToNewsDetail = (id) => {
+  router.push(`/news/${id}`);
+  console.log("Navigating to news detail with ID:", id);
+};
 
-    const handleLogout = async () => {
-      if (isLoggingOut.value) return; // Prevent multiple clicks
-      isLoggingOut.value = true;
+const handleLogout = async () => {
+  if (isLoggingOut.value) return;
+  isLoggingOut.value = true;
 
-      try {
-        // Sign out from Firebase
-        const auth = getAuth();
-        await signOut(auth);
+  try {
+    const auth = getAuth();
+    await signOut(auth);
 
-        // Call logout API
-        const apiDataToken = localStorage.getItem("apiDataToken");
-        if (apiDataToken) {
-          const response = await axios.post(
-            "https://api-uat.newsshield.io/user/logoutEvent",
-            {},
-            {
-              headers: { Authorization: `${apiDataToken}` },
-            }
-          );
-
-          if (response.status === 200) {
-            localStorage.removeItem("apiDataToken");
-            localStorage.setItem("logoutSuccess", "true");
-            isLoggedIn.value = false;
-
-            // Show success toaster notification
-            toast.add({
-              severity: "success", // Changed from "error" to "success" since it's a successful logout
-              summary: "Logged out successfully!",
-              summary2: "You have been safely logged out.",
-              group: "success",
-              life: 3000,
-            });
-            isCardDropdownOpen.value = !isCardDropdownOpen.value;
-          } else {
-            throw new Error("Failed to logout, unexpected response status");
-          }
+    const apiDataToken = localStorage.getItem("apiDataToken");
+    if (apiDataToken) {
+      const response = await axios.post(
+        "https://api-uat.newsshield.io/user/logoutEvent",
+        {},
+        {
+          headers: { Authorization: `${apiDataToken}` },
         }
-      } catch (error) {
-        console.error("Error during logout:", error);
+      );
+      if (response.status === 200) {
+        console.log(`BEFORE ${localStorage.getItem("news-")}`);
+        localStorage.removeItem("apiDataToken");
+        localStorage.setItem("logoutSuccess", "true");
+        isLoggedIn.value = false;
+        router.push("/");
         toast.add({
-          severity: "error",
-          summary: "Logged out Failed!",
-          summary2: "Try again after sometime.",
-          group: "error",
+          severity: "success",
+          summary: "Logged out successfully!",
+          summary2: "You have been safely logged out.",
+          group: "success",
           life: 3000,
         });
-      } finally {
-        isLoggingOut.value = false; // Re-enable the button once the process is complete
-        hidePopup();
-        toggleCardDropdown();
+        isCardDropdownOpen.value = !isCardDropdownOpen.value;
+      } else {
+        throw new Error("Failed to logout, unexpected response status");
       }
-    };
-
-    const fetchCategories = async () => {
-      try {
-        const languageId = "6421a32aa020a23deacecf92";
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/category/getAllCat",
-          { langauge: languageId }
-        );
-        categories.value = response.data.map((category) => ({
-          ...category,
-          name:
-            category.name.toLowerCase() === "ai"
-              ? category.name.toUpperCase()
-              : category.name.replace(/-/g, " "),
-        }));
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    const toggleSearchInput = () => {
-      isInputVisible.value = !isInputVisible.value;
-    };
-
-    const handleSearch = () => {
-      if (searchQuery.value.trim()) {
-        // Perform the search operation
-        console.log(`Searching for: ${searchQuery.value}`);
-      }
-      // Reset the input field and show only the icon again
-      isInputVisible.value = false;
-      searchQuery.value = "";
-    };
-
-    onMounted(() => {
-      fetchCategories();
+    }
+  } catch (error) {
+    console.error("Error during logout:", error);
+    toast.add({
+      severity: "error",
+      summary: "Logged out Failed!",
+      summary2: "Try again after sometime.",
+      group: "error",
+      life: 3000,
     });
-
-    return {
-      isMenuOpen,
-      toggleLogin,
-      isDropdownOpen,
-      categories,
-      isLoggedIn,
-      showBookmarkLink,
-      isPopupVisible,
-      toggleMenu,
-      toggleDropdown,
-      handleAuthAction,
-      handleBackgroundClick,
-      hidePopup,
-      handleLogout,
-      scrollRight,
-      scrollLeft,
-      categoriesContainer,
-      isCardDropdownOpen,
-      toggleCardDropdown,
-      isInputVisible,
-      searchQuery,
-      toggleSearchInput,
-      handleSearch,
-    };
-  },
+  } finally {
+    isLoggingOut.value = false;
+    hidePopup();
+    toggleCardDropdown();
+  }
 };
+const fetchNavbarCategory = async () => {
+  try {
+    const res = await axios.post(
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+      { categoryId }
+    );
+    categoryWise.value = res.data;
+  } catch (error) {
+    return [];
+  }
+};
+const fetchCategories = async () => {
+  try {
+    const languageId = "6421a32aa020a23deacecf92";
+    const response = await axios.post(
+      "https://api-uat.newsshield.io/category/getAllCat",
+      { langauge: languageId }
+    );
+    categories.value = response.data.map((category) => ({
+      ...category,
+    }));
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+  }
+};
+
+// const toggleSearchInput = () => {
+//   isInputVisible.value = !isInputVisible.value;
+// };
+
+const handleSearch = async () => {
+  if (
+    searchQuery.value.trim().length >= 4 &&
+    searchQuery.value.trim().length % 4 === 0
+  ) {
+    try {
+      const response = await axios.post(
+        "https://api-uat.newsshield.io/news/searchNewsFromWeb",
+        {
+          language: "6421a32aa020a23deacecf92",
+          search: searchQuery.value,
+        }
+      );
+      searchResults.value = response.data;
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  } else if (searchQuery.value.trim().length < 4) {
+    searchResults.value = [];
+  }
+};
+
+// const expandInput = () => {
+//   isExpanded.value = true;
+// };
+
+const collapseInput = (event) => {
+  if (
+    searchResultsDropdown.value &&
+    !searchResultsDropdown.value.contains(event.target) &&
+    searchInput.value &&
+    !searchInput.value.contains(event.target)
+  ) {
+    isExpanded.value = false;
+    searchResults.value = [];
+    searchQuery.value = "";
+  }
+};
+
+onMounted(() => {
+  fetchCategories();
+  document.addEventListener("mousedown", collapseInput);
+  fetchNavbarCategory();
+  // const categoryId = "63d90e4098d783ac0cbe2310";
+  // const storedNews = localStorage.getItem(`news-${categoryId}`);
+
+  // if (storedNews) {
+  //   newsItems.value = JSON.parse(storedNews);
+  //   console.log("Fetched news items:", newsItems.value);
+  // } else {
+  //   console.log(
+  //     "No news found in local storage for category:",
+  //     "news-" + categoryId
+  //   );
+  // }
+});
+const navigateToTrending = (id) => {
+  console.log("Navigating to trending with ID:", id);
+  if (id) {
+    router.push(`/news/${id}`);
+  }
+};
+const fetchCategoryFromLocalStorage = (categoryId) => {
+  const storedNews = localStorage.getItem(`news-${categoryId}`);
+  console.log(`FUNCTION CALLED news-${categoryId} news-${storedNews}`);
+  if (storedNews) {
+    console.log("INSIDE IF");
+    newsItems.value = JSON.parse(storedNews);
+    console.log("Fetched news items:", newsItems.value); // Verify the fetched items
+  } else {
+    console.log("INSIDE ELSE");
+
+    // console.log(
+    //   "No news found in local storage for category:",
+    //   `news-${categoryId}`
+    // );
+  }
+};
+
+onBeforeUnmount(() => {
+  document.removeEventListener("mousedown", collapseInput);
+});
+
+const inputClass = computed(() =>
+  isExpanded.value
+    ? "w-[441px] py-2 transition-all duration-300"
+    : "w-[220px] py-2 transition-all duration-300"
+);
+
+watch(searchQuery, (newValue) => {
+  if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
+    handleSearch();
+  } else if (newValue.trim().length < 4) {
+    searchResults.value = [];
+  }
+});
 </script>
 
 <style scoped>
@@ -547,5 +814,52 @@ export default {
 }
 .head-cat::-webkit-scrollbar {
   display: none !important;
+}
+.two_line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2 !important; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.shadow-custom {
+  box-shadow: 0px 0px 3.41px 0.71px #0000000d;
+}
+.border-custom {
+  border: 0.4px solid #e2e2e2ce;
+}
+.slim-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.slim-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.slim-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+.slim-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.multi-line-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate-one-liner {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate-tow-tow-liner {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
