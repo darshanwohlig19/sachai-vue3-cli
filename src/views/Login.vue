@@ -204,31 +204,27 @@
     <div class="relative h-[100%] w-full mobile">
       <!-- Login Credentials -->
       <div
-        class="absolute w-[350px] inset-0 flex items-center justify-center p-3 z-10 bg-opacity-75"
+        class="absolute inset-0 flex items-center justify-center p-4 z-10 bg-opacity-75"
       >
-        <div class="w-full p-3 bg-white rounded-lg shadow-lg h-[260px]">
-          <div class="flex justify-center mt-2">
+        <div class="w-full max-w-[360px] p-4 bg-white rounded-lg shadow-lg">
+          <div class="flex justify-center mt-5">
             <img
               src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
-              class="w-[100px] h-[26px] object-cover"
+              class="w-[128px] h-[33px] object-cover"
             />
           </div>
           <div id="recaptcha-container" class="justify-center flex"></div>
 
-          <div class="">
+          <div class="mt-2">
             <!-- Conditionally render based on showPhoneVerification -->
             <div v-if="!showPhoneVerification">
-              <div class="mt-3">
-                <div class="text-[24px] font-bold text-[#333333] font-lato">
-                  Hello !
-                </div>
-                <div class="font-normal text-[16px] text-[#1E0627] font-lato">
-                  Login to your account
-                </div>
+              <div class="text-[32px] font-lato text-center">Hello !</div>
+              <div class="mt-2 text-[18px] font-lato text-center">
+                Login to your account
               </div>
 
               <!-- Login Options -->
-              <div class="flex flex-row gap-4 mt-3 w-full justify-center">
+              <div class="flex flex-row gap-4 mt-6 w-full justify-center">
                 <div
                   class="bg-[#F7F7F7] w-[98px] h-[52px] flex items-center justify-center rounded-[12px]"
                   @click="loginWithGoogle"
@@ -259,11 +255,7 @@
               </div>
 
               <div
-
                 class="text-center text-[#FF0053] cursor-pointer mt-4 font-lato text-[16px]"
-
-                class="text-center text-[#FF0053] cursor-pointer mt-3 font-lato text-[15px]"
-
               >
                 <router-link to="/">Continue without login</router-link>
               </div>
@@ -272,15 +264,10 @@
             <!-- Phone Number Verification UI -->
             <div v-else>
               <div
-
                 class="text-center text-[#333333] font-lato font-[600] text-[18px] mt-5"
-
-                class="text-center mt-3 text-[#333333] font-lato font-[700] text-[18px]"
-
               >
                 Phone Verification
               </div>
-
 
               <div v-if="!showOtpInput">
                 <div class="flex justify-center mt-5">
@@ -320,28 +307,6 @@
                     @click="loginWithPhone"
                     class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[8px] mt-4 w-[304px] h-[44px]"
                     :disabled="isLoading"
-
-              <div v-if="!verificationCodeTab">
-                <div class="flex justify-center mt-3">
-                  <CountryCode
-                    v-model="selectedCountryCode"
-                    class="border p-2 rounded-[4px]"
-                    :default-country="'IN'"
-                    :show-flags="true"
-                    placeholder="Select Country Code"
-                  />
-                  <input
-                    v-model="phoneNumber"
-                    type="text"
-                    placeholder="Phone"
-                    class="border p-2 w-[240px] h-[33px] rounded-[4px]"
-                  />
-                </div>
-                <div class="flex justify-center">
-                  <button
-                    @click="handleSendVerificationCode"
-                    class="bg-[#1E0627] font-lato text-center text-[12px] text-[#FFFFFF] p-2 rounded-[10px] mt-2 w-[240px] h-[34px]"
-
                   >
                     <span v-if="!isLoading">Send Verification Code</span>
                     <span v-else>Sending...</span>
@@ -356,11 +321,7 @@
 
                 <div
                   @click="showPhoneVerification = false"
-
                   class="text-center font-lato text-[#878787] mt-2 cursor-pointer text-[12px]"
-
-                  class="text-center text-[12px] font-lato text-[#5E5E5E] mt-3 cursor-pointer"
-
                 >
                   Want to select another login method?
                 </div>
@@ -373,20 +334,15 @@
                       v-model="otp"
                       :length="6"
                       integerOnly
-                      class="p-2 mt-3 rounded-[4px]"
+                      class="p-2 mt-4 rounded-[4px]"
                     />
                   </div>
                 </div>
-
 
                 <div class="flex justify-center">
                   <button
                     @click="verifyOtp"
                     class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 rounded-[8px] mt-3 w-[304px] h-[44px]"
-                <div class="flex justify-center">
-                  <button
-                    @click="verifyCode"
-                    class="bg-[#1E0627] font-lato text-center text-[#FFFFFF] p-2 text-[12px] rounded-[10px] mt-2 w-[240px] h-[34px]"
                   >
                     Verify OTP
                   </button>
@@ -408,22 +364,6 @@
                     Resend OTP
                     {{ resendEnabled ? "" : `After${resendCountdown}sec` }}
                   </button>
-                <div class="flex justify-between">
-                  <div
-                    class="text-center font-lato text-[#5E5E5E] text-[9px] mt-2 cursor-pointer"
-                    @click="verificationCodeTab = false"
-                  >
-                    Edit Phone Number?
-                  </div>
-                  <div
-                    class="text-center text-[9px] font-lato text-[#5E5E5E] mt-2 cursor-pointer"
-                  >
-                    Resend OTP&nbsp;
-                    <span
-                      class="text-center text-[9px] font-lato text-[#BBBBBB] mt-2 cursor-pointer"
-                      >After 30 sec</span
-                    >
-                  </div>
                 </div>
               </div>
             </div>
@@ -436,7 +376,7 @@
         :value="mobileProducts"
         :numVisible="1"
         :numScroll="1"
-        class="carousel login-carousel"
+        class="carousel mobile-carousel"
         showIndicators
         circular
         :responsiveOptions="responsiveOptions"
