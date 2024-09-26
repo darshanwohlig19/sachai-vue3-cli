@@ -43,6 +43,14 @@
                             alt="Centered Image"
                           />
                         </div>
+                        <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
+                          <div
+                            class="multiline-truncate1 text-[16px] sm:text-[14px] md:text-[16px] fontCustom text-white w-full md:w-auto"
+                            :style="{ width: 'calc(100% - 30px)' }"
+                          >
+                            {{ news.headline || "No Headline" }}
+                          </div>
+                        </div>
                       </div>
                       <!-- <div class="relative drop-shadow-lg">
                         <img

@@ -157,7 +157,7 @@ const fetchNews = async (page = 1) => {
       {
         language: languageId.value,
         page: page,
-        limit: 20, // Fetch 20 news at a time
+        pageLimit: 5,
       }
     );
     console.log("API response:", response.data); // Check the response here

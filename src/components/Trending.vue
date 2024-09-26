@@ -70,7 +70,7 @@
                 <div
                   class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
                 >
-                  <div class="gap-1 text-white text-xs ml-3 mb-2">
+                  <div class="gap-1 text-white text-xs ml-2 mb-2">
                     <div class="leading-3 sm:w-full md:w-full">
                       <a
                         :href="`${SACHAI_NEWS_URL}${slotProps.data._id}`"
@@ -80,7 +80,7 @@
                         {{ slotProps.data.headline }}
                       </a>
                     </div>
-                    <div class="flex flex-row gap-3 mt-3 mb-1">
+                    <div class="flex flex-row gap-3 mt-1 mb-1">
                       <div
                         class="text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"
                       >
