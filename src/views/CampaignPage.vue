@@ -12,7 +12,7 @@
 
         <!-- No News Available message -->
         <div
-          v-else-if="news && news.length === 0"
+          v-else-if="paginatedNews && paginatedNews.length === 0"
           class="flex justify-center items-center h-[400px]"
         >
           <p class="text-lg font-bold">No News Available</p>
@@ -21,7 +21,7 @@
         <!-- Display news when available -->
         <div v-else>
           <div
-            v-for="item in news"
+            v-for="item in paginatedNews"
             :key="item._id"
             class="w-full mt-3 h-[170px] bg-white drop-shadow-md flex rounded-lg"
           >
@@ -137,33 +137,33 @@ import HotTopics from "@/components/HotTopics.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
 import Paginator from "primevue/paginator"; // Ensure PrimeVue paginator is imported
 
-const news = ref([]);
+// const news = ref([]);
+const paginatedNews = ref([]); // Holds the news items for the current page
 const loading = ref(false); // Loading state
 const languageId = ref("6421a32aa020a23deacecf92");
-const currentPage = ref(1); // Current page
+const currentPage = ref(1); // Current page (UI page)
 const rowsPerPage = ref(5); // Number of items per page
-const totalRecords = ref(0); // Total records from API
+const totalRecords = ref(0); // Total news records in API
 const fallbackImage = "path/to/fallback/image.jpg";
 const router = useRouter();
+let newsCache = []; // Holds fetched news
 
-// Fetch the news data from the API
 // Fetch the news data from the API
 const fetchNews = async (page = 1) => {
   loading.value = true;
-  console.log(`Fetching news for page: ${page}`);
   try {
     const response = await axios.post(
       `https://api-uat.newsshield.io/topic/apiForTopicsForWeb/65e17ea9842874dab8c45010`,
       {
         language: languageId.value,
         page: page,
-        limit: rowsPerPage.value,
+        limit: 20, // Fetch 20 news at a time
       }
     );
-
-    // Adjust this according to your API response structure
-    news.value = response.data;
-    totalRecords.value = response.data.length; // Assuming total count is in `response.data.total`
+    console.log("API response:", response.data); // Check the response here
+    newsCache = response.data; // Cache the fetched news
+    updatePaginatedNews(); // Update paginated news for display
+    totalRecords.value = response.data.length;
   } catch (error) {
     console.error("Error fetching news:", error);
   } finally {
@@ -171,11 +171,26 @@ const fetchNews = async (page = 1) => {
   }
 };
 
-// Handle page change event
-const onPageChange = (event) => {
-  currentPage.value = event.page + 1; // Update current page (Paginator's page is zero-indexed)
-  fetchNews(currentPage.value); // Fetch news for the new page
-  console.log("Current page:", currentPage.value); // Log current page
+// Update paginated news based on the current page
+const updatePaginatedNews = () => {
+  const start = (currentPage.value - 1) * rowsPerPage.value;
+  const end = start + rowsPerPage.value;
+  console.log("News Cache:", newsCache);
+  console.log("Paginated News:", newsCache.slice(start, end));
+  paginatedNews.value = newsCache.slice(start, end);
+};
+
+// Handle page change event in the paginator
+const onPageChange = async (event) => {
+  const uiPage = event.page + 1; // Convert to 1-based index
+  if (uiPage > Math.ceil(newsCache.length / rowsPerPage.value)) {
+    // If we're at the end of cached data, fetch the next set of 20 news
+    await fetchNews(currentPage.value + 1);
+    currentPage.value = 1;
+  } else {
+    currentPage.value = uiPage;
+    updatePaginatedNews();
+  }
 };
 
 // Navigation method for "More News"
