@@ -6,7 +6,7 @@
         class="flex-grow flex flex-col h-full max-w-full sm:max-w-[90%] lg:max-w-[66%]"
       >
         <div
-          class="shadow-lg rounded-lg overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[16rem] bg-white"
+          class="shadow-lg rounded-lg between-Laptop:!hidden overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[16rem] bg-white"
         >
           <div class="relative w-full md:w-1/2 overflow-hidden p-2">
             <div class="image-container">
@@ -19,22 +19,27 @@
           </div>
           <div class="w-full md:w-1/2 p-2 flex flex-col">
             <span
-              class="text-lg font-source-serif text-secondary font-semibold ml-1 pb-[5px]"
+              class="text-lg font-source-serif text-secondary font-semibold pb-[5px]"
             >
               {{ newsItem?.headline }}
             </span>
-            <div class="flex items-center ml-1 text-xs w-full pb-2">
-              <!-- Categories Name -->
-              <span class="text-neon-pink mr-1 capitalize">
-                {{ newsItem?.categoriesName[0] }}
-              </span>
-              <span class="text-light-gray mr-2">|</span>
-              <span class="text-light-gray mr-2">{{ newsItem?.source }}</span>
-              <span class="text-light-gray mr-2">|</span>
-              <span class="text-light-gray mr-2">
-                {{ formattedPublishTime }}
-              </span>
+            <div
+              class="flex flex-wrap items-center justify-between text-xs w-full pb-2"
+            >
+              <!-- Categories Name and Additional Info -->
+              <div class="flex items-center mr-2 pb-2">
+                <span class="text-neon-pink mr-1 capitalize">
+                  {{ newsItem?.categoriesName[0] }}
+                </span>
+                <span class="text-light-gray mr-2">|</span>
+                <span class="text-light-gray mr-2">{{ newsItem?.source }}</span>
+                <span class="text-light-gray mr-2">|</span>
+                <span class="text-light-gray mr-2">{{
+                  formattedPublishTime
+                }}</span>
+              </div>
 
+              <!-- Social Media Links and Bookmark -->
               <div class="ml-auto flex items-center space-x-2">
                 <a
                   :href="newsItem?.newsLink"
@@ -88,18 +93,116 @@
                 ></span>
               </div>
             </div>
-            <div class="text-[#878787] space-y-4 font-lato mt-1 text-sm ml-1">
+
+            <div
+              class="text-[#878787] space-y-4 font-lato text-sm ml-1 md-hidden"
+            >
               <p>{{ newsItem?.summary }}</p>
             </div>
           </div>
         </div>
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden mt-2">
+
+        <div
+          class="hidden between-Laptop:!flex !flex-col shadow-lg rounded-lg overflow-hidden bg-white h-[50vh]"
+        >
+          <div class="flex flex-row">
+            <div class="relative w-1/2 overflow-hidden p-2">
+              <img
+                :src="newsItem?.imgixUrlHighRes"
+                alt="News image"
+                class="news-image h-[150px] w-[266px] object-cover rounded-xl mx-2 my-2"
+              />
+            </div>
+            <div class="w-1/2 p-2 flex flex-col justify-between">
+              <!-- added flex-col and justify-between -->
+              <span
+                class="text-lg font-source-serif text-secondary font-semibold pb-1"
+              >
+                {{ newsItem?.headline }}
+              </span>
+              <div
+                class="flex flex-wrap items-center ml-1 text-[11px] w-full pb-2"
+              >
+                <span class="text-neon-pink mr-1 capitalize">
+                  {{ newsItem?.categoriesName[0] }}
+                </span>
+                <span class="text-light-gray mr-2">|</span>
+                <span class="text-light-gray mr-2">{{ newsItem?.source }}</span>
+                <span class="text-light-gray mr-2">|</span>
+                <span class="text-light-gray mr-2">{{
+                  formattedPublishTime
+                }}</span>
+              </div>
+              <div class="ml-auto flex items-center space-x-2">
+                <a
+                  :href="newsItem?.newsLink"
+                  target="_blank"
+                  class="flex items-center"
+                >
+                  <img
+                    :src="faceBookLogo"
+                    alt="Facebook Logo"
+                    class="social-icon"
+                  />
+                </a>
+                <a
+                  :href="newsItem?.newsLink"
+                  target="_blank"
+                  class="flex items-center"
+                >
+                  <img :src="xLogo" alt="X Logo" class="social-icon" />
+                </a>
+                <a
+                  :href="newsItem?.newsLink"
+                  target="_blank"
+                  class="flex items-center"
+                >
+                  <img
+                    :src="linkDinLogo"
+                    alt="LinkedIn Logo"
+                    class="social-icon"
+                  />
+                </a>
+                <a
+                  :href="newsItem?.newsLink"
+                  target="_blank"
+                  class="flex items-center"
+                >
+                  <img
+                    :src="whatsappLogo"
+                    alt="WhatsApp Logo"
+                    class="social-icon"
+                  />
+                </a>
+                <span
+                  :class="[
+                    'mdi',
+                    newsItem && newsItem.bookmark
+                      ? 'mdi-bookmark-outline text-[21px]'
+                      : 'mdi-bookmark-outline text-[21px]',
+                  ]"
+                  class="cursor-pointer"
+                  @click.stop="addBookmark(newsItem._id)"
+                ></span>
+              </div>
+            </div>
+          </div>
+          <div class="text-[#878787] space-y-4 font-lato text-sm mx-2">
+            <p>{{ newsItem?.summary }}</p>
+          </div>
+        </div>
+
+        <div
+          class="bg-white shadow-lg rounded-lg overflow-hidden mt-2 sm:h-[390px] lg:h-[390px] md:h-[390px]"
+        >
           <FeatureNews />
         </div>
       </div>
 
       <!-- ChatBot Section -->
-      <div class="hidden lg:block ml-2 h-[85.5vh]">
+      <div
+        class="hidden lg:block ml-2 md:h-[85vh] lg:h-[88.5vh] between-Laptop:!h-[96.5vh]"
+      >
         <ChatBot :category="newsItem" />
       </div>
     </div>
@@ -130,7 +233,6 @@ import faceBookLogo from "@/assets/facebook.svg";
 import xLogo from "@/assets/X.svg";
 import linkDinLogo from "@/assets/linkedin.svg";
 import whatsappLogo from "@/assets/whatsapp.svg";
-
 const route = useRoute();
 const newsItem = ref(null);
 const newsId = route.params.id;

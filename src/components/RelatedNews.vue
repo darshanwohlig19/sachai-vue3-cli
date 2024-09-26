@@ -1,21 +1,25 @@
 <template>
-  <div class="p-3 mt-3">
-    <div class="flex justify-between items-center w-full mb-3">
-      <span
-        class="text-[18px] font-bold border-l-4 border-red-500 text-[#1E0627] pl-2"
-      >
-        Featured News
-      </span>
+  <div class="p-2 mt-3">
+    <div class="flex justify-between items-center w-full mb-2 rounded-2xl">
+      <div class="flex items-center">
+        <span
+          class="border-l-4 border-[#FF0053] h-[13px] rounded-2xl mr-1"
+        ></span>
+        <span class="text-lg font-bold text-[#1E0627] font-Lato ml-0"
+          >Featured News</span
+        >
+      </div>
+
       <Button />
     </div>
 
     <div
-      class="flex flex-col lg:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg"
+      class="flex flex-col lg:flex-row md:grid md:grid-cols-2 gap-3 justify-between cursor-pointer drop-shadow-lg md:h-[350px]"
     >
       <div
-        v-for="news in featuredNewsItem.slice(0, 4)"
+        v-for="news in slicedData"
         :key="news._id"
-        class="w-full lg:w-[33%] sm:w-[48%] md:w-[32%] h-[340px]"
+        class="w-full lg:w-[33%] sm:w-[48%] md:w-[32%] h-[336px]"
       >
         <div
           class="flex flex-col bg-white rounded-[10px] h-full drop-shadow-sm"
@@ -38,16 +42,19 @@
               </div>
             </div>
             <div class="flex gap-1">
-              <span class="mdi mdi-share-variant text-[19px]"></span>
+              <span
+                class="mdi mdi-share-variant text-[19px] cursor-pointer"
+                @click="openInviteDialog(news)"
+              ></span>
               <span
                 :class="[
                   'mdi',
-                  news.bookmarked
-                    ? 'mdi-bookmark text-red-500'
+                  news.isBookmarked
+                    ? 'mdi-bookmark-outline text-[21px]'
                     : 'mdi-bookmark-outline text-[21px]',
                 ]"
                 class="cursor-pointer"
-                @click="addBookmark(news._id)"
+                @click.stop="addBookmark(news._id)"
               >
               </span>
             </div>
@@ -69,6 +76,7 @@
         </div>
       </div>
     </div>
+    <!-- <shareLink :inviteLink="yourInviteLink" v-model="isDialogVisible" /> -->
   </div>
 </template>
 
@@ -83,14 +91,17 @@ import {
   defineProps,
   // toRefs,
 } from "vue";
-import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
-
+// import shareLink from "@/common/config/shareLink.vue";
 const route = useRoute();
 const router = useRouter();
 const featuredNewsItem = ref([]);
+const newsItems = ref([]);
+
 const props = defineProps(
   ["category"]
   //   {category: {
@@ -99,7 +110,14 @@ const props = defineProps(
   //   },
   // }
 );
+const isDialogVisible = ref(true); // Control the dialog visibility
+const inviteLink = ref(""); // Store the invite link
 console.log("props", props, props.category);
+
+const openInviteDialog = (newsItem) => {
+  inviteLink.value = `https://example.com/invite/${newsItem._id}`;
+  isDialogVisible.value = true; // This will trigger the dialog to open
+};
 
 const categoryId = computed(() => {
   console.log("props---", props.value);
@@ -111,21 +129,22 @@ const blogs = ref([]);
 console.log("blogs", blogs);
 const screenWidth = ref(window.innerWidth);
 const newsId = ref(route.params.id || "");
+
 const fetchBlogs = async () => {
   const payload = {
     categoryId: categoryId.value,
   };
   console.log("payload", payload);
   try {
-    const response = await axios.post(
-      `https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb`,
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
       payload
     );
     featuredNewsItem.value = response.data;
     console.log(" featuredNewsItem.value----", featuredNewsItem.value);
     blogs.value = response.data.map((news) => ({
       ...news,
-      bookmarked: false,
     }));
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -146,53 +165,15 @@ const updateScreenWidth = () => {
 const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
 };
+
 const addBookmark = async (id) => {
+  const newStatus = newsItems.value.bookmark ? "Disabled" : "Enabled";
+  const payload = { status: newStatus };
   try {
-    const token = localStorage.getItem("apiDataToken");
-    if (!token) {
-      throw new Error("No authentication token found");
-    }
-
-    // Find the news item to check its current bookmark status
-    const newsItem = blogs.value.find((news) => news._id === id);
-
-    // Toggle the status between "Enabled" and "Disabled"
-    const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
-
-    const res = await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${newsId.value}`,
-      { status: newStatus },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
-    console.log("hiii", res);
-
-    // Update the local state to reflect the new bookmark status
-    newsItem.bookmarked = !newsItem.bookmarked;
-
-    console.log(
-      `News item ${id} bookmark status updated successfully to ${newStatus}`
-    );
+    await apiService.apiCall("post", `${apiConfig.BOOKMARK}/${id}`, payload);
+    newsItems.value.bookmark = !newsItems.value.bookmark;
   } catch (error) {
-    if (error.response) {
-      console.error(
-        `Error updating bookmark status for news item ${id}:`,
-        error.response.data
-      );
-    } else if (error.request) {
-      console.error(
-        `Error updating bookmark status for news item ${id}: No response received`,
-        error.request
-      );
-    } else {
-      console.error(
-        `Error updating bookmark status for news item ${id}:`,
-        error.message
-      );
-    }
+    console.error("Error fetching response:", error);
   }
 };
 
@@ -200,18 +181,18 @@ const checkRouteParam = () => {
   newsId.value = route.params.id || "";
 };
 
-// const slicedData = computed(() => {
-//   if (screenWidth.value < 640) {
-//     // Mobile devices
-//     return blogs.value.slice(0, 1);
-//   } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
-//     // Tablets
-//     return blogs.value.slice(0, 3);
-//   } else {
-//     // Desktop and larger devices
-//     return blogs.value.slice(0, 4);
-//   }
-// });
+const slicedData = computed(() => {
+  if (screenWidth.value <= 640) {
+    // Mobile devices
+    return featuredNewsItem.value.slice(0, 4);
+  } else if (screenWidth.value > 425 && screenWidth.value < 1024) {
+    // Tablet devices
+    return featuredNewsItem.value.slice(0, 4);
+  } else {
+    // Desktop and larger devices
+    return featuredNewsItem.value.slice(0, 4);
+  }
+});
 
 onMounted(async () => {
   console.log("children----", categoryId);

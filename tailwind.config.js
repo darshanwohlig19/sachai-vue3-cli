@@ -9,9 +9,16 @@ module.exports = {
         sourceSerifPro: ["Source Serif Pro"],
         "source-serif": ["Source Serif Pro", "serif"],
       },
+      boxShadow: {
+        "custom-red": "0 0 50px 0 #FF00530D",
+      },
       fontSize: {
         "16px": "16px",
         "12px": "12px",
+      },
+      borderRadius: {
+        customChat: "12.3px 0px 12.3px 12.3px",
+        customAnswerChat: "0px 10px 10px 10px",
       },
       colors: {
         "light-gray": "#676767",
@@ -52,29 +59,9 @@ module.exports = {
         "sm-425": { max: "425px" },
         md: "769px",
         "md-max": { max: "768px" },
+        "between-Laptop": { min: "860px", max: "1024px" },
+        "between-644-1024": { min: "644px", max: "1024px" },
         lg: "992px",
-        screens: {
-          xs: "350px",
-          "xs-max": { max: "350px" },
-          sm: "576px",
-          "sm-max": { max: "576px" },
-          md: "768px",
-          "md-max": { max: "768px" },
-          lg: "992px",
-          "lg-max": { max: "992px" },
-          "between-lg-max-md-max": { min: "768px", max: "992px" },
-
-          xl: "1200px",
-          "xl-max": { max: "1200px" },
-          "1xl": "1024px",
-          "1xl-max": { max: "1024px" },
-          "2xl": "1320px",
-          "2xl-max": { max: "1320px" },
-          "3xl": "1600px",
-          "3xl-max": { max: "1600px" },
-          "4xl": "1850px",
-          "4xl-max": { max: "1850px" },
-        },
         "lg-max": { max: "992px" },
 
         xl: "1200px",
