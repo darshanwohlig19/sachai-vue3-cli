@@ -195,6 +195,10 @@ export default {
         for (let category of categoriesData) {
           category.news = await fetchNewsForCategory(category._id);
           if (category.news && category.news.length > 0) {
+            console.log(
+              "CATEGORY DATA STORED GLOBALLY",
+              category.news.slice(0, 5)
+            );
             localStorage.setItem(
               `news-${category._id}`,
               JSON.stringify(category.news.slice(0, 5))

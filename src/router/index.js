@@ -68,7 +68,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isLoggedIn = !!localStorage.getItem("apiDataToken");
-
   // Check if the route requires authentication
   if (to.meta.requiresAuth && !isLoggedIn) {
     // Redirect to login if not authenticated
