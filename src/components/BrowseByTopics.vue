@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div
     class="text-[45px] font-bold font-lato mt-4 mr-[10px] ml-[10px] sm:mr-[60px] sm:ml-[60px]"
   >
@@ -159,4 +159,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->

@@ -11,7 +11,7 @@
           />
         </a>
       </div>
-      <div class="w-[60%]">
+      <div class="w-[70%]">
         <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
@@ -32,51 +32,97 @@
           </div>
 
           <div
-            class="relative flex gap-2"
+            class="relative lg-max:!hidden flex gap-2 cursor-pointer"
             @mouseover="showDropdown = true"
             @mouseleave="hideDropdown"
           >
             <img src="../assets/svg/category.svg" />
-            <div class="nav-items" active-class="active-link">Category</div>
+            <RouterLink
+              class="nav-items hover:text-[var(--hover-color)]"
+              to=""
+              :style="{
+                '--hover-color': '#FF0053',
+              }"
+              >Category</RouterLink
+            >
+            <!-- <div class="nav-items" active-class="active-link">Category</div> -->
             <div
               v-if="showDropdown"
               @mouseover="showDropdown = true"
               @mouseleave="hideDropdown"
-              class="absolute mt-4 bg-white border w-[537px] h-auto border-gray-300 rounded shadow-lg z-3"
+              class="absolute mt-4 bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
             >
               <div class="w-[100%] flex">
+                <!--  First Div  -->
                 <div
-                  class="w-[30%] shadow-lg capitalize category-head rounded-r-lg"
-                  @mouseover="fetchCategoryFromLocalStorage"
+                  class="shadow-[2px_0px_5px_rgba(240,0,0,0.2)] capitalize category-head rounded-r-lg w-[150px]"
                 >
                   <ul>
                     <li
-                      class="mt-3 ml-3"
+                      class="mt-1 p-2 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
                       v-for="category in categories"
                       :key="category._id"
                       @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                      :style="{
+                        '--hover-color': '#FF0053',
+                        '--hover-bg-color': '#FFF2F6',
+                      }"
                     >
-                      {{ category.name }} >
+                      <div class="flex items-center space-x-2">
+                        <a
+                          :href="`/categories/${category._id}?category=${category.name}`"
+                          class="flex items-center"
+                        >
+                          <span>{{ category.name }}</span>
+                          <div class="flex justify-center items-center">
+                            <img
+                              src="../assets/svg/triangle_arrow.svg"
+                              class="ml-1"
+                            />
+                          </div>
+                        </a>
+                      </div>
                     </li>
                   </ul>
                 </div>
-                <div class="w-[70%]">
-                  <div class="h-[203px] relative p-2">
+                <!--   Second Div  -->
+
+                <div v-if="newsItems.length > 0" class="p-3 w-[385px]">
+                  <div
+                    class="h-[203px] relative"
+                    @click="navigateToTrending(newsItems[0]?._id)"
+                  >
                     <img
                       class="h-[100%] w-full object-cover rounded-[10px]"
                       :src="newsItems[0]?.imgixUrlHighRes"
                     />
                     <div
+                      class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
+                    ></div>
+                    <div
                       class="absolute top-0 bottom-0 w-full h-full flex items-end justify-start"
                     >
-                      <div class="text-white p-2 rounded-md">
-                        {{ newsItems[0]?.headline }}
-                        <div>Time</div>
+                      <div class="text-white p-2 rounded-md w-[100%]">
+                        <div
+                          class="sub_category_head multiline-truncate-tow-tow-liner"
+                        >
+                          {{ newsItems[0]?.headline }}
+                        </div>
+                        <div class="flex flex-row gap-2 sub_category_summary">
+                          <div>{{ newsItems[0]?.source }}</div>
+                          <div>|</div>
+                          <div>
+                            {{ formatPublishTime(newsItems[0]?.publishTime) }}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="w-[100%] p-2 flex flex-col justify-between">
-                    <div class="below-sm:mt-4">
+                  <div
+                    class="w-[100%] flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[1]?._id)"
+                  >
+                    <div class="mt-3">
                       <div
                         class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
                       >
@@ -89,19 +135,24 @@
                         </div>
                         <div class="flex flex-col w-[70%]">
                           <div
-                            class="category-heading w-[100%] multiline-truncate"
+                            class="category-heading w-[100%] multiline-truncate-tow-tow-liner"
                           >
                             {{ newsItems[1]?.headline }}
                           </div>
-                          <div class="multiline-truncate-one-liner w-[100%]">
+                          <div
+                            class="multiline-truncate-one-liner category-head-head w-[100%]"
+                          >
                             {{ newsItems[1]?.summary }}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="w-[100%] p-2 flex flex-col justify-between">
-                    <div class="below-sm:mt-4">
+                  <div
+                    class="w-[100%] flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[2]?._id)"
+                  >
+                    <div class="mt-3">
                       <div
                         class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
                       >
@@ -114,18 +165,23 @@
                         </div>
                         <div class="flex flex-col w-[70%]">
                           <div
-                            class="category-heading w-[100%] multiline-truncate"
+                            class="category-heading w-[100%] multiline-truncate-tow-tow-liner"
                           >
                             {{ newsItems[2]?.headline }}
                           </div>
-                          <div class="multiline-truncate-one-liner w-[100%]">
+                          <div
+                            class="multiline-truncate-one-liner category-head-head w-[100%]"
+                          >
                             {{ newsItems[2]?.summary }}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="w-[100%] p-2 flex flex-col justify-between">
+                  <div
+                    class="w-[100%] mt-3 flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[3]?._id)"
+                  >
                     <div class="mt-4 md:mt-4 lg:mt-0 cursor-pointer">
                       <div class="flex flex-row gap-2">
                         <div class="w-[5%] mt-2">
@@ -135,14 +191,17 @@
                           <div class="font-16 multi-line-2">
                             {{ newsItems[3]?.headline }}
                           </div>
-                          <div class="para multiline-truncate1">
+                          <div class="para multiline-truncate-tow-tow-liner">
                             {{ newsItems[3]?.summary }}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="w-[100%] p-2 flex flex-col justify-between">
+                  <div
+                    class="w-[100%] mt-3 flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[4]?._id)"
+                  >
                     <div class="mt-0 cursor-pointer">
                       <div class="flex flex-row gap-2">
                         <div class="w-[5%] mt-2">
@@ -152,7 +211,7 @@
                           <div class="font-16 multi-line-2">
                             {{ newsItems[4]?.headline }}
                           </div>
-                          <div class="para multiline-truncate1">
+                          <div class="para multiline-truncate-tow-tow-liner">
                             {{ newsItems[4]?.summary }}
                           </div>
                         </div>
@@ -161,14 +220,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <ul class="list-none">
-                  v-for="item in itemsData"
-                  :key="item.label"
-                  class="hover:bg-gray-100 p-2 cursor-pointer"
-                >
-                  {{ item.label }}
-                </li>
-              </ul> -->
             </div>
           </div>
 
@@ -187,7 +238,7 @@
               {{ isLoggedIn ? "Logout" : "Login" }}
             </a>
           </div>
-          <div class="w-[50%] relative hidden md:block">
+          <div class="w-[421px] relative block lg-max:!hidden">
             <!-- @click="expandInput" -->
             <input
               type="text"
@@ -241,7 +292,97 @@
             @complete="handleSearch"
             class="w-[200px] border-1 h-[full]"
           /> -->
-          <router-link class="md:hidden sm-max:block">
+          <a class="block lg:hidden">
+            <div
+              @click="visibleRight = true"
+              class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+            >
+              <img src="../assets/svg/category.svg" />
+            </div>
+            <Sidebar
+              class="w-[25%] sm-425:w-[40%] h-[80%] rounded-l-[20px] block lg:hidden"
+              v-model:visible="visibleRight"
+              position="right"
+              :closeIcon="true"
+            >
+              <div class="capitalize category-head rounded-l-lg w-[150px]">
+                <ul>
+                  <li
+                    class="mt-1 p-2 ml-3 text-black hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                    v-for="category in categories"
+                    :key="category._id"
+                    @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                    :style="{
+                      '--hover-color': '#FF0053',
+                      '--hover-bg-color': '#FFF2F6',
+                    }"
+                  >
+                    <div class="flex items-center space-x-2">
+                      <a
+                        :href="`/categories/${category._id}?category=${category.name}`"
+                        class="flex items-center"
+                      >
+                        <span>{{ category.name }}</span>
+                        <img
+                          src="../assets/svg/triangle_arrow.svg"
+                          class="ml-1"
+                        />
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </Sidebar>
+            <!-- <div
+              class="relative flex gap-2 cursor-pointer"
+              @mouseover="showDropdown = true"
+              @mouseleave="hideDropdown"
+            >
+              <div
+                class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+              >
+                <img src="../assets/svg/category.svg" />
+              </div>
+
+              <div
+                v-if="showDropdown"
+                @mouseover="showDropdown = true"
+                @mouseleave="hideDropdown"
+                class="absolute mt-5 flex justify-end bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
+              >
+                <div class="w-[100%] flex">
+                  <div class="capitalize category-head rounded-l-lg w-[150px]">
+                    <ul>
+                      <li
+                        class="mt-3 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                        v-for="category in categories"
+                        :key="category._id"
+                        @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                        :style="{
+                          '--hover-color': '#FF0053',
+                          '--hover-bg-color': '#FF005333',
+                        }"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <a
+                            :href="`/categories/${category._id}?category=${category.name}`"
+                            class="flex items-center"
+                          >
+                            <span>{{ category.name }}</span>
+                            <img
+                              src="../assets/svg/triangle_arrow.svg"
+                              class="ml-1"
+                            />
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </a>
+          <router-link class="lg:hidden block">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
@@ -305,10 +446,9 @@
         </a>
       </div>
     </div>
-    <div
+    <!-- <div
       class="w-full h-[67px] mt-1 flex justify-between bg-white items-center relative lg:overflow-x-hidden"
     >
-      <!-- Icons for mobile and tablet screens -->
       <i
         class="pi pi-angle-left ml-2 cursor-pointer block md:hidden"
         @click="scrollLeft"
@@ -338,7 +478,7 @@
         class="pi pi-angle-right mr-2 cursor-pointer block md:hidden"
         @click="scrollRight"
       ></i>
-    </div>
+    </div> -->
 
     <!-- Popup Confirmation -->
     <div
@@ -373,10 +513,12 @@ import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { useToast } from "primevue/usetoast";
+import moment from "moment"; // Import moment.js
 
 // const isMenuOpen = ref(false);
 // const isDropdownOpen = ref(false);
 const categories = ref([]);
+const visibleRight = ref(false);
 const newsItems = ref([]);
 const categoryWise = ref([]);
 console.log("hiiǐ", categoryWise);
@@ -388,7 +530,7 @@ const searchInput = ref(null);
 const searchResultsDropdown = ref(null);
 const router = useRouter();
 const toast = useToast();
-const categoriesContainer = ref(null);
+// const categoriesContainer = ref(null);
 const isLoggingOut = ref(false);
 const isCardDropdownOpen = ref(false);
 const categoryId = "63d90f8aaabaf4bf0169c2b0";
@@ -405,36 +547,33 @@ const hideDropdown = () => {
       !document.querySelector(".absolute:hover")
     ) {
       showDropdown.value = false;
+      newsItems.value = [];
     }
   }, 10);
 };
-
-// const itemsData = [
-//   { label: "Item 1" },
-//   { label: "Item 2" },
-//   { label: "Item 3" },
-// ];
 const toggleCardDropdown = () => {
   isCardDropdownOpen.value = !isCardDropdownOpen.value;
 };
-
-const scrollLeft = () => {
-  if (categoriesContainer.value) {
-    categoriesContainer.value.scrollBy({
-      left: -100,
-      behavior: "smooth",
-    });
-  }
+const formatPublishTime = (publishTime) => {
+  return moment(publishTime).fromNow();
 };
+// const scrollLeft = () => {
+//   if (categoriesContainer.value) {
+//     categoriesContainer.value.scrollBy({
+//       left: -100,
+//       behavior: "smooth",
+//     });
+//   }
+// };
 
-const scrollRight = () => {
-  if (categoriesContainer.value) {
-    categoriesContainer.value.scrollBy({
-      left: 100,
-      behavior: "smooth",
-    });
-  }
-};
+// const scrollRight = () => {
+//   if (categoriesContainer.value) {
+//     categoriesContainer.value.scrollBy({
+//       left: 100,
+//       behavior: "smooth",
+//     });
+//   }
+// };
 
 // const toggleMenu = () => {
 //   isMenuOpen.value = !isMenuOpen.value;
@@ -486,13 +625,12 @@ const handleLogout = async () => {
           headers: { Authorization: `${apiDataToken}` },
         }
       );
-
       if (response.status === 200) {
+        console.log(`BEFORE ${localStorage.getItem("news-")}`);
         localStorage.removeItem("apiDataToken");
         localStorage.setItem("logoutSuccess", "true");
         isLoggedIn.value = false;
         router.push("/");
-
         toast.add({
           severity: "success",
           summary: "Logged out successfully!",
@@ -593,31 +731,39 @@ onMounted(() => {
   fetchCategories();
   document.addEventListener("mousedown", collapseInput);
   fetchNavbarCategory();
-  const categoryId = "63d90e4098d783ac0cbe2310";
-  const storedNews = localStorage.getItem(`news-${categoryId}`);
+  // const categoryId = "63d90e4098d783ac0cbe2310";
+  // const storedNews = localStorage.getItem(`news-${categoryId}`);
 
-  if (storedNews) {
-    newsItems.value = JSON.parse(storedNews);
-    console.log("Fetched news items:", newsItems.value);
-  } else {
-    console.log(
-      "No news found in local storage for category:",
-      "news-" + categoryId
-    );
-  }
+  // if (storedNews) {
+  //   newsItems.value = JSON.parse(storedNews);
+  //   console.log("Fetched news items:", newsItems.value);
+  // } else {
+  //   console.log(
+  //     "No news found in local storage for category:",
+  //     "news-" + categoryId
+  //   );
+  // }
 });
-
+const navigateToTrending = (id) => {
+  console.log("Navigating to trending with ID:", id);
+  if (id) {
+    router.push(`/news/${id}`);
+  }
+};
 const fetchCategoryFromLocalStorage = (categoryId) => {
   const storedNews = localStorage.getItem(`news-${categoryId}`);
-
+  console.log(`FUNCTION CALLED news-${categoryId} news-${storedNews}`);
   if (storedNews) {
+    console.log("INSIDE IF");
     newsItems.value = JSON.parse(storedNews);
     console.log("Fetched news items:", newsItems.value); // Verify the fetched items
   } else {
-    console.log(
-      "No news found in local storage for category:",
-      `news-${categoryId}`
-    );
+    console.log("INSIDE ELSE");
+
+    // console.log(
+    //   "No news found in local storage for category:",
+    //   `news-${categoryId}`
+    // );
   }
 };
 
@@ -706,6 +852,13 @@ watch(searchQuery, (newValue) => {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate-tow-tow-liner {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }
