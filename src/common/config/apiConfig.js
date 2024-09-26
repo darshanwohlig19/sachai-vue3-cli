@@ -9,7 +9,7 @@ config.PROTOCOL_STR = `${config.PROTOCOL}://${config.HOST}`;
 // config.PROTOCOL_STR = `${config.PROTOCOL}://${config.HOST}:${config.PORT}`;
 
 config.PORT_IP = {
-  LOGIN: config.PROTOCOL_STR,
+  LOGIN: config.PROTOCOL,
 };
 
 // NodalOfficer Api
