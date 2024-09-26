@@ -300,7 +300,7 @@
               <img src="../assets/svg/category.svg" />
             </div>
             <Sidebar
-              class="w-[25%] sm-425:w-[40%] h-[80%] rounded-l-[20px] block lg:hidden"
+              class="w-[30%] sm-425:w-[40%] h-[100%] rounded-l-[20px] block lg:hidden"
               v-model:visible="visibleRight"
               position="right"
               :closeIcon="true"
