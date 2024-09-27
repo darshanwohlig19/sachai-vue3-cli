@@ -82,7 +82,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, defineProps, computed } from "vue";
+import {
+  ref,
+  onBeforeMount,
+  onBeforeUnmount,
+  defineProps,
+  computed,
+} from "vue";
 import axios from "axios";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
@@ -174,7 +180,7 @@ const slicedData = computed(() => {
     return blogs.value.slice(0, 6);
   }
 });
-onMounted(() => {
+onBeforeMount(() => {
   fetchBlogs();
   checkRouteParam();
   window.addEventListener("resize", updateScreenWidth);
