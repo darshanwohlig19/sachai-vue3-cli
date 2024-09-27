@@ -201,7 +201,7 @@
 
       <!-- ChatBot Section -->
       <div
-        class="hidden lg:block ml-2 md:h-[85vh] lg:h-[88.5vh] between-Laptop:!h-[96.5vh]"
+        class="hidden lg:block ml-2 md:h-[85vh] lg:h-[88.5vh] between-Laptop:!h-[111.5vh]"
       >
         <ChatBot :category="newsItem" />
       </div>
