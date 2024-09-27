@@ -11,6 +11,7 @@ import MoreNews from "../views/MoreNews.vue";
 import NewsByTopics from "../views/NewsByTopics.vue";
 import TermsandCondition from "../views/TermsandCondition.vue";
 import PrivacyPolicy from "../views/PrivacyPolicy.vue";
+import Profile from "../views/Profile.vue";
 
 const routes = [
   {
@@ -70,6 +71,11 @@ const routes = [
     path: "/PrivacyPolicy",
     name: "PrivacyPolicy",
     component: PrivacyPolicy,
+  },
+  {
+    path: "/Profile",
+    name: "Profile",
+    component: Profile,
   },
 ];
 

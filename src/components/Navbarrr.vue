@@ -15,12 +15,8 @@
         <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
-            <img
-              v-if="isHomeActive"
-              src="../assets/active_home.svg"
-              alt="Home"
-            />
-            <img v-else src="../assets/Home.svg" alt="Home" />
+            <img v-if="isHomeActive" src="../assets/active_home.svg" />
+            <img v-else src="../assets/Home.svg" />
             <RouterLink class="nav-items" active-class="active-link" to="/"
               >Home</RouterLink
             >
@@ -110,12 +106,6 @@
               </div>
             </div>
           </div>
-          <!-- <AutoComplete
-            v-model="searchQuery"
-            :suggestions="searchResults"
-            @complete="handleSearch"
-            class="w-[200px] border-1 h-[full]"
-          /> -->
           <router-link class="md:hidden sm-max:block">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
@@ -128,14 +118,24 @@
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
               @click="navigateToSettings"
             >
-              <img src="../assets/Settings.svg" alt="" />
+              <img
+                v-if="isSettingsActive"
+                src="../assets/active_setting.svg"
+                alt=""
+              />
+              <img v-else src="../assets/Settings.svg" alt="" />
             </div>
           </router-link>
           <router-link v-if="isLoggedIn">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
-              <img src="../assets/Accounts.svg" alt="" />
+              <img
+                v-if="isAccountsActive"
+                src="../assets/active_account.svg"
+                alt=""
+              />
+              <img v-else src="../assets/Account.svg" alt="" />
             </div>
           </router-link>
 
@@ -274,8 +274,8 @@ export default {
     const isHomeActive = computed(() => route.path === "/");
     const isAstrologyActive = computed(() => route.path === "/Astrology");
     const isBookmarkActive = computed(() => route.path === "/Bookmark");
-    // const isSettingsActive = computed(() => route.path === "/");
-    // const isAccountsActive = computed(() => route.path === "/");
+    const isSettingsActive = computed(() => route.path === "/Setting");
+    const isAccountsActive = computed(() => route.path === "/Profile");
 
     const toggleCardDropdown = () => {
       isCardDropdownOpen.value = !isCardDropdownOpen.value;
@@ -507,6 +507,8 @@ export default {
       isHomeActive,
       isAstrologyActive,
       isBookmarkActive,
+      isSettingsActive,
+      isAccountsActive,
     };
   },
 };
