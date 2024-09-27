@@ -5,14 +5,12 @@ const config = {
   // PROTOCOL: "http",
   // HOST: "localhost",
 };
-config.PROTOCOL_STR = `${config.PROTOCOL}://${config.HOST}`;
+config.PROTOCOL = `${config.PROTOCOL}://${config.HOST}`;
 // config.PROTOCOL_STR = `${config.PROTOCOL}://${config.HOST}:${config.PORT}`;
 
 config.PORT_IP = {
   LOGIN: config.PROTOCOL,
 };
-
-//api-uat.newsshield.io/bookmark/addBookmark
 
 config.BOOKMARK = config.PORT_IP.LOGIN + "/bookmark/addBookmark";
 
