@@ -28,7 +28,7 @@
           <div
             class="text-[14px] sm:text-[16px] md:text-[16px] fontCustom text-white"
           >
-            {{ blogs[0]?.headline || "No Headline" }}
+            {{ blogs[0]?.headline }}
           </div>
           <div
             class="flex gap-2 text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"

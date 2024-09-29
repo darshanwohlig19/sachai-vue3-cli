@@ -129,6 +129,7 @@
           <router-link v-if="isLoggedIn">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+              @click="navigateToProfile"
             >
               <img
                 v-if="isAccountsActive"
@@ -283,7 +284,9 @@ export default {
     const navigateToSettings = () => {
       router.push("/Setting");
     };
-
+    const navigateToProfile = () => {
+      router.push("/Profile");
+    };
     const scrollLeft = () => {
       if (categoriesContainer.value) {
         categoriesContainer.value.scrollBy({
@@ -509,6 +512,7 @@ export default {
       isBookmarkActive,
       isSettingsActive,
       isAccountsActive,
+      navigateToProfile,
     };
   },
 };
