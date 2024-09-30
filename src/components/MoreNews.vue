@@ -13,8 +13,76 @@
       </div>
     </div>
 
-    <div v-if="loading" class="text-center py-5">Loading...</div>
-    <div v-else-if="error" class="text-center py-5">No News Available</div>
+    <div v-if="loading" class="mt-3">
+      <div>
+        <div class="bg-white w-[100%] flex justify-center">
+          <!-- First Column -->
+          <div
+            class="w-[30%] sm-425:w-[100%] sm-max:w-[50%] between-sm-md:w-[50%] below-sm:w-[100%]"
+          >
+            <div>
+              <div>
+                <Skeleton width="100%" height="5rem"></Skeleton>
+                <div class="divider mt-3"></div>
+              </div>
+              <div>
+                <Skeleton width="100%" height="5rem"></Skeleton>
+                <div class="divider mt-3"></div>
+              </div>
+              <div>
+                <Skeleton width="100%" height="5rem"></Skeleton>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider Column -->
+          <div class="w-[3%] flex justify-center sm-425:hidden divider_loader">
+            <div class="divider1 sm-425:hidden"></div>
+          </div>
+
+          <!-- Second Column -->
+          <div
+            class="w-[30%] sm-max:w-[50%] between-sm-md:w-[50%] sm-425:hidden"
+          >
+            <div>
+              <div>
+                <Skeleton width="100%" height="5rem"></Skeleton>
+                <div class="divider mt-3"></div>
+              </div>
+              <div>
+                <Skeleton width="100%" height="5rem"></Skeleton>
+                <div class="divider mt-3"></div>
+              </div>
+              <div>
+                <Skeleton width="100%" height="5rem"></Skeleton>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider Column -->
+          <div class="w-[3%] flex justify-center divider_loader">
+            <div class="divider1 sm-max:hidden"></div>
+          </div>
+
+          <!-- Third Column -->
+          <div class="w-[30%] sm-max:hidden">
+            <div>
+              <div>
+                <Skeleton width="100%" height="5rem"></Skeleton>
+                <div class="divider mt-3"></div>
+              </div>
+              <div>
+                <Skeleton width="100%" height="5rem"></Skeleton>
+                <div class="divider mt-3"></div>
+              </div>
+              <div>
+                <Skeleton width="100%" height="5rem"></Skeleton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div v-else class="bg-white w-[100%] flex">
       <!-- First Column -->
       <div
@@ -198,5 +266,10 @@ onMounted(fetchNews);
   -webkit-line-clamp: 3; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
+}
+@media screen and (max-width: 425px) {
+  .divider_loader {
+    display: none !important;
+  }
 }
 </style>

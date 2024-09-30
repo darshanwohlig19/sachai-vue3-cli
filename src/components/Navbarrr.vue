@@ -15,7 +15,9 @@
         <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
-            <img src="../assets/Home.svg" alt="" />
+            <img v-if="isHomeActive" src="../assets/active_home.svg" />
+            <img v-else src="../assets/Home.svg" />
+
             <RouterLink class="nav-items" active-class="active-link" to="/"
               >Home</RouterLink
             >
@@ -286,6 +288,8 @@
               </div>
             </div>
           </div>
+          <router-link class="md:hidden sm-max:block">
+
           <!-- <AutoComplete
             v-model="searchQuery"
             :suggestions="searchResults"
@@ -383,6 +387,7 @@
             </div> -->
           </a>
           <router-link class="lg:hidden block">
+
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
@@ -393,14 +398,25 @@
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
-              <img src="../assets/Settings.svg" alt="" />
+              <img
+                v-if="isSettingsActive"
+                src="../assets/active_setting.svg"
+                alt=""
+              />
+              <img v-else src="../assets/Settings.svg" alt="" />
             </div>
           </router-link>
           <router-link v-if="isLoggedIn">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+              @click="navigateToProfile"
             >
-              <img src="../assets/Accounts.svg" alt="" />
+              <img
+                v-if="isAccountsActive"
+                src="../assets/active_account.svg"
+                alt=""
+              />
+              <img v-else src="../assets/Account.svg" alt="" />
             </div>
           </router-link>
 
@@ -513,6 +529,53 @@ import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { useToast } from "primevue/usetoast";
+
+import { useRoute } from "vue-router";
+export default {
+  setup() {
+    const isMenuOpen = ref(false);
+    const isDropdownOpen = ref(false);
+    const categories = ref([]);
+    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
+    const showBookmarkLink = ref(true);
+    const isPopupVisible = ref(false);
+    const isExpanded = ref(false);
+    const searchInput = ref(null);
+    const searchResultsDropdown = ref(null);
+    const router = useRouter();
+    const toast = useToast();
+    const categoriesContainer = ref(null);
+    const isLoggingOut = ref(false);
+    const isCardDropdownOpen = ref(false);
+    const route = useRoute();
+    const isInputVisible = ref(false);
+    const searchQuery = ref("");
+    const searchResults = ref([]);
+
+    const isHomeActive = computed(() => route.path === "/");
+    const isAstrologyActive = computed(() => route.path === "/Astrology");
+    const isBookmarkActive = computed(() => route.path === "/Bookmark");
+    const isSettingsActive = computed(() => route.path === "/Setting");
+    const isAccountsActive = computed(() => route.path === "/Profile");
+
+    const toggleCardDropdown = () => {
+      isCardDropdownOpen.value = !isCardDropdownOpen.value;
+    };
+    const navigateToSettings = () => {
+      router.push("/Setting");
+    };
+    const navigateToProfile = () => {
+      router.push("/Profile");
+    };
+    const scrollLeft = () => {
+      if (categoriesContainer.value) {
+        categoriesContainer.value.scrollBy({
+          left: -100,
+          behavior: "smooth",
+        });
+      }
+    };
+
 import moment from "moment"; // Import moment.js
 
 // const isMenuOpen = ref(false);
@@ -727,6 +790,44 @@ const collapseInput = (event) => {
   }
 };
 
+    return {
+      navigateToSettings,
+      isExpanded,
+      searchInput,
+      expandInput,
+      inputClass,
+      isMenuOpen,
+      isDropdownOpen,
+      categories,
+      isLoggedIn,
+      showBookmarkLink,
+      isPopupVisible,
+      toggleMenu,
+      toggleDropdown,
+      handleAuthAction,
+      handleBackgroundClick,
+      hidePopup,
+      handleLogout,
+      scrollRight,
+      scrollLeft,
+      categoriesContainer,
+      isCardDropdownOpen,
+      toggleCardDropdown,
+      isInputVisible,
+      searchQuery,
+      toggleSearchInput,
+      handleSearch,
+      searchResults,
+      navigateToNewsDetail,
+      searchResultsDropdown,
+      isHomeActive,
+      isAstrologyActive,
+      isBookmarkActive,
+      isSettingsActive,
+      isAccountsActive,
+      navigateToProfile,
+    };
+  },
 onMounted(() => {
   fetchCategories();
   document.addEventListener("mousedown", collapseInput);

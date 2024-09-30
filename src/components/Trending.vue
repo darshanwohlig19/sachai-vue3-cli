@@ -2,15 +2,63 @@
   <div
     class="w-full md-max:!block flex sm:flex-row lg:flex-row flex-wrap justify-between mt-3 relative bg-white p-3 rounded-[10px]"
   >
-    <div class="relative w-[100%] lg:w-[30%] md:w-[48%]">
-      <div v-if="loading" class="text-center py-5 bg-white rounded-[10px]">
-        Loading...
-      </div>
-      <div v-else-if="error" class="text-center py-5 bg-white rounded-[10px]">
-        No News Available
+    <div v-if="loading" class="w-full flex flex-wrap gap-3">
+      <!-- Skeleton for Trending Carousel -->
+      <div class="relative w-[100%] lg:w-[30%] md:w-[48%]">
+        <div class="bg-white p-2 rounded-lg shadow-md">
+          <div
+            class="relative w-full h-[234px] md-max:h-[300px] rounded-lg overflow-hidden"
+          >
+            <Skeleton width="100%" height="100%"></Skeleton>
+          </div>
+          <div class="flex flex-col gap-2 mt-2">
+            <Skeleton width="50%" height="1rem"></Skeleton>
+            <Skeleton width="80%" height="1rem"></Skeleton>
+            <div class="flex gap-2">
+              <Skeleton width="25%" height="10px"></Skeleton>
+              <Skeleton width="25%" height="10px"></Skeleton>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div v-else>
+      <!-- Skeleton for List of News -->
+      <div
+        class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 md:mt-0 lg:mt-0 flex flex-col gap-3"
+      >
+        <div v-for="n in 3" :key="n" class="flex gap-2">
+          <div class="w-[50px]">
+            <Skeleton width="50px" height="50px" shape="circle"></Skeleton>
+          </div>
+          <div class="w-full flex flex-col gap-1">
+            <Skeleton width="90%" height="1rem"></Skeleton>
+            <Skeleton width="70%" height="1rem"></Skeleton>
+            <Skeleton width="100%" height="1px"></Skeleton>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skeleton for Blog List -->
+      <div class="w-[100%] lg:w-[30%] md:w-[100%] flex flex-col gap-3">
+        <div
+          v-for="b in 3"
+          :key="b"
+          class="shadow-md flex gap-2 w-full p-2 rounded-[8px]"
+        >
+          <div class="flex-shrink-0">
+            <Skeleton width="78px" height="57px"></Skeleton>
+          </div>
+          <div class="flex flex-col gap-1 w-full">
+            <Skeleton width="100%" height="1rem"></Skeleton>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actual Content -->
+
+    <div class="relative w-[100%] lg:w-[30%] md:w-[48%]">
+      <div>
         <div class="trendingCarousel">
           <Carousel
             :value="blogs"

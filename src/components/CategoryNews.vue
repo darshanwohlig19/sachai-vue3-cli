@@ -1,6 +1,78 @@
 <template>
   <div class="mt-3 rounded-[10px]">
-    <div v-for="category in categories" :key="category._id" class="mb-3">
+    <div v-if="loading">
+      <div v-for="n in 3" :key="n" class="mt-3">
+        <div class="bg-white p-3 rounded-[10px] mb-3">
+          <!-- Main Content -->
+          <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
+            <!-- Left Section (Main Image and Headlines) -->
+            <div class="w-[100%] lg:w-[65%]">
+              <div class="flex flex-col gap-5">
+                <!-- Image and Headlines -->
+                <div class="flex sm:flex-row flex-col gap-3 h-[100%]">
+                  <div class="md:w-[70%] w-[100%]">
+                    <!-- Main Image -->
+                    <Skeleton
+                      shape="rectangle"
+                      width="100%"
+                      height="220px"
+                      borderRadius="10px"
+                    />
+                  </div>
+                  <div
+                    class="sm:w-[70%] w-[100%] flex flex-col justify-between gap-3 sm:gap-0"
+                  >
+                    <div
+                      v-for="i in 3"
+                      :key="i"
+                      class="flex flex-row gap-2 items-center"
+                    >
+                      <!-- Headline Bullet and Text -->
+                      <Skeleton
+                        width="100%"
+                        height="50px"
+                        borderRadius="10px"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom Section with Horizontal Headlines -->
+                <div class="flex flex-row justify-center h-[100%] gap-3">
+                  <div
+                    v-for="i in 3"
+                    :key="i"
+                    class="flex flex-row gap-1 w-[50%]"
+                  >
+                    <Skeleton height="75px" borderRadius="10px" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vertical Divider Between Sections -->
+            <div class="divider-vertical"></div>
+
+            <!-- Right Section (News Snippets) -->
+            <div
+              class="w-[100%] lg:w-[35%] flex flex-col justify-between gap-3 sm:gap-3"
+            >
+              <div
+                v-for="i in 4"
+                :key="i"
+                class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
+              >
+                <!-- Snippet Thumbnail -->
+                <Skeleton size="47px" />
+                <!-- Snippet Title -->
+                <Skeleton width="100%" height="32px" borderRadius="10px" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-else v-for="category in categories" :key="category._id" class="mb-3">
       <div class="bg-white p-3 rounded-[10px]">
         <div>
           <div class="w-[100%] flex justify-between mb-3">
@@ -157,6 +229,7 @@ export default {
     const categories = ref({});
     const isMobileOrTablet = ref(window.innerWidth < 768);
     const screenWidth = ref(window.innerWidth);
+    const loading = ref(true); // Add loading state
 
     const fetchNewsForCategory = async (categoryId) => {
       try {
@@ -211,6 +284,8 @@ export default {
         categories.value = categoriesData;
       } catch (error) {
         console.error("Error fetching categories:", error);
+      } finally {
+        loading.value = false; // Set loading to false after data is fetched
       }
     };
 
@@ -241,6 +316,7 @@ export default {
       displayedNews,
       screenWidth,
       Button,
+      loading,
     };
   },
 };

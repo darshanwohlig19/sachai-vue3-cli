@@ -9,6 +9,9 @@ import Bookmark from "../views/Bookmark.vue";
 import Setting from "../views/Setting.vue";
 import MoreNews from "../views/MoreNews.vue";
 import NewsByTopics from "../views/NewsByTopics.vue";
+import TermsandCondition from "../views/TermsandCondition.vue";
+import PrivacyPolicy from "../views/PrivacyPolicy.vue";
+import Profile from "../views/Profile.vue";
 
 const routes = [
   {
@@ -58,6 +61,21 @@ const routes = [
     path: "/NewsByTopics/:topic",
     name: "NewsByTopics",
     component: NewsByTopics,
+  },
+  {
+    path: "/Terms&Condition",
+    name: "TermsandCondition",
+    component: TermsandCondition,
+  },
+  {
+    path: "/PrivacyPolicy",
+    name: "PrivacyPolicy",
+    component: PrivacyPolicy,
+  },
+  {
+    path: "/Profile",
+    name: "Profile",
+    component: Profile,
   },
 ];
 
