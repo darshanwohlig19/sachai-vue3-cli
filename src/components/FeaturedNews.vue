@@ -2,7 +2,9 @@
   <!-- No News Message -->
   <!-- Main Content -->
   <div
+
     class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-4 mt-3 justify-between bg-white rounded-[10px]"
+
   >
     <!-- First Section -->
     <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col cursor-pointer">
