@@ -51,13 +51,12 @@
                   <span
                     :class="[
                       'mdi',
-                      news.bookmarked
-                        ? 'mdi-bookmark text-[#FF0053] text-[21px]'
-                        : 'mdi-bookmark-outline text-[21px]',
+                      'mdi-bookmark text-[11px] lg:text-[17px] cursor-pointer',
+                      getBookmarkColor(news?.isBookmarked),
                     ]"
-                    class="cursor-pointer"
-                    @click="addBookmark(news._id)"
-                  ></span>
+                    @click="addBookmark(news)"
+                  >
+                  </span>
                 </div>
               </div>
               <div
@@ -170,37 +169,31 @@ const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
 };
 
-const addBookmark = async (id) => {
+const getBookmarkColor = (isBookmarked) => {
+  return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
+};
+
+const addBookmark = async (news) => {
+  const token = localStorage.getItem("apiDataToken");
   try {
-    const token = localStorage.getItem("apiDataToken");
-    if (!token) {
-      throw new Error("No authentication token found");
-    }
+    const currentStatus =
+      news.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
 
-    const newsItem = blogs.value.find((news) => news._id === id);
-    const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
-
-    await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${id}`,
-      { status: newStatus },
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${news._id}`,
+      {
+        status: currentStatus,
+      },
       {
         headers: {
           Authorization: `${token}`,
         },
       }
     );
-
-    newsItem.bookmarked = !newsItem.bookmarked;
-    localStorage.setItem(
-      `bookmark_${id}`,
-      newsItem.bookmarked ? "Enabled" : "Disabled"
-    );
-
-    console.log(
-      `News item ${id} bookmark status updated successfully to ${newStatus}`
-    );
+    news.isBookmarked = currentStatus;
+    return response.data;
   } catch (error) {
-    console.error(`Error updating bookmark status for news item ${id}:`, error);
+    console.error("Error adding bookmark:", error);
   }
 };
 

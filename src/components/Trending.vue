@@ -61,9 +61,19 @@
                     ></i>
                   </div>
                   <div>
-                    <i
-                      class="mdi mdi-bookmark-outline text-black bg-white rounded-[50%] sm:h-[23.63px] sm:w-[23.63px] sm:text-[12px] h-[23.63px] w-[23.63px] text-[14px] flex justify-center items-center"
-                    ></i>
+                    <div
+                      class="bg-white rounded-[50%] sm:h-[23.63px] sm:w-[23.63px] sm:text-[12px] h-[23.63px] w-[23.63px] text-[14px] flex justify-center items-center icon-black"
+                    >
+                      <span
+                        :class="[
+                          'mdi',
+                          'mdi-bookmark text-[11px] lg:text-[17px] cursor-pointer',
+                          getBookmarkColor(slotProps.data.isBookmarked),
+                        ]"
+                        @click="addBookmark(slotProps.data)"
+                      >
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div
@@ -149,120 +159,130 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import axios from "axios";
 import moment from "moment";
-import { ProductService } from "../../src/assets/service/ProductService";
+// import { ProductService } from "../../src/assets/service/ProductService";
 
-export default {
-  data() {
-    return {
-      blogs: [],
-      news: [],
-      products: [],
-      SACHAI_NEWS_URL: "https://news.sachai.io/news/",
-      languageId: "6421a32aa020a23deacecf92",
-      screenWidth: window.innerWidth,
-      responsiveOptions: [
-        {
-          breakpoint: "1400px",
-          numVisible: 1,
-          numScroll: 1,
-        },
-        {
-          breakpoint: "1199px",
-          numVisible: 1,
-          numScroll: 1,
-        },
-        {
-          breakpoint: "767px",
-          numVisible: 1,
-          numScroll: 1,
-        },
-        {
-          breakpoint: "575px",
-          numVisible: 1,
-          numScroll: 1,
-        },
-      ],
-      loading: true,
-      error: false,
-    };
+const blogs = ref([]);
+console.log("opp", blogs);
+const news = ref([]);
+// const products = ref([]);
+const SACHAI_NEWS_URL = "https://news.sachai.io/news/";
+const languageId = "6421a32aa020a23deacecf92";
+const screenWidth = ref(window.innerWidth);
+const loading = ref(true);
+const error = ref(false);
+const responsiveOptions = [
+  {
+    breakpoint: "1400px",
+    numVisible: 1,
+    numScroll: 1,
   },
-  computed: {
-    slicedData() {
-      if (this.screenWidth < 640) {
-        return this.blogs.slice(0, 2);
-      }
-      return this.blogs.slice(0, 3);
-    },
+  {
+    breakpoint: "1199px",
+    numVisible: 1,
+    numScroll: 1,
   },
-  mounted() {
-    this.fetchBlogs();
-    window.addEventListener("resize", this.updateScreenWidth);
-    ProductService.getProductsSmall().then((data) => {
-      this.products = data.slice(0, 9);
-    });
+  {
+    breakpoint: "767px",
+    numVisible: 1,
+    numScroll: 1,
   },
+  {
+    breakpoint: "575px",
+    numVisible: 1,
+    numScroll: 1,
+  },
+];
 
-  beforeUnmount() {
-    window.removeEventListener("resize", this.updateScreenWidth);
-  },
-  methods: {
-    async fetchBlogs() {
-      this.loading = true;
-      this.error = false;
-      try {
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
-          {
-            language: "6421a32aa020a23deacecf92",
-            categoryId: "63d90e4098d783ac0cbe2310",
-          }
-        );
-        if (response.data.length === 0) {
-          this.error = true;
-        } else {
-          this.blogs = response.data.slice(0, 3);
-          this.news = response.data.slice(6, 12);
-        }
-      } catch (error) {
-        this.error = true;
-      } finally {
-        this.loading = false;
+const fetchBlogs = async () => {
+  loading.value = true;
+  error.value = false;
+  try {
+    const response = await axios.post(
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
+      {
+        language: languageId,
+        categoryId: "63d90e4098d783ac0cbe2310",
       }
-    },
-    truncateText(text, maxLength) {
-      if (text.length > maxLength) {
-        return text.slice(0, maxLength) + "...";
-      }
-      return text;
-    },
-    formatPublishTime(publishTime) {
-      return moment(publishTime).fromNow();
-    },
-    updateScreenWidth() {
-      this.screenWidth = window.innerWidth;
-    },
-    navigateToTrending(id) {
-      if (id) {
-        this.$router.push(`/news/${id}`);
-      }
-    },
-    getSeverity(status) {
-      switch (status) {
-        case "INSTOCK":
-          return "success";
-        case "LOWSTOCK":
-          return "warn";
-        case "OUTOFSTOCK":
-          return "danger";
-        default:
-          return null;
-      }
-    },
-  },
+    );
+    if (response.data.length === 0) {
+      error.value = true;
+    } else {
+      blogs.value = response.data.slice(0, 3);
+      news.value = response.data.slice(6, 12);
+    }
+  } catch (err) {
+    error.value = true;
+  } finally {
+    loading.value = false;
+  }
 };
+
+const getBookmarkColor = (isBookmarked) => {
+  return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
+};
+
+const addBookmark = async (newsItem) => {
+  const token = localStorage.getItem("apiDataToken");
+  try {
+    const currentStatus =
+      newsItem.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
+
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${newsItem._id}`,
+      {
+        status: currentStatus,
+      },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+
+    newsItem.isBookmarked = currentStatus;
+    return response.data;
+  } catch (err) {
+    console.error("Failed to update bookmark status:", err);
+  }
+};
+
+const getSeverity = (inventoryStatus) => {
+  switch (inventoryStatus) {
+    case "INSTOCK":
+      return "success";
+    case "LOWSTOCK":
+      return "warning";
+    case "OUTOFSTOCK":
+      return "danger";
+    default:
+      return null;
+  }
+};
+
+const formatPublishTime = (publishTime) => {
+  return moment(publishTime).fromNow();
+};
+
+const navigateToTrending = (id) => {
+  window.location.href = `${SACHAI_NEWS_URL}${id}`;
+};
+
+const handleResize = () => {
+  screenWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener("resize", handleResize);
+  fetchBlogs();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleResize);
+});
 </script>
 
 <style>
