@@ -1,71 +1,90 @@
 <template>
-  <Navbarrr />
-  <div>
-    <img src="../assets/Ellipse 62.png" class="h-[250px] w-[100%]" alt="" />
-  </div>
-  <div class="w-[100%] p-3 flex flex-row">
-    <div class="w-[70%] bg-white p-3 rounded-[12px]">
-      <div class="heads">Welcome to sachai!</div>
-      <div class="about-us-sub-head mt-2">
-        At sachai, we are firm believers in the power of truth. In today's world
-        flooded with information, distinguishing fact from fiction has become
-        increasingly challenging. Our primary goal is to cut through this noise
-        and offer our readers credible, reliable, and unbiased information.
+  <div class="backgroundddd">
+    <div class="relative z-1">
+      <Navbarrr />
+    </div>
+
+    <div class="">
+      <div class="w-[100%] p-3 flex">
+        <div class="w-[100%] flex flex-row relative bg-white rounded-[10px]">
+          <div class="w-[100%] sm:w-[70%] p-3">
+            <div class="heads">Welcome to sachai!</div>
+            <div class="about-us-sub-head mt-2">
+              At sachai, we are firm believers in the power of truth. In today's
+              world flooded with information, distinguishing fact from fiction
+              has become increasingly challenging. Our primary goal is to cut
+              through this noise and offer our readers credible, reliable, and
+              unbiased information.
+            </div>
+          </div>
+          <div class="w-[30%] -mt-0 sm:-mt-6">
+            <div
+              class="absolute w-[253px] md:w-[313px] h-[170px] sm:h-[264px] mt-[20px] md:mt-[0px]"
+            >
+              <img
+                class="absolute"
+                width="100%"
+                height="100%"
+                src="../assets/svg/about-us.svg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-[100%] p-3 flex flex-col sm:flex sm:flex-row gap-4">
+        <div class="w-[100%] sm:w-[40%] p-3 rounded-[12px] bg-white">
+          <div class="heads">Who We Are</div>
+          <div class="about-us-sub-head mt-2">
+            We are a team of passionate individuals committed to the pursuit of
+            truth. Our expertise spans journalism, technology, research, and
+            academia. Together, we bring diverse perspectives and knowledge to
+            the table, enabling us to address complex issues with clarity and
+            insight.
+          </div>
+        </div>
+        <div class="w-[100%] sm:w-[60%] p-3 rounded-[12px] bg-white">
+          <div class="heads">What We Do</div>
+          <div class="about-us-sub-head mt-2">
+            At sachai, our aim is to deliver top-notch content that informs,
+            educates, and inspires. From breaking news to in-depth analysis, we
+            cover a broad spectrum of topics including politics, science,
+            culture, and more. Our dedication to accuracy and integrity ensures
+            that you can rely on us for factual information, free from bias or
+            hidden agendas.
+          </div>
+        </div>
+      </div>
+      <div class="w-[100%] p-3 flex flex-col sm:flex sm:flex-row gap-4">
+        <div class="w-[100%] sm:w-[50%] p-3 rounded-[12px] bg-white">
+          <div class="heads">Why Choose Us</div>
+          <div class="about-us-sub-head mt-2">
+            In an era plagued by misinformation, sachai stands out as a beacon
+            of truth. Our adherence to journalistic principles and unwavering
+            commitment to transparency set us apart. When you visit sachai, you
+            can trust that you're receiving the complete story, supported by
+            thorough research and meticulous fact-checking.
+          </div>
+        </div>
+        <div class="w-[100%] sm:w-[50%] p-3 rounded-[12px] bg-white">
+          <div class="heads">Get Involved</div>
+          <div class="about-us-sub-head mt-2">
+            We believe that seeking truth is a collaborative endeavor.
+            Therefore, we encourage our readers to engage with us, share their
+            insights, and participate in discussions. Whether you have a tip to
+            offer, a question to pose, or a story to share, we want to hear from
+            you. Together, we can contribute to a more informed and enlightened
+            society.
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 flex justify-center text-center font-category-summary">
+        “Thank you for choosing Sachai. We eagerly anticipate serving you and
+        becoming your trusted source for<br />
+        news and information.”
       </div>
     </div>
-    <div class="w-[30%] bg-white">
-      <img width="313px" height="244px" src="../assets/svg/about-us.svg" />
-    </div>
+    <Footer />
   </div>
-  <div class="w-[100%] p-3 flex flex-row gap-4">
-    <div class="w-[40%] p-3 rounded-[12px] bg-white">
-      <div class="heads">Who We Are</div>
-      <div class="about-us-sub-head mt-2">
-        We are a team of passionate individuals committed to the pursuit of
-        truth. Our expertise spans journalism, technology, research, and
-        academia. Together, we bring diverse perspectives and knowledge to the
-        table, enabling us to address complex issues with clarity and insight.
-      </div>
-    </div>
-    <div class="w-[60%] p-3 rounded-[12px] bg-white">
-      <div class="heads">What We Do</div>
-      <div class="about-us-sub-head mt-2">
-        At sachai, our aim is to deliver top-notch content that informs,
-        educates, and inspires. From breaking news to in-depth analysis, we
-        cover a broad spectrum of topics including politics, science, culture,
-        and more. Our dedication to accuracy and integrity ensures that you can
-        rely on us for factual information, free from bias or hidden agendas.
-      </div>
-    </div>
-  </div>
-  <div class="w-[100%] p-3 flex flex-row gap-4">
-    <div class="w-[50%] p-3 rounded-[12px] bg-white">
-      <div class="heads">Why Choose Us</div>
-      <div class="about-us-sub-head mt-2">
-        In an era plagued by misinformation, sachai stands out as a beacon of
-        truth. Our adherence to journalistic principles and unwavering
-        commitment to transparency set us apart. When you visit sachai, you can
-        trust that you're receiving the complete story, supported by thorough
-        research and meticulous fact-checking.
-      </div>
-    </div>
-    <div class="w-[50%] p-3 rounded-[12px] bg-white">
-      <div class="heads">Get Involved</div>
-      <div class="about-us-sub-head mt-2">
-        We believe that seeking truth is a collaborative endeavor. Therefore, we
-        encourage our readers to engage with us, share their insights, and
-        participate in discussions. Whether you have a tip to offer, a question
-        to pose, or a story to share, we want to hear from you. Together, we can
-        contribute to a more informed and enlightened society.
-      </div>
-    </div>
-  </div>
-  <div class="mt-4 flex justify-center text-center font-category-summary">
-    “Thank you for choosing Sachai. We eagerly anticipate serving you and
-    becoming your trusted source for<br />
-    news and information.”
-  </div>
-  <Footer />
 </template>
 <script setup>
 import Navbarrr from "@/components/Navbarrr.vue";
@@ -90,5 +109,10 @@ body {
   color: black;
   font-size: 28px;
   font-weight: 700;
+}
+.backgroundddd {
+  background-image: url(@/assets/svg/Ellipse.svg/);
+  background-repeat: no-repeat;
+  background-size: 100% 350px;
 }
 </style>
