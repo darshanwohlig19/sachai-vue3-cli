@@ -292,6 +292,8 @@
             @complete="handleSearch"
             class="w-[200px] border-1 h-[full]"
           /> -->
+          <router-link class="md:hidden sm-max:block" to="/Search">
+
           <a class="block lg:hidden">
             <div
               @click="visibleRight = true"

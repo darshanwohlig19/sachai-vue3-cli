@@ -20,6 +20,7 @@
             class="carousel w-full h-full custom-carousal-custom"
             showIndicators
             circular
+            :autoplayInterval="2000"
           >
             <template #item="slotProps">
               <div
@@ -69,7 +70,7 @@
                 <div
                   class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
                 >
-                  <div class="gap-1 text-white text-xs ml-3 mb-2">
+                  <div class="gap-1 text-white text-xs ml-2 mb-2">
                     <div class="leading-3 sm:w-full md:w-full">
                       <a
                         :href="`${SACHAI_NEWS_URL}${slotProps.data._id}`"
@@ -79,7 +80,7 @@
                         {{ slotProps.data.headline }}
                       </a>
                     </div>
-                    <div class="flex flex-row gap-3 mt-3 mb-1">
+                    <div class="flex flex-row gap-3 mt-1 mb-1">
                       <div
                         class="text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"
                       >
@@ -114,15 +115,21 @@
           <img class="image-small" src="../assets/Group.png" />
         </div>
         <div>
-          <div class="font-16 headline-tuncate">{{ item.headline }}</div>
+          <!-- Show Skeleton if loading, otherwise show the headline -->
+          <div class="font-16 headline-tuncate">
+            <Skeleton v-if="loading" width="5rem" class="mb-2"></Skeleton>
+            <span v-else>{{ item.headline }}</span>
+          </div>
           <div class="font-133 summary-tuncate">{{ item.summary }}</div>
           <div v-if="index < 2" class="border-1 sm-max:mt-3 mt-2"></div>
         </div>
       </div>
     </div>
+
     <div class="w-[1%] xl-max:!hidden flex justify-center">
       <div class="divider11"></div>
     </div>
+
     <div
       class="w-[100%] lg:w-[30%] md:w-[100%] lg:mt-0 mt-3 flex flex-col justify-between"
     >
@@ -141,7 +148,8 @@
         </div>
         <div class="font-14 p-2 h">
           <div class="headline-tuncate">
-            {{ blog.headline || "headline" }}
+            <Skeleton v-if="loading" width="5rem" class="mb-2"></Skeleton>
+            <span v-else>{{ blog.headline || "headline" }}</span>
           </div>
         </div>
       </div>

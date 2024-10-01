@@ -8,7 +8,7 @@
       </div>
       <!-- Conditionally render button based on loading state -->
       <div v-if="!isLoading && campaigns.length > 0 && campaigns1.length > 0">
-        <Button />
+        <a href="/Campaign"> <Button /></a>
       </div>
     </div>
 
@@ -37,12 +37,35 @@
           class="w-[100%] sm:w-[100%] md-max:w-[100%] flex justify-between"
         >
           <div>
-            <div>
-              <img
-                class="w-full h-[182px] rounded-[8px] object-contain"
-                :src="campaignNews.imgixUrlHighRes || fallbackImage"
-              />
+            <div
+              class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden"
+            >
+              <div class="relative w-full h-[100%]">
+                <img
+                  class="absolute inset-0 object-cover h-full w-full filter blur-sm"
+                  :src="campaignNews.imgixUrlHighRes || fallbackImage"
+                  alt="Background"
+                  @click="navigateToCampingNews(campaignNews._id)"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+                ></div>
+              </div>
+              <div
+                class="absolute inset-0 flex flex-col justify-between text-white"
+              >
+                <img
+                  class="object-contain h-full w-full"
+                  :src="campaignNews.imgixUrlHighRes || fallbackImage"
+                  alt="Centered Image"
+                  @click="navigateToCampingNews(campaignNews._id)"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                ></div>
+              </div>
             </div>
+
             <div class="p-2 shadow-lg rounded-b-[8px]">
               <div
                 class="font-16 lines2 cursor-pointer"
