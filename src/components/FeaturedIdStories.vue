@@ -169,15 +169,15 @@ const slicedData = computed(() => {
   } else if (screenWidth.value >= 1024 && screenWidth.value < 860) {
     // Tablets
     return blogs.value.slice(0, 3);
-  } else if (screenWidth.value >= 1024 && screenWidth.value <= 1600) {
+  } else if (screenWidth.value >= 1024 && screenWidth.value <= 1400) {
     // Tablets
     return blogs.value.slice(0, 4);
-  } else if (screenWidth.value >= 1601) {
+  } else if (screenWidth.value >= 1400 && screenWidth.value <= 1600) {
     // Tablets
     return blogs.value.slice(0, 8);
   } else {
     // Desktop and larger devices
-    return blogs.value.slice(0, 6);
+    return blogs.value.slice(0, 8);
   }
 });
 onBeforeMount(() => {

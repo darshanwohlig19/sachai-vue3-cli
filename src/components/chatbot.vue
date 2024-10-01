@@ -16,15 +16,11 @@
       </div>
     </div>
 
-    <!-- Chat Body -->
     <div
       ref="chatBodyRef"
       class="scrollable-container flex-grow overflow-y-auto p-1"
     >
-      <!-- Suggested QnA -->
-      <div>
-        <!-- <vue-markdown :content="MarkDownContent" /> -->
-      </div>
+      <div></div>
       <div
         v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
         class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto mt-[3%]"
@@ -71,72 +67,86 @@
         </div>
       </div>
 
-      <!-- Conversation Messages -->
       <div v-if="conversation.length">
         <div
           v-for="(message, index) in conversation"
           :key="index"
           :class="{
-            'flex justify-end mt-2 text-base': message.type === 'user',
-            'flex justify-start mt-2 text-base': message.type === 'bot',
+            'bg-[#C9E6FC] text-[#1E0627] rounded-customChat flex justify-start p-2 shadow font-normal font-Lato m-2.5 ml-[122px]':
+              message.type === 'user' || message.type === 'qnaQuestion',
+            'bg-[#EFF2F7] text-[#1E0627] rounded-customAnswerChat p-2.5 shadow font-normal font-Lato ml-[10px] m-2.5':
+              (message.type === 'bot' && !message.loading) ||
+              (message.type === 'qnaAnswers' && !message.loading),
           }"
         >
-          <div
-            :class="{
-              'bg-[#C9E6FC] text-[#1E0627] rounded-customChat flex justify-end mt-2  max-w-[22rem] p-3 shadow font-normal font-Lato':
-                message.type === 'user',
-              'bg-[#EFF2F7] text-[#1E0627] rounded-customAnswerChat w-96 p-3 shadow font-normal font-Lato ml-[10px]':
-                message.type === 'bot' && !message.loading,
-            }"
-          >
-            <!-- User Message -->
-            <p v-if="message.type === 'user'">{{ message.text }}</p>
+          <div>
+            <p v-if="message.type === 'user'">
+              {{ message.text }}
+            </p>
+            <p v-if="message.type === 'qnaQuestion'">{{ message.text }}</p>
             <div
-              v-if="message.type === 'bot' && message.loading"
-              class="bg-[#EFF2F7] rounded-customAnswerChat p-3 shadow"
+              v-if="
+                (message.type === 'bot' && message.loading) ||
+                (message.type === 'qnaAnswers' && message.loading)
+              "
+              class="bg-[#EFF2F7] rounded-customAnswerChat p-3 shadow !mr-[320px] !ml-[10px]"
             >
               <ChatLoading />
             </div>
 
             <div v-else-if="!message.loading && message.type === 'bot'">
-              <div v-html="renderMarkdown(message.text)"></div>
+              <div>
+                {{ message.text }}
+              </div>
+            </div>
+
+            <div v-else-if="!message.loading && message.type === 'qnaAnswers'">
+              <div>
+                {{ message.text }}
+              </div>
             </div>
 
             <div v-if="message.type === 'bot' && !message.loading">
               <hr class="my-2 text-[#878787]" />
-              <div class="flex items-center text-sm h-[30px] space-x-1">
-                <span class="text-[#878787] mr-[5px]">
+              <div
+                class="flex items-center justify-end text-sm h-[30px] space-x-1"
+                v-if="message.type === 'bot'"
+              >
+                <span
+                  class="text-[#878787] mr-[5px]"
+                  v-if="message.type === 'bot' && isLastBotMessage(index)"
+                >
                   {{ remainingQuestions }} questions left
                 </span>
-                <img :src="chatVectorImage" alt="Vector Logo" />
-                <!-- Feedback Thumbs Up / Down -->
-                <div class="flex space-x-2 ml-auto">
-                  <!-- Thumbs Up Button -->
+                <div
+                  v-if="message.type === 'bot'"
+                  class="flex space-x-2 ml-auto"
+                >
                   <button
                     class="p-2 rounded-lg bg-blue-100 text-gray-700 hover:bg-blue-200"
                     aria-label="Thumbs up"
-                    @click.stop="toggleThumbsUp"
+                    @click.stop="toggleThumbsUp(index)"
                   >
-                    <i
-                      :class="
-                        thumbsUpSelected ? 'text-green-500' : 'text-[#1E0627]'
+                    <img
+                      :src="
+                        message.thumbsUpSelected ? thumbsUpSelected : thumbsUp
                       "
-                      class="pi pi-thumbs-up"
-                    ></i>
+                      alt="Thumbs Up"
+                    />
                   </button>
-
-                  <!-- Thumbs Down Button -->
                   <button
                     class="p-2 rounded-lg bg-blue-100 text-gray-700 hover:bg-blue-200"
                     aria-label="Thumbs down"
-                    @click.stop="toggleThumbsDown"
+                    @click.stop="toggleThumbsDown(index)"
                   >
-                    <i
-                      :class="
-                        thumbsDownSelected ? 'text-red-500' : 'text-[#1E0627]'
+                    <img
+                      :src="
+                        message.thumbsDownSelected
+                          ? thumbsDownSelected
+                          : thumbsDown
                       "
-                      class="pi pi-thumbs-down"
-                    ></i>
+                      alt="Thumbs Up"
+                    />
                   </button>
                 </div>
               </div>
@@ -146,10 +156,9 @@
       </div>
     </div>
 
-    <!-- Chat Input (Fixed at bottom) -->
     <div class="p-3">
       <div
-        class="flex items-center bg-white overflow-hidden rounded-3xl border h-[54px] border-[#eaeaea] shadow-custom-red"
+        class="flex items-center bg-white overflow-hidden rounded-3xl border h-[40px] border-[#eaeaea] shadow-custom-red"
       >
         <input
           type="text"
@@ -161,10 +170,10 @@
         />
         <button
           @click="handleChatClick"
-          class="bg-[#320A38] text-white p-2 w-[48px] h-[100px] rounded-2xl"
+          class="bg-[#320A38] text-white p-2 w-[48px] h-[32px] mr-[3px] rounded-2xl"
           aria-label="Submit question"
         >
-          <img :src="vectorImg" alt="Submit question" class="ml-[6px]" />
+          <img :src="vectorImg" alt="Submit question" class="ml-[10px]" />
         </button>
       </div>
     </div>
@@ -173,18 +182,16 @@
 
 <script setup>
 import { defineProps, ref, onMounted, nextTick, computed } from "vue";
-import vectorImg from "@/assets/png/Vector.png";
 import commentsImg from "@/assets/svg/chatComments.svg";
 import { useRoute } from "vue-router";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
-import { marked } from "marked";
-import DOMPurify from "dompurify";
-import chatVectorImage from "@/assets/svg/chatVector.svg";
-
-// import VueMarkdown from "vue-markdown-render";
-// import loadingImg from "@/assets/gif/loading.gif";
+import vectorImg from "@/assets/svg/chatVector.svg";
 import ChatLoading from "@/common/config/chatLoader.vue";
+import thumbsUp from "@/assets/svg/thumbsUp.svg";
+import thumbsDown from "@/assets/svg/thumbsDown.svg";
+import thumbsUpSelected from "@/assets/svg/thumbsUpSelected.svg";
+import thumbsDownSelected from "@/assets/svg/thumbsDownSelected.svg";
 const props = defineProps({
   category: {
     type: Object,
@@ -202,25 +209,33 @@ console.log("conversationconversation", conversation);
 const showQuestions = ref(true);
 console.log("showQuestions", showQuestions);
 const selectedQuestionIndex = ref(null);
+console.log("selectedQuestionIndex", selectedQuestionIndex);
 const selectedQuestionAnswers = ref([]);
 console.log("selectedQuestionAnswers", selectedQuestionAnswers);
-const thumbsUpSelected = ref(false);
-const thumbsDownSelected = ref(false);
+
 const newsId = route.params.id;
 const chatBodyRef = ref(null);
 const loading = ref(false);
 const botDataCount = ref("");
-const limit = 50;
 
 const remainingQuestions = computed(() => {
-  return limit - botDataCount.value;
+  const limit = chatsLimitData.value?.limit;
+  console.log("limit", limit);
+  const count = chatsLimitData.value?.count;
+  console.log("count", count);
+  return limit - count;
 });
+
+const isLastBotMessage = (index) => {
+  const lastBotMessageIndex = conversation.value
+    .slice()
+    .reverse()
+    .findIndex((message) => message.type === "bot");
+  return index === conversation.value.length - 1 - lastBotMessageIndex;
+};
+
 const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
-};
-const renderMarkdown = (text) => {
-  const html = marked.parse(text);
-  return DOMPurify.sanitize(html);
 };
 
 const scrollToBottom = () => {
@@ -233,10 +248,7 @@ const scrollToBottom = () => {
 
 const handleQnAClick = async (question, index) => {
   selectedQuestionIndex.value = index;
-  selectedQuestionAnswers.value = props.category?.suggestedQnA[index]?.answer;
-
-  conversation.value.push({ type: "user", text: question });
-
+  conversation.value.push({ type: "qnaQuestion", text: question });
   const suggestedAnswer = props.category?.suggestedQnA[index]?.answer;
 
   if (suggestedAnswer) {
@@ -244,7 +256,8 @@ const handleQnAClick = async (question, index) => {
     loading.value = true;
     const botMessage = typewriterEffect(suggestedAnswer);
     console.log("suggestedAnswer", suggestedAnswer);
-    conversation.value.push({ type: "bot", text: botMessage });
+    conversation.value.push({ type: "qnaAnswers", text: botMessage });
+    console.log("conversation", conversation);
     await nextTick();
     scrollToBottom();
   }
@@ -256,6 +269,7 @@ const handleQnAClick = async (question, index) => {
       `${apiConfig.ADD_QA_DATA}/${newsId}`,
       payload
     );
+    chatBotLimitData();
   } catch (error) {
     console.error("Error fetching response:", error);
   } finally {
@@ -299,8 +313,9 @@ const handleChatClick = async () => {
         type: "bot",
         text: typewriterEffect(botResponse),
       });
+      chatBotLimitData();
       scrollToBottom();
-    }, 5000); // 10 second delay
+    }, 10000); // 10 second delay
   } catch (error) {
     console.error("Error fetching response:", error);
   }
@@ -367,19 +382,21 @@ const typewriterEffect = (text, delay = 50) => {
   return message;
 };
 
-const toggleThumbsUp = () => {
-  thumbsUpSelected.value = !thumbsUpSelected.value;
-  if (thumbsUpSelected.value) {
-    thumbsDownSelected.value = false;
-    handleFeedbackClick("positive");
+const toggleThumbsUp = (index) => {
+  const message = conversation.value[index];
+  if (!message.thumbsUpSelected) {
+    message.thumbsUpSelected = true;
+    message.thumbsDownSelected = false;
+    handleFeedbackClick("positive", index);
   }
 };
 
-const toggleThumbsDown = () => {
-  thumbsDownSelected.value = !thumbsDownSelected.value;
-  if (thumbsDownSelected.value) {
-    thumbsUpSelected.value = false;
-    handleFeedbackClick("negative");
+const toggleThumbsDown = (index) => {
+  const message = conversation.value[index];
+  if (!message.thumbsDownSelected) {
+    message.thumbsDownSelected = true;
+    message.thumbsUpSelected = false;
+    handleFeedbackClick("negative", index);
   }
 };
 

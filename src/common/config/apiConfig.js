@@ -2,6 +2,7 @@ const config = {
   PORT: 3000,
   PROTOCOL: "https",
   HOST: "api-uat.newsshield.io",
+  // HOST: "dev-api.newsshield.io",
   // PROTOCOL: "http",
   // HOST: "localhost",
 };
