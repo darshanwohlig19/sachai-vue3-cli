@@ -150,7 +150,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { ProductService } from "../../src/assets/service/ProductService";
 
@@ -212,13 +213,15 @@ export default {
     async fetchBlogs() {
       this.loading = true;
       this.error = false;
+      const payload = {
+        language: "6421a32aa020a23deacecf92",
+        categoryId: "63d90e4098d783ac0cbe2310",
+      };
       try {
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
-          {
-            language: "6421a32aa020a23deacecf92",
-            categoryId: "63d90e4098d783ac0cbe2310",
-          }
+        const response = await apiService.apiCall(
+          "post",
+          `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+          payload
         );
         if (response.data.length === 0) {
           this.error = true;
