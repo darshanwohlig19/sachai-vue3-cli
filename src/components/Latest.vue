@@ -98,10 +98,12 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
-import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
@@ -116,14 +118,19 @@ const isLoading = ref(true); // New state for loader
 
 const fetchBlogs = async () => {
   isLoading.value = true; // Start loading
+  const payload = {
+    language: "6421a32aa020a23deacecf92",
+    page: 1,
+  };
   try {
-    const response = await axios.post(
-      "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
-      {
-        language: "6421a32aa020a23deacecf92",
-        page: 1,
-      }
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_ALL_BLOGS_FOR_WEB}`,
+      payload
     );
+    // const response = await axios.post(
+    //   "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
+    // );
     blogs.value = response.data.map((news) => ({
       ...news,
       bookmarked: localStorage.getItem(`bookmark_${news._id}`) === "Enabled",

@@ -31,4 +31,15 @@ config.GET_CATEGORY_WISE_NEWS_FOR_WEB =
 
 //Featured
 config.GET_TRENDING_NEWS = config.PORT_IP.LOGIN + "/news/getTrendingNews";
+
+//Latest
+config.GET_ALL_BLOGS_FOR_WEB = config.PORT_IP.LOGIN + "/news/getAllBlogsForWeb";
+// config.ADD_BOOKMARK = config.PORT_IP.LOGIN + "/bookmark/addBookmark/${id}";
+
+//Campaign
+config.API_FOR_TOPICS_FOR_WEB =
+  config.PORT_IP.LOGIN + "/topic/apiForTopicsForWeb/65e17ea9842874dab8c45010";
+
+//Category_News
+config.GET_ALL_CATEGORY = config.PORT_IP.LOGIN + "/category/getAllCat";
 export default config;

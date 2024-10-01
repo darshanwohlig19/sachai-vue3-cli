@@ -91,7 +91,8 @@
 
 <script>
 import { ref } from "vue";
-import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import { computed, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
@@ -110,13 +111,15 @@ export default {
 
     async function fetchBlogs() {
       isLoading.value = true; // Start loading
+      const payload = {
+        language: languageId.value,
+        page: 1,
+      };
       try {
-        const response = await axios.post(
-          `https://api-uat.newsshield.io/topic/apiForTopicsForWeb/65e17ea9842874dab8c45010`,
-          {
-            language: languageId.value,
-            page: 1,
-          }
+        const response = await apiService.apiCall(
+          "post",
+          `${apiConfig.API_FOR_TOPICS_FOR_WEB}`,
+          payload
         );
         campaigns.value = response.data.slice(0, 3);
         campaigns1.value = response.data.slice(3, 8);
