@@ -294,7 +294,7 @@
           /> -->
           <router-link
             class="md:hidden sm-max:block"
-            to="/Search"
+            to="/search"
           ></router-link>
 
           <a class="block lg:hidden">
