@@ -327,6 +327,7 @@
         showIndicators
         circular
         :responsiveOptions="responsiveOptions"
+        :autoplayInterval="2000"
       >
         <template v-slot:item="{ data }">
           <div class="w-full">
