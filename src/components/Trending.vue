@@ -20,6 +20,7 @@
             class="carousel w-full h-full custom-carousal-custom"
             showIndicators
             circular
+            :autoplayInterval="2000"
           >
             <template #item="slotProps">
               <div
@@ -112,7 +113,7 @@
     </div>
 
     <div
-      class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 md:mt-0 lg:mt-0 flex flex-col gap-3"
+      class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 sm-max:mt-3 md:mt-0 lg:mt-0 flex flex-col gap-3"
     >
       <div
         @click="navigateToTrending(item._id)"

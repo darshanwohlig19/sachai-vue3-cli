@@ -42,7 +42,9 @@
                   alt=""
                 />
               </div>
-              <div class="flex justify-between items-center p-3">
+              <div
+                class="flex justify-between items-center pr-3 pl-3 mt-2 mb-1"
+              >
                 <div class="flex gap-1 text-[#676767] text-xs">
                   <div>{{ news.source }}</div>
                 </div>
@@ -51,7 +53,7 @@
                   <span
                     :class="[
                       'mdi',
-                      'mdi-bookmark text-[11px] lg:text-[17px] cursor-pointer',
+                      'mdi-bookmark text-[21px] cursor-pointer',
                       getBookmarkColor(news?.isBookmarked),
                     ]"
                     @click="addBookmark(news)"

@@ -67,7 +67,7 @@
       </div>
     </div>
     <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col justify-between">
-      <div v-for="blog in blogs1" :key="blog._id" class="below-sm:mt-4">
+      <div v-for="blog in blogs1" :key="blog._id" class="sm-max:mt-4">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
           @click="navigateToCategory(blog._id)"
