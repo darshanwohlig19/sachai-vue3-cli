@@ -5,9 +5,13 @@
     </div>
 
     <div class="">
-      <div class="w-[100%] p-3 flex">
-        <div class="w-[100%] flex flex-row relative bg-white rounded-[10px]">
-          <div class="w-[100%] sm:w-[70%] p-3">
+      <div class="w-[100%] mt-5 p-3 flex">
+        <div
+          class="w-[100%] sm:flex sm:flex-row sm:relative flex flex-col-reverse relative bg-white rounded-[10px]"
+        >
+          <div
+            class="w-[100%] sm:top-0 between-lg-max-md-max:w-[60%] between-md-max-sm-max:w-[50%] md:w-[70%] p-3 between-xs-max-sm-max:!pt-[155px]"
+          >
             <div class="heads">Welcome to sachai!</div>
             <div class="about-us-sub-head mt-2">
               At sachai, we are firm believers in the power of truth. In today's
@@ -17,12 +21,14 @@
               unbiased information.
             </div>
           </div>
-          <div class="w-[30%] -mt-0 sm:-mt-6">
+          <div
+            class="w-[30%] between-lg-max-md-max:w-[40%] between-md-max-sm-max:w-[50%] -mt-0 sm:-mt-6"
+          >
             <div
-              class="absolute w-[253px] md:w-[313px] h-[170px] sm:h-[264px] mt-[20px] md:mt-[0px]"
+              class="!absolute !right-0 -top-16 sm:-top-0px sm:absolute w-[253px] h-[170px] sm:w-[313px] sm:h-[204px] mt-[20px] md:mt-[0px]"
             >
               <img
-                class="absolute"
+                class="relative sm:absolute"
                 width="100%"
                 height="100%"
                 src="../assets/svg/about-us.svg"
@@ -114,5 +120,14 @@ body {
   background-image: url(@/assets/svg/Ellipse.svg/);
   background-repeat: no-repeat;
   background-size: 100% 350px;
+}
+
+@media screen and (max-width: 576px) {
+  .backgroundddd {
+    background-image: url(@/assets/svg/mobile-image.png/);
+    background-repeat: no-repeat;
+    /* width: 100%; */
+    background-size: 100%;
+  }
 }
 </style>
