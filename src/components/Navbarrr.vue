@@ -292,7 +292,10 @@
             @complete="handleSearch"
             class="w-[200px] border-1 h-[full]"
           /> -->
-          <router-link class="md:hidden sm-max:block" to="/Search">
+          <router-link
+            class="md:hidden sm-max:block"
+            to="/Search"
+          ></router-link>
 
           <a class="block lg:hidden">
             <div
