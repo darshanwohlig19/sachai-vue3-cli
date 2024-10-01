@@ -42,6 +42,9 @@
                             :src="news.imgixUrlHighRes || fallbackImage"
                             alt="Centered Image"
                           />
+                          <div
+                            class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                          ></div>
                         </div>
                         <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
                           <div

@@ -37,12 +37,26 @@
           class="w-[100%] sm:w-[100%] md-max:w-[100%] flex justify-between"
         >
           <div>
-            <div>
+            <div class="relative rounded-[8px]">
+              <!-- Blurred Background Image -->
+              <div class="absolute inset-0">
+                <img
+                  :src="campaignNews.imgixUrlHighRes || fallbackImage"
+                  class="h-full w-full rounded-[8px] object-cover filter blur-sm"
+                  alt=""
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[8px]"
+                ></div>
+              </div>
+              <!-- Foreground Image -->
               <img
-                class="w-full h-[182px] rounded-[8px] object-contain"
                 :src="campaignNews.imgixUrlHighRes || fallbackImage"
+                class="relative z-10 w-full h-[182px] rounded-[8px] object-contain"
+                alt=""
               />
             </div>
+
             <div class="p-2 shadow-lg rounded-b-[8px]">
               <div
                 class="font-16 lines2 cursor-pointer"
