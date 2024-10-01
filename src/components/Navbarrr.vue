@@ -11,28 +11,17 @@
           />
         </a>
       </div>
-      <div class="w-[60%]">
+      <div class="w-[70%]">
         <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
-            <img
-              v-if="isHomeActive"
-              src="../assets/active_home.svg"
-              alt="Home"
-            />
-            <img v-else src="../assets/Home.svg" alt="Home" />
+            <img src="../assets/Home.svg" alt="" />
             <RouterLink class="nav-items" active-class="active-link" to="/"
               >Home</RouterLink
             >
           </div>
           <div class="hidden lg:flex head-navs gap-2" v-if="isLoggedIn">
-            <img
-              v-if="isAstrologyActive"
-              src="../assets/active_astrology.svg"
-              alt=""
-            />
-            <img v-else src="../assets/Astrology.svg" alt="" />
-
+            <img src="../assets/Astrology.svg" alt="" />
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -42,13 +31,200 @@
             <!-- Astrology -->
           </div>
 
+          <div
+            class="relative lg-max:!hidden flex gap-2 cursor-pointer"
+            @mouseover="showDropdown = true"
+            @mouseleave="hideDropdown"
+          >
+            <img src="../assets/svg/category.svg" />
+            <RouterLink
+              class="nav-items hover:text-[var(--hover-color)]"
+              to=""
+              :style="{
+                '--hover-color': '#FF0053',
+              }"
+              >Category</RouterLink
+            >
+            <!-- <div class="nav-items" active-class="active-link">Category</div> -->
+            <div
+              v-if="showDropdown"
+              @mouseover="showDropdown = true"
+              @mouseleave="hideDropdown"
+              class="absolute mt-4 bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
+            >
+              <div class="w-[100%] flex">
+                <!--  First Div  -->
+                <div
+                  class="shadow-[2px_0px_5px_rgba(240,0,0,0.2)] capitalize category-head rounded-r-lg w-[150px]"
+                >
+                  <ul>
+                    <li
+                      class="mt-1 p-2 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                      v-for="category in categories"
+                      :key="category._id"
+                      @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                      :style="{
+                        '--hover-color': '#FF0053',
+                        '--hover-bg-color': '#FFF2F6',
+                      }"
+                    >
+                      <div class="flex items-center space-x-2">
+                        <a
+                          :href="`/categories/${category._id}?category=${category.name}`"
+                          class="flex items-center"
+                        >
+                          <span>{{ category.name }}</span>
+                          <div class="flex justify-center items-center">
+                            <img
+                              src="../assets/svg/triangle_arrow.svg"
+                              class="ml-1"
+                            />
+                          </div>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <!--   Second Div  -->
+
+                <div v-if="newsItems.length > 0" class="p-3 w-[385px]">
+                  <div
+                    class="h-[203px] relative"
+                    @click="navigateToTrending(newsItems[0]?._id)"
+                  >
+                    <img
+                      class="h-[100%] w-full object-cover rounded-[10px]"
+                      :src="newsItems[0]?.imgixUrlHighRes"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
+                    ></div>
+                    <div
+                      class="absolute top-0 bottom-0 w-full h-full flex items-end justify-start"
+                    >
+                      <div class="text-white p-2 rounded-md w-[100%]">
+                        <div
+                          class="sub_category_head multiline-truncate-tow-tow-liner"
+                        >
+                          {{ newsItems[0]?.headline }}
+                        </div>
+                        <div class="flex flex-row gap-2 sub_category_summary">
+                          <div>{{ newsItems[0]?.source }}</div>
+                          <div>|</div>
+                          <div>
+                            {{ formatPublishTime(newsItems[0]?.publishTime) }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100%] flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[1]?._id)"
+                  >
+                    <div class="mt-3">
+                      <div
+                        class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                      >
+                        <div class="w-[20%]">
+                          <img
+                            :src="newsItems[1]?.imgixUrlHighRes"
+                            class="rounded-[6px] h-[65px] w-[65px]"
+                            alt=""
+                          />
+                        </div>
+                        <div class="flex flex-col w-[70%]">
+                          <div
+                            class="category-heading w-[100%] multiline-truncate-tow-tow-liner"
+                          >
+                            {{ newsItems[1]?.headline }}
+                          </div>
+                          <div
+                            class="multiline-truncate-one-liner category-head-head w-[100%]"
+                          >
+                            {{ newsItems[1]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100%] flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[2]?._id)"
+                  >
+                    <div class="mt-3">
+                      <div
+                        class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                      >
+                        <div class="w-[20%]">
+                          <img
+                            :src="newsItems[2]?.imgixUrlHighRes"
+                            class="rounded-[6px] h-[65px] w-[65px]"
+                            alt=""
+                          />
+                        </div>
+                        <div class="flex flex-col w-[70%]">
+                          <div
+                            class="category-heading w-[100%] multiline-truncate-tow-tow-liner"
+                          >
+                            {{ newsItems[2]?.headline }}
+                          </div>
+                          <div
+                            class="multiline-truncate-one-liner category-head-head w-[100%]"
+                          >
+                            {{ newsItems[2]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100%] mt-3 flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[3]?._id)"
+                  >
+                    <div class="mt-4 md:mt-4 lg:mt-0 cursor-pointer">
+                      <div class="flex flex-row gap-2">
+                        <div class="w-[5%] mt-2">
+                          <img src="../assets/Group.png" alt="" />
+                        </div>
+                        <div class="flex flex-col w-[100%]">
+                          <div class="font-16 multi-line-2">
+                            {{ newsItems[3]?.headline }}
+                          </div>
+                          <div class="para multiline-truncate-tow-tow-liner">
+                            {{ newsItems[3]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100%] mt-3 flex flex-col justify-between"
+                    @click="navigateToTrending(newsItems[4]?._id)"
+                  >
+                    <div class="mt-0 cursor-pointer">
+                      <div class="flex flex-row gap-2">
+                        <div class="w-[5%] mt-2">
+                          <img src="../assets/Group.png" alt="" />
+                        </div>
+                        <div class="flex flex-col w-[100%]">
+                          <div class="font-16 multi-line-2">
+                            {{ newsItems[4]?.headline }}
+                          </div>
+                          <div class="para multiline-truncate-tow-tow-liner">
+                            {{ newsItems[4]?.summary }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="hidden lg:flex head-navs gap-2">
-            <img
-              v-if="isBookmarkActive"
-              src="../assets/active_bookmark.svg"
-              alt=""
-            />
-            <img v-else src="../assets/Bookmark.svg" alt="" />
+            <img src="../assets/Bookmark.svg" alt="" />
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -62,7 +238,7 @@
               {{ isLoggedIn ? "Logout" : "Login" }}
             </a>
           </div>
-          <div class="w-[50%] relative hidden md:block">
+          <div class="w-[421px] relative block lg-max:!hidden">
             <!-- @click="expandInput" -->
             <input
               type="text"
@@ -117,6 +293,98 @@
             class="w-[200px] border-1 h-[full]"
           /> -->
           <router-link class="md:hidden sm-max:block" to="/Search">
+
+          <a class="block lg:hidden">
+            <div
+              @click="visibleRight = true"
+              class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+            >
+              <img src="../assets/svg/category.svg" />
+            </div>
+            <Sidebar
+              class="w-[30%] sm-425:w-[40%] h-[100%] rounded-l-[20px] block lg:hidden"
+              v-model:visible="visibleRight"
+              position="right"
+              :closeIcon="true"
+            >
+              <div class="capitalize category-head rounded-l-lg w-[150px]">
+                <ul>
+                  <li
+                    class="mt-1 p-2 ml-3 text-black hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                    v-for="category in categories"
+                    :key="category._id"
+                    @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                    :style="{
+                      '--hover-color': '#FF0053',
+                      '--hover-bg-color': '#FFF2F6',
+                    }"
+                  >
+                    <div class="flex items-center space-x-2">
+                      <a
+                        :href="`/categories/${category._id}?category=${category.name}`"
+                        class="flex items-center"
+                      >
+                        <span>{{ category.name }}</span>
+                        <img
+                          src="../assets/svg/triangle_arrow.svg"
+                          class="ml-1"
+                        />
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </Sidebar>
+            <!-- <div
+              class="relative flex gap-2 cursor-pointer"
+              @mouseover="showDropdown = true"
+              @mouseleave="hideDropdown"
+            >
+              <div
+                class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+              >
+                <img src="../assets/svg/category.svg" />
+              </div>
+
+              <div
+                v-if="showDropdown"
+                @mouseover="showDropdown = true"
+                @mouseleave="hideDropdown"
+                class="absolute mt-5 flex justify-end bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
+              >
+                <div class="w-[100%] flex">
+                  <div class="capitalize category-head rounded-l-lg w-[150px]">
+                    <ul>
+                      <li
+                        class="mt-3 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                        v-for="category in categories"
+                        :key="category._id"
+                        @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                        :style="{
+                          '--hover-color': '#FF0053',
+                          '--hover-bg-color': '#FF005333',
+                        }"
+                      >
+                        <div class="flex items-center space-x-2">
+                          <a
+                            :href="`/categories/${category._id}?category=${category.name}`"
+                            class="flex items-center"
+                          >
+                            <span>{{ category.name }}</span>
+                            <img
+                              src="../assets/svg/triangle_arrow.svg"
+                              class="ml-1"
+                            />
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </a>
+          <router-link class="lg:hidden block">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
@@ -126,7 +394,6 @@
           <router-link v-if="isLoggedIn">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
-              @click="navigateToSettings"
             >
               <img src="../assets/Settings.svg" alt="" />
             </div>
@@ -181,10 +448,9 @@
         </a>
       </div>
     </div>
-    <div
+    <!-- <div
       class="w-full h-[67px] mt-1 flex justify-between bg-white items-center relative lg:overflow-x-hidden"
     >
-      <!-- Icons for mobile and tablet screens -->
       <i
         class="pi pi-angle-left ml-2 cursor-pointer block md:hidden"
         @click="scrollLeft"
@@ -214,7 +480,7 @@
         class="pi pi-angle-right mr-2 cursor-pointer block md:hidden"
         @click="scrollRight"
       ></i>
-    </div>
+    </div> -->
 
     <!-- Popup Confirmation -->
     <div
@@ -243,273 +509,283 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { useToast } from "primevue/usetoast";
-import { useRoute } from "vue-router";
-export default {
-  setup() {
-    const isMenuOpen = ref(false);
-    const isDropdownOpen = ref(false);
-    const categories = ref([]);
-    const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
-    const showBookmarkLink = ref(true);
-    const isPopupVisible = ref(false);
-    const isExpanded = ref(false);
-    const searchInput = ref(null);
-    const searchResultsDropdown = ref(null);
-    const router = useRouter();
-    const toast = useToast();
-    const categoriesContainer = ref(null);
-    const isLoggingOut = ref(false);
-    const isCardDropdownOpen = ref(false);
-    const route = useRoute();
-    const isInputVisible = ref(false);
-    const searchQuery = ref("");
-    const searchResults = ref([]);
+import moment from "moment"; // Import moment.js
 
-    const isHomeActive = computed(() => route.path === "/");
-    const isAstrologyActive = computed(() => route.path === "/Astrology");
-    const isBookmarkActive = computed(() => route.path === "/Bookmark");
-    // const isSettingsActive = computed(() => route.path === "/");
-    // const isAccountsActive = computed(() => route.path === "/");
+// const isMenuOpen = ref(false);
+// const isDropdownOpen = ref(false);
+const categories = ref([]);
+const visibleRight = ref(false);
+const newsItems = ref([]);
+const categoryWise = ref([]);
+console.log("hiiǐ", categoryWise);
+const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
+// const showBookmarkLink = ref(true);
+const isPopupVisible = ref(false);
+const isExpanded = ref(false);
+const searchInput = ref(null);
+const searchResultsDropdown = ref(null);
+const router = useRouter();
+const toast = useToast();
+// const categoriesContainer = ref(null);
+const isLoggingOut = ref(false);
+const isCardDropdownOpen = ref(false);
+const categoryId = "63d90f8aaabaf4bf0169c2b0";
+// const isInputVisible = ref(false);
+const searchQuery = ref("");
+const searchResults = ref([]);
 
-    const toggleCardDropdown = () => {
-      isCardDropdownOpen.value = !isCardDropdownOpen.value;
-    };
-    const navigateToSettings = () => {
-      router.push("/Setting");
-    };
+const showDropdown = ref(false);
 
-    const scrollLeft = () => {
-      if (categoriesContainer.value) {
-        categoriesContainer.value.scrollBy({
-          left: -100,
-          behavior: "smooth",
-        });
-      }
-    };
+const hideDropdown = () => {
+  setTimeout(() => {
+    if (
+      // !document.querySelector(".relative:hover") &&
+      !document.querySelector(".absolute:hover")
+    ) {
+      showDropdown.value = false;
+      newsItems.value = [];
+    }
+  }, 10);
+};
+const toggleCardDropdown = () => {
+  isCardDropdownOpen.value = !isCardDropdownOpen.value;
+};
+const formatPublishTime = (publishTime) => {
+  return moment(publishTime).fromNow();
+};
+// const scrollLeft = () => {
+//   if (categoriesContainer.value) {
+//     categoriesContainer.value.scrollBy({
+//       left: -100,
+//       behavior: "smooth",
+//     });
+//   }
+// };
 
-    const scrollRight = () => {
-      if (categoriesContainer.value) {
-        categoriesContainer.value.scrollBy({
-          left: 100,
-          behavior: "smooth",
-        });
-      }
-    };
+// const scrollRight = () => {
+//   if (categoriesContainer.value) {
+//     categoriesContainer.value.scrollBy({
+//       left: 100,
+//       behavior: "smooth",
+//     });
+//   }
+// };
 
-    const toggleMenu = () => {
-      isMenuOpen.value = !isMenuOpen.value;
-    };
+// const toggleMenu = () => {
+//   isMenuOpen.value = !isMenuOpen.value;
+// };
 
-    const toggleDropdown = () => {
-      isDropdownOpen.value = !isDropdownOpen.value;
-    };
+// const toggleDropdown = () => {
+//   isDropdownOpen.value = !isDropdownOpen.value;
+// };
 
-    const handleBackgroundClick = () => {
-      hidePopup();
-    };
+const handleBackgroundClick = () => {
+  hidePopup();
+};
 
-    const handleAuthAction = async () => {
-      if (isLoggedIn.value) {
-        showPopup();
-      } else {
-        try {
-          await router.push("/Login");
-        } catch (error) {
-          console.error("Navigation error:", error);
+const handleAuthAction = async () => {
+  if (isLoggedIn.value) {
+    showPopup();
+  } else {
+    router.push("/Login");
+  }
+};
+
+const showPopup = () => {
+  isPopupVisible.value = true;
+};
+
+const hidePopup = () => {
+  isPopupVisible.value = false;
+};
+
+const navigateToNewsDetail = (id) => {
+  router.push(`/news/${id}`);
+  console.log("Navigating to news detail with ID:", id);
+};
+
+const handleLogout = async () => {
+  if (isLoggingOut.value) return;
+  isLoggingOut.value = true;
+
+  try {
+    const auth = getAuth();
+    await signOut(auth);
+
+    const apiDataToken = localStorage.getItem("apiDataToken");
+    if (apiDataToken) {
+      const response = await axios.post(
+        "https://api-uat.newsshield.io/user/logoutEvent",
+        {},
+        {
+          headers: { Authorization: `${apiDataToken}` },
         }
-      }
-    };
-
-    const showPopup = () => {
-      isPopupVisible.value = true;
-    };
-
-    const hidePopup = () => {
-      isPopupVisible.value = false;
-    };
-    const navigateToNewsDetail = (id) => {
-      router.push(`/news/${id}`);
-      console.log("Navigating to news detail with ID:", id);
-    };
-    const handleLogout = async () => {
-      if (isLoggingOut.value) return;
-      isLoggingOut.value = true;
-
-      try {
-        const auth = getAuth();
-        await signOut(auth);
-
-        const apiDataToken = localStorage.getItem("apiDataToken");
-        if (apiDataToken) {
-          const response = await axios.post(
-            "https://api-uat.newsshield.io/user/logoutEvent",
-            {},
-            {
-              headers: { Authorization: `${apiDataToken}` },
-            }
-          );
-
-          if (response.status === 200) {
-            localStorage.removeItem("apiDataToken");
-            localStorage.setItem("logoutSuccess", "true");
-            isLoggedIn.value = false;
-            router.push("/");
-
-            toast.add({
-              severity: "success",
-              summary: "Logged out successfully!",
-              summary2: "You have been safely logged out.",
-              group: "success",
-              life: 3000,
-            });
-            isCardDropdownOpen.value = !isCardDropdownOpen.value;
-          } else {
-            throw new Error("Failed to logout, unexpected response status");
-          }
-        }
-      } catch (error) {
-        console.error("Error during logout:", error);
+      );
+      if (response.status === 200) {
+        console.log(`BEFORE ${localStorage.getItem("news-")}`);
+        localStorage.removeItem("apiDataToken");
+        localStorage.setItem("logoutSuccess", "true");
+        isLoggedIn.value = false;
+        router.push("/");
         toast.add({
-          severity: "error",
-          summary: "Logged out Failed!",
-          summary2: "Try again after sometime.",
-          group: "error",
+          severity: "success",
+          summary: "Logged out successfully!",
+          summary2: "You have been safely logged out.",
+          group: "success",
           life: 3000,
         });
-      } finally {
-        isLoggingOut.value = false;
-        hidePopup();
-        toggleCardDropdown();
+        isCardDropdownOpen.value = !isCardDropdownOpen.value;
+      } else {
+        throw new Error("Failed to logout, unexpected response status");
       }
-    };
-
-    const fetchCategories = async () => {
-      try {
-        const languageId = "6421a32aa020a23deacecf92";
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/category/getAllCat",
-          { langauge: languageId }
-        );
-        categories.value = response.data.map((category) => ({
-          ...category,
-          name:
-            category.name.toLowerCase() === "ai"
-              ? category.name.toUpperCase()
-              : category.name.replace(/-/g, " "),
-        }));
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    const toggleSearchInput = () => {
-      isInputVisible.value = !isInputVisible.value;
-    };
-
-    const handleSearch = async () => {
-      if (
-        searchQuery.value.trim().length >= 4 &&
-        searchQuery.value.trim().length % 4 === 0
-      ) {
-        try {
-          const response = await axios.post(
-            "https://api-uat.newsshield.io/news/searchNewsFromWeb",
-            {
-              language: "6421a32aa020a23deacecf92",
-              search: searchQuery.value,
-            }
-          );
-          searchResults.value = response.data;
-        } catch (error) {
-          console.error("Error fetching search results:", error);
-        }
-      } else if (searchQuery.value.trim().length < 4) {
-        searchResults.value = [];
-      }
-    };
-
-    const expandInput = () => {
-      isExpanded.value = true;
-    };
-
-    const collapseInput = (event) => {
-      if (
-        searchResultsDropdown.value &&
-        !searchResultsDropdown.value.contains(event.target) &&
-        searchInput.value &&
-        !searchInput.value.contains(event.target)
-      ) {
-        isExpanded.value = false;
-        searchResults.value = [];
-        searchQuery.value = "";
-      }
-    };
-
-    onMounted(() => {
-      fetchCategories();
-      document.addEventListener("mousedown", collapseInput);
+    }
+  } catch (error) {
+    console.error("Error during logout:", error);
+    toast.add({
+      severity: "error",
+      summary: "Logged out Failed!",
+      summary2: "Try again after sometime.",
+      group: "error",
+      life: 3000,
     });
-
-    onBeforeUnmount(() => {
-      document.removeEventListener("mousedown", collapseInput);
-    });
-
-    const inputClass = computed(() =>
-      isExpanded.value
-        ? "w-[441px] py-2 transition-all duration-300"
-        : "w-[220px] py-2 transition-all duration-300"
-    );
-
-    watch(searchQuery, (newValue) => {
-      if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
-        handleSearch();
-      } else if (newValue.trim().length < 4) {
-        searchResults.value = [];
-      }
-    });
-
-    return {
-      navigateToSettings,
-      isExpanded,
-      searchInput,
-      expandInput,
-      inputClass,
-      isMenuOpen,
-      isDropdownOpen,
-      categories,
-      isLoggedIn,
-      showBookmarkLink,
-      isPopupVisible,
-      toggleMenu,
-      toggleDropdown,
-      handleAuthAction,
-      handleBackgroundClick,
-      hidePopup,
-      handleLogout,
-      scrollRight,
-      scrollLeft,
-      categoriesContainer,
-      isCardDropdownOpen,
-      toggleCardDropdown,
-      isInputVisible,
-      searchQuery,
-      toggleSearchInput,
-      handleSearch,
-      searchResults,
-      navigateToNewsDetail,
-      searchResultsDropdown,
-      isHomeActive,
-      isAstrologyActive,
-      isBookmarkActive,
-    };
-  },
+  } finally {
+    isLoggingOut.value = false;
+    hidePopup();
+    toggleCardDropdown();
+  }
 };
+const fetchNavbarCategory = async () => {
+  try {
+    const res = await axios.post(
+      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+      { categoryId }
+    );
+    categoryWise.value = res.data;
+  } catch (error) {
+    return [];
+  }
+};
+const fetchCategories = async () => {
+  try {
+    const languageId = "6421a32aa020a23deacecf92";
+    const response = await axios.post(
+      "https://api-uat.newsshield.io/category/getAllCat",
+      { langauge: languageId }
+    );
+    categories.value = response.data.map((category) => ({
+      ...category,
+    }));
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+  }
+};
+
+// const toggleSearchInput = () => {
+//   isInputVisible.value = !isInputVisible.value;
+// };
+
+const handleSearch = async () => {
+  if (
+    searchQuery.value.trim().length >= 4 &&
+    searchQuery.value.trim().length % 4 === 0
+  ) {
+    try {
+      const response = await axios.post(
+        "https://api-uat.newsshield.io/news/searchNewsFromWeb",
+        {
+          language: "6421a32aa020a23deacecf92",
+          search: searchQuery.value,
+        }
+      );
+      searchResults.value = response.data;
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  } else if (searchQuery.value.trim().length < 4) {
+    searchResults.value = [];
+  }
+};
+
+// const expandInput = () => {
+//   isExpanded.value = true;
+// };
+
+const collapseInput = (event) => {
+  if (
+    searchResultsDropdown.value &&
+    !searchResultsDropdown.value.contains(event.target) &&
+    searchInput.value &&
+    !searchInput.value.contains(event.target)
+  ) {
+    isExpanded.value = false;
+    searchResults.value = [];
+    searchQuery.value = "";
+  }
+};
+
+onMounted(() => {
+  fetchCategories();
+  document.addEventListener("mousedown", collapseInput);
+  fetchNavbarCategory();
+  // const categoryId = "63d90e4098d783ac0cbe2310";
+  // const storedNews = localStorage.getItem(`news-${categoryId}`);
+
+  // if (storedNews) {
+  //   newsItems.value = JSON.parse(storedNews);
+  //   console.log("Fetched news items:", newsItems.value);
+  // } else {
+  //   console.log(
+  //     "No news found in local storage for category:",
+  //     "news-" + categoryId
+  //   );
+  // }
+});
+const navigateToTrending = (id) => {
+  console.log("Navigating to trending with ID:", id);
+  if (id) {
+    router.push(`/news/${id}`);
+  }
+};
+const fetchCategoryFromLocalStorage = (categoryId) => {
+  const storedNews = localStorage.getItem(`news-${categoryId}`);
+  console.log(`FUNCTION CALLED news-${categoryId} news-${storedNews}`);
+  if (storedNews) {
+    console.log("INSIDE IF");
+    newsItems.value = JSON.parse(storedNews);
+    console.log("Fetched news items:", newsItems.value); // Verify the fetched items
+  } else {
+    console.log("INSIDE ELSE");
+
+    // console.log(
+    //   "No news found in local storage for category:",
+    //   `news-${categoryId}`
+    // );
+  }
+};
+
+onBeforeUnmount(() => {
+  document.removeEventListener("mousedown", collapseInput);
+});
+
+const inputClass = computed(() =>
+  isExpanded.value
+    ? "w-[441px] py-2 transition-all duration-300"
+    : "w-[220px] py-2 transition-all duration-300"
+);
+
+watch(searchQuery, (newValue) => {
+  if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
+    handleSearch();
+  } else if (newValue.trim().length < 4) {
+    searchResults.value = [];
+  }
+});
 </script>
 
 <style scoped>
@@ -566,5 +842,26 @@ export default {
 }
 .slim-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+.multi-line-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate-one-liner {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.multiline-truncate-tow-tow-liner {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
