@@ -201,11 +201,17 @@ const fetchBlogs = async () => {
   loading.value = true;
   error.value = false;
   try {
+    const token = localStorage.getItem("apiDataToken");
     const response = await axios.post(
       "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
       {
         language: languageId,
         categoryId: "63d90e4098d783ac0cbe2310",
+      },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
       }
     );
     if (response.data.length === 0) {
@@ -220,19 +226,17 @@ const fetchBlogs = async () => {
     loading.value = false;
   }
 };
-
 const getBookmarkColor = (isBookmarked) => {
   return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
 };
-
-const addBookmark = async (newsItem) => {
+const addBookmark = async (news) => {
   const token = localStorage.getItem("apiDataToken");
   try {
     const currentStatus =
-      newsItem.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
+      news.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
 
     const response = await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${newsItem._id}`,
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${news._id}`,
       {
         status: currentStatus,
       },
@@ -242,11 +246,11 @@ const addBookmark = async (newsItem) => {
         },
       }
     );
-
-    newsItem.isBookmarked = currentStatus;
+    news.isBookmarked = currentStatus;
+    blogs.value.isBookmarked = currentStatus;
     return response.data;
-  } catch (err) {
-    console.error("Failed to update bookmark status:", err);
+  } catch (error) {
+    console.error("Error adding bookmark:", error);
   }
 };
 
@@ -278,6 +282,7 @@ const handleResize = () => {
 onMounted(() => {
   window.addEventListener("resize", handleResize);
   fetchBlogs();
+  getBookmarkColor();
 });
 
 onBeforeUnmount(() => {

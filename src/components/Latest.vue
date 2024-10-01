@@ -172,7 +172,6 @@ const navigateToNewsDetail = (id) => {
 const getBookmarkColor = (isBookmarked) => {
   return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
 };
-
 const addBookmark = async (news) => {
   const token = localStorage.getItem("apiDataToken");
   try {
