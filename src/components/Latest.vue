@@ -33,12 +33,24 @@
           >
             <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
               <div
-                class="rounded-[10px]"
+                class="relative rounded-[10px]"
                 @click="navigateToNewsDetail(news._id)"
               >
+                <!-- Blurred Background Image -->
+                <div class="absolute inset-0">
+                  <img
+                    :src="news.imgixUrlHighRes || fallbackImage"
+                    class="h-full w-full rounded-[10px] object-cover blur-sm filter"
+                    alt=""
+                  />
+                  <div
+                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                  ></div>
+                </div>
+                <!-- Foreground Image -->
                 <img
-                  :src="news.imgixUrlHighRes"
-                  class="relative z-10 h-[156px] w-full rounded-[10px] object-cover"
+                  :src="news.imgixUrlHighRes || fallbackImage"
+                  class="relative z-10 h-[156px] w-full rounded-[10px] object-contain"
                   alt=""
                 />
               </div>
