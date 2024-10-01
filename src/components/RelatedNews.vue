@@ -14,7 +14,7 @@
     </div>
 
     <div
-      class="flex flex-col lg:flex-row md:grid md:grid-cols-2 gap-3 justify-between cursor-pointer drop-shadow-lg md:h-[350px]"
+      class="flex flex-col lg:flex-row md:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg md:h-[350px]"
     >
       <div
         v-for="news in slicedData"
@@ -187,7 +187,7 @@ const slicedData = computed(() => {
     return featuredNewsItem.value.slice(0, 4);
   } else if (screenWidth.value > 425 && screenWidth.value < 1024) {
     // Tablet devices
-    return featuredNewsItem.value.slice(0, 4);
+    return featuredNewsItem.value.slice(0, 2);
   } else {
     // Desktop and larger devices
     return featuredNewsItem.value.slice(0, 4);

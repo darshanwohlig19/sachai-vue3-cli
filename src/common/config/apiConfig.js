@@ -2,17 +2,16 @@ const config = {
   PORT: 3000,
   PROTOCOL: "https",
   HOST: "api-uat.newsshield.io",
+  // HOST: "dev-api.newsshield.io",
   // PROTOCOL: "http",
   // HOST: "localhost",
 };
-config.PROTOCOL_STR = `${config.PROTOCOL}://${config.HOST}`;
+config.PROTOCOL = `${config.PROTOCOL}://${config.HOST}`;
 // config.PROTOCOL_STR = `${config.PROTOCOL}://${config.HOST}:${config.PORT}`;
 
 config.PORT_IP = {
   LOGIN: config.PROTOCOL,
 };
-
-//api-uat.newsshield.io/bookmark/addBookmark
 
 config.BOOKMARK = config.PORT_IP.LOGIN + "/bookmark/addBookmark";
 
