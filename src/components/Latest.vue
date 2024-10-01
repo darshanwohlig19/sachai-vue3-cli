@@ -9,7 +9,7 @@
         </div>
         <!-- Conditionally render button based on loading state and data -->
         <div v-if="!isLoading && blogs.length > 0">
-          <Button />
+          <a href="/Latest"> <Button /></a>
         </div>
       </div>
 
@@ -33,26 +33,32 @@
           >
             <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
               <div
-                class="relative rounded-[10px]"
-                @click="navigateToNewsDetail(news._id)"
+                class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden w-full"
               >
-                <!-- Blurred Background Image -->
-                <div class="absolute inset-0">
+                <div class="relative w-full h-[100%]">
                   <img
+                    class="absolute inset-0 object-cover h-full w-full filter blur-md"
                     :src="news.imgixUrlHighRes || fallbackImage"
-                    class="h-full w-full rounded-[10px] object-cover blur-sm filter"
-                    alt=""
+                    alt="Background"
+                    @click="navigateToCampingNews(news._id)"
+                  />
+                  <div
+                    class="absolute inset-0 bg-gradient from-transparent to-black opacity-75"
+                  ></div>
+                </div>
+                <div
+                  class="absolute inset-0 flex flex-col justify-between text-white"
+                >
+                  <img
+                    class="object-contain h-full w-full"
+                    :src="news.imgixUrlHighRes || fallbackImage"
+                    alt="Centered Image"
+                    @click="navigateToCampingNews(news._id)"
                   />
                   <div
                     class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
                   ></div>
                 </div>
-                <!-- Foreground Image -->
-                <img
-                  :src="news.imgixUrlHighRes || fallbackImage"
-                  class="relative z-10 h-[156px] w-full rounded-[10px] object-contain"
-                  alt=""
-                />
               </div>
               <div class="flex justify-between items-center pl-3 pr-3 mt-2">
                 <div class="flex gap-1 text-[#676767] text-xs">

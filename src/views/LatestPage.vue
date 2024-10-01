@@ -136,10 +136,10 @@ import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
 import Paginator from "primevue/paginator"; // Ensure PrimeVue paginator is imported
-
 import { useToast } from "primevue/usetoast";
 // const news = ref([]);
 const toast = useToast();
+
 const paginatedNews = ref([]); // Holds the news items for the current page
 const loading = ref(false); // Loading state
 const languageId = ref("6421a32aa020a23deacecf92");
@@ -155,7 +155,7 @@ const fetchNews = async (page = 1) => {
   loading.value = true;
   try {
     const response = await axios.post(
-      `https://api-uat.newsshield.io/topic/apiForTopicsForWeb/65e17ea9842874dab8c45010`,
+      "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
       {
         language: languageId.value,
         page: page,

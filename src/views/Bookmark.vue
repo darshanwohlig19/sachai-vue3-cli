@@ -116,12 +116,15 @@ import moment from "moment";
 import Navbarrr from "@/components/Navbarrr.vue";
 import { useRouter } from "vue-router";
 import Paginator from "primevue/paginator";
+import { useToast } from "primevue/usetoast"; // Import the toast composable
 
 const router = useRouter();
+const toast = useToast(); // Create a toast instance
+
 const BookmarkData = ref([]);
 const paginatedData = ref([]);
 const rowsPerPage = 5;
-const first = ref(0); // Keeps track of the first item index
+const first = ref(0);
 const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
 };
@@ -145,8 +148,7 @@ const Bookmark = async () => {
       }
     );
     BookmarkData.value = response.data;
-
-    updatePaginatedData(); // Update the paginated data
+    updatePaginatedData();
   } catch (error) {
     console.error("Error fetching bookmarks:", error);
   }
@@ -187,11 +189,23 @@ const removeBookmark = async (id) => {
     if (res.status === 200) {
       BookmarkData.value = BookmarkData.value.filter((item) => item._id !== id);
       localStorage.removeItem(`bookmark_${id}`);
-      updatePaginatedData(); // Refresh paginated data
+      updatePaginatedData();
+      toast.add({
+        severity: "success",
+        summary: "Bookmark Removed",
+        group: "success",
+        life: 3000,
+      });
       Bookmark();
     }
   } catch (error) {
     console.error(`Error removing bookmark for news item ${id}:`, error);
+    toast.add({
+      severity: "error",
+      summary: "Failed!",
+      group: "error",
+      life: 3000,
+    });
   }
 };
 

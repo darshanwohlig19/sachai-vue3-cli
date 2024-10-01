@@ -143,7 +143,7 @@ import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
 import Navbarrr from "@/components/Navbarrr.vue";
-
+import { useToast } from "primevue/usetoast";
 // Refs for storing news and pagination state
 const news = ref([]);
 const loading = ref(true); // Add loading state
@@ -154,7 +154,7 @@ const router = useRouter();
 const categoryId = route.params.slugOrId;
 const categoryName = route.query.category;
 const fallbackImage = "path/to/fallback/image.jpg"; // Replace with your fallback image URL
-
+const toast = useToast();
 const navigateToMoreNews = (id) => {
   router.push(`/news/${id}`);
 };
@@ -219,6 +219,21 @@ const addBookmark = async (news) => {
         },
       }
     );
+    if (currentStatus === "Enabled") {
+      toast.add({
+        severity: "success",
+        summary: "Bookmark Added",
+        group: "success",
+        life: 3000,
+      });
+    } else {
+      toast.add({
+        severity: "success",
+        summary: "Bookmark Removed",
+        group: "success",
+        life: 3000,
+      });
+    }
     news.isBookmarked = currentStatus;
     return response.data;
   } catch (error) {
