@@ -12,8 +12,14 @@
           <div
             class="w-[100%] sm:top-0 between-lg-max-md-max:w-[60%] between-md-max-sm-max:w-[50%] md:w-[70%] p-3 between-xs-max-sm-max:!pt-[155px]"
           >
-            <div class="heads">Welcome to sachai!</div>
-            <div class="about-us-sub-head mt-2">
+            <div
+              class="font-lato font-[700] text-[18px] sm:text-[20px] text-[#1e0627]"
+            >
+              Welcome to sachai!
+            </div>
+            <div
+              class="font-lato text-[14px] sm:text-[16px] text-[#878787] mt-2"
+            >
               At sachai, we are firm believers in the power of truth. In today's
               world flooded with information, distinguishing fact from fiction
               has become increasingly challenging. Our primary goal is to cut
@@ -39,8 +45,12 @@
       </div>
       <div class="w-[100%] p-3 flex flex-col sm:flex sm:flex-row gap-4">
         <div class="w-[100%] sm:w-[40%] p-3 rounded-[12px] bg-white">
-          <div class="heads">Who We Are</div>
-          <div class="about-us-sub-head mt-2">
+          <div
+            class="font-lato font-[700] text-[18px] sm:text-[20px] text-[#1e0627]"
+          >
+            Who We Are
+          </div>
+          <div class="font-lato text-[14px] sm:text-[16px] text-[#878787] mt-2">
             We are a team of passionate individuals committed to the pursuit of
             truth. Our expertise spans journalism, technology, research, and
             academia. Together, we bring diverse perspectives and knowledge to
@@ -49,8 +59,12 @@
           </div>
         </div>
         <div class="w-[100%] sm:w-[60%] p-3 rounded-[12px] bg-white">
-          <div class="heads">What We Do</div>
-          <div class="about-us-sub-head mt-2">
+          <div
+            class="font-lato font-[700] text-[18px] sm:text-[20px] text-[#1e0627]"
+          >
+            What We Do
+          </div>
+          <div class="font-lato text-[14px] sm:text-[16px] text-[#878787] mt-2">
             At sachai, our aim is to deliver top-notch content that informs,
             educates, and inspires. From breaking news to in-depth analysis, we
             cover a broad spectrum of topics including politics, science,
@@ -62,8 +76,12 @@
       </div>
       <div class="w-[100%] p-3 flex flex-col sm:flex sm:flex-row gap-4">
         <div class="w-[100%] sm:w-[50%] p-3 rounded-[12px] bg-white">
-          <div class="heads">Why Choose Us</div>
-          <div class="about-us-sub-head mt-2">
+          <div
+            class="font-lato font-[700] text-[18px] sm:text-[20px] text-[#1e0627]"
+          >
+            Why Choose Us
+          </div>
+          <div class="font-lato text-[14px] sm:text-[16px] text-[#878787] mt-2">
             In an era plagued by misinformation, sachai stands out as a beacon
             of truth. Our adherence to journalistic principles and unwavering
             commitment to transparency set us apart. When you visit sachai, you
@@ -72,8 +90,12 @@
           </div>
         </div>
         <div class="w-[100%] sm:w-[50%] p-3 rounded-[12px] bg-white">
-          <div class="heads">Get Involved</div>
-          <div class="about-us-sub-head mt-2">
+          <div
+            class="font-lato font-[700] text-[18px] sm:text-[20px] text-[#1e0627]"
+          >
+            Get Involved
+          </div>
+          <div class="font-lato text-[14px] sm:text-[16px] text-[#878787] mt-2">
             We believe that seeking truth is a collaborative endeavor.
             Therefore, we encourage our readers to engage with us, share their
             insights, and participate in discussions. Whether you have a tip to
@@ -83,7 +105,9 @@
           </div>
         </div>
       </div>
-      <div class="mt-4 flex justify-center text-center font-category-summary">
+      <div
+        class="mt-4 flex justify-center text-center font-lato sm:text-[20px] text-[14px] text-[#878787]"
+      >
         “Thank you for choosing Sachai. We eagerly anticipate serving you and
         becoming your trusted source for<br />
         news and information.”
