@@ -1,10 +1,12 @@
 <template>
   <Navbarrr />
-  <div class="mx-[30px] mt-3 min-h-screen flex flex-col">
-    <div class="flex flex-col gap-3 bg-white rounded-[10px] p-3 flex-grow">
+  <div class="mx-[20px] mt-2 min-h-screen flex flex-col">
+    <div class="flex flex-col gap-2 bg-white rounded-[10px] p-3 flex-grow">
       <div class="flex flex-row items-center gap-2">
         <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
-        <div class="font-18">Bookmarks</div>
+        <div class="text-[18px] font-lato font-[700] text-[#1E0627]">
+          Bookmarks
+        </div>
       </div>
 
       <div v-if="paginatedData.length > 0" class="flex flex-col gap-3">
@@ -37,44 +39,46 @@
                 </div>
               </div>
             </div>
-            <div class="w-[80%] ml-3 mr-3 flex flex-col">
+            <div class="w-[80%] ml-3 mr-3 flex flex-col justify-around">
               <div class="flex justify-between items-center mt-3">
                 <div class="flex gap-1 text-[#1E0627] medium">
-                  <div class="text-[8px] lg:text-[12px] font-lato">
+                  <div class="xs-max:text-[9px] text-[12px] font-lato">
                     {{ item.source || "No source" }}
                   </div>
-                  <div class="text-[8px] lg:text-[12px]">
+                  <div class="xs-max:text-[9px] text-[12px]">
                     | {{ moment(item.publishTime || new Date()).fromNow() }}
                   </div>
                 </div>
                 <div class="flex gap-1">
                   <span
-                    class="material-symbols-outlined text-[11px] lg:text-[19px] cursor-pointer"
+                    class="material-symbols-outlined text-[14px] lg:text-[19px] cursor-pointer"
                     >share</span
                   >
                 </div>
               </div>
               <div
-                class="text-[12px] md:text-[20px] fontCustom title-md-multiline-truncate leading-1 bold mr-1 cursor-pointer mt-1"
+                class="text-[14px] md:text-[20px] fontCustom title-md-multiline-truncate leading-1 bold mr-1 cursor-pointer mt-1"
                 @click="navigateToNewsDetail(item._id)"
               >
                 {{ item.headline || "No Headline" }}
               </div>
               <div
-                class="text-[10px] md:text-[14px] text-[#878787] md-multiline-truncate lg:multiline-truncate font-lato leading-1 mr-1 mt-1 mb-1 cursor-pointer"
+                class="text-[12px] md:text-[14px] text-[#878787] md-multiline-truncate lg:multiline-truncate font-lato leading-1 mr-1 mt-1 mb-1 cursor-pointer"
                 @click="navigateToNewsDetail(item.newsId)"
               >
                 {{ item.summary || "No summary" }}
               </div>
               <div class="flex justify-between mt-2 mb-2 items-end">
-                <div class="text-[8px] lg:text-[12px] flex gap-3">
+                <div
+                  class="xs-max:text-[9px] text-[12px] h-[100%] items-center flex gap-2"
+                >
                   <span class="text-red-500">Politics</span>
                   <span>|</span>
                   <span>4 min read</span>
                 </div>
                 <div class="font-12">
                   <div
-                    class="text-[#FF0053] h-[28px] items-center flex justify-between gap-1 font-bold bg-[#FF00530F] cursor-pointer rounded-[4px] text-[12px] p-2"
+                    class="text-[#FF0053] h-[28px] items-center flex justify-between gap-1 font-bold bg-[#FF00530F] cursor-pointer rounded-[4px] xs-max:text-[9px] text-[12px] p-2"
                   >
                     <div @click="removeBookmark(item.newsId)">Remove</div>
                   </div>
