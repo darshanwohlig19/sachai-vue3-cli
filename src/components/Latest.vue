@@ -54,7 +54,7 @@
                   alt=""
                 />
               </div>
-              <div class="flex justify-between items-center p-3">
+              <div class="flex justify-between items-center pl-3 pr-3 mt-2">
                 <div class="flex gap-1 text-[#676767] text-xs">
                   <div>{{ news.source }}</div>
                 </div>
@@ -86,7 +86,7 @@
               >
                 {{ news.summary }}
               </div>
-              <div class="px-3 pb-3 mt-2 mb-2 text-[12px] flex gap-1">
+              <div class="px-3 mb-3 mt-2 text-[12px] flex gap-1">
                 <span class="text-red-500 bold capitalize">
                   {{
                     news.categories[0].name.toLowerCase() === "ai"
