@@ -14,7 +14,6 @@ import TermsandCondition from "../views/TermsandCondition.vue";
 import PrivacyPolicy from "../views/PrivacyPolicy.vue";
 import Profile from "../views/Profile.vue";
 
-
 import SearchForMobile from "@/views/SearchForMobile.vue";
 import Campaign from "@/views/CampaignPage.vue";
 import Latest from "@/views/LatestPage.vue";
@@ -83,6 +82,7 @@ const routes = [
     name: "Profile",
     component: Profile,
   },
+  {
     path: "/search",
     name: "Search",
     component: SearchForMobile,
@@ -96,7 +96,6 @@ const routes = [
     path: "/Latest",
     name: "Latest",
     component: Latest,
-
   },
 ];
 

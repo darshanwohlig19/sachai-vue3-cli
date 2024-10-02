@@ -405,7 +405,7 @@
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
-              <!-- <img src="../assets/Accounts.svg" alt="" />  -->
+              <!-- <img src="../assets/Accounts.svg" alt="" /> -->
             </div>
           </router-link>
 
