@@ -42,4 +42,8 @@ config.API_FOR_TOPICS_FOR_WEB =
 
 //Category_News
 config.GET_ALL_CATEGORY = config.PORT_IP.LOGIN + "/category/getAllCat";
+
+//Footer
+config.GET_TRENDING_TOPICS = config.PORT_IP.LOGIN + "/news/getTrendingTopics";
+
 export default config;

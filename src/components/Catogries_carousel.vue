@@ -74,7 +74,6 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
 import Carousel from "primevue/carousel";
 import Card from "primevue/card";
 import "primevue/resources/themes/saga-blue/theme.css"; // Theme CSS
@@ -82,6 +81,8 @@ import "primevue/resources/primevue.min.css"; // Core CSS
 import "primeicons/primeicons.css"; // Icons CSS
 import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 
 const categories = ref([]);
 const loading = ref(true);
@@ -93,10 +94,18 @@ const navigateToCategoryDetail = (id) => {
 };
 
 const fetchNewsForCategory = async (categoryId) => {
+  const payload = {
+    categoryId,
+  };
   try {
-    const { data } = await axios.post(
-      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-      { categoryId }
+    // const { data } = await axios.post(
+    //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+    //   { categoryId }
+    // );
+    const { data } = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+      payload
     );
     return data;
   } catch (error) {
@@ -106,13 +115,19 @@ const fetchNewsForCategory = async (categoryId) => {
 };
 
 const fetchCategories = async () => {
+  const languageId = "6421a32aa020a23deacecf92";
+  const payload = {
+    langauge: languageId,
+  };
   try {
-    const languageId = "6421a32aa020a23deacecf92";
-    const { data } = await axios.post(
-      "https://api-uat.newsshield.io/category/getAllCat",
-      { langauge: languageId }
+    // const { data } = await axios.post(
+    //   "https://api-uat.newsshield.io/category/getAllCat"
+    // );
+    const { data } = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_ALL_CATEGORY}`,
+      payload
     );
-
     const categoriesData = data.slice(8, 16).map((category) => ({
       ...category,
       name:
