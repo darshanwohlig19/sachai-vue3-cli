@@ -88,7 +88,7 @@
             <div class="w-[100%] lg:w-[65%]">
               <div class="flex flex-col gap-5">
                 <div class="flex sm:flex-row flex-col gap-3 h-[100%]">
-                  <div class="md:w-[70%] w-[100%]">
+                  <div class="md:w-[70%] w-[100%] cursor-pointer">
                     <div
                       v-for="news in category.news.slice(0, 1)"
                       :key="news._id"
@@ -101,6 +101,7 @@
                             class="absolute inset-0 object-cover h-full w-full filter blur-sm"
                             :src="news.imgixUrlHighRes || fallbackImage"
                             alt="Background"
+                            @click="navigateToCampingNews(news._id)"
                           />
                           <div
                             class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
@@ -113,7 +114,20 @@
                             class="object-contain h-full w-full"
                             :src="news.imgixUrlHighRes || fallbackImage"
                             alt="Centered Image"
+                            @click="navigateToCampingNews(news._id)"
                           />
+                          <div
+                            class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                          ></div>
+                        </div>
+                        <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
+                          <div
+                            class="multiline-truncate1 text-[16px] sm:text-[14px] md:text-[16px] fontCustom text-white w-full md:w-auto"
+                            :style="{ width: 'calc(100% - 30px)' }"
+                            @click="navigateToCampingNews(news._id)"
+                          >
+                            {{ news.headline || "No Headline" }}
+                          </div>
                         </div>
                       </div>
                       <!-- <div class="relative drop-shadow-lg">
@@ -136,6 +150,7 @@
                       </div> -->
                     </div>
                   </div>
+
                   <div
                     class="sm:w-[70%] w-[100%] flex flex-col justify-between gap-3 sm:gap-0"
                   >
@@ -148,8 +163,11 @@
                         <div class="w-[15px]">
                           <img src="../assets/Group.png" alt="" />
                         </div>
-                        <div class="font-14 one-line">
-                          <a :href="`${SACHAI_NEWS_URL}${news._id}`">
+                        <div
+                          class="font-14 one-line cursor-pointer"
+                          @click="navigateToCampingNews(news._id)"
+                        >
+                          <a>
                             {{ news.headline }}
                           </a>
                         </div>
@@ -164,7 +182,10 @@
                     :key="news._id"
                     class="flex flex-row gap-1 w-[50%] md:w-[30%]"
                   >
-                    <div class="multiline-truncate1 font-14 w-[100%]">
+                    <div
+                      class="multiline-truncate1 font-14 w-[100%] cursor-pointer"
+                      @click="navigateToCampingNews(news._id)"
+                    >
                       {{ news.headline }}
                     </div>
                     <div
@@ -181,12 +202,13 @@
             >
               <div v-for="news in category.news.slice(9, 13)" :key="news._id">
                 <div
-                  class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center"
+                  class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                  @click="navigateToCampingNews(news._id)"
                 >
                   <div class="">
                     <img
                       class="rounded-[6px] h-[47px]"
-                      :src="news.imgixUrlHighRes"
+                      :src="news.imgixUrlHighRes || fallbackImage"
                       alt=""
                     />
                   </div>
@@ -206,7 +228,7 @@
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import axios from "axios";
 import Button from "./ViewAll.vue";
-
+import { useRouter } from "vue-router";
 export default {
   props: {
     category: {
@@ -226,6 +248,7 @@ export default {
   },
 
   setup() {
+    const router = useRouter();
     const categories = ref({});
     const isMobileOrTablet = ref(window.innerWidth < 768);
     const screenWidth = ref(window.innerWidth);
@@ -249,7 +272,9 @@ export default {
         return screenWidth.value > 1600 ? news.slice(1, 5) : news.slice(1, 4);
       };
     });
-
+    const navigateToCampingNews = (id) => {
+      router.push(`/news/${id}`);
+    };
     const fetchCategories = async () => {
       try {
         const languageId = "6421a32aa020a23deacecf92";
@@ -316,7 +341,11 @@ export default {
       displayedNews,
       screenWidth,
       Button,
+
       loading,
+
+      navigateToCampingNews,
+
     };
   },
 };

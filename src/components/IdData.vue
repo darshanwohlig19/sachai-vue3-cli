@@ -201,7 +201,7 @@
 
       <!-- ChatBot Section -->
       <div
-        class="hidden lg:block ml-2 md:h-[85vh] lg:h-[88.5vh] between-Laptop:!h-[111.5vh]"
+        class="hidden lg:block ml-2 md:h-[85vh] lg:h-[88.5vh] between-1011-1440:!h-[] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh]"
       >
         <ChatBot :category="newsItem" />
       </div>
@@ -213,6 +213,18 @@
     v-if="newsItem?._id"
   >
     <RelatedNewsData :category="newsItem" />
+  </div>
+  <div
+    class="z-10 fixed bottom-8 right-8 h-[40px] w-[40px] cursor-pointer rounded-full bg-[#320A38]"
+    :style="{ top: `${position.y}px`, left: `${position.x}px` }"
+    @mousedown="startDrag"
+    @click="toggleChat"
+  >
+    <span
+      class="flex h-full cursor-pointer items-center justify-center text-[25px] text-white"
+    >
+      <i class="pi pi-comments"></i>
+    </span>
   </div>
   <Footer />
 </template>
@@ -237,6 +249,31 @@ const route = useRoute();
 const newsItem = ref(null);
 const newsId = route.params.id;
 
+const position = ref({ x: 100, y: 100 });
+let isDragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+const startDrag = (event) => {
+  isDragging = true;
+  offsetX = event.clientX - position.value.x;
+  offsetY = event.clientY - position.value.y;
+  document.addEventListener("mousemove", drag);
+  document.addEventListener("mouseup", stopDrag);
+};
+
+const drag = (event) => {
+  if (isDragging) {
+    position.value.x = event.clientX - offsetX;
+    position.value.y = event.clientY - offsetY;
+  }
+};
+
+const stopDrag = () => {
+  isDragging = false;
+  document.removeEventListener("mousemove", drag);
+  document.removeEventListener("mouseup", stopDrag);
+};
 const formattedPublishTime = computed(() => {
   return newsItem.value?.publishTime
     ? moment(newsItem.value.publishTime).fromNow()

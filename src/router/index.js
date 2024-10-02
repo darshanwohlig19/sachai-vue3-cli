@@ -9,9 +9,15 @@ import Bookmark from "../views/Bookmark.vue";
 import Setting from "../views/Setting.vue";
 import MoreNews from "../views/MoreNews.vue";
 import NewsByTopics from "../views/NewsByTopics.vue";
+
 import TermsandCondition from "../views/TermsandCondition.vue";
 import PrivacyPolicy from "../views/PrivacyPolicy.vue";
 import Profile from "../views/Profile.vue";
+
+
+import SearchForMobile from "@/views/SearchForMobile.vue";
+import Campaign from "@/views/CampaignPage.vue";
+import Latest from "@/views/LatestPage.vue";
 
 const routes = [
   {
@@ -76,6 +82,21 @@ const routes = [
     path: "/Profile",
     name: "Profile",
     component: Profile,
+  },
+    path: "/search",
+    name: "Search",
+    component: SearchForMobile,
+  },
+  {
+    path: "/Campaign",
+    name: "Campaign",
+    component: Campaign,
+  },
+  {
+    path: "/Latest",
+    name: "Latest",
+    component: Latest,
+
   },
 ];
 
