@@ -376,10 +376,7 @@
         :value="mobileProducts"
         :numVisible="1"
         :numScroll="1"
-
-
         class="carousel mobile-carousel"
-
         showIndicators
         circular
         :responsiveOptions="responsiveOptions"
