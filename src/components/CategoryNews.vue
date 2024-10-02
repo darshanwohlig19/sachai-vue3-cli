@@ -345,7 +345,6 @@ export default {
       loading,
 
       navigateToCampingNews,
-
     };
   },
 };

@@ -65,7 +65,6 @@ module.exports = {
         "between-md-max-sm-max": { min: "576px", max: "768px" },
         "between-xs-max-sm-max": { min: "310px", max: "577px" },
 
-
         xl: "1200px",
         "xl-max": { max: "1200px" },
         "1xl": "1024px",

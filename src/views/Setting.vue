@@ -27,7 +27,11 @@
           </ul>
         </nav>
       </div>
-      <button class="w-full bg-[#1E0627] text-white py-2 rounded-md mb-3">
+      <button
+        :disabled="isLoggingOut"
+        @click="handleLogout"
+        class="w-full bg-[#1E0627] text-white py-2 rounded-md mb-3"
+      >
         Logout
       </button>
       <button class="w-full text-gray-600 hover:text-gray-900 mb-3">

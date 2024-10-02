@@ -83,7 +83,7 @@ const routes = [
     component: Profile,
   },
   {
-    path: "/search",
+    path: "/Search",
     name: "Search",
     component: SearchForMobile,
   },

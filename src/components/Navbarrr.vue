@@ -15,13 +15,25 @@
         <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
-            <img src="../assets/Home.svg" alt="" />
+            <img
+              v-if="route.path === '/'"
+              src="@/assets/active_home.svg"
+              alt="Active Home Image"
+            />
+            <img v-else src="@/assets/Home.svg" alt="Home Image" />
+
             <RouterLink class="nav-items" active-class="active-link" to="/"
               >Home</RouterLink
             >
           </div>
           <div class="hidden lg:flex head-navs gap-2" v-if="isLoggedIn">
-            <img src="../assets/Astrology.svg" alt="" />
+            <img
+              v-if="route.path === '/Astrology'"
+              src="@/assets/active_astrology.svg"
+              alt="Active Home Image"
+            />
+            <img v-else src="@/assets/Astrology.svg" alt="Home Image" />
+
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -36,14 +48,26 @@
             @mouseover="showDropdown = true"
             @mouseleave="hideDropdown"
           >
-            <img src="../assets/svg/category.svg" />
-            <RouterLink
-              class="nav-items hover:text-[var(--hover-color)]"
-              to=""
+            <img
+              v-if="showDropdown"
+              src="../assets/active_catogery.svg"
+              alt="Active Category"
+              height="14px"
+              width="14px"
+            />
+            <img
+              v-else
+              src="../assets/svg/category.svg"
+              alt="Category"
+              height="14px"
+              width="14px"
+            />
+            <span
+              class="nav-items text-[14px] font-lato"
               :style="{
-                '--hover-color': '#FF0053',
+                color: showDropdown ? '#FF0053' : hoverColor,
               }"
-              >Category</RouterLink
+              >Category</span
             >
             <!-- <div class="nav-items" active-class="active-link">Category</div> -->
             <div
@@ -224,7 +248,12 @@
           </div>
 
           <div class="hidden lg:flex head-navs gap-2">
-            <img src="../assets/Bookmark.svg" alt="" />
+            <img
+              v-if="route.path === '/Bookmark'"
+              src="@/assets/active_bookmark.svg"
+              alt="Active Bookmark Image"
+            />
+            <img v-else src="@/assets/Bookmark.svg" alt="Bookmark Image" />
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -294,7 +323,7 @@
           /> -->
           <router-link
             class="md:hidden sm-max:block"
-            to="/search"
+            to="/Search"
           ></router-link>
 
           <a class="block lg:hidden">
@@ -394,18 +423,28 @@
               <img src="../assets/search.svg" alt="" />
             </div>
           </router-link>
-          <router-link v-if="isLoggedIn">
+          <router-link v-if="isLoggedIn" to="/Setting">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
-              <img src="../assets/Settings.svg" alt="" />
+              <img
+                v-if="route.path === '/Setting'"
+                src="@/assets/active_setting.svg"
+                alt="Active Setting Image"
+              />
+              <img v-else src="@/assets/Settings.svg" alt="Setting Image" />
             </div>
           </router-link>
-          <router-link v-if="isLoggedIn">
+          <router-link v-if="isLoggedIn" to="/Profile">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
-              <!-- <img src="../assets/Accounts.svg" alt="" /> -->
+              <img
+                v-if="route.path === '/Profile'"
+                src="@/assets/active_account.svg"
+                alt="Active Account Image"
+              />
+              <img v-else src="@/assets/Account.svg" alt="Account Image" />
             </div>
           </router-link>
 
@@ -488,10 +527,10 @@
     <!-- Popup Confirmation -->
     <div
       v-if="isPopupVisible"
-      class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50"
+      class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50 bg-[#000000b0]"
       @click="handleBackgroundClick"
     >
-      <div class="bg-white p-5 sm:p-6 rounded-[18px] shadow-lg" @click.stop>
+      <div class="bg-white p-4 sm:p-6 rounded-[18px] shadow-lg" @click.stop>
         <p class="mt-2 text-[#121212] font-lato font-bold font-[24px]">
           Are you sure you want to logout?
         </p>
@@ -519,9 +558,11 @@ import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
 import { useToast } from "primevue/usetoast";
 import moment from "moment"; // Import moment.js
+import { useRoute } from "vue-router";
 
 // const isMenuOpen = ref(false);
 // const isDropdownOpen = ref(false);
+const route = useRoute();
 const categories = ref([]);
 const visibleRight = ref(false);
 const newsItems = ref([]);

@@ -588,9 +588,9 @@ const verifyOtp = async () => {
         router.push("/");
       }, 0);
       toast.add({
-        severity: "success ",
-        summary: "login Successfull",
-
+        severity: "success",
+        summary: "Logged in successfully!",
+        summary2: "Welcome back!",
         group: "success",
         life: 3000,
       });
