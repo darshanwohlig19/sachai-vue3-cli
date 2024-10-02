@@ -402,13 +402,12 @@
           >
             <img src="../assets/Settings.svg" alt="Settings" />
           </button>
-          <router-link v-if="isLoggedIn">
-            <div
-              class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
-            >
-              <img src="../assets/Accounts.svg" alt="" />
-            </div>
-          </router-link>
+          <button
+            v-if="isLoggedIn"
+            class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+          >
+            <img src="../assets/Accounts.svg" alt="Accounts" />
+          </button>
 
           <div
             class="h-[34px] w-[34px] flex justify-center items-center lg:hidden"
