@@ -201,7 +201,7 @@
     </div>
     <button id="sign-in-button" class="hidden"></button>
     <!-- Mobile carousel with login on top -->
-    <div class="relative h-[100%] w-full mobile">
+    <div class="relative h-[100%] !overflow-hidden w-full mobile">
       <!-- Login Credentials -->
       <div
         class="absolute inset-0 flex items-center justify-center p-4 z-10 bg-opacity-75"
