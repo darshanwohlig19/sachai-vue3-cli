@@ -62,7 +62,7 @@ const routes = [
     component: NewsByTopics,
   },
   {
-    path: "/Search",
+    path: "/search",
     name: "Search",
     component: SearchForMobile,
   },
