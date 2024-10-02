@@ -387,20 +387,21 @@
               </div>
             </div> -->
           </a>
-          <router-link class="lg:hidden block">
+          <button class="lg:hidden block" @click="$router.push('/search')">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
-              <img src="../assets/search.svg" alt="" />
+              <img src="../assets/search.svg" alt="Search" />
             </div>
-          </router-link>
-          <router-link v-if="isLoggedIn">
-            <div
-              class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
-            >
-              <img src="../assets/Settings.svg" alt="" />
-            </div>
-          </router-link>
+          </button>
+
+          <button
+            v-if="isLoggedIn"
+            @click="$router.push('/Setting')"
+            class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+          >
+            <img src="../assets/Settings.svg" alt="Settings" />
+          </button>
           <router-link v-if="isLoggedIn">
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
