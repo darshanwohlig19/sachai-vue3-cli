@@ -144,7 +144,6 @@ import Paginator from "primevue/paginator";
 import Navbarrr from "@/components/Navbarrr.vue";
 import fallbackImage2 from "../common/config/GlobalConstants";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
-
 const news = ref([]);
 const currentPage = ref(0);
 const rowsPerPage = ref(5);
