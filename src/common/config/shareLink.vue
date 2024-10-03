@@ -108,6 +108,15 @@ import chainLink from "@/assets/svg/chain.svg";
 // import CopyLink from "@/assets/svg/copyLink.svg";
 
 export default {
+  data() {
+    return {
+      faceBookLogo,
+      xLogo,
+      linkDinLogo,
+      whatsappLogo,
+      chainLink,
+    };
+  },
   props: {
     isVisible: {
       type: Boolean,
