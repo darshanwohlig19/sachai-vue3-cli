@@ -71,13 +71,18 @@
                   <div
                     v-for="news in slotProps.data.news.slice(0, 5)"
                     :key="news._id"
-                    class="flex gap-3 rounded-[4px] bg-white h-auto p-2"
+                    class="flex gap-3 rounded-[4px] bg-white h-autoc p-2"
                     style="box-shadow: 0px 0px 5px 2px #0000000f"
                     @click="navigateToCategoryDetail(news._id)"
                   >
                     <img
-                      :src="news.imgixUrlHighRes"
-                      class="w-[58px] h-[55px] object-cover rounded"
+                      :src="news.imgixUrlHighRes || fallbackImage"
+                      class="h-[58px] w-[55px] rounded"
+                      :class="
+                        news?.imgixUrlHighRes
+                          ? 'object-cover'
+                          : 'object-contain'
+                      "
                       alt="News image"
                     />
                     <p class="multiline-text fonttt">
@@ -106,12 +111,13 @@ import Button from "./ViewAll.vue";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import { useRouter } from "vue-router";
+import fallbackImage2 from "../common/config/GlobalConstants";
 
 const categories = ref([]);
 const router = useRouter();
 const loading = ref(true);
 const noNews = ref(false); // Optional: Use this if you need to track if no news is found
-
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 const numberOfItems = ref(4); // Default to 4 for large screens
 
 const navigateToCategoryDetail = (id) => {

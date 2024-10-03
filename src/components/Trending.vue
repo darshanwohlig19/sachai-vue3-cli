@@ -77,7 +77,7 @@
                     <div class="relative h-[234px] w-[100%]">
                       <img
                         class="absolute inset-0 object-cover h-full w-full filter blur-sm"
-                        :src="slotProps.data.imgixUrlHighRes"
+                        :src="slotProps.data.imgixUrlHighRes || fallbackImage"
                       />
                       <div
                         class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
@@ -88,7 +88,8 @@
                     >
                       <img
                         class="object-contain h-full w-[100%]"
-                        :src="slotProps.data.imgixUrlHighRes"
+                        :src="slotProps.data.imgixUrlHighRes 
+                        || fallbackImage"
                       />
                     </div>
                   </div>
@@ -214,6 +215,8 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 import moment from "moment";
 // import { ProductService } from "../../src/assets/service/ProductService";
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 
 const blogs = ref([]);
 console.log("opp", blogs);

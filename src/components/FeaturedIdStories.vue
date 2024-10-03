@@ -96,7 +96,8 @@ import moment from "moment";
 // import { useRoute, useRouter } from "vue-router";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
-
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 const router = useRouter();
 
 const props = defineProps({

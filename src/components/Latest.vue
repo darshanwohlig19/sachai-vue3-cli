@@ -143,10 +143,11 @@ import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 
 const route = useRoute();
 const router = useRouter();
-
 const blogs = ref([]);
 const relatedNews = ref([]);
 const screenWidth = ref(window.innerWidth);

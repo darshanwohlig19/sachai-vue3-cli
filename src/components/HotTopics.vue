@@ -22,7 +22,8 @@
       <div class="flex w-[20%] justify-center items-center">
         <a :href="`${SACHAI_NEWS_URL}${item._id}`">
           <img
-            class="h-[51px] w-[51px] rounded-md object-cover"
+            class="h-[51px] w-[51px] rounded-md"
+            :class="item?.imgixUrlHighRes ? 'object-cover' : 'object-contain'"
             :src="item?.imgixUrlHighRes || fallbackImage"
             alt=""
           />

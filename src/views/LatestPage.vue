@@ -141,16 +141,15 @@ import HotTopics from "@/components/HotTopics.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
 import Paginator from "primevue/paginator"; // Ensure PrimeVue paginator is imported
 import { useToast } from "primevue/usetoast";
-// const news = ref([]);
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 const toast = useToast();
-
 const paginatedNews = ref([]); // Holds the news items for the current page
 const loading = ref(false); // Loading state
 const languageId = ref("6421a32aa020a23deacecf92");
 const currentPage = ref(1); // Current page (UI page)
 const rowsPerPage = ref(5); // Number of items per page
 const totalRecords = ref(0); // Total news records in API
-const fallbackImage = "path/to/fallback/image.jpg";
 const router = useRouter();
 let newsCache = []; // Holds fetched news
 

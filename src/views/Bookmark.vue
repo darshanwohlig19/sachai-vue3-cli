@@ -120,10 +120,10 @@ import Navbarrr from "@/components/Navbarrr.vue";
 import { useRouter } from "vue-router";
 import Paginator from "primevue/paginator";
 import { useToast } from "primevue/usetoast"; // Import the toast composable
-
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 const router = useRouter();
 const toast = useToast(); // Create a toast instance
-
 const BookmarkData = ref([]);
 const paginatedData = ref([]);
 const rowsPerPage = 5;

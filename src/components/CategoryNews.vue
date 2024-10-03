@@ -230,6 +230,7 @@ import Button from "./ViewAll.vue";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import { useRouter } from "vue-router";
+import fallbackImage2 from "../common/config/GlobalConstants";
 
 export default {
   props: {
@@ -255,7 +256,7 @@ export default {
     const isMobileOrTablet = ref(window.innerWidth < 768);
     const screenWidth = ref(window.innerWidth);
     const loading = ref(true); // Add loading state
-
+    const fallbackImage = fallbackImage2.variables.fallbackImage;
     const fetchNewsForCategory = async (categoryId) => {
       const payload = {
         categoryId,
@@ -359,9 +360,8 @@ export default {
       displayedNews,
       screenWidth,
       Button,
-
+      fallbackImage,
       loading,
-
       navigateToCampingNews,
     };
   },

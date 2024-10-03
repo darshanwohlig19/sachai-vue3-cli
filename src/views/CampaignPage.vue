@@ -40,7 +40,7 @@
                   <div class="absolute w-[100%] h-[100%]">
                     <img
                       class="absolute inset-0 object-cover h-full w-full filter blur-sm"
-                      :src="imageSource || fallbackImage"
+                      :src="item?.imgixUrlHighRes || fallbackImage"
                     />
                     <div
                       class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
@@ -51,7 +51,7 @@
                   >
                     <img
                       class="object-contain h-full w-[100%]"
-                      :src="imageSource || fallbackImage"
+                      :src="item?.imgixUrlHighRes || fallbackImage"
                     />
                   </div>
                 </div>
@@ -144,7 +144,7 @@ import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
 import Paginator from "primevue/paginator"; // Ensure PrimeVue paginator is imported
-import fallbackImage from "../common/config/GlobalConstants";
+import fallbackImage2 from "../common/config/GlobalConstants";
 
 import { useToast } from "primevue/usetoast";
 // const news = ref([]);
@@ -154,7 +154,7 @@ const loading = ref(false); // Loading state
 const languageId = ref("6421a32aa020a23deacecf92");
 const currentPage = ref(1); // Current page (UI page)
 const rowsPerPage = ref(5); // Number of items per page
-const imageSource = null;
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 const totalRecords = ref(0); // Total news records in API
 const router = useRouter();
 let newsCache = []; // Holds fetched news
@@ -256,5 +256,4 @@ const addBookmark = async (news) => {
 onMounted(() => {
   fetchNews();
 });
-
 </script>

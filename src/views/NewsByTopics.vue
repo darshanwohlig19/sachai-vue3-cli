@@ -142,8 +142,9 @@ import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
 import Navbarrr from "@/components/Navbarrr.vue";
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 
-// Refs for storing news and pagination state
 const news = ref([]);
 const currentPage = ref(0);
 const rowsPerPage = ref(5);
@@ -152,7 +153,6 @@ const route = useRoute();
 const router = useRouter();
 const topic = route.params.topic;
 const categoryName = topic;
-const fallbackImage = "path/to/fallback/image.jpg"; // Replace with your fallback image URL
 
 const navigateToMoreNews = (id) => {
   router.push(`/news/${id}`);
