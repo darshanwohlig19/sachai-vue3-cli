@@ -128,7 +128,7 @@
                     <div class="gap-1 text-white text-xs ml-3 mb-2">
                       <div class="leading-3 sm:w-full md:w-full">
                         <a
-                          :href="`${SACHAI_NEWS_URL}${slotProps.data._id}`"
+                          @click="navigateToTrending(slotProps.data._id)"
                           style="line-height: 1.2"
                           class="hover:text-current text-[14px] sm:text-[16px] md:text-[16px] fontCustom text-white"
                         >
@@ -208,6 +208,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useRouter } from "vue-router";
 import axios from "axios";
 import moment from "moment";
 // import { ProductService } from "../../src/assets/service/ProductService";
@@ -221,6 +222,8 @@ const languageId = "6421a32aa020a23deacecf92";
 const screenWidth = ref(window.innerWidth);
 const loading = ref(true);
 const error = ref(false);
+const router = useRouter();
+
 const responsiveOptions = [
   {
     breakpoint: "1400px",
@@ -319,7 +322,7 @@ const formatPublishTime = (publishTime) => {
 };
 
 const navigateToTrending = (id) => {
-  window.location.href = `${SACHAI_NEWS_URL}${id}`;
+  router.push(`/news/${id}`);
 };
 
 const handleResize = () => {
