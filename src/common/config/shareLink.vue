@@ -128,7 +128,7 @@ export default {
 
 <style scoped>
 .social-icon {
-  width: 24px; /* Adjust icon size if needed */
-  height: 24px; /* Adjust icon size if needed */
+  width: 24px;
+  height: 24px;
 }
 </style>
