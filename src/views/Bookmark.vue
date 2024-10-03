@@ -63,7 +63,8 @@
   </div>
 </template>
 <script setup>
-import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import { ref, onMounted } from "vue";
 import moment from "moment";
 import Navbarrr from "@/components/Navbarrr.vue";
@@ -78,22 +79,22 @@ const navigateToNewsDetail = (id) => {
 
 const Bookmark = async () => {
   try {
+    const payload = {
+      language: "English",
+      page: 1,
+    };
     const token = localStorage.getItem("apiDataToken");
     if (!token) {
       throw new Error("No authentication token found");
     }
-    const response = await axios.post(
-      "https://api-uat.newsshield.io/bookmark/getBookmarkData",
-      {
-        language: "English",
-        page: 1,
-      },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_BOOKMARK_DATA}`,
+      payload
     );
+    // const response = await axios.post(
+    //   "https://api-uat.newsshield.io/bookmark/getBookmarkData",
+    // );
     console.log("data", response);
     BookmarkData.value = response.data;
     console.log(response.data);
@@ -103,6 +104,10 @@ const Bookmark = async () => {
 };
 
 const removeBookmark = async (id) => {
+  const newStatus = "Disabled";
+  const payload = {
+    status: newStatus,
+  };
   try {
     const token = localStorage.getItem("apiDataToken");
 
@@ -110,17 +115,15 @@ const removeBookmark = async (id) => {
       throw new Error("No authentication token found");
     }
 
-    const newStatus = "Disabled";
     console.log("This is id", id);
-    const res = await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${id}`,
-      { status: newStatus },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
+    const res = await apiService.apiCall(
+      "post",
+      `${apiConfig.ADD_BOOKMARK}/${id}`,
+      payload
     );
+    // const res = await axios.post(
+    //   `https://api-uat.newsshield.io/bookmark/addBookmark/${id}`
+    // );
     if (res.status === 200) {
       // Remove the disabled news item from the BookmarkData array
       BookmarkData.value = BookmarkData.value.filter((item) => item._id !== id);

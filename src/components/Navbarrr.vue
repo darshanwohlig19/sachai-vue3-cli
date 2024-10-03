@@ -508,7 +508,6 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
@@ -620,13 +619,17 @@ const handleLogout = async () => {
 
     const apiDataToken = localStorage.getItem("apiDataToken");
     if (apiDataToken) {
-      const response = await axios.post(
-        "https://api-uat.newsshield.io/user/logoutEvent",
-        {},
-        {
-          headers: { Authorization: `${apiDataToken}` },
-        }
+      const response = await apiService.apiCall(
+        "post",
+        `${apiConfig.LOGOUT_EVENT}`
       );
+      // const response = await axios.post(
+      //   "https://api-uat.newsshield.io/user/logoutEvent",
+      //   {},
+      //   {
+      //     headers: { Authorization: `${apiDataToken}` },
+      //   }
+      // );
       if (response.status === 200) {
         console.log(`BEFORE ${localStorage.getItem("news-")}`);
         localStorage.removeItem("apiDataToken");

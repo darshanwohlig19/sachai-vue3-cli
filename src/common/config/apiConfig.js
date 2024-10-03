@@ -49,5 +49,9 @@ config.GET_TRENDING_TOPICS = config.PORT_IP.LOGIN + "/news/getTrendingTopics";
 
 //Navbar
 config.SEARCH_NEWS_FROM_WEB = config.PORT_IP.LOGIN + "/news/searchNewsFromWeb";
+config.LOGOUT_EVENT = config.PORT_IP.LOGIN + "/user/logoutEvent";
+
+//Bookmark
+config.GET_BOOKMARK_DATA = config.PORT_IP.LOGIN + "/bookmark/getBookmarkData";
 
 export default config;
