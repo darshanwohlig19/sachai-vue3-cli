@@ -97,9 +97,8 @@
 </template>
 
 <script setup>
-
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import axios from "axios";
+// import axios from "axios";
 import Carousel from "primevue/carousel";
 import Card from "primevue/card";
 import "primevue/resources/themes/saga-blue/theme.css"; // Theme CSS

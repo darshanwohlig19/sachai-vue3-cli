@@ -206,14 +206,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
-
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
-
 import moment from "moment";
 // import { ProductService } from "../../src/assets/service/ProductService";
 
@@ -221,7 +219,7 @@ const blogs = ref([]);
 console.log("opp", blogs);
 const news = ref([]);
 // const products = ref([]);
-const languageId = "6421a32aa020a23deacecf92";
+// const languageId = "6421a32aa020a23deacecf92";
 const screenWidth = ref(window.innerWidth);
 const loading = ref(true);
 const error = ref(false);
@@ -248,48 +246,20 @@ const responsiveOptions = [
     numVisible: 1,
     numScroll: 1,
   },
-  methods: {
-    async fetchBlogs() {
-      this.loading = true;
-      this.error = false;
-      const payload = {
-        language: "6421a32aa020a23deacecf92",
-        categoryId: "63d90e4098d783ac0cbe2310",
-      };
-      try {
-        const response = await apiService.apiCall(
-          "post",
-          `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
-          payload
-        );
-        if (response.data.length === 0) {
-          this.error = true;
-        } else {
-          this.blogs = response.data.slice(0, 3);
-          this.news = response.data.slice(6, 12);
-        }
-      } catch (error) {
-        this.error = true;
-      } finally {
-        this.loading = false;
-      }
-    },
-    truncateText(text, maxLength) {
-      if (text.length > maxLength) {
-        return text.slice(0, maxLength) + "...";
-      }
-      return text;
-    },
-    formatPublishTime(publishTime) {
-      return moment(publishTime).fromNow();
-    },
-    updateScreenWidth() {
-      this.screenWidth = window.innerWidth;
-    },
-    navigateToTrending(id) {
-      if (id) {
-        this.$router.push(`/news/${id}`);
-      }
+];
+
+const fetchBlogs = async () => {
+  loading.value = true;
+  error.value = false;
+  try {
+    const payload = {
+      language: "6421a32aa020a23deacecf92",
+      categoryId: "63d90e4098d783ac0cbe2310",
+    };
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+      payload
     );
     if (response.data.length === 0) {
       error.value = true;
@@ -366,7 +336,6 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", handleResize);
 });
 </script>
-
 <style>
 .p-carousel-content {
   border-radius: 0 10px 10px 0 !important;
