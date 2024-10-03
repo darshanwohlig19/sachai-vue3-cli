@@ -196,7 +196,7 @@
             />
           </div>
           <div class="font-14 p-2 h">
-            <div class="headline-tuncate">
+            <div class="headline-tuncate-right">
               {{ blog.headline || "headline" }}
             </div>
           </div>
@@ -395,6 +395,13 @@ onBeforeUnmount(() => {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1 !important; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.headline-tuncate-right {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2 !important; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }
