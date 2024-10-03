@@ -53,6 +53,7 @@
 
       <div class="flex justify-center space-x-4 mb-2">
         <Button
+          @click="navigateToInviteLink(inviteLink)"
           size="icon"
           variant="outline"
           class="rounded-full bg-[#1877F2] text-white hover:bg-[#1877F2]/90"
@@ -61,6 +62,7 @@
         </Button>
 
         <Button
+          @click="navigateToInviteLink(inviteLink)"
           size="icon"
           variant="outline"
           class="rounded-full bg-black text-white hover:bg-black/90"
@@ -68,6 +70,7 @@
           <img :src="xLogo" alt="X Logo" class="social-icon" />
         </Button>
         <Button
+          @click="navigateToInviteLink(inviteLink)"
           size="icon"
           variant="outline"
           class="rounded-full bg-[#25D366] text-white hover:bg-[#25D366]/90"
@@ -75,6 +78,7 @@
           <img :src="whatsappLogo" alt="WhatsApp Logo" class="social-icon" />
         </Button>
         <Button
+          @click="navigateToInviteLink(inviteLink)"
           size="icon"
           variant="outline"
           class="rounded-full bg-[#0A66C2] text-white hover:bg-[#0A66C2]/90"
@@ -136,6 +140,10 @@ export default {
   methods: {
     copyToClipboard(text) {
       navigator.clipboard.writeText(text);
+    },
+    navigateToInviteLink(link) {
+      // Open the invite link in a new tab
+      window.open(link, "_blank");
     },
   },
 };
