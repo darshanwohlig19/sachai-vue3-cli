@@ -31,14 +31,16 @@
         Your invite link
       </h2>
 
-      <div class="relative w-full flex justify-center">
+      <div
+        class="flex items-center bg-[#F8F8F8] overflow-hidden rounded border h-[40px] w-[475px]"
+      >
         <Input
           :value="inviteLink"
           readOnly
-          class="border p-2 w-[475px] h-[46px] rounded font-lato text-sm"
+          class="w-full h-full ml-[1px] bg-[#F8F8F8]"
         />
         <button
-          class="absolute right-[85px] top-1/2 transform -translate-y-1/2"
+          class="text-white p-2 w-[32px] h-[32px] bg-[#F8F8F8]"
           @click="copyToClipboard(inviteLink)"
         >
           <img :src="CopyLink" />
@@ -84,7 +86,7 @@
         @click="copyToClipboard(inviteLink)"
       >
         Copy my link
-        <img :src="chainLink" />
+        <img :src="chainLink" class="ml-2" />
       </Button>
 
       <div class="text-center">
@@ -105,7 +107,7 @@ import xLogo from "@/assets/svg/x.svg";
 import linkDinLogo from "@/assets/svg/linkdin.svg";
 import whatsappLogo from "@/assets/svg/whatsapp.svg";
 import chainLink from "@/assets/svg/chain.svg";
-// import CopyLink from "@/assets/svg/copyLink.svg";
+import CopyLink from "@/assets/svg/copy.svg";
 
 export default {
   data() {
@@ -115,6 +117,7 @@ export default {
       linkDinLogo,
       whatsappLogo,
       chainLink,
+      CopyLink,
     };
   },
   props: {
@@ -127,6 +130,7 @@ export default {
       required: true,
     },
   },
+
   methods: {
     copyToClipboard(text) {
       navigator.clipboard.writeText(text);
