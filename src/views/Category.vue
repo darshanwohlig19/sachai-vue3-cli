@@ -143,7 +143,8 @@ import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
 import Navbarrr from "@/components/Navbarrr.vue";
-
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 // Refs for storing news and pagination state
 const news = ref([]);
 const loading = ref(true); // Add loading state
@@ -161,29 +162,31 @@ const navigateToMoreNews = (id) => {
 
 // Fetching news based on category ID
 const fetchNews = async () => {
+  const payload = {
+    categoryId,
+  };
   try {
     loading.value = true; // Set loading to true before fetching news
     const token = localStorage.getItem("apiDataToken");
     let response;
 
     if (token == null) {
-      response = await axios.post(
-        "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-        {
-          categoryId,
-        }
+      response = await apiService.apiCall(
+        "post",
+        `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+        payload
       );
+      // response = await axios.post(
+      //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+      //   {
+      //     categoryId,
+      //   }
+      // );
     } else {
-      response = await axios.post(
-        "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-        {
-          categoryId,
-        },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
+      response = await apiService.apiCall(
+        "post",
+        `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+        payload
       );
     }
     news.value = response.data; // Set the news data

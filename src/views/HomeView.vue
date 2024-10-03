@@ -27,7 +27,8 @@ import MoreNews from "@/components/MoreNews.vue";
 import CarouselCat from "@/components/Catogries_carousel.vue";
 import Campaign from "@/components/Campaign.vue";
 import Navbarrr from "@/components/Navbarrr.vue";
-import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import FeaturedNews from "@/components/FeaturedNews.vue";
@@ -61,12 +62,20 @@ export default {
     };
 
     const fetchCategories = async () => {
+      const languageId = "6421a32aa020a23deacecf92";
+
+      const payload = {
+        langauge: languageId,
+      };
       try {
-        const languageId = "6421a32aa020a23deacecf92";
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/category/getAllCat",
-          { langauge: languageId }
+        const response = await apiService.apiCall(
+          "post",
+          `${apiConfig.GET_ALL_CATEGORY}`,
+          payload
         );
+        // const response = await axios.post(
+        //   "https://api-uat.newsshield.io/category/getAllCat"
+        // );
         categories.value = response.data;
 
         // Set default category as the first one

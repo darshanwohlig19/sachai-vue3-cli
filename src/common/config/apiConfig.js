@@ -54,4 +54,7 @@ config.LOGOUT_EVENT = config.PORT_IP.LOGIN + "/user/logoutEvent";
 //Bookmark
 config.GET_BOOKMARK_DATA = config.PORT_IP.LOGIN + "/bookmark/getBookmarkData";
 
+//Login
+config.LOGIN_V2 = config.PORT_IP.LOGIN + "/user/loginv2/";
+
 export default config;

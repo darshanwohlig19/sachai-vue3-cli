@@ -39,7 +39,8 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import moment from "moment"; // Import moment
 
 export default {
@@ -54,15 +55,21 @@ export default {
 
   methods: {
     async fetchBlogs() {
+      const payload = {
+        language: this.languageId,
+        page: 1,
+      };
       try {
         this.loading = true; // Set loading to true when starting the API call
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
-          {
-            language: this.languageId,
-            page: 1,
-          }
+        const response = await apiService.apiCall(
+          "post",
+          `${apiConfig.GET_ALL_BLOGS_FOR_WEB}`,
+          payload
         );
+        // const response = await axios.post(
+        //   "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
+
+        // );
         this.hot = response.data.slice(0, 10); // Assign the fetched blogs to 'hot'
       } catch (error) {
         console.error("Error fetching blogs:", error);

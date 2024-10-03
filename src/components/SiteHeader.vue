@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <section>
     <div class="flex justify-between mt-10 mb-10 mx-[20px] sm:mx-[60px]">
       <div class="flex items-center w-[30%] justify-between">
@@ -337,4 +337,4 @@ export default {
 .shadow-lg {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-</style>
+</style> -->

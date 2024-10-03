@@ -401,6 +401,8 @@
 
 <script setup>
 import { ref, onMounted, computed, defineEmits } from "vue";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 import { ProductService } from "../assets/service/ProductService";
@@ -755,7 +757,12 @@ const signInWithApple = async () => {
 };
 
 const sendUserDataToApi = async (name, email, id) => {
-  const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
+  const apiUrl = await apiService.apiCall(
+    "post",
+    `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+    payload
+  );
+  // const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
   const payload = {
     auth0: {
       name: name,
