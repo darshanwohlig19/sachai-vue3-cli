@@ -88,8 +88,7 @@
                     >
                       <img
                         class="object-contain h-full w-[100%]"
-                        :src="slotProps.data.imgixUrlHighRes 
-                        || fallbackImage"
+                        :src="slotProps.data.imgixUrlHighRes || fallbackImage"
                       />
                     </div>
                   </div>
