@@ -32,7 +32,7 @@
         >
           <div class="rounded-[10px]">
             <img
-              :src="news.imgixUrlHighRes"
+              :src="news.imgixUrlHighRes || fallbackImage"
               class="relative z-10 h-[170px] w-full rounded-[10px] object-fill"
               alt=""
               @click="navigateToFeaturedDetail(news._id)"
@@ -96,12 +96,15 @@ import {
   defineProps,
   // toRefs,
 } from "vue";
+
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 
 const route = useRoute();
 const router = useRouter();

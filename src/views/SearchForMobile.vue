@@ -60,12 +60,12 @@
 <script>
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
-
+import fallbackImage2 from "../common/config/GlobalConstants";
 import axios from "axios";
 export default {
   setup() {
     const router = useRouter();
-
+    const fallbackImage = fallbackImage2.variables.fallbackImage;
     const searchQuery = ref("");
     const searchResults = ref([]);
     const searchResultsDropdown = ref(null);
@@ -161,14 +161,11 @@ export default {
       searchInput,
       expandInput,
       inputClass,
-
       categories,
-
       searchQuery,
-
       handleSearch,
       searchResults,
-
+      fallbackImage,
       searchResultsDropdown,
       navigateToNewsDetail,
     };

@@ -82,7 +82,7 @@
                     <div class="relative h-[234px] w-[100%]">
                       <img
                         class="absolute inset-0 object-cover h-full w-full filter blur-sm"
-                        :src="slotProps.data.imgixUrlHighRes"
+                        :src="slotProps.data.imgixUrlHighRes || fallbackImage"
                       />
                       <div
                         class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
@@ -93,7 +93,7 @@
                     >
                       <img
                         class="object-contain h-full w-[100%]"
-                        :src="slotProps.data.imgixUrlHighRes"
+                        :src="slotProps.data.imgixUrlHighRes || fallbackImage"
                       />
                     </div>
                   </div>
@@ -178,7 +178,7 @@
           <div>
             <div class="font-16 headline-tuncate">{{ item.headline }}</div>
             <div class="font-133 summary-tuncate">{{ item.summary }}</div>
-            <div v-if="index < 2" class="border-1 sm-max:mt-3 mt-2"></div>
+            <div v-if="index < 2" class="border_11 sm-max:mt-3 mt-2"></div>
           </div>
         </div>
       </div>
@@ -223,6 +223,9 @@ import moment from "moment";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
+
 const blogs = ref([]);
 console.log("opp", blogs);
 const news = ref([]);
@@ -385,7 +388,7 @@ onBeforeUnmount(() => {
   object-fit: contain; /* Ensures the image fits within the specified dimensions */
 }
 .dividerrr {
-  height: 1px;
+  height: 0.4px;
   background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
   width: 100%;
 }
@@ -393,6 +396,9 @@ onBeforeUnmount(() => {
   height: 100%;
   background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
   width: 1px;
+}
+.border_11 {
+  border-bottom: 2px solid #f3f3f3;
 }
 .summary-tuncate {
   display: -webkit-box;

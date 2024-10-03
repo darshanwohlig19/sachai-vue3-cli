@@ -1,5 +1,8 @@
 export default {
-  variables: {},
+  variables: {
+    fallbackImage:
+      "https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp",
+  },
 
   companyDetails: {},
   sessionChecked: false, // Flag to track if session check has been performed

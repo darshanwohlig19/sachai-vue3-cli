@@ -104,6 +104,8 @@ import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
 
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 const router = useRouter();
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately

@@ -77,7 +77,7 @@
           <div class="w-[20%]">
             <img
               class="rounded-[6px] h-[47px]"
-              :src="blog.imgixUrlHighRes"
+              :src="blog.imgixUrlHighRes || fallbackImage"
               alt=""
             />
           </div>
@@ -127,6 +127,8 @@ import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRouter } from "vue-router";
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 
 const blogs = ref([]);
 const blogs1 = ref([]);
@@ -136,7 +138,6 @@ const error = ref(false);
 const router = useRouter(); // Use Vue Router
 
 const languageId = ref("6421a32aa020a23deacecf92");
-const fallbackImage = "path/to/your/fallback-image.jpg"; // Define fallback image
 
 function formatPublishTime(publishTime) {
   return moment(publishTime).fromNow();

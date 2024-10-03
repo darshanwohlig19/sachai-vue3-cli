@@ -10,7 +10,9 @@
       <div class="flex justify-between w-full items-center mb-3">
         <div class="flex flex-row items-center gap-2">
           <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
-          <div class="text-[20px] font-bold font-lato">{{ headingText }}</div>
+          <div class="text-[20px] font-bold font-lato">
+            {{ headingText }}
+          </div>
         </div>
         <!-- Conditionally render button based on loading state and data -->
         <div v-if="!isLoading && blogs.length > 0">
@@ -155,6 +157,8 @@ const route = useRoute();
 const router = useRouter();
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 const blogs = ref([]);
 const relatedNews = ref([]);
 const screenWidth = ref(window.innerWidth);

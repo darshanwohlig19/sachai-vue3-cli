@@ -142,6 +142,7 @@ import apiConfig from "@/common/config/apiConfig";
 import { computed, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+import fallbackImage2 from "../common/config/GlobalConstants";
 
 export default {
   components: {
@@ -154,7 +155,7 @@ export default {
     const isLoading = ref(true); // Loader state
     const languageId = ref("6421a32aa020a23deacecf92");
     const router = useRouter();
-
+    const fallbackImage = fallbackImage2.variables.fallbackImage;
     async function fetchBlogs() {
       isLoading.value = true; // Start loading
       const payload = {
@@ -208,6 +209,7 @@ export default {
       navigateToCampingNews,
       isLoading, // Expose loader
       Button,
+      fallbackImage,
     };
   },
 };

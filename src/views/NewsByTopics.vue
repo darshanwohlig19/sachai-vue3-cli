@@ -5,7 +5,7 @@ b
     <div class="mx-[20px]">
       <div class="flex flex-col lg:flex-row gap-3 mt-3">
         <div
-          class="w-[100%] lg:w-[62%] flex flex-col gap-3 bg-white rounded-[10px] p-3"
+          class="w-[100%] lg:w-[62%] flex flex-col bg-white rounded-[10px] p-3"
         >
           <div class="flex flex-row items-center gap-1">
             <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
@@ -142,8 +142,8 @@ import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
 import Navbarrr from "@/components/Navbarrr.vue";
-
-// Refs for storing news and pagination state
+import fallbackImage2 from "../common/config/GlobalConstants";
+const fallbackImage = fallbackImage2.variables.fallbackImage;
 const news = ref([]);
 const currentPage = ref(0);
 const rowsPerPage = ref(5);
@@ -152,7 +152,6 @@ const route = useRoute();
 const router = useRouter();
 const topic = route.params.topic;
 const categoryName = topic;
-const fallbackImage = "path/to/fallback/image.jpg"; // Replace with your fallback image URL
 
 const navigateToMoreNews = (id) => {
   router.push(`/news/${id}`);
