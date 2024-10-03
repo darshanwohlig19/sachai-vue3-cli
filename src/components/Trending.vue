@@ -217,7 +217,6 @@ const blogs = ref([]);
 console.log("opp", blogs);
 const news = ref([]);
 // const products = ref([]);
-const SACHAI_NEWS_URL = "https://news.sachai.io/news/";
 const languageId = "6421a32aa020a23deacecf92";
 const screenWidth = ref(window.innerWidth);
 const loading = ref(true);
