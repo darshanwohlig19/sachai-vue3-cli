@@ -1,36 +1,26 @@
 <template>
-  <!-- Loader -->
-  <div
-    v-if="loading"
-    class="flex justify-center items-center h-full bg-white rounded-[10px] mt-3"
-  >
-    <!-- Loader component or spinner -->
-    <div class="text-center py-5">Loading...</div>
-  </div>
-
   <!-- No News Message -->
-  <div
-    v-else-if="!blogs.length"
-    class="flex justify-center items-center h-full text-center py-5 bg-white rounded-[10px] mt-3"
-  >
-    <div>No News Available</div>
-  </div>
-
   <!-- Main Content -->
   <div
-    v-else
-    class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-3 mt-3 justify-between bg-white rounded-[10px]"
+    class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-4 mt-3 justify-between bg-white rounded-[10px]"
   >
+    <!-- First Section -->
     <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col cursor-pointer">
+      <div v-if="loading">
+        <Skeleton width="100%" height="233px" />
+      </div>
       <div
+        v-else
         class="relative drop-shadow-lg"
         @click="navigateToCategory(blogs[0]?._id)"
       >
-        <img
-          :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
-          class="rounded-[8px] h-[234px] w-full"
-          alt=""
-        />
+        <div>
+          <img
+            :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
+            class="rounded-[8px] h-[234px] w-full"
+            alt=""
+          />
+        </div>
         <div
           class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
         ></div>
@@ -38,7 +28,7 @@
           <div
             class="text-[14px] sm:text-[16px] md:text-[16px] fontCustom text-white"
           >
-            {{ blogs[0]?.headline || "No Headline" }}
+            {{ blogs[0]?.headline }}
           </div>
           <div
             class="flex gap-2 text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"
@@ -49,8 +39,13 @@
           </div>
         </div>
       </div>
-
-      <div class="flex flex-row gap-10 mt-5 cursor-pointer">
+      <div v-if="loading" class="mt-5">
+        <div class="flex justify-between gap-3">
+          <Skeleton width="45%" height="20px" />
+          <Skeleton width="45%" height="20px" />
+        </div>
+      </div>
+      <div v-else class="flex flex-row gap-10 mt-5 cursor-pointer">
         <div
           class="font-14 multiline-truncate1"
           @click="navigateToCategory(blogs[1]?._id)"
@@ -66,8 +61,15 @@
         </div>
       </div>
     </div>
+
+    <!-- Second Section -->
     <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col justify-between">
-      <div v-for="blog in blogs1" :key="blog._id" class="below-sm:mt-4">
+      <div v-if="loading">
+        <Skeleton weight="100%" height="70px" />
+        <Skeleton weight="100%" height="70px" class="mt-5" />
+        <Skeleton weight="100%" height="70px" class="mt-5" />
+      </div>
+      <div v-else v-for="blog in blogs1" :key="blog._id" class="below-sm:mt-4">
         <div
           class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
           @click="navigateToCategory(blog._id)"
@@ -85,8 +87,17 @@
         </div>
       </div>
     </div>
+
+    <!-- Divider (hidden on small devices) -->
     <div class="border-1 lg:flex hidden"></div>
-    <div class="w-[100%] lg:w-[35%] flex flex-col justify-between">
+
+    <!-- Third Section -->
+    <div v-if="loading" class="w-[100%] lg:w-[35%]">
+      <Skeleton weight="100%" height="70px" />
+      <Skeleton weight="100%" height="70px" class="mt-5" />
+      <Skeleton weight="100%" height="70px" class="mt-5" />
+    </div>
+    <div v-else class="w-[100%] lg:w-[35%] flex flex-col justify-between">
       <div
         v-for="(item, index) in blogs2"
         :key="item._id"
@@ -94,7 +105,7 @@
       >
         <div class="flex flex-row gap-2" @click="navigateToCategory(item._id)">
           <div class="w-[5%] mt-2">
-            <img src="../assets/png/Group.png" alt="" />
+            <img src="@/assets/png/Group.png" alt="" />
           </div>
           <div class="flex flex-col w-[100%]">
             <div class="font-16 multiline-truncate3">{{ item.headline }}</div>

@@ -13,16 +13,39 @@
     </div>
 
     <!-- Loader -->
-    <div v-if="isLoading" class="text-center py-5">
-      <span>Loading...</span>
-    </div>
-
-    <!-- No Data Message -->
     <div
-      v-if="!isLoading && campaigns.length === 0 && campaigns1.length === 0"
-      class="text-center py-5"
+      v-if="isLoading"
+      class="w-[100%] flex flex-col lg:flex-row gap-2 sm:gap-4 mt-3"
     >
-      <span>No News Available</span>
+      <!-- Skeleton for Campaign News -->
+      <div class="w-[100%] sm:w-[100%] gap-4 flex justify-between">
+        <div class="w-[100%] sm:w-[100%] md-max:w-[100%] flex justify-between">
+          <Skeleton width="210px" height="100%"></Skeleton>
+          <Skeleton width="210px" height="100%"></Skeleton>
+          <Skeleton width="210px" height="100%"></Skeleton>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="flex justify-center">
+        <Skeleton class="skeleton w-full h-2"></Skeleton>
+      </div>
+
+      <!-- Skeleton for Campaigns List -->
+      <div
+        class="w-[100%] sm:w-[100%] sm:gap-2 md-max:w-[100%] flex flex-col justify-between md-max:gap-5"
+      >
+        <div
+          class="flex flex-row gap-2.5 items-center border-b border-gray-300 pb-3"
+          v-for="index in 3"
+          :key="index"
+        >
+          <div class="w-[15px]">
+            <Skeleton class="skeleton h-4 w-[15px]"></Skeleton>
+          </div>
+          <Skeleton class="skeleton h-4 w-[80%]"></Skeleton>
+        </div>
+      </div>
     </div>
 
     <!-- News Content -->
@@ -98,7 +121,7 @@
           ]"
         >
           <div class="w-[15px]">
-            <img src="../assets/png/Group.png" alt="" />
+            <img src="@/assets/png/Group.png" alt="" />
           </div>
           <div
             class="font-14 lines2 cursor-pointer"
