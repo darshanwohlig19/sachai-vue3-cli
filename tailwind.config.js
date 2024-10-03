@@ -52,33 +52,33 @@ module.exports = {
       },
 
       screens: {
-        xs: "350px",
+        xs: "350px", // Extra small mobile
         "xs-max": { max: "350px" },
-        sm: "576px",
+        sm: "576px", // Small mobile
         "sm-max": { max: "576px" },
-        "sm-425": { max: "425px" },
-        md: "769px",
+        "sm-425": { max: "425px" }, // Very small mobile
+        md: "769px", // Tablet
         "md-max": { max: "768px" },
-        lg: "992px",
+        lg: "992px", // Laptop
         "lg-max": { max: "992px" },
+        xl: "1200px", // Large laptop or small desktop
+        "xl-max": { max: "1200px" },
+        "1xl": "1024px", // Larger tablet or smaller laptop
+        "1xl-max": { max: "1024px" },
+        "2xl": "1320px", // Desktop
+        "2xl-max": { max: "1320px" },
+        "3xl": "1600px", // Larger desktop
+        "3xl-max": { max: "1600px" },
+        "4xl": "1850px", // Ultra-wide screen
+        "4xl-max": { max: "1850px" },
         "between-lg-max-md-max": { min: "768px", max: "992px" },
         "between-md-max-sm-max": { min: "576px", max: "768px" },
         "between-xs-max-sm-max": { min: "310px", max: "577px" },
-
-
-        xl: "1200px",
-        "xl-max": { max: "1200px" },
-        "1xl": "1024px",
-        "1xl-max": { max: "1024px" },
-        "2xl": "1320px",
-        "2xl-max": { max: "1320px" },
-        "3xl": "1600px",
-        "3xl-max": { max: "1600px" },
-        "4xl": "1850px",
-        "4xl-max": { max: "1850px" },
+        "between-Laptop-small": { min: "768px", max: "859px" },
         "between-Laptop": { min: "860px", max: "1024px" },
         "between-644-1024": { min: "644px", max: "1024px" },
-        "between-1011-1440": { min: "1011px", max: "1440px" },
+        "between-1011-1200": { min: "1011px", max: "1200px" },
+
         "between-2560-1875": { min: "2560px", max: "1875px" },
       },
     },

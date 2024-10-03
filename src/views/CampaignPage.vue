@@ -5,13 +5,6 @@
       <div
         class="w-[100%] lg:w-[62%] flex flex-col gap-3 bg-white rounded-[10px] p-3"
       >
-        <div class="flex flex-row items-center gap-1">
-          <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
-          <div class="heads1 capitalize">
-            {{ categoryName || "Error" }}
-          </div>
-        </div>
-
         <!-- Loading message -->
         <div v-if="loading" class="flex justify-center items-center h-[400px]">
           <p class="text-lg font-bold">Loading...</p>
@@ -19,19 +12,20 @@
 
         <!-- No News Available message -->
         <div
-          v-else-if="!news.length"
+          v-else-if="paginatedNews && paginatedNews.length === 0"
           class="flex justify-center items-center h-[400px]"
         >
           <p class="text-lg font-bold">No News Available</p>
         </div>
 
         <!-- Display news when available -->
-        <div>
+        <div v-else>
           <div
-            v-for="(item, index) in paginatedNews"
-            :key="index"
+            v-for="item in paginatedNews"
+            :key="item._id"
             class="w-full mt-3 h-[170px] bg-white drop-shadow-md flex rounded-lg"
           >
+            <!-- News item layout -->
             <div class="w-full bg-white flex gap-0 rounded-lg">
               <div class="w-[40%] h-full items-center">
                 <div
@@ -116,6 +110,7 @@
             </div>
           </div>
 
+          <!-- Paginator -->
           <Paginator
             :rows="rowsPerPage"
             :totalRecords="totalRecords"
@@ -133,71 +128,76 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
-import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import moment from "moment";
-
 import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
-import Paginator from "primevue/paginator";
 import Navbarrr from "@/components/Navbarrr.vue";
-import apiService from "@/services/apiServices";
-import apiConfig from "@/common/config/apiConfig";
+import Paginator from "primevue/paginator"; // Ensure PrimeVue paginator is imported
+
 import { useToast } from "primevue/usetoast";
-// Refs for storing news and pagination state
-const news = ref([]);
-const loading = ref(true); // Add loading state
-const currentPage = ref(0);
-const rowsPerPage = ref(5);
-const route = useRoute();
-const router = useRouter();
-const categoryId = route.params.slugOrId;
-const categoryName = route.query.category;
-const fallbackImage = "path/to/fallback/image.jpg"; // Replace with your fallback image URL
+// const news = ref([]);
 const toast = useToast();
-const navigateToMoreNews = (id) => {
-  router.push(`/news/${id}`);
-};
+const paginatedNews = ref([]); // Holds the news items for the current page
+const loading = ref(false); // Loading state
+const languageId = ref("6421a32aa020a23deacecf92");
+const currentPage = ref(1); // Current page (UI page)
+const rowsPerPage = ref(5); // Number of items per page
+const totalRecords = ref(0); // Total news records in API
+const fallbackImage = "path/to/fallback/image.jpg";
+const router = useRouter();
+let newsCache = []; // Holds fetched news
 
-// Fetching news based on category ID
-const fetchNews = async () => {
-  const payload = {
-    categoryId,
-  };
+// Fetch the news data from the API
+const fetchNews = async (page = 1) => {
+  loading.value = true;
   try {
-    loading.value = true; // Set loading to true before fetching news
-    const token = localStorage.getItem("apiDataToken");
-    let response;
-
-    if (token == null) {
-      response = await apiService.apiCall(
-        "post",
-        `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
-        payload
-      );
-      // response = await axios.post(
-      //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-      //   {
-      //     categoryId,
-      //   }
-      // );
-    } else {
-      response = await apiService.apiCall(
-        "post",
-        `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
-        payload
-      );
-    }
-    console.log(response);
-    news.value = response.data; // Set the news data
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/topic/apiForTopicsForWeb/65e17ea9842874dab8c45010`,
+      {
+        language: languageId.value,
+        page: page,
+        pageLimit: 5,
+      }
+    );
+    console.log("API response:", response.data); // Check the response here
+    newsCache = response.data; // Cache the fetched news
+    updatePaginatedNews(); // Update paginated news for display
+    totalRecords.value = response.data.length;
   } catch (error) {
     console.error("Error fetching news:", error);
-    news.value = []; // If there's an error, set news to an empty array
   } finally {
-    loading.value = false; // Set loading to false after fetching is complete
+    loading.value = false;
   }
+};
+
+// Update paginated news based on the current page
+const updatePaginatedNews = () => {
+  const start = (currentPage.value - 1) * rowsPerPage.value;
+  const end = start + rowsPerPage.value;
+  console.log("News Cache:", newsCache);
+  console.log("Paginated News:", newsCache.slice(start, end));
+  paginatedNews.value = newsCache.slice(start, end);
+};
+
+// Handle page change event in the paginator
+const onPageChange = async (event) => {
+  const uiPage = event.page + 1; // Convert to 1-based index
+  if (uiPage > Math.ceil(newsCache.length / rowsPerPage.value)) {
+    // If we're at the end of cached data, fetch the next set of 20 news
+    await fetchNews(currentPage.value + 1);
+    currentPage.value = 1;
+  } else {
+    currentPage.value = uiPage;
+    updatePaginatedNews();
+  }
+};
+
+// Navigation method for "More News"
+const navigateToMoreNews = (id) => {
+  router.push(`/news/${id}`);
 };
 
 const getBookmarkColor = (isBookmarked) => {
@@ -243,46 +243,8 @@ const addBookmark = async (news) => {
   }
 };
 
-// Computed property for paginated news
-const paginatedNews = computed(() => {
-  const start = currentPage.value * rowsPerPage.value;
-  return news.value.slice(start, start + rowsPerPage.value);
-});
-
-// Computed property for total number of records
-const totalRecords = computed(() => news.value.length);
-
-// Method to handle page change
-const onPageChange = (event) => {
-  currentPage.value = event.page;
-  rowsPerPage.value = event.rows;
-};
-
-// Fetch news when the component is mounted
+// Fetch news on component mount
 onMounted(() => {
-  if (categoryId) {
-    fetchNews();
-  }
+  fetchNews();
 });
 </script>
-
-<style scoped>
-.fontCustom {
-  font-family: "source-serif-pro-semibold";
-  color: #1e0627;
-}
-.multiline-truncate {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Number of lines to display */
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.multiline-truncate1 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* Number of lines to display */
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>

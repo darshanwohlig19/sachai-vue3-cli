@@ -1,9 +1,18 @@
 <template>
   <div class="backgroundddd">
-    <div class="relative z-1">
+    <div class="hidden sm:block relative z-1">
       <Navbarrr />
     </div>
-
+    <div class="block sm:hidden">
+      <div class="bg-white rounded-b-[12px] h-[48px]">
+        <div class="flex">
+          <div>></div>
+          <div class="gap-4 font-lato text-[16px] text-700 text-[#121212]">
+            About Us
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="">
       <div class="w-[100%] mt-5 p-3 flex">
         <div

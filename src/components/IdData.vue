@@ -201,7 +201,7 @@
 
       <!-- ChatBot Section -->
       <div
-        class="hidden lg:block ml-2 md:h-[85vh] lg:h-[88.5vh] between-1011-1440:!h-[] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh]"
+        class="hidden lg:block ml-2 md:h-[85vh] lg:h-[669px] between-644-1024:!h-[110vh] between-1011-1200:!h-[110vh] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh]"
       >
         <ChatBot :category="newsItem" />
       </div>
@@ -215,9 +215,7 @@
     <RelatedNewsData :category="newsItem" />
   </div>
   <div
-    class="z-10 fixed bottom-8 right-8 h-[40px] w-[40px] cursor-pointer rounded-full bg-[#320A38]"
-    :style="{ top: `${position.y}px`, left: `${position.x}px` }"
-    @mousedown="startDrag"
+    class="z-10 fixed bottom-8 right-8 h-[40px] w-[40px] cursor-pointer rounded-full bg-[#320A38] block sm:hidden"
     @click="toggleChat"
   >
     <span
@@ -226,6 +224,7 @@
       <i class="pi pi-comments"></i>
     </span>
   </div>
+
   <Footer />
 </template>
 
@@ -241,39 +240,39 @@ import Navbarrr from "@/components/Navbarrr.vue";
 import FeatureNews from "@/components/FeaturedIdStories.vue";
 import RelatedNewsData from "@/components/RelatedNews.vue";
 import ChatBot from "@/components/chatbot.vue";
-import faceBookLogo from "@/assets/facebook.svg";
-import xLogo from "@/assets/X.svg";
-import linkDinLogo from "@/assets/linkedin.svg";
-import whatsappLogo from "@/assets/whatsapp.svg";
+import faceBookLogo from "@/assets/svg/facebook.svg";
+import xLogo from "@/assets/svg/x.svg";
+import linkDinLogo from "@/assets/svg/linkdin.svg";
+import whatsappLogo from "@/assets/svg/whatsapp.svg";
 const route = useRoute();
 const newsItem = ref(null);
 const newsId = route.params.id;
 
-const position = ref({ x: 100, y: 100 });
-let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
+// const position = ref({ x: 100, y: 100 });
+// let isDragging = false;
+// let offsetX = 0;
+// let offsetY = 0;
 
-const startDrag = (event) => {
-  isDragging = true;
-  offsetX = event.clientX - position.value.x;
-  offsetY = event.clientY - position.value.y;
-  document.addEventListener("mousemove", drag);
-  document.addEventListener("mouseup", stopDrag);
-};
+// const startDrag = (event) => {
+//   isDragging = true;
+//   offsetX = event.clientX - position.value.x;
+//   offsetY = event.clientY - position.value.y;
+//   document.addEventListener("mousemove", drag);
+//   document.addEventListener("mouseup", stopDrag);
+// };
 
-const drag = (event) => {
-  if (isDragging) {
-    position.value.x = event.clientX - offsetX;
-    position.value.y = event.clientY - offsetY;
-  }
-};
+// const drag = (event) => {
+//   if (isDragging) {
+//     position.value.x = event.clientX - offsetX;
+//     position.value.y = event.clientY - offsetY;
+//   }
+// };
 
-const stopDrag = () => {
-  isDragging = false;
-  document.removeEventListener("mousemove", drag);
-  document.removeEventListener("mouseup", stopDrag);
-};
+// const stopDrag = () => {
+//   isDragging = false;
+//   document.removeEventListener("mousemove", drag);
+//   document.removeEventListener("mouseup", stopDrag);
+// };
 const formattedPublishTime = computed(() => {
   return newsItem.value?.publishTime
     ? moment(newsItem.value.publishTime).fromNow()

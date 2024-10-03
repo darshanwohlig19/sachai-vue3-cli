@@ -2,14 +2,38 @@
   <div class="mt-3">
     <div class="carousel_card">
       <!-- Loader -->
-      <div v-if="loading" class="text-center py-5">Loading...</div>
-
-      <!-- No News Message -->
       <div
-        v-if="!loading && !categories.length"
-        class="bg-white p-3 rounded-[10px] text-center py-5"
+        v-if="loading"
+        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-[3px] mt-3"
       >
-        No News Available
+        <div
+          v-for="n in numberOfItems"
+          :key="n"
+          class="p-4 bg-white rounded-lg shadow"
+        >
+          <div class="flex justify-between mb-4">
+            <!-- Skeleton for title and "View All" button -->
+            <Skeleton width="40%" height="1.5rem" />
+            <Skeleton width="20%" height="1.5rem" />
+          </div>
+
+          <!-- Skeleton for the list of items -->
+          <div class="space-y-4">
+            <div
+              v-for="n in numberOfItems"
+              :key="n"
+              class="flex items-center space-x-4"
+            >
+              <!-- Skeleton for image -->
+              <Skeleton width="4rem" height="4rem" borderRadius="8px" />
+              <!-- Skeleton for text -->
+              <div class="w-full">
+                <Skeleton width="100%" height="1.5rem" class="mb-2" />
+                <Skeleton width="75%" height="1.5rem" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Carousel -->
@@ -73,13 +97,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import axios from "axios";
 import Carousel from "primevue/carousel";
 import Card from "primevue/card";
 import "primevue/resources/themes/saga-blue/theme.css"; // Theme CSS
 import "primevue/resources/primevue.min.css"; // Core CSS
 import "primeicons/primeicons.css"; // Icons CSS
-import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
@@ -87,11 +112,28 @@ import apiConfig from "@/common/config/apiConfig";
 const categories = ref([]);
 const loading = ref(true);
 const noNews = ref(false); // Optional: Use this if you need to track if no news is found
-const router = useRouter(); // Use Vue Router
 
-const navigateToCategoryDetail = (id) => {
-  router.push(`/news/${id}`);
+const numberOfItems = ref(4); // Default to 4 for large screens
+
+const updateNumberOfItems = () => {
+  const screenWidth = window.innerWidth;
+  if (screenWidth < 640) {
+    numberOfItems.value = 1; // Mobile devices
+  } else if (screenWidth >= 640 && screenWidth < 1024) {
+    numberOfItems.value = 2; // Tablet devices
+  } else {
+    numberOfItems.value = 4; // Laptop and larger devices
+  }
 };
+
+onMounted(() => {
+  updateNumberOfItems(); // Set the initial number of items based on the screen size
+  window.addEventListener("resize", updateNumberOfItems); // Listen for screen resize events
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateNumberOfItems); // Cleanup event listener when component is destroyed
+});
 
 const fetchNewsForCategory = async (categoryId) => {
   const payload = {

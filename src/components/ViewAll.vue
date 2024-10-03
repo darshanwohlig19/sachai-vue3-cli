@@ -5,7 +5,7 @@
     >
       <div>View all</div>
       <div class="flex justify-center">
-        <img src="../assets/right_angle.svg" alt="" />
+        <img src="../assets/svg/right_angle.svg" alt="" />
       </div>
     </div>
   </div>
