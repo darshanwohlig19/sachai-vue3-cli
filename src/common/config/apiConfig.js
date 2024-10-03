@@ -47,4 +47,7 @@ config.GET_ALL_CATEGORY = config.PORT_IP.LOGIN + "/category/getAllCat";
 //Footer
 config.GET_TRENDING_TOPICS = config.PORT_IP.LOGIN + "/news/getTrendingTopics";
 
+//Navbar
+config.SEARCH_NEWS_FROM_WEB = config.PORT_IP.LOGIN + "/news/searchNewsFromWeb";
+
 export default config;
