@@ -123,7 +123,8 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRouter } from "vue-router";
 
@@ -142,13 +143,21 @@ function formatPublishTime(publishTime) {
 }
 
 async function fetchBlogs() {
+  const payload = {
+    language: languageId.value,
+  };
   try {
-    const response = await axios.post(
-      "https://api-uat.newsshield.io/news/getTrendingNews",
-      {
-        language: languageId.value,
-      }
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_TRENDING_NEWS}`,
+      payload
     );
+    // const response = await axios.post(
+    //   "https://api-uat.newsshield.io/news/getTrendingNews",
+    //   {
+    //     language: languageId.value,
+    //   }
+    // );
     blogs.value = response.data.slice(0, 4);
     blogs1.value = response.data.slice(4, 8);
     blogs2.value = response.data.slice(8, 11);

@@ -560,7 +560,8 @@
 </template>
 
 <script setup>
-import axios from "axios";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
@@ -672,13 +673,17 @@ const handleLogout = async () => {
 
     const apiDataToken = localStorage.getItem("apiDataToken");
     if (apiDataToken) {
-      const response = await axios.post(
-        "https://api-uat.newsshield.io/user/logoutEvent",
-        {},
-        {
-          headers: { Authorization: `${apiDataToken}` },
-        }
+      const response = await apiService.apiCall(
+        "post",
+        `${apiConfig.LOGOUT_EVENT}`
       );
+      // const response = await axios.post(
+      //   "https://api-uat.newsshield.io/user/logoutEvent",
+      //   {},
+      //   {
+      //     headers: { Authorization: `${apiDataToken}` },
+      //   }
+      // );
       if (response.status === 200) {
         console.log(`BEFORE ${localStorage.getItem("news-")}`);
         localStorage.removeItem("apiDataToken");
@@ -713,22 +718,38 @@ const handleLogout = async () => {
   }
 };
 const fetchNavbarCategory = async () => {
+  const payload = {
+    categoryId,
+  };
   try {
-    const res = await axios.post(
-      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-      { categoryId }
+    const res = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+      payload
     );
+    // const res = await axios.post(
+    //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+    //   { categoryId }
+    // );
     categoryWise.value = res.data;
   } catch (error) {
     return [];
   }
 };
 const fetchCategories = async () => {
+  const languageId = "6421a32aa020a23deacecf92";
+  const payload = {
+    langauge: languageId,
+  };
   try {
-    const languageId = "6421a32aa020a23deacecf92";
-    const response = await axios.post(
-      "https://api-uat.newsshield.io/category/getAllCat",
-      { langauge: languageId }
+    // const response = await axios.post(
+    //   "https://api-uat.newsshield.io/category/getAllCat",
+    //   {}
+    // );
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_ALL_CATEGORY}`,
+      payload
     );
     categories.value = response.data.map((category) => ({
       ...category,
@@ -748,13 +769,18 @@ const handleSearch = async () => {
     searchQuery.value.trim().length % 4 === 0
   ) {
     try {
-      const response = await axios.post(
-        "https://api-uat.newsshield.io/news/searchNewsFromWeb",
-        {
-          language: "6421a32aa020a23deacecf92",
-          search: searchQuery.value,
-        }
+      const payload = {
+        language: "6421a32aa020a23deacecf92",
+        search: searchQuery.value,
+      };
+      const response = await apiService.apiCall(
+        "post",
+        `${apiConfig.SEARCH_NEWS_FROM_WEB}`,
+        payload
       );
+      // const response = await axios.post(
+      //   "https://api-uat.newsshield.io/news/searchNewsFromWeb"
+      // );
       searchResults.value = response.data;
     } catch (error) {
       console.error("Error fetching search results:", error);

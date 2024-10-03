@@ -1,3 +1,4 @@
+b
 <template>
   <div>
     <Navbarrr />
@@ -134,9 +135,9 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import axios from "axios";
 import moment from "moment";
-
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
@@ -159,14 +160,20 @@ const navigateToMoreNews = (id) => {
 
 // Fetching news based on category ID
 const fetchNewsByTopic = async () => {
+  const payload = {
+    language: "6421a32aa020a23deacecf92",
+    search: topic,
+  };
   try {
     loading.value = true; // Set loading to true when starting the API call
-    const response = await axios.post(
-      "https://api-uat.newsshield.io/news/searchNewsFromWeb",
-      {
-        language: "6421a32aa020a23deacecf92",
-        search: topic,
-      }
+    // const response = await axios.post(
+    //   "https://api-uat.newsshield.io/news/searchNewsFromWeb",
+
+    // );
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.SEARCH_NEWS_FROM_WEB}`,
+      payload
     );
     news.value = response.data; // Assign fetched data to news
     console.log("API Response:", response.data); // Log the response
@@ -184,15 +191,17 @@ const getBookmarkColor = (isBookmarked) => {
 
 const addBookmark = async (newsItem) => {
   const token = localStorage.getItem("apiDataToken");
-  try {
-    const currentStatus =
-      newsItem.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
+  const currentStatus =
+    newsItem.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
+  const payload = {
+    status: currentStatus,
+  };
 
-    const response = await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${newsItem._id}`,
-      {
-        status: currentStatus,
-      },
+  try {
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.ADD_BOOKMARK}/${newsItem._id}`,
+      payload,
       {
         headers: {
           Authorization: `${token}`,

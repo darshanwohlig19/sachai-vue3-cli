@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="ml-[20px] mr-[20px] sm:mr-[60px] sm:ml-[60px]">
     <div class="flex flex-wrap justify-center sm:justify-start gap-2 mt-4">
       <div v-for="item in navcategories3" :key="item._id" class="mt-2">
@@ -91,4 +91,4 @@ onMounted(() => {
   flex-direction: row;
   margin-top: 50px;
 }
-</style>
+</style> -->

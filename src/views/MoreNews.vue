@@ -123,9 +123,9 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
 import moment from "moment";
-
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
@@ -148,28 +148,30 @@ const fetchNews = async () => {
   const token = localStorage.getItem("apiDataToken");
   var response;
   try {
+    const payload = {
+      language: "6421a32aa020a23deacecf92",
+      categoryId: "63d90e4098d783ac0cbe2310",
+      page: 9,
+    };
     if (token == null) {
-      response = await axios.post(
-        "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
-        {
-          language: "6421a32aa020a23deacecf92",
-          categoryId: "63d90e4098d783ac0cbe2310",
-          page: 9,
-        }
+      response = await apiService.apiCall(
+        "post",
+        `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+        payload
       );
+      // response = await axios.post(
+      //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
+      //   {
+      //     language: "6421a32aa020a23deacecf92",
+      //     categoryId: "63d90e4098d783ac0cbe2310",
+      //     page: 9,
+      //   }
+      // );
     } else {
-      response = await axios.post(
-        "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
-        {
-          language: "6421a32aa020a23deacecf92",
-          categoryId: "63d90e4098d783ac0cbe2310",
-          page: 9,
-        },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
+      response = await apiService.apiCall(
+        "post",
+        `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+        payload
       );
     }
 
@@ -193,21 +195,25 @@ const getBookmarkColor = (isBookmarked) => {
 
 const addBookmark = async (news) => {
   const token = localStorage.getItem("apiDataToken");
-  try {
-    const currentStatus =
-      news.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
+  const currentStatus =
+    news.isBookmarked === "Enabled" ? "Disabled" : "Enabled"; // Define currentStatus here
 
-    const response = await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${news._id}`,
-      {
-        status: currentStatus,
-      },
+  const payload = {
+    status: currentStatus,
+  };
+
+  try {
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.ADD_BOOKMARK}/${news._id}`,
+      payload,
       {
         headers: {
-          Authorization: `${token}`,
+          Authorization: `${token}`, // Use the token in the headers if required
         },
       }
     );
+
     news.isBookmarked = currentStatus;
     return response.data;
   } catch (error) {

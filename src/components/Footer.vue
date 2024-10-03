@@ -398,8 +398,9 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import { ref, onMounted } from "vue";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 
 export default {
   setup() {
@@ -412,12 +413,20 @@ export default {
     const hasError = ref(false);
 
     const fetchCategories = async () => {
+      const languageId = "6421a32aa020a23deacecf92";
+
+      const payload = {
+        langauge: languageId,
+      };
       try {
-        const languageId = "6421a32aa020a23deacecf92";
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/category/getAllCat",
-          { langauge: languageId }
+        const response = await apiService.apiCall(
+          "post",
+          `${apiConfig.GET_ALL_CATEGORY}`,
+          payload
         );
+        // const response = await axios.post(
+        //   "https://api-uat.newsshield.io/category/getAllCat"
+        // );
         categories.value = response.data.map((category) => ({
           ...category,
           name:
@@ -435,10 +444,17 @@ export default {
     console.log("Catogries", categories.value);
 
     const fetchNewsTopics = async () => {
+      // const payload = {
+      //   langauge: languageId,
+      // };
       try {
-        const response = await axios.get(
-          "https://api-uat.newsshield.io/news/getTrendingTopics"
+        const response = await apiService.apiCall(
+          "get",
+          `${apiConfig.GET_TRENDING_TOPICS}`
         );
+        // const response = await axios.get(
+        //   "https://api-uat.newsshield.io/news/getTrendingTopics"
+        // );
         console.log(response.data);
         latestNews.value = response.data.slice(0, 4);
         hotOnTheWeb.value = response.data.slice(5, 12);

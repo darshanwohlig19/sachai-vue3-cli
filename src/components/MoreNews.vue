@@ -173,9 +173,10 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import axios from "axios";
 import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 
 const allNews = ref([]);
 const loading = ref(true);
@@ -190,15 +191,21 @@ const navigateToMoreNews = (id) => {
 };
 
 const fetchNews = async () => {
+  const payload = {
+    language: "6421a32aa020a23deacecf92",
+    categoryId: "63d90e4098d783ac0cbe2310",
+    page: 9,
+  };
   try {
-    const response = await axios.post(
-      "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
-      {
-        language: "6421a32aa020a23deacecf92",
-        categoryId: "63d90e4098d783ac0cbe2310",
-        page: 9,
-      }
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+      payload
     );
+    // const response = await axios.post(
+    //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
+
+    // );
     allNews.value = response.data.slice(0, 9);
     error.value = allNews.value.length === 0;
   } catch (e) {

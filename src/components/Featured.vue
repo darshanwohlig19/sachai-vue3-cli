@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div v-if="blogs.length > 0">
     <div
       class="text-[45px] font-bold font-lato mt-4 mr-[20px] ml-[20px] sm:mr-[60px] sm:ml-[60px]"
@@ -189,4 +189,4 @@ export default {
 .fontCustom {
   font-family: "source-serif-pro-semibold";
 }
-</style>
+</style> -->
