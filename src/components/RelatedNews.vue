@@ -1,5 +1,11 @@
 <template>
   <div class="p-2 mt-3">
+    <InviteLinkDialog
+      :isVisible="isDialogVisible"
+      :inviteLink="inviteLink"
+      @close="isDialogVisible = false"
+    />
+
     <div class="flex justify-between items-center w-full mb-2 rounded-2xl">
       <div class="flex items-center">
         <span
@@ -44,7 +50,7 @@
             <div class="flex gap-1">
               <span
                 class="mdi mdi-share-variant text-[19px] cursor-pointer"
-                @click="openInviteDialog(news)"
+                @click.stop="showDialog"
               ></span>
               <span
                 :class="[
@@ -76,7 +82,6 @@
         </div>
       </div>
     </div>
-    <!-- <shareLink :inviteLink="yourInviteLink" v-model="isDialogVisible" /> -->
   </div>
 </template>
 
@@ -96,12 +101,14 @@ import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
-// import shareLink from "@/common/config/shareLink.vue";
+import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
+
 const route = useRoute();
 const router = useRouter();
 const featuredNewsItem = ref([]);
 const newsItems = ref([]);
-
+const isDialogVisible = ref(false); // State for dialog visibility
+const inviteLink = ref(""); // Link to share, set this appropriately
 const props = defineProps(
   ["category"]
   //   {category: {
@@ -110,14 +117,6 @@ const props = defineProps(
   //   },
   // }
 );
-const isDialogVisible = ref(true); // Control the dialog visibility
-const inviteLink = ref(""); // Store the invite link
-console.log("props", props, props.category);
-
-const openInviteDialog = (newsItem) => {
-  inviteLink.value = `https://example.com/invite/${newsItem._id}`;
-  isDialogVisible.value = true; // This will trigger the dialog to open
-};
 
 const categoryId = computed(() => {
   console.log("props---", props.value);
@@ -166,6 +165,10 @@ const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
 };
 
+const showDialog = () => {
+  isDialogVisible.value = true;
+  inviteLink.value = `https://your-invite-link.com/${route.params.id}`; // Replace with your dynamic invite link
+};
 const addBookmark = async (id) => {
   const newStatus = newsItems.value.bookmark ? "Disabled" : "Enabled";
   const payload = { status: newStatus };
