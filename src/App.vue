@@ -20,7 +20,7 @@
             ></div>
           </div>
           <div class="flex justify-center items-center">
-            <img src="../src/assets/success.svg" alt="" />
+            <img src="../src/assets/svg/success.svg" alt="" />
           </div>
           <div class="flex flex-col justify-center" style="flex: 1">
             <div class="font-bold font-lato !text-[#1E0627] my-1 text-[16px]">
@@ -48,7 +48,7 @@
             ></div>
           </div>
           <div class="flex justify-center items-center">
-            <img src="../src/assets/failed.svg" alt="" />
+            <img src="../src/assets/svg/failed.svg" alt="" />
           </div>
           <div class="flex flex-col justify-center" style="flex: 1">
             <div class="font-bold font-lato !text-[#1E0627] my-1 text-[16px]">

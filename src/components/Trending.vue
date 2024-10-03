@@ -122,7 +122,7 @@
         class="flex gap-2 mt-0 sm-max:!mt-0 cursor-pointer"
       >
         <div class="flex w-[50px]">
-          <img class="image-small" src="../assets/Group.png" />
+          <img class="image-small" src="../assets/png/Group.png" />
         </div>
         <div>
           <div class="font-16 headline-tuncate">{{ item.headline }}</div>

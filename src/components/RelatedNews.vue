@@ -50,7 +50,7 @@
             <div class="flex gap-1">
               <span
                 class="mdi mdi-share-variant text-[19px] cursor-pointer"
-                @click.stop="showDialog"
+                @click.stop="showDialog(news)"
               ></span>
               <span
                 :class="[
@@ -106,7 +106,8 @@ import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dial
 const route = useRoute();
 const router = useRouter();
 const featuredNewsItem = ref([]);
-const newsItems = ref([]);
+console.log("featuredNewsItem", featuredNewsItem);
+
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately
 const props = defineProps(
@@ -165,20 +166,20 @@ const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
 };
 
-const showDialog = () => {
+const showDialog = (news) => {
   isDialogVisible.value = true;
-  inviteLink.value = `https://your-invite-link.com/${route.params.id}`; // Replace with your dynamic invite link
+  inviteLink.value = news.newsLink;
 };
-const addBookmark = async (id) => {
-  const newStatus = newsItems.value.bookmark ? "Disabled" : "Enabled";
-  const payload = { status: newStatus };
-  try {
-    await apiService.apiCall("post", `${apiConfig.BOOKMARK}/${id}`, payload);
-    newsItems.value.bookmark = !newsItems.value.bookmark;
-  } catch (error) {
-    console.error("Error fetching response:", error);
-  }
-};
+// const addBookmark = async (id) => {
+//   const newStatus = newsItems.value.bookmark ? "Disabled" : "Enabled";
+//   const payload = { status: newStatus };
+//   try {
+//     await apiService.apiCall("post", `${apiConfig.BOOKMARK}/${id}`, payload);
+//     newsItems.value.bookmark = !newsItems.value.bookmark;
+//   } catch (error) {
+//     console.error("Error fetching response:", error);
+//   }
+// };
 
 const checkRouteParam = () => {
   newsId.value = route.params.id || "";

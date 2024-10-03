@@ -28,7 +28,7 @@
         >
           <div class="flex flex-row gap-3 cursor-pointer">
             <div class="w-[50px]">
-              <img class="small-img" src="../assets/Group.png" />
+              <img class="small-img" src="../assets/png/Group.png" />
             </div>
             <div>
               <div class="font-16 more_headline">{{ news.headline }}</div>
@@ -57,7 +57,7 @@
         >
           <div class="flex flex-row gap-3 cursor-pointer">
             <div class="w-[50px]">
-              <img class="small-img" src="../assets/Group.png" />
+              <img class="small-img" src="../assets/png/Group.png" />
             </div>
             <div>
               <div class="font-16 more_headline">{{ news.headline }}</div>
@@ -86,7 +86,7 @@
         >
           <div class="flex flex-row gap-3 cursor-pointer">
             <div class="w-[50px]">
-              <img class="small-img" src="../assets/Group.png" />
+              <img class="small-img" src="../assets/png/Group.png" />
             </div>
             <div>
               <div class="font-16 more_headline">{{ news.headline }}</div>

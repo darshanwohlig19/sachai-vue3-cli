@@ -55,6 +55,7 @@
         >
           <img :src="faceBookLogo" alt="Facebook Logo" class="social-icon" />
         </Button>
+
         <Button
           size="icon"
           variant="outline"
@@ -100,11 +101,11 @@
 
 <script>
 import faceBookLogo from "@/assets/svg/facebook.svg";
-import xLogo from "@/assets/X.svg";
-import linkDinLogo from "@/assets/linkedin.svg";
-import whatsappLogo from "@/assets/whatsapp.svg";
+import xLogo from "@/assets/svg/x.svg";
+import linkDinLogo from "@/assets/svg/linkdin.svg";
+import whatsappLogo from "@/assets/svg/whatsapp.svg";
 import chainLink from "@/assets/svg/chain.svg";
-import CopyLink from "@/assets/svg/copy.svg";
+// import CopyLink from "@/assets/svg/copyLink.svg";
 
 export default {
   props: {

@@ -89,7 +89,7 @@
                     >
                       <div class="flex flex-row gap-2 items-center">
                         <div class="w-[15px]">
-                          <img src="../assets/Group.png" alt="" />
+                          <img src="../assets/png/Group.png" alt="" />
                         </div>
                         <div
                           class="font-14 one-line cursor-pointer"

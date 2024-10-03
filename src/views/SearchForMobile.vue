@@ -21,7 +21,7 @@
           class="pr-10 pl-3 py-2 w-full rounded-[100px] text-[12px] font-lato border-1"
         />
         <img
-          src="../assets/svg-icons/search.svg"
+          src="../assets/svg/search.svg"
           class="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-500"
         />
       </div>

@@ -15,13 +15,13 @@
         <div class="flex gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
-            <img src="../assets/Home.svg" alt="" />
+            <img src="../assets/svg/Home.svg" alt="" />
             <RouterLink class="nav-items" active-class="active-link" to="/"
               >Home</RouterLink
             >
           </div>
           <div class="hidden lg:flex head-navs gap-2" v-if="isLoggedIn">
-            <img src="../assets/Astrology.svg" alt="" />
+            <img src="../assets/svg/Astrology.svg" alt="" />
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -185,7 +185,7 @@
                     <div class="mt-4 md:mt-4 lg:mt-0 cursor-pointer">
                       <div class="flex flex-row gap-2">
                         <div class="w-[5%] mt-2">
-                          <img src="../assets/Group.png" alt="" />
+                          <img src="../assets/png/Group.png" alt="" />
                         </div>
                         <div class="flex flex-col w-[100%]">
                           <div class="font-16 multi-line-2">
@@ -205,7 +205,7 @@
                     <div class="mt-0 cursor-pointer">
                       <div class="flex flex-row gap-2">
                         <div class="w-[5%] mt-2">
-                          <img src="../assets/Group.png" alt="" />
+                          <img src="../assets/png/Group.png" alt="" />
                         </div>
                         <div class="flex flex-col w-[100%]">
                           <div class="font-16 multi-line-2">
@@ -224,7 +224,7 @@
           </div>
 
           <div class="hidden lg:flex head-navs gap-2">
-            <img src="../assets/Bookmark.svg" alt="" />
+            <img src="../assets/svg/Bookmark.svg" alt="" />
             <RouterLink
               class="nav-items"
               active-class="active-link"
@@ -233,7 +233,7 @@
             >
           </div>
           <div class="hidden lg:flex head-navs gap-2">
-            <img src="../assets/Login.svg" alt="" />
+            <img src="../assets/svg/Login.svg" alt="" />
             <a href="#" class="nav-items" @click="handleAuthAction">
               {{ isLoggedIn ? "Logout" : "Login" }}
             </a>
@@ -253,7 +253,7 @@
               class="pr-10 pl-3 py-2 w-full font-[#1E0627] rounded-[100px] text-[12px] font-lato border-1"
             />
             <img
-              src="../assets/svg-icons/search.svg"
+              src="../assets/svg/searchimage.svg"
               class="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-500"
             />
             <div
@@ -391,7 +391,7 @@
             <div
               class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
             >
-              <img src="../assets/search.svg" alt="Search" />
+              <img src="../assets/svg/search.svg" alt="Search" />
             </div>
           </button>
 
@@ -400,13 +400,13 @@
             @click="$router.push('/Setting')"
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
           >
-            <img src="../assets/Settings.svg" alt="Settings" />
+            <img src="../assets/svg/Settings.svg" alt="Settings" />
           </button>
           <button
             v-if="isLoggedIn"
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
           >
-            <img src="../assets/Accounts.svg" alt="Accounts" />
+            <img src="../assets/svg/Accounts.svg" alt="Accounts" />
           </button>
 
           <div

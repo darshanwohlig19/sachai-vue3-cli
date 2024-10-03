@@ -94,7 +94,7 @@
       >
         <div class="flex flex-row gap-2" @click="navigateToCategory(item._id)">
           <div class="w-[5%] mt-2">
-            <img src="../assets/Group.png" alt="" />
+            <img src="../assets/png/Group.png" alt="" />
           </div>
           <div class="flex flex-col w-[100%]">
             <div class="font-16 multiline-truncate3">{{ item.headline }}</div>
