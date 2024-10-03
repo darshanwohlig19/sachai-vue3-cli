@@ -103,7 +103,6 @@ import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
-import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
@@ -146,13 +145,19 @@ const fetchBlogs = async () => {
 const fetchRelatedNews = async () => {
   if (!newsId.value) return;
   isLoading.value = true; // Start loading
+
+  const payload = {
+    language: "6421a32aa020a23deacecf92",
+  };
   try {
-    const response = await axios.post(
-      `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`,
-      {
-        language: "6421a32aa020a23deacecf92",
-      }
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.ADD_BOOKMARK}/${newsId.value}`,
+      payload
     );
+    // const response = await axios.post(
+    //   `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`
+    // );
     relatedNews.value = response?.data;
     blogs.value = response.data.map((news) => ({
       ...news,
@@ -179,24 +184,28 @@ const navigateToNewsDetail = (id) => {
 
 const addBookmark = async (id) => {
   try {
-    const token = localStorage.getItem("apiDataToken");
-    if (!token) {
-      throw new Error("No authentication token found");
+    // First, find the news item by its ID
+    const newsItem = blogs.value.find((news) => news._id === id);
+
+    // Check if the newsItem exists
+    if (!newsItem) {
+      throw new Error(`News item with id ${id} not found`);
     }
 
-    const newsItem = blogs.value.find((news) => news._id === id);
+    // Determine the new status based on the current bookmark state
     const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
 
-    await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${id}`,
-      { status: newStatus },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
+    const payload = {
+      status: newStatus,
+    };
+    // Send the API request to update the bookmark status
+    await apiService.apiCall(
+      "post",
+      `${apiConfig.ADD_BOOKMARK}/${id}`,
+      payload
     );
 
+    // Update the bookmarked status locally
     newsItem.bookmarked = !newsItem.bookmarked;
     localStorage.setItem(
       `bookmark_${id}`,

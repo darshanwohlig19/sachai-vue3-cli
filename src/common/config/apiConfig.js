@@ -34,7 +34,8 @@ config.GET_TRENDING_NEWS = config.PORT_IP.LOGIN + "/news/getTrendingNews";
 
 //Latest
 config.GET_ALL_BLOGS_FOR_WEB = config.PORT_IP.LOGIN + "/news/getAllBlogsForWeb";
-// config.ADD_BOOKMARK = config.PORT_IP.LOGIN + "/bookmark/addBookmark/${id}";
+config.ADD_BOOKMARK = config.PORT_IP.LOGIN + "/bookmark/addBookmark/";
+config.GET_RELATED_NEWS = config.PORT_IP.LOGIN + "/pinecone/getRelatedNews/";
 
 //Campaign
 config.API_FOR_TOPICS_FOR_WEB =

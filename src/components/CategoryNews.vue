@@ -132,8 +132,9 @@
 </template>
 <script>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
-import axios from "axios";
 import Button from "./ViewAll.vue";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 
 export default {
   props: {
@@ -159,11 +160,18 @@ export default {
     const screenWidth = ref(window.innerWidth);
 
     const fetchNewsForCategory = async (categoryId) => {
+      const payload = {
+        categoryId,
+      };
       try {
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-          { categoryId }
+        const response = await apiService.apiCall(
+          "post",
+          `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
+          payload
         );
+        // const response = await axios.post(
+        //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/"
+        // );
         return response.data;
       } catch (error) {
         console.error(`Error fetching news for category ${categoryId}:`, error);
@@ -178,12 +186,21 @@ export default {
     });
 
     const fetchCategories = async () => {
+      const languageId = "6421a32aa020a23deacecf92";
+
+      const payload = {
+        langauge: languageId,
+      };
       try {
-        const languageId = "6421a32aa020a23deacecf92";
-        const response = await axios.post(
-          "https://api-uat.newsshield.io/category/getAllCat",
-          { langauge: languageId }
+        const response = await apiService.apiCall(
+          "post",
+          `${apiConfig.GET_ALL_CATEGORY}`,
+          payload
         );
+        // const response = await axios.post(
+        //   "https://api-uat.newsshield.io/category/getAllCat",
+        //   { langauge: languageId }
+        // );
         const categoriesData = response.data.slice(0, 16).map((category) => ({
           ...category,
           name:
