@@ -12,7 +12,7 @@
         </a>
       </div>
       <div class="w-[70%]">
-        <div class="flex gap-3 items-center justify-end">
+        <div class="flex gap-1 sm:gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
             <img
@@ -157,7 +157,7 @@
                         <div class="w-[20%]">
                           <img
                             :src="newsItems[1]?.imgixUrlHighRes"
-                            class="rounded-[6px] h-[65px] w-[65px]"
+                            class="rounded-[6px] h-[65px] w-[65px] object-cover"
                             alt=""
                           />
                         </div>
@@ -187,7 +187,7 @@
                         <div class="w-[20%]">
                           <img
                             :src="newsItems[2]?.imgixUrlHighRes"
-                            class="rounded-[6px] h-[65px] w-[65px]"
+                            class="rounded-[6px] h-[65px] w-[65px] object-cover"
                             alt=""
                           />
                         </div>
@@ -924,7 +924,7 @@ watch(searchQuery, (newValue) => {
 .multi-line-2 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* Number of lines to display */
+  -webkit-line-clamp: 2; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }

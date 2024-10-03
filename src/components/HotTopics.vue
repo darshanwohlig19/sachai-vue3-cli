@@ -41,8 +41,8 @@
 <script>
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
-import moment from "moment"; // Import moment
-
+import moment from "moment"; // Import moment;
+import fallbackImage from "../common/config/GlobalConstants";
 export default {
   data() {
     return {
@@ -50,6 +50,7 @@ export default {
       loading: true, // Add loading state
       SACHAI_NEWS_URL: "https://news.sachai.io/news/",
       languageId: "6421a32aa020a23deacecf92",
+      fallbackImage: fallbackImage.variables.fallbackImage,
     };
   },
 
@@ -70,7 +71,7 @@ export default {
         //   "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
 
         // );
-        this.hot = response.data.slice(0, 10); // Assign the fetched blogs to 'hot'
+        this.hot = response.data.slice(0, 12); // Assign the fetched blogs to 'hot'
       } catch (error) {
         console.error("Error fetching blogs:", error);
         this.hot = []; // Set hot to empty array in case of an error

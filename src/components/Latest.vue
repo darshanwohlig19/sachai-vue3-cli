@@ -5,7 +5,9 @@
       <div class="flex justify-between w-full items-center mb-3">
         <div class="flex flex-row items-center gap-2">
           <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
-          <div class="text-[20px] font-bold font-lato">{{ headingText }}</div>
+          <div class="text-[20px] font-bold font-lato">
+            {{ headingText }}
+          </div>
         </div>
         <!-- Conditionally render button based on loading state and data -->
         <div v-if="!isLoading && blogs.length > 0">

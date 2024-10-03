@@ -47,7 +47,6 @@
         :showNavigators="true"
         :responsiveOptions="responsiveOptions"
         class="custom-carousel w-full"
-        :autoplayInterval="5000"
       >
         <template #item="slotProps">
           <div class="category-item mx-2">
@@ -55,7 +54,7 @@
               <template #header>
                 <div class="flex justify-between items-center mb-3">
                   <div class="flex items-center gap-1">
-                    <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
+                    <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
                     <h3 class="font-18 capitalize !text-[#1e0627]">
                       {{ slotProps.data.name }}
                     </h3>
@@ -68,21 +67,20 @@
                 </div>
               </template>
               <template #content>
-                <div class="flex flex-col gap-3 cursor-pointer">
+                <div class="flex flex-col gap-3 cursor-pointer w-[100%] h-[]">
                   <div
                     v-for="news in slotProps.data.news.slice(0, 5)"
                     :key="news._id"
-                    class="flex gap-3 rounded-[4px] drop-shadow-sm bg-white h-[67px]"
+                    class="flex gap-3 rounded-[4px] bg-white h-auto p-2"
+                    style="box-shadow: 0px 0px 5px 2px #0000000f"
                     @click="navigateToCategoryDetail(news._id)"
                   >
                     <img
                       :src="news.imgixUrlHighRes"
-                      class="w-[67px] h-[67px] object-cover rounded"
+                      class="w-[58px] h-[55px] object-cover rounded"
                       alt="News image"
                     />
-                    <p
-                      class="text-[14px] text-[#1E0627] multiline-truncate fontCustom"
-                    >
+                    <p class="multiline-text fonttt">
                       {{ news.headline }}
                     </p>
                   </div>
@@ -107,13 +105,18 @@ import "primeicons/primeicons.css"; // Icons CSS
 import Button from "./ViewAll.vue";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
+import { useRouter } from "vue-router";
 
 const categories = ref([]);
+const router = useRouter();
 const loading = ref(true);
 const noNews = ref(false); // Optional: Use this if you need to track if no news is found
 
 const numberOfItems = ref(4); // Default to 4 for large screens
 
+const navigateToCategoryDetail = (id) => {
+  router.push(`/news/${id}`);
+};
 const updateNumberOfItems = () => {
   const screenWidth = window.innerWidth;
   if (screenWidth < 640) {
@@ -224,14 +227,6 @@ onMounted(() => {
   flex: 1 0 auto;
 }
 
-.multiline-truncate {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Number of lines to display */
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .category-item .p-card {
   box-shadow: none;
 }
@@ -239,5 +234,8 @@ onMounted(() => {
 .category-item .p-card-content,
 .category-item .p-card-body {
   padding: 0 !important;
+}
+.fonttt {
+  font-size: 14px;
 }
 </style>

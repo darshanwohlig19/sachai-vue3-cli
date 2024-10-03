@@ -172,7 +172,7 @@
           <div>
             <div class="font-16 headline-tuncate">{{ item.headline }}</div>
             <div class="font-133 summary-tuncate">{{ item.summary }}</div>
-            <div v-if="index < 2" class="border-1 sm-max:mt-3 mt-2"></div>
+            <div v-if="index < 2" class="border_11 sm-max:mt-3 mt-2"></div>
           </div>
         </div>
       </div>
@@ -372,7 +372,7 @@ onBeforeUnmount(() => {
   object-fit: contain; /* Ensures the image fits within the specified dimensions */
 }
 .dividerrr {
-  height: 1px;
+  height: 0.4px;
   background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
   width: 100%;
 }
@@ -380,6 +380,9 @@ onBeforeUnmount(() => {
   height: 100%;
   background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
   width: 1px;
+}
+.border_11 {
+  border-bottom: 2px solid #f3f3f3;
 }
 .summary-tuncate {
   display: -webkit-box;
