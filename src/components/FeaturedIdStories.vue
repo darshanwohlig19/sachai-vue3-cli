@@ -1,4 +1,9 @@
 <template>
+  <InviteLinkDialog
+    :isVisible="isDialogVisible"
+    :inviteLink="inviteLink"
+    @close="isDialogVisible = false"
+  />
   <div class="p-2 lg:h-full">
     <div class="flex justify-between items-center w-full mb-2 rounded-2xl">
       <div class="flex items-center">
@@ -46,6 +51,7 @@
               <div>
                 <i
                   class="mdi mdi-share-variant text-black rounded-[50%] text-[19px]"
+                  @click.stop="showDialog(blog)"
                 ></i>
               </div>
               <div>
@@ -96,9 +102,11 @@ import moment from "moment";
 // import { useRoute, useRouter } from "vue-router";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
 
 const router = useRouter();
-
+const isDialogVisible = ref(false); // State for dialog visibility
+const inviteLink = ref(""); // Link to share, set this appropriately
 const props = defineProps({
   category: {
     type: Object,
@@ -115,6 +123,10 @@ console.log("blogs", blogs);
 const screenWidth = ref(window.innerWidth);
 const newsId = ref(route.params.id || "");
 
+const showDialog = (blog) => {
+  isDialogVisible.value = true;
+  inviteLink.value = blog.newsLink;
+};
 const fetchBlogs = async () => {
   try {
     const languageId = "6421a32aa020a23deacecf92";

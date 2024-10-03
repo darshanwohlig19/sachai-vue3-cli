@@ -1,4 +1,9 @@
 <template>
+  <InviteLinkDialog
+    :isVisible="isDialogVisible"
+    :inviteLink="inviteLink"
+    @close="isDialogVisible = false"
+  />
   <div>
     <div
       v-if="loading"
@@ -104,6 +109,7 @@
                       <i
                         class="mdi mdi-share-variant text-black bg-white rounded-[50%] sm:h-[23.63px] sm:w-[23.63px] sm:text-[12px] h-[23.63px] w-[23.63px] text-[14px] flex justify-center items-center icon-black"
                         style="color: black"
+                        @click.stop="showDialog(slotProps.data)"
                       ></i>
                     </div>
                     <div>
@@ -214,7 +220,9 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 import moment from "moment";
 // import { ProductService } from "../../src/assets/service/ProductService";
-
+import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
+const isDialogVisible = ref(false); // State for dialog visibility
+const inviteLink = ref(""); // Link to share, set this appropriately
 const blogs = ref([]);
 console.log("opp", blogs);
 const news = ref([]);
@@ -247,6 +255,11 @@ const responsiveOptions = [
     numScroll: 1,
   },
 ];
+
+const showDialog = (news) => {
+  isDialogVisible.value = true;
+  inviteLink.value = news.newsLink;
+};
 
 const fetchBlogs = async () => {
   loading.value = true;

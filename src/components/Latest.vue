@@ -1,4 +1,9 @@
 <template>
+  <InviteLinkDialog
+    :isVisible="isDialogVisible"
+    :inviteLink="inviteLink"
+    @close="isDialogVisible = false"
+  />
   <section class="mt-3">
     <div class="bg-white p-3 rounded-[10px]">
       <!-- Heading and Button -->
@@ -85,7 +90,10 @@
                   <div>{{ news.source }}</div>
                 </div>
                 <div class="flex gap-1">
-                  <span class="mdi mdi-share-variant text-[19px]"></span>
+                  <span
+                    class="mdi mdi-share-variant text-[19px]"
+                    @click.stop="showDialog(news)"
+                  ></span>
                   <span
                     :class="[
                       'mdi',
@@ -141,10 +149,12 @@ import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
+import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
 
 const route = useRoute();
 const router = useRouter();
-
+const isDialogVisible = ref(false); // State for dialog visibility
+const inviteLink = ref(""); // Link to share, set this appropriately
 const blogs = ref([]);
 const relatedNews = ref([]);
 const screenWidth = ref(window.innerWidth);
@@ -153,6 +163,10 @@ const isRelatedNews = ref(false);
 const newsId = ref(route.params.id || "");
 const isLoading = ref(true); // New state for loader
 
+const showDialog = (news) => {
+  isDialogVisible.value = true;
+  inviteLink.value = news.newsLink;
+};
 const fetchBlogs = async () => {
   isLoading.value = true; // Start loading
   const payload = {
