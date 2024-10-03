@@ -401,8 +401,8 @@
 
 <script setup>
 import { ref, onMounted, computed, defineEmits } from "vue";
-import apiService from "@/services/apiServices";
-import apiConfig from "@/common/config/apiConfig";
+// import apiService from "@/services/apiServices";
+// import apiConfig from "@/common/config/apiConfig";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 import { ProductService } from "../assets/service/ProductService";
@@ -755,14 +755,8 @@ const signInWithApple = async () => {
     });
   }
 };
-
 const sendUserDataToApi = async (name, email, id) => {
-  const apiUrl = await apiService.apiCall(
-    "post",
-    `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
-    payload
-  );
-  // const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
+  const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
   const payload = {
     auth0: {
       name: name,
@@ -771,7 +765,6 @@ const sendUserDataToApi = async (name, email, id) => {
     },
     type: "google", // This should be dynamically set based on the provider
   };
-
   try {
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -780,11 +773,9 @@ const sendUserDataToApi = async (name, email, id) => {
       },
       body: JSON.stringify(payload),
     });
-
     if (!response.ok) {
       throw new Error(`API error: ${response.statusText}`);
     }
-
     const responseData = await response.json();
     const token = responseData.data;
     localStorage.setItem("apiDataToken", token);
