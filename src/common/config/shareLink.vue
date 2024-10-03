@@ -7,24 +7,26 @@
       class="!w-[621px] !h-[404px] bg-white rounded-3xl shadow-lg space-y-6 relative flex flex-col items-center justify-center"
     >
       <button
-        class="absolute top-4 right-4"
+        class="absolute top-4 right-4 h-[10px]"
         @click="$emit('close')"
         aria-label="Close"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          class="w-6 h-6 text-gray-600 hover:text-gray-800"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
+        <div class="border border-[#121212] rounded-full inline-block">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="text-[#121212] hover:text-gray-800 h-[27px]"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </div>
       </button>
 
       <h2 class="text-2xl font-bold font-lato text-[#121212] text-center mb-2">
