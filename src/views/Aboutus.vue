@@ -4,12 +4,23 @@
       <Navbarrr />
     </div>
     <div class="block sm:hidden">
-      <div class="bg-white rounded-b-[12px] h-[48px]">
-        <div class="flex">
-          <div>></div>
-          <div class="gap-4 font-lato text-[16px] text-700 text-[#121212]">
-            About Us
-          </div>
+      <div class="bg-white rounded-b-[12px] p-2.5 h-[48px] w-[100%] flex">
+        <div class="w-[4%] flex justify-center items-center">
+          <a
+            href="javascript: history.go(-1)
+"
+          >
+            <img
+              height="14px"
+              width="9px"
+              src="../assets/svg/triangle-left.svg"
+            />
+          </a>
+        </div>
+        <div
+          class="flex justify-center font-lato font-semibold text-[16px] text-[#121212] items-center text-center w-[96%]"
+        >
+          About Us
         </div>
       </div>
     </div>

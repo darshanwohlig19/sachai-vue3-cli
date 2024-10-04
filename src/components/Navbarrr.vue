@@ -299,6 +299,26 @@
               class="absolute w-full bg-white p-2 border border-gray-300 rounded-md mt-2 z-10 h-[370px] overflow-y-auto slim-scrollbar"
             >
               <div
+                v-if="loading"
+                class="text-center py-2 text-gray-500 overflow-y-hidden"
+              >
+                <div class="flex flex-col gap-[13px] overflow-y-hidden">
+                  <div
+                    v-for="b in 4"
+                    :key="b"
+                    class="shadow-md flex gap-3 shadow-custom border-custom overflow-y-hidden w-full p-2 rounded-[8px]"
+                  >
+                    <div class="flex-shrink-0">
+                      <Skeleton width="78px" height="57px"></Skeleton>
+                    </div>
+                    <div class="flex justify-center flex-col w-full">
+                      <Skeleton width="100%" height="25px"></Skeleton>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                v-else
                 v-for="(result, index) in searchResults"
                 :key="index"
                 class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
@@ -585,6 +605,7 @@ const isExpanded = ref(false);
 const searchInput = ref(null);
 const searchResultsDropdown = ref(null);
 const router = useRouter();
+const loading = ref(true);
 const toast = useToast();
 // const categoriesContainer = ref(null);
 const isLoggingOut = ref(false);
@@ -785,6 +806,8 @@ const handleSearch = async () => {
       searchResults.value = response.data;
     } catch (error) {
       console.error("Error fetching search results:", error);
+    } finally {
+      loading.value = false;
     }
   } else if (searchQuery.value.trim().length < 4) {
     searchResults.value = [];

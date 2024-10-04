@@ -3,7 +3,7 @@
     <div class="flex justify-between w-full items-center">
       <div class="flex flex-row items-center gap-2">
         <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
-        <div class="text-[20px] font-bold font-lato mt-[75px]">More News</div>
+        <div class="text-[20px] font-bold font-lato">More News</div>
       </div>
       <!-- Conditionally render button based on loading and error states -->
       <div v-if="!loading && !error">
