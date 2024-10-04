@@ -54,7 +54,7 @@
 
       <div class="flex justify-center space-x-4 mb-2 flex-wrap">
         <Button
-          @click="navigateToInviteLink(inviteLink)"
+          @click="shareOnFacebook(inviteLink)"
           size="icon"
           variant="outline"
           class="rounded-full bg-[#1877F2] text-white hover:bg-[#1877F2]/90"
@@ -63,7 +63,7 @@
         </Button>
 
         <Button
-          @click="navigateToInviteLink(inviteLink)"
+          @click="shareOnX(inviteLink)"
           size="icon"
           variant="outline"
           class="rounded-full bg-black text-white hover:bg-black/90"
@@ -72,7 +72,7 @@
         </Button>
 
         <Button
-          @click="navigateToInviteLink(inviteLink)"
+          @click="shareOnWhatsApp(inviteLink)"
           size="icon"
           variant="outline"
           class="rounded-full bg-[#25D366] text-white hover:bg-[#25D366]/90"
@@ -81,7 +81,7 @@
         </Button>
 
         <Button
-          @click="navigateToInviteLink(inviteLink)"
+          @click="shareOnLinkedIn(inviteLink)"
           size="icon"
           variant="outline"
           class="rounded-full bg-[#0A66C2] text-white hover:bg-[#0A66C2]/90"
@@ -168,6 +168,30 @@ export default {
     navigateToInviteLink(link) {
       // Open the invite link in a new tab
       window.open(link, "_blank");
+    },
+    shareOnFacebook(link) {
+      const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        link
+      )}`;
+      window.open(facebookShareUrl, "_blank");
+    },
+    shareOnLinkedIn(link) {
+      const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+        link
+      )}`;
+      window.open(linkedInShareUrl, "_blank");
+    },
+    shareOnWhatsApp(link) {
+      const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(
+        link
+      )}`;
+      window.open(whatsappShareUrl, "_blank");
+    },
+    shareOnX(link) {
+      const xShareUrl = `https://x.com/intent/tweet?url=${encodeURIComponent(
+        link
+      )}`;
+      window.open(xShareUrl, "_blank");
     },
   },
 };
