@@ -94,7 +94,7 @@
         class="w-full max-w-[194px] h-[40px] font-bold font-lato text-base justify-center bg-[#1E0627] hover:[#1E0627] text-[#FFFFFF]"
         @click="copyToLink(inviteLink)"
       >
-        <span v-if="!isCopiedLink">Copy my link</span>
+        <span v-if="!isCopiedLink">Copy invite link</span>
         <span v-else>Copied.!</span>
         <img
           :src="chainLink"
@@ -177,5 +177,8 @@ export default {
 .social-icon {
   width: 30px;
   height: 30px;
+}
+.tooltip.top {
+  margin-top: 15px;
 }
 </style>
