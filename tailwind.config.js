@@ -53,6 +53,7 @@ module.exports = {
 
       screens: {
         xs: "350px", // Extra small mobile
+        xxss: "375px",
         "xs-max": { max: "350px" },
         sm: "576px", // Small mobile
         "sm-max": { max: "576px" },

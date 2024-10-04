@@ -178,12 +178,13 @@
           <div>
             <div class="font-16 headline-tuncate">{{ item.headline }}</div>
             <div class="font-133 summary-tuncate">{{ item.summary }}</div>
-            <div v-if="index < 2" class="border_11 sm-max:mt-3 mt-2"></div>
+            <!-- <div v-if="index < 2" class="border_11 sm-max:mt-3 mt-2"></div> -->
+            <hr v-if="index < 2" class="mt-3 border-t border-gray-300" />
           </div>
         </div>
       </div>
       <div class="w-[1%] xl-max:!hidden flex justify-center">
-        <div class="divider11"></div>
+        <div class="standing_divider"></div>
       </div>
       <div
         class="w-[100%] lg:w-[30%] md:w-[100%] lg:mt-0 mt-3 flex flex-col justify-between"

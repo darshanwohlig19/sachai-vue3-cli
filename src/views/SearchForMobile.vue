@@ -14,7 +14,7 @@
           ref="searchInput"
           :class="inputClass"
           v-model="searchQuery"
-          @input="handleSearch"
+          @input="onInput"
           name="fname"
           autocomplete="off"
           placeholder="Search"
@@ -58,13 +58,13 @@
         @click="navigateToNewsDetail(result._id)"
       >
         <div
-          class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[6px] p-2 border-1"
+          class="w-[100%] flex flex-row justify-between items-center gap-3 shadow-custom border-custom rounded-[6px] p-2 border-1"
           @click="navigateToNewsDetail(result._id)"
         >
-          <div class="w-[15%]">
+          <div class="w-[25%] xxss:w-[15%]">
             <img
               :src="result.imgixUrlHighRes || fallbackImage"
-              class="h-[54px] w-[56px] object-cover rounded-[8px]"
+              class="h-[54px] w-[100%] object-contain rounded-[8px] bg-[#454545]"
             />
           </div>
           <div
@@ -80,6 +80,8 @@
 <script>
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 import fallbackImage2 from "../common/config/GlobalConstants";
 import axios from "axios";
 export default {
@@ -92,32 +94,84 @@ export default {
     const isExpanded = ref(false);
     const searchInput = ref(null);
     const categories = ref([]);
+    const loading = ref(false);
+
+    let timeout = null;
 
     const navigateToNewsDetail = (id) => {
       router.push(`/news/${id}`);
       console.log("Navigating to news detail with ID:", id);
     };
 
-    const handleSearch = async () => {
-      if (searchQuery.value.trim().length >= 4) {
-        console.log("Search query:", searchQuery.value); // Log the search query
-        try {
-          const response = await axios.post(
-            "https://api-uat.newsshield.io/news/searchNewsFromWeb",
-            {
-              language: "6421a32aa020a23deacecf92",
-              search: searchQuery.value,
-            }
-          );
-          console.log("API Response:", response.data); // Log the API response
-          searchResults.value = response.data;
-        } catch (error) {
-          console.error("Error fetching search results:", error); // Log any errors
-        }
-      } else {
-        searchResults.value = [];
-      }
+    // Debounced input handler
+    const onInput = () => {
+      clearTimeout(timeout); // Clear any existing timeout
+
+      // Set a new timeout to detect when the user stops typing (500ms)
+      timeout = setTimeout(() => {
+        onStopTyping();
+      }, 500);
     };
+
+    // Called when the user stops typing
+    const onStopTyping = () => {
+      console.log("User stopped typing. Final input:");
+      handleSearch();
+      // Handle your logic here, such as making an API call
+    };
+
+    const handleSearch = async () => {
+      // if (
+      //   searchQuery.value.trim().length >= 4 &&
+      //   searchQuery.value.trim().length % 4 === 0
+      // ) {
+      try {
+        console.log("API CALLED");
+        loading.value = true;
+        const payload = {
+          language: "6421a32aa020a23deacecf92",
+          search: searchQuery.value,
+        };
+        const response = await apiService.apiCall(
+          "post",
+          `${apiConfig.SEARCH_NEWS_FROM_WEB}`,
+          payload
+        );
+        // const response = await axios.post(
+        //   "https://api-uat.newsshield.io/news/searchNewsFromWeb"
+        // );
+        searchResults.value = response.data;
+        loading.value = false;
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      } finally {
+        loading.value = false;
+      }
+      // } else if (searchQuery.value.trim().length < 4) {
+      //   searchResults.value = [];
+      // }
+    };
+
+    // const handleSearch = async () => {
+    //   if (searchQuery.value.trim().length >= 4) {
+    //     console.log("Search query:", searchQuery.value); // Log the search query
+    //     try {
+    //       const response = await axios.post(
+    //         "https://api-uat.newsshield.io/news/searchNewsFromWeb",
+    //         {
+    //           language: "6421a32aa020a23deacecf92",
+    //           search: searchQuery.value,
+    //         }
+    //       );
+    //       console.log("API Response:", response.data); // Log the API response
+    //       searchResults.value = response.data;
+    //     } catch (error) {
+    //       console.error("Error fetching search results:", error); // Log any errors
+    //     }
+    //   } else {
+    //     searchResults.value = [];
+    //   }
+    // };
 
     const fetchCategories = async () => {
       try {
@@ -169,12 +223,12 @@ export default {
         : "w-[220px] py-2 transition-all duration-300"
     );
 
-    watch(searchQuery, (newValue) => {
-      if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
-        handleSearch();
-      } else if (newValue.trim().length < 4) {
-        searchResults.value = [];
-      }
+    watch(searchQuery, () => {
+      // if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
+      onInput();
+      // } else if (newValue.trim().length < 4) {
+      //   searchResults.value = [];
+      // }
     });
     return {
       isExpanded,

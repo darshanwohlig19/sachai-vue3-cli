@@ -52,7 +52,7 @@
         >
           {{ blogs[1]?.headline }}
         </div>
-        <div class="border-1"></div>
+        <div class="standing_divider"></div>
         <div
           class="font-14 multiline-truncate1"
           @click="navigateToCategory(blogs[2]?._id)"
@@ -89,7 +89,9 @@
     </div>
 
     <!-- Divider (hidden on small devices) -->
-    <div class="border-1 lg:flex hidden"></div>
+    <div class="w-[1%] lg:flex lg:justify-center hidden">
+      <div class="standing_divider"></div>
+    </div>
 
     <!-- Third Section -->
     <div v-if="loading" class="w-[100%] lg:w-[35%]">
@@ -211,5 +213,10 @@ onMounted(() => {
   -webkit-line-clamp: 1; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.standing_divider {
+  height: 100%;
+  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
+  width: 1px;
 }
 </style>

@@ -23,11 +23,15 @@
             <div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
-                <div class="divider mt-3"></div>
+                <div class="mt-3">
+                  <hr class="mt-3 border-t border-gray-300" />
+                </div>
               </div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
-                <div class="divider mt-3"></div>
+                <div class="mt-3">
+                  <hr class="mt-3 border-t border-gray-300" />
+                </div>
               </div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
@@ -37,7 +41,7 @@
 
           <!-- Divider Column -->
           <div class="w-[3%] flex justify-center sm-425:hidden divider_loader">
-            <div class="divider1 sm-425:hidden"></div>
+            <div class="standing_divider sm-425:hidden"></div>
           </div>
 
           <!-- Second Column -->
@@ -47,11 +51,15 @@
             <div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
-                <div class="divider mt-3"></div>
+                <div class="mt-3">
+                  <hr class="mt-3 border-t border-gray-300" />
+                </div>
               </div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
-                <div class="divider mt-3"></div>
+                <div class="mt-3">
+                  <hr class="mt-3 border-t border-gray-300" />
+                </div>
               </div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
@@ -61,7 +69,7 @@
 
           <!-- Divider Column -->
           <div class="w-[3%] flex justify-center divider_loader">
-            <div class="divider1 sm-max:hidden"></div>
+            <div class="standing_divider sm-max:hidden"></div>
           </div>
 
           <!-- Third Column -->
@@ -69,11 +77,15 @@
             <div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
-                <div class="divider mt-3"></div>
+                <!-- <div class="mt-3">
+                  <hr class="mt-3 border-t border-gray-300" />
+                </div> -->
               </div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
-                <div class="divider mt-3"></div>
+                <!-- <div class="mt-3">
+                  <hr class="mt-3 border-t border-gray-300" />
+                </div> -->
               </div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
@@ -103,10 +115,9 @@
               <div class="para summary">{{ news.summary }}</div>
             </div>
           </div>
-          <div
-            v-if="index < leftColumnNews.length - 1"
-            class="divider mt-3"
-          ></div>
+          <div v-if="index < leftColumnNews.length - 1" class="mt-3">
+            <hr class="mt-3 border-t border-gray-300" />
+          </div>
         </div>
       </div>
 
@@ -132,10 +143,9 @@
               <div class="para summary">{{ news.summary }}</div>
             </div>
           </div>
-          <div
-            v-if="index < middleColumnNews.length - 1"
-            class="divider mt-3"
-          ></div>
+          <div v-if="index < middleColumnNews.length - 1" class="mt-3">
+            <hr class="mt-3 border-t border-gray-300" />
+          </div>
         </div>
       </div>
 
@@ -161,10 +171,9 @@
               <div class="para summary">{{ news.summary }}</div>
             </div>
           </div>
-          <div
-            v-if="index < rightColumnNews.length - 1"
-            class="divider mt-3"
-          ></div>
+          <div v-if="index < rightColumnNews.length - 1" class="mt-3">
+            <hr class="mt-3 border-t border-gray-300" />
+          </div>
         </div>
       </div>
     </div>

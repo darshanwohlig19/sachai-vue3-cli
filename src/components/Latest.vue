@@ -100,13 +100,12 @@
                     <span
                       :class="[
                         'mdi',
-                        news.bookmarked
-                          ? 'mdi-bookmark text-[#FF0053] text-[21px]'
-                          : 'mdi-bookmark-outline text-[21px]',
+                        'mdi-bookmark text-[21px] cursor-pointer',
+                        getBookmarkColor(news?.isBookmarked),
                       ]"
-                      class="cursor-pointer"
-                      @click="addBookmark(news._id)"
-                    ></span>
+                      @click="addBookmark(news)"
+                    >
+                    </span>
                   </div>
                 </div>
                 <div
@@ -154,7 +153,7 @@ import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
-
+import axios from "axios";
 const route = useRoute();
 const router = useRouter();
 const isDialogVisible = ref(false); // State for dialog visibility
@@ -240,41 +239,30 @@ const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
 };
 
-const addBookmark = async (id) => {
+const getBookmarkColor = (isBookmarked) => {
+  return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
+};
+const addBookmark = async (news) => {
+  const token = localStorage.getItem("apiDataToken");
   try {
-    // First, find the news item by its ID
-    const newsItem = blogs.value.find((news) => news._id === id);
+    const currentStatus =
+      news.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
 
-    // Check if the newsItem exists
-    if (!newsItem) {
-      throw new Error(`News item with id ${id} not found`);
-    }
-
-    // Determine the new status based on the current bookmark state
-    const newStatus = newsItem.bookmarked ? "Disabled" : "Enabled";
-
-    const payload = {
-      status: newStatus,
-    };
-    // Send the API request to update the bookmark status
-    await apiService.apiCall(
-      "post",
-      `${apiConfig.ADD_BOOKMARK}/${id}`,
-      payload
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${news._id}`,
+      {
+        status: currentStatus,
+      },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
     );
-
-    // Update the bookmarked status locally
-    newsItem.bookmarked = !newsItem.bookmarked;
-    localStorage.setItem(
-      `bookmark_${id}`,
-      newsItem.bookmarked ? "Enabled" : "Disabled"
-    );
-
-    console.log(
-      `News item ${id} bookmark status updated successfully to ${newStatus}`
-    );
+    news.isBookmarked = currentStatus;
+    return response.data;
   } catch (error) {
-    console.error(`Error updating bookmark status for news item ${id}:`, error);
+    console.error("Error adding bookmark:", error);
   }
 };
 
