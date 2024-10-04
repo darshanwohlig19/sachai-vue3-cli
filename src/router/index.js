@@ -13,6 +13,7 @@ import SearchForMobile from "@/views/SearchForMobile.vue";
 import Campaign from "@/views/CampaignPage.vue";
 import Latest from "@/views/LatestPage.vue";
 import FeaturedNews from "@/components/RelatedNews.vue";
+
 const routes = [
   {
     path: "/",
@@ -23,6 +24,7 @@ const routes = [
     path: "/Setting",
     name: "Setting",
     component: Setting,
+    meta: { requiresAuth: true },
   },
   {
     path: "/categories/:slugOrId",
@@ -46,11 +48,13 @@ const routes = [
     path: "/Bookmark",
     name: "Bookmark",
     component: Bookmark,
+    meta: { requiresAuth: true },
   },
   {
     path: "/Astrology",
     name: "Astrology",
     component: Astrology,
+    meta: { requiresAuth: true },
   },
   {
     path: "/MoreNews",
@@ -97,17 +101,20 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = !!localStorage.getItem("apiDataToken");
-  // Check if the route requires authentication
-  if (to.meta.requiresAuth && !isLoggedIn) {
-    // Redirect to login if not authenticated
+  const apiDataToken = localStorage.getItem("apiDataToken");
+  if (to.meta.requiresAuth && !apiDataToken) {
     next("/login");
-  } else if (to.path === "/login" && isLoggedIn) {
-    // Redirect to home if already logged in and trying to access login page
+  } else if (to.path === "/login" && apiDataToken) {
+    next("/");
+  } else if (to.path === "/Astrology" && !apiDataToken) {
+    next("/");
+  } else if (to.path === "/Setting" && !apiDataToken) {
+    next("/");
+  } else if (to.path === "/Bookmark" && !apiDataToken) {
     next("/");
   } else {
-    // Allow navigation to other routes
     next();
   }
 });
+
 export default router;

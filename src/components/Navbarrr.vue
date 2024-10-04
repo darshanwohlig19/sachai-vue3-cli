@@ -40,7 +40,7 @@
             <RouterLink
               class="nav-items"
               active-class="active-link"
-              to="/Astrology"
+              :to="isLoggedIn ? '/Astrology' : '/'"
               >Astrology</RouterLink
             >
             <!-- Astrology -->
@@ -251,7 +251,7 @@
             </div>
           </div>
 
-          <div class="hidden lg:flex head-navs gap-2">
+          <div class="hidden lg:flex head-navs gap-2" v-if="isLoggedIn">
             <img
               v-if="route.path === '/Bookmark'"
               src="@/assets/svg/active_bookmark.svg"
@@ -261,7 +261,7 @@
             <RouterLink
               class="nav-items"
               active-class="active-link"
-              to="/Bookmark"
+              :to="isLoggedIn ? '/Bookmark' : '/'"
               >Bookmark</RouterLink
             >
           </div>
