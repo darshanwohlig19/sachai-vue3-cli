@@ -4,10 +4,10 @@
     class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
   >
     <div
-      class="!w-[621px] !h-[404px] bg-white rounded-3xl shadow-lg space-y-6 relative flex flex-col items-center justify-center"
+      class="w-full max-w-[621px] h-auto bg-white rounded-3xl shadow-lg space-y-6 p-6 relative flex flex-col items-center"
     >
       <button
-        class="absolute top-4 right-4 h-[10px]"
+        class="absolute top-4 right-4"
         @click="$emit('close')"
         aria-label="Close"
       >
@@ -34,24 +34,24 @@
       </h2>
 
       <div
-        class="flex items-center bg-[#F8F8F8] overflow-hidden rounded border h-[40px] w-[475px]"
+        class="flex items-center bg-[#F8F8F8] overflow-hidden rounded border h-[40px] w-full max-w-[475px]"
       >
         <Input
           :value="inviteLink"
           readOnly
-          class="w-full h-full ml-[1px] bg-[#F8F8F8]"
+          class="w-full h-full bg-[#F8F8F8] border-none ml-[3px]"
         />
         <button
           class="text-white p-2 w-[32px] h-[32px] bg-[#F8F8F8]"
           @click="copyToClipboard(inviteLink)"
         >
-          <img :src="CopyLink" />
+          <img :src="CopyLink" alt="Copy Link" />
         </button>
       </div>
 
       <div class="text-center font-normal text-base text-[#757575]">Or</div>
 
-      <div class="flex justify-center space-x-4 mb-2">
+      <div class="flex justify-center space-x-4 mb-2 flex-wrap">
         <Button
           @click="navigateToInviteLink(inviteLink)"
           size="icon"
@@ -69,6 +69,7 @@
         >
           <img :src="xLogo" alt="X Logo" class="social-icon" />
         </Button>
+
         <Button
           @click="navigateToInviteLink(inviteLink)"
           size="icon"
@@ -77,6 +78,7 @@
         >
           <img :src="whatsappLogo" alt="WhatsApp Logo" class="social-icon" />
         </Button>
+
         <Button
           @click="navigateToInviteLink(inviteLink)"
           size="icon"
@@ -88,11 +90,11 @@
       </div>
 
       <Button
-        class="w-[194px] h-[40px] font-bold font-lato text-base justify-center bg-[#1E0627] hover:[#1E0627] text-[#FFFFFF]"
+        class="w-full max-w-[194px] h-[40px] font-bold font-lato text-base justify-center bg-[#1E0627] hover:[#1E0627] text-[#FFFFFF]"
         @click="copyToClipboard(inviteLink)"
       >
         Copy my link
-        <img :src="chainLink" class="ml-2" />
+        <img :src="chainLink" class="ml-2" alt="Chain Link" />
       </Button>
 
       <div class="text-center">
