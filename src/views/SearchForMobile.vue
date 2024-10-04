@@ -32,6 +32,26 @@
       class="w-[100%] bg-white p-2 border border-gray-300 rounded-md mt-2 h-full"
     >
       <div
+        v-if="loading"
+        class="text-center py-2 text-gray-500 rounded-md overflow-y-hidden"
+      >
+        <div class="flex flex-col gap-[13px] overflow-y-hidden">
+          <div
+            v-for="b in 4"
+            :key="b"
+            class="shadow-md flex gap-3 shadow-custom border-custom overflow-y-hidden w-full p-2 rounded-[8px] border-1"
+          >
+            <div class="flex-shrink-0">
+              <Skeleton width="78px" height="57px"></Skeleton>
+            </div>
+            <div class="flex justify-center flex-col w-full">
+              <Skeleton width="100%" height="25px"></Skeleton>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        v-else
         v-for="(result, index) in searchResults"
         :key="index"
         class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
