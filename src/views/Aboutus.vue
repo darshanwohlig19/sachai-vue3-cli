@@ -6,7 +6,10 @@
     <div class="block sm:hidden">
       <div class="bg-white rounded-b-[12px] p-2.5 h-[48px] w-[100%] flex">
         <div class="w-[4%] flex justify-center items-center">
-          <a href="/">
+          <a
+            href="javascript: history.go(-1)
+"
+          >
             <img
               height="14px"
               width="9px"

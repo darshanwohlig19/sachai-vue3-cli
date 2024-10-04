@@ -2,7 +2,7 @@
   <div class="mx-[20px] my-[20px]">
     <div class="flex items-center gap-2">
       <div>
-        <a href="/">
+        <a href="javascript: history.go(-1)">
           <img src="../assets/svg/Left.svg" alt="" />
         </a>
       </div>
