@@ -129,3 +129,7 @@ button.p-carousel-next.p-link {
 }
 .sleeping_divider {
 }
+.p-paginator-last,
+.p-paginator-first {
+  display: none !important;
+}
