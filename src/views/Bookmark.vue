@@ -6,7 +6,7 @@
   />
   <div>
     <Navbarrr />
-    <div class="mx-[20px] mt-[75px] min-h-screen flex flex-col">
+    <div class="mx-[10px] mt-[75px] min-h-screen flex flex-col">
       <div class="flex flex-col gap-2 bg-white rounded-[10px] p-3 flex-grow">
         <div class="flex flex-row items-center gap-2">
           <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
