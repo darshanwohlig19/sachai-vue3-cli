@@ -1,16 +1,13 @@
 <template>
   <div class="home">
     <Navbarrr />
-    <div class="mx-[10px]">
+    <div class="mx-[10px] mt-[75px]">
       <Trending />
       <FeaturedNews />
-
       <Latest />
-
       <Campaign />
       <CategoryNews />
       <CarouselCat />
-
       <MoreNews />
     </div>
     <Footer1 />

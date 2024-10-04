@@ -1,147 +1,149 @@
 <template>
-  <InviteLinkDialog
-    :isVisible="isDialogVisible"
-    :inviteLink="inviteLink"
-    @close="isDialogVisible = false"
-  />
-  <section class="mt-3">
-    <div class="bg-white p-3 rounded-[10px]">
-      <!-- Heading and Button -->
-      <div class="flex justify-between w-full items-center mb-3">
-        <div class="flex flex-row items-center gap-2">
-          <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
-          <div class="text-[20px] font-bold font-lato">
-            {{ headingText }}
-          </div>
-        </div>
-        <!-- Conditionally render button based on loading state and data -->
-        <div v-if="!isLoading && blogs.length > 0">
-          <a href="/Latest"> <Button /></a>
-        </div>
-      </div>
-
-      <!-- Loader -->
-      <div v-if="isLoading" class="flex flex-row gap-3 justify-between">
-        <div v-for="n in 4" :key="n" class="w-[33%] md-max:w-full">
-          <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
-            <!-- Skeleton Image -->
-            <Skeleton height="156px" width />
-
-            <!-- Skeleton for Source & Actions -->
-            <div class="flex justify-between items-center p-3">
-              <Skeleton width="25%" height="12px" />
-            </div>
-            <!-- Skeleton for Title -->
-            <div class="pl-3 pr-3">
-              <Skeleton width="100%" height="20px" />
-            </div>
-
-            <!-- Skeleton for Summary -->
-            <div class="pl-3 pr-3 mt-3">
-              <Skeleton width="100%" height="50px" />
-            </div>
-
-            <!-- Skeleton for Category & Time -->
-            <div class="px-3 pb-3 mt-2 mb-2 flex gap-1">
-              <Skeleton width="25%" height="12px" />
-              <Skeleton width="25%" height="12px" />
+  <div>
+    <InviteLinkDialog
+      :isVisible="isDialogVisible"
+      :inviteLink="inviteLink"
+      @close="isDialogVisible = false"
+    />
+    <section class="mt-3">
+      <div class="bg-white p-3 rounded-[10px]">
+        <!-- Heading and Button -->
+        <div class="flex justify-between w-full items-center mb-3">
+          <div class="flex flex-row items-center gap-2">
+            <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
+            <div class="text-[20px] font-bold font-lato">
+              {{ headingText }}
             </div>
           </div>
+          <!-- Conditionally render button based on loading state and data -->
+          <div v-if="!isLoading && blogs.length > 0">
+            <a href="/Latest"> <Button /></a>
+          </div>
         </div>
-      </div>
 
-      <!-- News Content -->
-      <div v-if="!isLoading && blogs.length > 0">
-        <div class="flex flex-row gap-3 justify-between cursor-pointer">
-          <div
-            v-for="news in slicedData"
-            :key="news._id"
-            class="w-[33%] md-max:w-full"
-          >
+        <!-- Loader -->
+        <div v-if="isLoading" class="flex flex-row gap-3 justify-between">
+          <div v-for="n in 4" :key="n" class="w-[33%] md-max:w-full">
             <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
-              <div
-                class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden w-full"
-              >
-                <div class="relative w-full h-[100%]">
-                  <img
-                    class="absolute inset-0 object-cover h-full w-full filter blur-md"
-                    :src="news.imgixUrlHighRes || fallbackImage"
-                    alt="Background"
-                    @click="navigateToCampingNews(news._id)"
-                  />
+              <!-- Skeleton Image -->
+              <Skeleton height="156px" width />
+
+              <!-- Skeleton for Source & Actions -->
+              <div class="flex justify-between items-center p-3">
+                <Skeleton width="25%" height="12px" />
+              </div>
+              <!-- Skeleton for Title -->
+              <div class="pl-3 pr-3">
+                <Skeleton width="100%" height="20px" />
+              </div>
+
+              <!-- Skeleton for Summary -->
+              <div class="pl-3 pr-3 mt-3">
+                <Skeleton width="100%" height="50px" />
+              </div>
+
+              <!-- Skeleton for Category & Time -->
+              <div class="px-3 pb-3 mt-2 mb-2 flex gap-1">
+                <Skeleton width="25%" height="12px" />
+                <Skeleton width="25%" height="12px" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- News Content -->
+        <div v-if="!isLoading && blogs.length > 0">
+          <div class="flex flex-row gap-3 justify-between cursor-pointer">
+            <div
+              v-for="news in slicedData"
+              :key="news._id"
+              class="w-[33%] md-max:w-full"
+            >
+              <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
+                <div
+                  class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden w-full"
+                >
+                  <div class="relative w-full h-[100%]">
+                    <img
+                      class="absolute inset-0 object-cover h-full w-full filter blur-md"
+                      :src="news.imgixUrlHighRes || fallbackImage"
+                      alt="Background"
+                      @click="navigateToCampingNews(news._id)"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient from-transparent to-black opacity-75"
+                    ></div>
+                  </div>
                   <div
-                    class="absolute inset-0 bg-gradient from-transparent to-black opacity-75"
-                  ></div>
+                    class="absolute inset-0 flex flex-col justify-between text-white"
+                  >
+                    <img
+                      class="object-contain h-full w-full"
+                      :src="news.imgixUrlHighRes || fallbackImage"
+                      alt="Centered Image"
+                      @click="navigateToCampingNews(news._id)"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                    ></div>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center pl-3 pr-3 mt-2">
+                  <div class="flex gap-1 text-[#676767] text-xs">
+                    <div>{{ news.source }}</div>
+                  </div>
+                  <div class="flex gap-1">
+                    <span
+                      class="mdi mdi-share-variant text-[19px]"
+                      @click.stop="showDialog(news)"
+                    ></span>
+                    <span
+                      :class="[
+                        'mdi',
+                        news.bookmarked
+                          ? 'mdi-bookmark text-[#FF0053] text-[21px]'
+                          : 'mdi-bookmark-outline text-[21px]',
+                      ]"
+                      class="cursor-pointer"
+                      @click="addBookmark(news._id)"
+                    ></span>
+                  </div>
                 </div>
                 <div
-                  class="absolute inset-0 flex flex-col justify-between text-white"
+                  class="pl-3 pr-3 text-[16px] font-semibold"
+                  @click="navigateToNewsDetail(news._id)"
                 >
-                  <img
-                    class="object-contain h-full w-full"
-                    :src="news.imgixUrlHighRes || fallbackImage"
-                    alt="Centered Image"
-                    @click="navigateToCampingNews(news._id)"
-                  />
-                  <div
-                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
-                  ></div>
+                  <a class="hover:text-current font-16 multiline-truncate1">
+                    {{ news.headline }}
+                  </a>
                 </div>
-              </div>
-              <div class="flex justify-between items-center pl-3 pr-3 mt-2">
-                <div class="flex gap-1 text-[#676767] text-xs">
-                  <div>{{ news.source }}</div>
+                <div
+                  class="pl-3 pr-3 para multiline-truncate"
+                  @click="navigateToNewsDetail(news._id)"
+                >
+                  {{ news.summary }}
                 </div>
-                <div class="flex gap-1">
-                  <span
-                    class="mdi mdi-share-variant text-[19px]"
-                    @click.stop="showDialog(news)"
-                  ></span>
-                  <span
-                    :class="[
-                      'mdi',
-                      news.bookmarked
-                        ? 'mdi-bookmark text-[#FF0053] text-[21px]'
-                        : 'mdi-bookmark-outline text-[21px]',
-                    ]"
-                    class="cursor-pointer"
-                    @click="addBookmark(news._id)"
-                  ></span>
+                <div class="px-3 mb-3 mt-2 text-[12px] flex gap-1">
+                  <span class="text-red-500 bold capitalize">
+                    {{
+                      news.categories[0].name.toLowerCase() === "ai"
+                        ? news.categories[0].name.toUpperCase()
+                        : news.categories[0].name.replace(/-/g, " ")
+                    }}
+                  </span>
+                  <span>
+                    <div class="text-[#676767] text-xs">
+                      | {{ formatPublishTime(news.publishTime) }}
+                    </div>
+                  </span>
                 </div>
-              </div>
-              <div
-                class="pl-3 pr-3 text-[16px] font-semibold"
-                @click="navigateToNewsDetail(news._id)"
-              >
-                <a class="hover:text-current font-16 multiline-truncate1">
-                  {{ news.headline }}
-                </a>
-              </div>
-              <div
-                class="pl-3 pr-3 para multiline-truncate"
-                @click="navigateToNewsDetail(news._id)"
-              >
-                {{ news.summary }}
-              </div>
-              <div class="px-3 mb-3 mt-2 text-[12px] flex gap-1">
-                <span class="text-red-500 bold capitalize">
-                  {{
-                    news.categories[0].name.toLowerCase() === "ai"
-                      ? news.categories[0].name.toUpperCase()
-                      : news.categories[0].name.replace(/-/g, " ")
-                  }}
-                </span>
-                <span>
-                  <div class="text-[#676767] text-xs">
-                    | {{ formatPublishTime(news.publishTime) }}
-                  </div>
-                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script setup>

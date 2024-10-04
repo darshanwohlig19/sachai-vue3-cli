@@ -9,12 +9,34 @@
           class="shadow-lg rounded-lg between-Laptop:!hidden overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[16rem] bg-white"
         >
           <div class="relative w-full md:w-1/2 overflow-hidden p-2">
-            <div class="image-container">
+            <div
+              class="relative image-container w-full h-64 rounded-xl overflow-hidden"
+            >
+              <!-- Background Image with Blur -->
               <img
-                :src="newsItem?.imgixUrlHighRes"
-                alt="News image"
-                class="news-image w-full h-64 object-fill rounded-xl"
+                :src="newsItem?.imgixUrlHighRes || fallbackImage"
+                alt="Background"
+                class="absolute inset-0 object-cover w-full h-full filter blur-md"
               />
+
+              <!-- Gradient Overlay -->
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+              ></div>
+
+              <!-- Foreground Image -->
+              <div
+                class="absolute inset-0 flex flex-col justify-between text-white"
+              >
+                <img
+                  :src="newsItem?.imgixUrlHighRes || fallbackImage"
+                  alt="News image"
+                  class="relative z-10 object-contain w-full h-64 rounded-xl"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                ></div>
+              </div>
             </div>
           </div>
           <div class="w-full md:w-1/2 p-2 flex flex-col">
