@@ -2,7 +2,7 @@
   <div>
     <Navbarrr />
   </div>
-  <div class="flex min-h-screen bg-gray-100 pt-2 mx-2 space-x-2 mt-[75px]">
+  <div class="flex min-h-screen bg-gray-100 mx-2 space-x-2 mt-[75px]">
     <!-- Sidebar -->
     <div class="w-80 bg-white shadow-md rounded-lg">
       <div class="p-4">
