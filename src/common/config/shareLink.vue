@@ -44,8 +44,9 @@
         <button
           class="text-white p-2 w-[32px] h-[32px] bg-[#F8F8F8]"
           @click="copyToClipboard(inviteLink)"
+          v-tooltip.top="!isCopied ? ' Copy to clipboard' : 'Copied'"
         >
-          <img :src="CopyLink" alt="Copy Link" />
+          <img :src="isCopied ? Copied : CopyLink" alt="Copy Link" />
         </button>
       </div>
 
@@ -91,10 +92,16 @@
 
       <Button
         class="w-full max-w-[194px] h-[40px] font-bold font-lato text-base justify-center bg-[#1E0627] hover:[#1E0627] text-[#FFFFFF]"
-        @click="copyToClipboard(inviteLink)"
+        @click="copyToLink(inviteLink)"
       >
-        Copy my link
-        <img :src="chainLink" class="ml-2" alt="Chain Link" />
+        <span v-if="!isCopiedLink">Copy my link</span>
+        <span v-else>Copied.!</span>
+        <img
+          :src="chainLink"
+          class="ml-2"
+          alt="Chain Link"
+          v-if="!isCopiedLink"
+        />
       </Button>
 
       <div class="text-center">
@@ -116,6 +123,7 @@ import linkDinLogo from "@/assets/svg/linkdin.svg";
 import whatsappLogo from "@/assets/svg/whatsapp.svg";
 import chainLink from "@/assets/svg/chain.svg";
 import CopyLink from "@/assets/svg/copy.svg";
+import Copied from "@/assets/svg/Copied.svg";
 
 export default {
   data() {
@@ -126,6 +134,9 @@ export default {
       whatsappLogo,
       chainLink,
       CopyLink,
+      Copied,
+      isCopied: false,
+      isCopiedLink: false,
     };
   },
   props: {
@@ -142,6 +153,17 @@ export default {
   methods: {
     copyToClipboard(text) {
       navigator.clipboard.writeText(text);
+      this.isCopied = true;
+      setTimeout(() => {
+        this.isCopied = false;
+      }, 1000);
+    },
+    copyToLink(text) {
+      navigator.clipboard.writeText(text);
+      this.isCopiedLink = true;
+      setTimeout(() => {
+        this.isCopiedLink = false;
+      }, 1000);
     },
     navigateToInviteLink(link) {
       // Open the invite link in a new tab
