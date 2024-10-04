@@ -114,7 +114,6 @@ button.p-carousel-next.p-link {
   padding: 0.5rem;
 }
 
-
 .multiline-text {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -123,3 +122,10 @@ button.p-carousel-next.p-link {
   text-overflow: ellipsis;
 }
 
+.standing_divider {
+  height: 100%;
+  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
+  width: 1px;
+}
+.sleeping_divider {
+}

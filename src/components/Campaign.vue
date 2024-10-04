@@ -103,7 +103,7 @@
 
       <!-- Divider -->
       <div class="flex justify-center">
-        <div class="divider1"></div>
+        <div class="standing_divider"></div>
       </div>
 
       <!-- Campaigns List -->

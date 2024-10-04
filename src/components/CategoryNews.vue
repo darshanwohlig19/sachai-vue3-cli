@@ -72,7 +72,12 @@
         </div>
       </div>
     </div>
-    <div v-else v-for="category in categories" :key="category._id" class="mb-3">
+    <div
+      v-else
+      v-for="category in categories.slice(0, 6)"
+      :key="category._id"
+      class="mb-3"
+    >
       <div class="bg-white p-3 rounded-[10px]">
         <div>
           <div class="w-[100%] flex justify-between mb-3">
@@ -172,7 +177,9 @@
                           </a>
                         </div>
                       </div>
-                      <div class="divider-horizontal mt-2"></div>
+                      <div class="mt-2">
+                        <hr class="mt-3 border-t border-gray-300" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -190,13 +197,15 @@
                     </div>
                     <div
                       v-if="index < getDisplayedNews(category.news).length - 1"
-                      class="divider-vertical"
+                      class="standing_divider"
                     ></div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="divider-vertical"></div>
+            <div class="w-[1%]">
+              <div class="standing_divider"></div>
+            </div>
             <div
               class="w-[100%] lg:w-[35%] flex flex-col justify-between gap-3 sm:gap-3"
             >

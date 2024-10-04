@@ -11,7 +11,7 @@
           />
         </a>
       </div>
-      <div class="w-[70%]">
+      <div class="w-[80%]">
         <div class="flex gap-1 sm:gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
@@ -283,7 +283,7 @@
               ref="searchInput"
               :class="inputClass"
               v-model="searchQuery"
-              @input="handleSearch"
+              @input="onInput"
               name="fname"
               autocomplete="off"
               placeholder="Search"
@@ -294,19 +294,18 @@
               class="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-500"
             />
             <div
-              v-if="searchResults.length"
               ref="searchResultsDropdown"
-              class="absolute w-full bg-white p-2 border border-gray-300 rounded-md mt-2 z-10 h-[370px] overflow-y-auto slim-scrollbar"
+              class="absolute w-full 0 rounded-md mt-2 z-10 min-h-[0px] max-h-[370px] overflow-y-auto slim-scrollbar"
             >
               <div
                 v-if="loading"
-                class="text-center py-2 text-gray-500 overflow-y-hidden"
+                class="text-center text-gray-500 overflow-y-hidden p-2 bg-white border border-gray-30"
               >
-                <div class="flex flex-col gap-[13px] overflow-y-hidden">
+                <div else class="flex flex-col gap-[13px] overflow-y-hidden">
                   <div
                     v-for="b in 4"
                     :key="b"
-                    class="shadow-md flex gap-3 shadow-custom border-custom overflow-y-hidden w-full p-2 rounded-[8px]"
+                    class="shadow-md flex gap-3 shadow-custom border-custom overflow-y-hidden w-full p-2 rounded-[8px] bg-white border border-gray-30"
                   >
                     <div class="flex-shrink-0">
                       <Skeleton width="78px" height="57px"></Skeleton>
@@ -318,26 +317,40 @@
                 </div>
               </div>
               <div
-                v-else
-                v-for="(result, index) in searchResults"
-                :key="index"
-                class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
-                @click="navigateToNewsDetail(result._id)"
+                class="p-2 bg-white border border-gray-30"
+                v-else-if="
+                  searchResults &&
+                  searchResults.length === 0 &&
+                  searchQuery.length != 0
+                "
+              >
+                NO NEWS
+              </div>
+              <div
+                class="p-2 bg-white border border-gray-30"
+                v-else-if="searchResults.length"
               >
                 <div
-                  class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
+                  v-for="(result, index) in searchResults"
+                  :key="index"
+                  class="flex gap-3 flex-row p-2 cursor-pointer hover:bg-gray-100 overflow-y-auto"
                   @click="navigateToNewsDetail(result._id)"
                 >
-                  <div class="w-[15%]">
-                    <img
-                      :src="result.imgixUrlHighRes || fallbackImage"
-                      class="h-[54px] w-[56px] object-cover rounded-[8px]"
-                    />
-                  </div>
                   <div
-                    class="w-[80%] flex justify-start items-center text-start font-light font-[#1E0627] font-source-serif text-[13px] two_line"
+                    class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
+                    @click="navigateToNewsDetail(result._id)"
                   >
-                    {{ result.headline }}
+                    <div class="w-[15%]">
+                      <img
+                        :src="result.imgixUrlHighRes || fallbackImage"
+                        class="h-[54px] w-[56px] object-cover rounded-[8px]"
+                      />
+                    </div>
+                    <div
+                      class="w-[80%] flex justify-start items-center text-start font-light font-[#1E0627] font-source-serif text-[13px] two_line"
+                    >
+                      {{ result.headline }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -605,7 +618,7 @@ const isExpanded = ref(false);
 const searchInput = ref(null);
 const searchResultsDropdown = ref(null);
 const router = useRouter();
-const loading = ref(true);
+const loading = ref(false);
 const toast = useToast();
 // const categoriesContainer = ref(null);
 const isLoggingOut = ref(false);
@@ -616,6 +629,7 @@ const searchQuery = ref("");
 const searchResults = ref([]);
 
 const showDropdown = ref(false);
+let timeout = null;
 
 const hideDropdown = () => {
   setTimeout(() => {
@@ -785,33 +799,53 @@ const fetchCategories = async () => {
 //   isInputVisible.value = !isInputVisible.value;
 // };
 
+// Debounced input handler
+const onInput = () => {
+  clearTimeout(timeout); // Clear any existing timeout
+
+  // Set a new timeout to detect when the user stops typing (500ms)
+  timeout = setTimeout(() => {
+    onStopTyping();
+  }, 500);
+};
+
+// Called when the user stops typing
+const onStopTyping = () => {
+  console.log("User stopped typing. Final input:");
+  handleSearch();
+  // Handle your logic here, such as making an API call
+};
+
 const handleSearch = async () => {
-  if (
-    searchQuery.value.trim().length >= 4 &&
-    searchQuery.value.trim().length % 4 === 0
-  ) {
-    try {
-      const payload = {
-        language: "6421a32aa020a23deacecf92",
-        search: searchQuery.value,
-      };
-      const response = await apiService.apiCall(
-        "post",
-        `${apiConfig.SEARCH_NEWS_FROM_WEB}`,
-        payload
-      );
-      // const response = await axios.post(
-      //   "https://api-uat.newsshield.io/news/searchNewsFromWeb"
-      // );
-      searchResults.value = response.data;
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    } finally {
-      loading.value = false;
-    }
-  } else if (searchQuery.value.trim().length < 4) {
-    searchResults.value = [];
+  // if (
+  //   searchQuery.value.trim().length >= 4 &&
+  //   searchQuery.value.trim().length % 4 === 0
+  // ) {
+  try {
+    console.log("API CALLED");
+    loading.value = true;
+    const payload = {
+      language: "6421a32aa020a23deacecf92",
+      search: searchQuery.value,
+    };
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.SEARCH_NEWS_FROM_WEB}`,
+      payload
+    );
+    // const response = await axios.post(
+    //   "https://api-uat.newsshield.io/news/searchNewsFromWeb"
+    // );
+    searchResults.value = response.data;
+    loading.value = false;
+  } catch (error) {
+    console.error("Error fetching search results:", error);
+  } finally {
+    loading.value = false;
   }
+  // } else if (searchQuery.value.trim().length < 4) {
+  //   searchResults.value = [];
+  // }
 };
 
 // const expandInput = () => {
@@ -881,12 +915,12 @@ const inputClass = computed(() =>
     : "w-[220px] py-2 transition-all duration-300"
 );
 
-watch(searchQuery, (newValue) => {
-  if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
-    handleSearch();
-  } else if (newValue.trim().length < 4) {
-    searchResults.value = [];
-  }
+watch(searchQuery, () => {
+  // if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
+  onInput();
+  // } else if (newValue.trim().length < 4) {
+  //   searchResults.value = [];
+  // }
 });
 </script>
 
