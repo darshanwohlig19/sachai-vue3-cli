@@ -7,7 +7,7 @@
   <div>
     <div
       v-if="loading"
-      class="w-full md-max:!block flex sm:flex-row lg:flex-row flex-wrap justify-between mt-3 relative bg-white p-3 rounded-[10px]"
+      class="w-full md-max:!block flex sm:flex-row lg:flex-row flex-wrap justify-between relative bg-white p-3 rounded-[10px]"
     >
       <div class="w-full flex flex-wrap gap-3">
         <!-- Skeleton for Trending Carousel -->
@@ -57,7 +57,7 @@
     <!-- Actual Content -->
     <div
       v-else
-      class="w-full md-max:!block flex sm:flex-row lg:flex-row flex-wrap justify-between mt-3 relative bg-white p-3 rounded-[10px]"
+      class="w-full md-max:!block flex sm:flex-row lg:flex-row flex-wrap justify-between relative bg-white p-3 rounded-[10px] mt-[75px]"
     >
       <div class="relative w-[100%] lg:w-[30%] md:w-[48%]">
         <div>

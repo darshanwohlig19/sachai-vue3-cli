@@ -1,7 +1,7 @@
 <template>
   <Navbarrr />
   <div class="mx-[10px] mt-3">
-    <div class="flex flex-col lg:flex-row">
+    <div class="flex flex-col lg:flex-row mt-[75px]">
       <div
         class="flex-grow flex flex-col h-full max-w-full sm:max-w-[90%] lg:max-w-[66%]"
       >

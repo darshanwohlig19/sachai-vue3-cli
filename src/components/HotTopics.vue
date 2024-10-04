@@ -19,21 +19,23 @@
       :key="index"
       class="mt-3 flex gap-4 items-center drop-shadow-lg border-1 p-2"
     >
-      <div class="flex w-[20%] justify-center items-center">
-        <a :href="`${SACHAI_NEWS_URL}${item._id}`">
-          <img
-            class="h-[51px] w-[51px] rounded-md"
-            :class="item?.imgixUrlHighRes ? 'object-cover' : 'object-contain'"
-            :src="item?.imgixUrlHighRes || fallbackImage"
-            alt=""
-          />
-        </a>
+      <div
+        class="flex w-[20%] justify-center items-center"
+        @click="navigateToNewsDetail(item._id)"
+      >
+        <img
+          class="h-[51px] w-[51px] rounded-md"
+          :class="item?.imgixUrlHighRes ? 'object-cover' : 'object-contain'"
+          :src="item?.imgixUrlHighRes || fallbackImage"
+          alt=""
+        />
       </div>
       <div class="flex flex-col w-[80%] justify-between">
-        <div class="text-[14px] mt-1 fontCustom">
-          <a :href="`${SACHAI_NEWS_URL}${item._id}`" class="hover:text-current">
-            {{ item?.headline || "No Headline" }}
-          </a>
+        <div
+          class="text-[14px] mt-1 fontCustom"
+          @click="navigateToNewsDetail(item._id)"
+        >
+          {{ item?.headline || "No Headline" }}
         </div>
       </div>
     </div>
@@ -83,6 +85,9 @@ export default {
 
     formatPublishTime(publishTime) {
       return moment(publishTime).fromNow();
+    },
+    navigateToNewsDetail(id) {
+      this.$router.push(`/news/${id}`);
     },
   },
 

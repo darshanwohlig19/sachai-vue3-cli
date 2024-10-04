@@ -16,7 +16,9 @@
         >
       </div>
 
-      <Button />
+      <div v-if="!isLoading && featuredNewsItem.length > 0">
+        <a href="/featured-news"> <Button /></a>
+      </div>
     </div>
 
     <div
@@ -105,10 +107,10 @@ import Button from "./ViewAll.vue";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
 import fallbackImage2 from "../common/config/GlobalConstants";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
-
 const route = useRoute();
 const router = useRouter();
 const featuredNewsItem = ref([]);
+const isLoading = ref(true); // New state for loader
 console.log("featuredNewsItem", featuredNewsItem);
 
 const isDialogVisible = ref(false); // State for dialog visibility
@@ -134,6 +136,7 @@ const screenWidth = ref(window.innerWidth);
 const newsId = ref(route.params.id || "");
 
 const fetchBlogs = async () => {
+  isLoading.value = true; // Start loading
   const payload = {
     categoryId: categoryId.value,
   };
@@ -151,6 +154,8 @@ const fetchBlogs = async () => {
     }));
   } catch (error) {
     console.error("Error fetching blogs:", error);
+  } finally {
+    isLoading.value = false; // Stop loading
   }
 };
 
@@ -189,16 +194,16 @@ const checkRouteParam = () => {
 };
 
 const slicedData = computed(() => {
-  if (screenWidth.value <= 640) {
-    // Mobile devices
-    return featuredNewsItem.value.slice(0, 4);
-  } else if (screenWidth.value > 425 && screenWidth.value < 1024) {
-    // Tablet devices
-    return featuredNewsItem.value.slice(0, 2);
-  } else {
-    // Desktop and larger devices
-    return featuredNewsItem.value.slice(0, 4);
+  if (Array.isArray(featuredNewsItem.value)) {
+    if (screenWidth.value <= 640) {
+      return featuredNewsItem.value.slice(0, 4); // Mobile devices
+    } else if (screenWidth.value > 425 && screenWidth.value < 1024) {
+      return featuredNewsItem.value.slice(0, 2); // Tablet devices
+    } else {
+      return featuredNewsItem.value.slice(0, 4); // Desktop and larger devices
+    }
   }
+  return []; // Return an empty array if featuredNewsItem is not an array
 });
 
 onMounted(async () => {

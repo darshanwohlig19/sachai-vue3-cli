@@ -3,7 +3,7 @@
     <Navbarrr />
     <div>
       <img
-        class="h-auto w-full"
+        class="h-auto w-full mt-[75px]"
         src="https://ik.imagekit.io/553gmaygy/Mask%20group.png?updatedAt=1724327336715"
       />
     </div>

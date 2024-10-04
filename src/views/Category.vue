@@ -1,6 +1,6 @@
 <template>
   <Navbarrr />
-  <div class="mx-[20px]">
+  <div class="mx-[20px] mt-[75px]">
     <div class="flex flex-col lg:flex-row gap-3 mt-3">
       <div
         class="w-[100%] lg:w-[62%] flex flex-col bg-white rounded-[10px] p-3"

@@ -1,7 +1,12 @@
 <template>
+  <InviteLinkDialog
+    :isVisible="isDialogVisible"
+    :inviteLink="inviteLink"
+    @close="isDialogVisible = false"
+  />
   <div>
     <Navbarrr />
-    <div class="mx-[20px] mt-2 min-h-screen flex flex-col">
+    <div class="mx-[20px] mt-[75px] min-h-screen flex flex-col">
       <div class="flex flex-col gap-2 bg-white rounded-[10px] p-3 flex-grow">
         <div class="flex flex-row items-center gap-2">
           <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
@@ -52,9 +57,9 @@
                   </div>
                   <div class="flex gap-1">
                     <span
-                      class="material-symbols-outlined text-[14px] lg:text-[19px] cursor-pointer"
-                      >share</span
-                    >
+                      class="mdi mdi-share-variant text-[19px]"
+                      @click.stop="showDialog(item)"
+                    ></span>
                   </div>
                 </div>
                 <div
@@ -119,19 +124,26 @@ import moment from "moment";
 import Navbarrr from "@/components/Navbarrr.vue";
 import { useRouter } from "vue-router";
 import Paginator from "primevue/paginator";
+import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
 import { useToast } from "primevue/usetoast"; // Import the toast composable
 import fallbackImage2 from "../common/config/GlobalConstants";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
+
 const router = useRouter();
 const toast = useToast(); // Create a toast instance
 const BookmarkData = ref([]);
 const paginatedData = ref([]);
 const rowsPerPage = 5;
 const first = ref(0);
+const isDialogVisible = ref(false); // State for dialog visibility
+const inviteLink = ref(""); // Link to share, set this appropriately
 const navigateToNewsDetail = (id) => {
   router.push(`/news/${id}`);
 };
-
+const showDialog = (item) => {
+  isDialogVisible.value = true;
+  inviteLink.value = item.newsLink;
+};
 const Bookmark = async () => {
   try {
     const payload = {

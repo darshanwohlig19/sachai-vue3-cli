@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="w-[100%] h-[67px] bg-white rounded-b-[20px] shadow-[0px_4px_6px_rgba(240,0,0,0.2)] justify-between flex items-center pl-4 pr-4"
+      class="w-[100%] h-[67px] bg-white rounded-b-[20px] shadow-[0px_4px_6px_rgba(240,0,0,0.2)] justify-between flex items-center pl-4 pr-4 fixed inset-0 z-50 bg-opacity-50"
     >
       <div class="">
         <a href="/">
@@ -467,7 +467,7 @@
     </div>
     <div
       v-if="isCardDropdownOpen"
-      class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10"
+      class="right-0 w-[192px] bg-white rounded-md shadow-lg z-10 h-full fixed position: fixed; height: 100%; width: 100%; left: 0px; top: 0px; display: flex; justify-content: flex-end; align-items: center; z-index: 1101; rounded-l-[20px]"
     >
       <div class="py-1">
         <RouterLink
