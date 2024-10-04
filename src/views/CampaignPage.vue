@@ -27,7 +27,7 @@
           <div
             v-for="item in paginatedNews"
             :key="item._id"
-            class="w-full mt-3 h-[170px] bg-white drop-shadow-md flex rounded-lg"
+            class="w-full mt-3 h-[300px] sm:h-[170px] bg-white drop-shadow-md flex rounded-lg"
           >
             <!-- News item layout -->
             <div

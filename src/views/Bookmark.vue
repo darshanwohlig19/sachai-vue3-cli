@@ -18,7 +18,7 @@
         <div v-if="paginatedData.length > 0" class="flex flex-col gap-3">
           <div v-for="item in paginatedData" :key="item._id">
             <div
-              class="w-full h-[174px] bg-white flex rounded-lg border-1 drop-shadow-md"
+              class="w-full h-[300px] sm:h-[170px] bg-white flex rounded-lg border-1 drop-shadow-md"
             >
               <div class="w-[25%] h-full items-center">
                 <div
