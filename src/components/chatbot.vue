@@ -10,7 +10,9 @@
           >
             <img :src="commentsImg" class="mt-[6px] ml-[10px] w-[25px]" />
           </div>
-          <span class="ml-2 mt-[8px] text-[20px]">Chat Assistant</span>
+          <span class="ml-2 mt-[8px] text-[20px] font-normal font-lato"
+            >Chat Assistant</span
+          >
         </div>
       </div>
     </div>
@@ -29,7 +31,7 @@
         v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
         class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto mt-[3%] mb-[10px]"
       >
-        <h2 class="text-lg font-bold mb-2 text-[#131314]">
+        <h2 class="text-lg font-bold mb-2 text-[#1E0627] font-lato">
           Need any assistance with your queries?
         </h2>
 
@@ -50,13 +52,17 @@
             @click="handleQnAClick(item.question, index)"
             class="bg-white p-2 rounded-lg shadow cursor-pointer"
           >
-            <p class="text-[#121212] font-medium text-center">
+            <p
+              class="text-[#121212] font-semibold text-center text-xs font-lato"
+            >
               {{ item.question }}
             </p>
           </div>
         </div>
 
-        <div class="flex justify-center mt-3 text-[#3978E1]">
+        <div
+          class="flex justify-center font-semibold font-lato text-xs mt-3 text-[#3978E1]"
+        >
           <Button variant="outline" @click="toggleQuestionsVisibility">
             {{
               showQuestions && conversation.length === 0
@@ -77,7 +83,7 @@
             <div class="flex justify-end ml-5">
               <p
                 v-if="message.type === 'user' || message.type === 'qnaQuestion'"
-                class="bg-[#C9E6FC] text-[#1E0627] rounded-customChat flex justify-start p-2 shadow font-normal font-Lato max-w-fit w-[286px]"
+                class="bg-[#C9E6FC] text-[#1E0627] rounded-customChat flex justify-start p-2 shadow font-normal font-lato max-w-fit w-[286px] text-xs"
                 v-html="message.text"
               ></p>
             </div>
@@ -97,7 +103,7 @@
                 !message.loading &&
                 (message.type === 'qnaAnswers' || message.type === 'bot')
               "
-              class="bg-[#EFF2F7] text-[#1E0627] rounded-customAnswerChat p-2.5 shadow font-normal font-Lato ml-[10px] mt-[10px] mb-[10px] w-[388px]"
+              class="bg-[#EFF2F7] text-[#1E0627] rounded-customAnswerChat p-2.5 shadow text-xs font-normal font-Lato ml-[10px] mt-[10px] mb-[10px] w-[388px]"
             >
               <p v-html="message.text"></p>
               <div
@@ -112,7 +118,7 @@
                   v-if="message.type === 'bot' || message.type === 'qnaAnswers'"
                 >
                   <span
-                    class="text-[#878787] mr-[5px] flex items-center"
+                    class="text-[#878787] font-normal text-xs font-lato mr-[5px] flex items-center"
                     v-if="
                       (message.type === 'bot' && isLastBotMessage(index)) ||
                       (message.type === 'qnaAnswers' && isLastBotMessage(index))
@@ -179,7 +185,7 @@
           type="text"
           v-model="userQuestion"
           placeholder="Ask a question about this article!"
-          class="flex-grow px-2 py-2 focus:outline-none h-full"
+          class="flex-grow px-2 py-2 focus:outline-none h-full placeholder:font-normal placeholder:font-lato placeholder:text-xs"
           aria-label="User question input"
           @keyup.enter="handleChatClick"
         />

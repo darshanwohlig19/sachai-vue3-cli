@@ -1,5 +1,5 @@
 <template>
-  <div class="text-[45px] font-bold font-lato mt-4 mx-[20px] sm:mx-[60px]">
+  <div class="text-[45px] font-bold font-lato mx-[10px] sm:mx-[60px] mt-[75px]">
     Categories
   </div>
   <div
