@@ -113,3 +113,15 @@ button.p-carousel-next.p-link {
 .p-sidebar .p-sidebar-content {
   padding: 0.5rem;
 }
+.multiline-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Adjust this based on your needs */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.p-paginator-first,
+.p-paginator-last {
+  display: none !important;
+}
