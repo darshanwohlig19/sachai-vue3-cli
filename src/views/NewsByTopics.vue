@@ -13,11 +13,8 @@ b
           </div>
 
           <!-- Show loading message or 'No News Available' -->
-          <div
-            v-if="loading"
-            class="flex justify-center items-center h-[400px]"
-          >
-            <p class="text-lg font-bold">Loading...</p>
+          <div v-if="loading">
+            <Skeleton />
           </div>
           <div
             v-else-if="!news.length"
@@ -125,6 +122,7 @@ b
               :totalRecords="totalRecords"
               :page="currentPage"
               @page="onPageChange"
+              :class="{ hidden: isLoading, visible: !isLoading }"
             />
           </div>
         </div>
@@ -138,6 +136,7 @@ b
 </template>
 
 <script setup>
+import Skeleton from "../common/config/common_skeleton.vue";
 import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import moment from "moment";

@@ -8,13 +8,17 @@
         <div class="flex flex-row items-center gap-1">
           <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
           <div class="heads1 capitalize">
-            {{ categoryName || "Error" }}
+            {{
+              categoryName === "Breaking-News"
+                ? "Breaking News"
+                : categoryName || "Error"
+            }}
           </div>
         </div>
 
         <!-- Loading message -->
-        <div v-if="loading" class="flex justify-center items-center h-[400px]">
-          <p class="text-lg font-bold">Loading...</p>
+        <div v-if="loading">
+          <Skeleton />
         </div>
 
         <!-- No News Available message -->
@@ -125,6 +129,7 @@
             :totalRecords="totalRecords"
             :page="currentPage"
             @page="onPageChange"
+            :class="{ hidden: isLoading, visible: !isLoading }"
           />
         </div>
       </div>
@@ -137,6 +142,7 @@
 </template>
 
 <script setup>
+import Skeleton from "../common/config/common_skeleton.vue";
 import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";

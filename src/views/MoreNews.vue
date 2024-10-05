@@ -11,15 +11,18 @@
         </div>
 
         <!-- Loading Message -->
-        <div v-if="loading" class="text-center py-4 text-lg">Loading...</div>
+
+        <div v-if="loading">
+          <Skeleton />
+        </div>
 
         <!-- No News Available Message -->
-        <div
+        <!-- <div
           v-else-if="hasError || !news.length"
           class="text-center py-4 text-lg"
         >
           No News Available
-        </div>
+        </div> -->
 
         <!-- News List -->
         <div
@@ -112,6 +115,7 @@
 
         <Paginator
           v-if="!loading && !hasError && news.length"
+          :class="{ hidden: !isLoading, visible: isLoading }"
           :rows="rowsPerPage"
           :totalRecords="totalRecords"
           :page="currentPage"
@@ -137,6 +141,7 @@ import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
 import Navbarrr from "@/components/Navbarrr.vue";
 import fallbackImage2 from "../common/config/GlobalConstants";
+import Skeleton from "../common/config/common_skeleton.vue";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
 const news = ref([]);
 const loading = ref(true);

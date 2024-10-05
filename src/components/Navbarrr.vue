@@ -91,6 +91,7 @@
                       v-for="category in categories"
                       :key="category._id"
                       @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                      @mouseleave="hoveredCategoryId = null"
                       :style="{
                         '--hover-color': '#FF0053',
                         '--hover-bg-color': '#FFF2F6',
@@ -104,7 +105,11 @@
                           <span>{{ category.name }}</span>
                           <div class="flex justify-center items-center">
                             <img
-                              src="../assets/svg/triangle_arrow.svg"
+                              :src="
+                                hoveredCategoryId === category._id
+                                  ? require('@/assets/svg/active_right_arrow.svg')
+                                  : require('@/assets/svg/triangle_arrow.svg')
+                              "
                               class="ml-1"
                             />
                           </div>
@@ -607,6 +612,7 @@ import moment from "moment"; // Import moment.js
 import { useRoute } from "vue-router";
 import fallbackImage2 from "../common/config/GlobalConstants";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
+const hoveredCategoryId = ref(null);
 // const isMenuOpen = ref(false);
 // const isDropdownOpen = ref(false);
 const route = useRoute();
@@ -793,6 +799,10 @@ const fetchCategories = async () => {
     );
     categories.value = response.data.map((category) => ({
       ...category,
+      name:
+        category.name.toLowerCase() === "ai"
+          ? category.name.toUpperCase()
+          : category.name.replace(/-/g, " "),
     }));
   } catch (error) {
     console.error("Error fetching categories:", error);
