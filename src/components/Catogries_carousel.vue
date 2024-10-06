@@ -47,6 +47,7 @@
         :showNavigators="true"
         :responsiveOptions="responsiveOptions"
         class="custom-carousel w-full"
+        :autoplayInterval="2000"
       >
         <template #item="slotProps">
           <div class="category-item mx-2">
