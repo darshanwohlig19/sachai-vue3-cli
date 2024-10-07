@@ -74,6 +74,7 @@ module.exports = {
         "4xl": "1850px", // Ultra-wide screen
         "4xl-max": { max: "1850px" },
         "between-lg-max-md-max": { min: "768px", max: "992px" },
+        "between-992-max-md-1025": { min: "992px", max: "1025px" },
         "between-md-max-sm-max": { min: "576px", max: "768px" },
         "between-xs-max-sm-max": { min: "310px", max: "577px" },
         "between-Laptop-small": { min: "768px", max: "859px" },

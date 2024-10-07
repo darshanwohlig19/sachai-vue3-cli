@@ -15,11 +15,48 @@
         @click="navigateToCategory(blogs[0]?._id)"
       >
         <div>
-          <img
+          <!-- <img
             :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
             class="rounded-[8px] h-[234px] w-full"
             alt=""
-          />
+          /> -->
+          <div
+            class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden"
+          >
+            <div class="relative w-[100%] h-[100%]">
+              <img
+                class="absolute inset-0 object-cover h-full filter blur-sm"
+                :src="blogs[1]?.imgixUrlHighRes || fallbackImage"
+                alt="Background"
+                @click="navigateToCampingNews(news._id)"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+              ></div>
+            </div>
+            <div
+              class="absolute inset-0 flex flex-col justify-between text-white"
+            >
+              <img
+                class="object-contain h-full w-full"
+                :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
+                alt="Centered Image"
+                @click="navigateToCampingNews(news._id)"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+              ></div>
+            </div>
+            <!-- <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
+              <div
+                class="multiline-truncate1 text-[16px] sm:text-[14px] md:text-[16px] fontCustom text-white w-full md:w-auto"
+                :style="{ width: 'calc(100% - 30px)' }"
+                @click="navigateToCampingNews(news._id)"
+              >
+                {{ news.headline || "No Headline" }}
+              </div>
+            </div> -->
+          </div>
         </div>
         <div
           class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"

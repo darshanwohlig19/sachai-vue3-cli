@@ -6,12 +6,12 @@
       <div class="">
         <a href="/">
           <img
-            class="h-[20px] w-[78px] object-cover"
+            class="w-[78px] object-contain"
             src="https://uploads-ssl.webflow.com/64ae7a0260c324b7e56ab6b5/64b653319dad7b8061b00de2_sachai-logo.webp"
           />
         </a>
       </div>
-      <div class="w-[80%]">
+      <div class="w-[80%] between-992-max-md-1025:w-[90%]">
         <div class="flex gap-1 sm:gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->

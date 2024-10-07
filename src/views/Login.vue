@@ -583,19 +583,25 @@ const verifyOtp = async () => {
 
   confirmationResult1
     .confirm(otp.value)
-    .then((result) => {
+    .then(async (result) => {
       // User signed in successfully.
       const user = result.user;
 
       // Extract user detailsx
       const uid = user.uid;
 
+      console.log(user);
+
       console.log(uid);
-      sendUserDataToApi(uid);
+      await sendUserDataToApi(
+        "",
+        "",
+        uid,
+        user.providerData[0]?.phoneNumber,
+        "mobile"
+      );
       // console.log(user);
-      setTimeout(() => {
-        router.push("/");
-      }, 0);
+
       toast.add({
         severity: "success ",
         summary: "login Successfull",
@@ -690,7 +696,9 @@ const loginWithGoogle = async () => {
         await sendUserDataToApi(
           user.providerData[0]?.displayName,
           user.providerData[0]?.email,
-          user.providerData[0]?.uid
+          user.providerData[0]?.uid,
+          "", //mobile number field
+          "google"
         );
 
         // Show success toast
@@ -701,11 +709,6 @@ const loginWithGoogle = async () => {
           group: "success",
           life: 3000,
         });
-
-        // Navigate to home
-        setTimeout(() => {
-          router.push("/");
-        }, 0);
       })
       .catch((error) => {
         console.error(error);
@@ -735,7 +738,9 @@ const signInWithApple = async () => {
     await sendUserDataToApi(
       user.providerData[0]?.displayName,
       user.providerData[0]?.email,
-      user.providerData[0]?.uid
+      user.providerData[0]?.uid,
+      "",
+      "apple"
     );
 
     // Show success toast
@@ -748,9 +753,6 @@ const signInWithApple = async () => {
     });
 
     // Navigate to home
-    setTimeout(() => {
-      router.push("/");
-    }, 0);
   } catch (error) {
     console.error("Apple login failed:", error);
     toast.add({
@@ -762,15 +764,16 @@ const signInWithApple = async () => {
     });
   }
 };
-const sendUserDataToApi = async (name, email, id) => {
+const sendUserDataToApi = async (name, email, id, mobile, type) => {
   const apiUrl = "https://api-uat.newsshield.io/user/loginv2/";
   const payload = {
     auth0: {
       name: name,
       email: email,
       id: id,
+      mobile: mobile,
     },
-    type: "google", // This should be dynamically set based on the provider
+    type: type, // This should be dynamically set based on the provider
   };
   try {
     const response = await fetch(apiUrl, {
@@ -780,12 +783,16 @@ const sendUserDataToApi = async (name, email, id) => {
       },
       body: JSON.stringify(payload),
     });
-    if (!response.ok) {
+
+    if (response.status != 200) {
       throw new Error(`API error: ${response.statusText}`);
     }
     const responseData = await response.json();
     const token = responseData.data;
     localStorage.setItem("apiDataToken", token);
+    setTimeout(() => {
+      router.push("/");
+    }, 0);
   } catch (error) {
     console.error("Failed to send data to API:", error);
   }

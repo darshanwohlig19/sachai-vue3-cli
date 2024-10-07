@@ -83,9 +83,9 @@
                       alt="Centered Image"
                       @click="navigateToCampingNews(news._id)"
                     />
-                    <div
+                    <!-- <div
                       class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
-                    ></div>
+                    ></div> -->
                   </div>
                 </div>
                 <div class="flex justify-between items-center pl-3 pr-3 mt-2">

@@ -67,8 +67,8 @@
     </div>
   </div>
   <div v-else>
-    <!-- <p>Loading...</p> -->
-    <!-- Or show a placeholder if no data is available -->
+     <p>Loading...</p>
+   Or show a placeholder if no data is available 
   </div>
 </template>
 

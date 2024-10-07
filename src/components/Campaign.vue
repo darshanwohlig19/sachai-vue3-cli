@@ -70,9 +70,9 @@
                   alt="Background"
                   @click="navigateToCampingNews(campaignNews._id)"
                 />
-                <div
+                <!-- <div
                   class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
-                ></div>
+                ></div> -->
               </div>
               <div
                 class="absolute inset-0 flex flex-col justify-between text-white"
@@ -83,9 +83,9 @@
                   alt="Centered Image"
                   @click="navigateToCampingNews(campaignNews._id)"
                 />
-                <div
+                <!-- <div
                   class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
-                ></div>
+                ></div> -->
               </div>
             </div>
 

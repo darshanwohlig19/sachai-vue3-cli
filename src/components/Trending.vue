@@ -194,11 +194,16 @@
             @click="navigateToTrending(blog._id)"
             v-for="(blog, index) in blogs.slice(0, 4)"
             :key="index"
-            class="shadow-md flex flex-row gap-2 w-full border-1 p-2 rounded-[8px] cursor-pointer"
+            class="flex-row flex shadow-md gap-2 border-1 p-2 rounded-[8px] cursor-pointer"
           >
+            <!-- <BlogCard
+              :headline="blog.headline"
+              :image="blog.imgixUrlHighRes || fallbackImage"
+              height="57px"
+            /> -->
             <div class="flex-shrink-0">
               <img
-                class="h-[57px] w-[78px] object-cover rounded-[8px]"
+                class="h-[57px] w-[ ] object-contain rounded-[8px]"
                 :src="blog.imgixUrlHighRes || fallbackImage"
                 alt="Blog Image"
               />
@@ -227,6 +232,9 @@ import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dial
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately
 import fallbackImage2 from "../common/config/GlobalConstants";
+
+// import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
+
 const fallbackImage = fallbackImage2.variables.fallbackImage;
 
 const blogs = ref([]);
