@@ -124,14 +124,40 @@
           class="hidden between-Laptop:!flex between-1011-1200:!flex !flex-col shadow-lg rounded-lg overflow-hidden bg-white h-[50vh]"
         >
           <div class="flex flex-row">
-            <div class="relative h-[150px] w-[266px] overflow-hidden p-2">
-              <img
-                :src="newsItem?.imgixUrlHighRes"
-                alt="News image"
-                class="news-image object-contain rounded-xl mx-2 my-2"
-              />
+            <div class="w-[30%] p-2 rounded-xl">
+              <div
+                class="relative image-container w-full h-[100%] rounded-xl overflow-hidden"
+              >
+                <!-- Background Image with Blur -->
+                <img
+                  :src="newsItem?.imgixUrlHighRes || fallbackImage"
+                  alt="Background"
+                  class="absolute inset-0 object-cover w-full h-full filter blur-md"
+                />
+
+                <!-- Gradient Overlay -->
+                <div
+                  class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+                ></div>
+
+                <!-- Foreground Image -->
+                <div
+                  class="absolute inset-0 flex flex-col justify-between text-white"
+                >
+                  <img
+                    :src="newsItem?.imgixUrlHighRes || fallbackImage"
+                    alt="News image"
+                    class="relative z-10 object-contain w-full h-[100%] rounded-xl"
+                  />
+                  <div
+                    class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                  ></div>
+                </div>
+              </div>
             </div>
-            <div class="p-2 flex-col justify-between between-Laptop:!w-[72%]">
+            <div
+              class="p-2 flex-col justify-between !w-[70%] between-Laptop:!w-[72%]"
+            >
               <!-- added flex-col and justify-between -->
               <span
                 class="text-lg font-source-serif text-secondary font-semibold"
@@ -357,26 +383,6 @@ onMounted(() => {
   overflow: hidden;
   border-radius: 0.5rem;
   padding: 16px; /* Adjust padding as needed */
-}
-
-.news-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(100% - 32px); /* Adjust for padding */
-  height: calc(100% - 32px); /* Adjust for padding */
-  object-fit: cover; /* This will maintain the aspect ratio */
-  object-position: center;
-}
-
-.news-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* This will maintain the aspect ratio */
-  object-position: center;
 }
 
 .font-semibold {
