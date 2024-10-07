@@ -51,7 +51,12 @@
               <!-- Categories Name and Additional Info -->
               <div class="flex items-center space-x-2 mb-[5px] mt-[5px]">
                 <span class="text-neon-pink capitalize">
-                  {{ newsItem?.categoriesName[0] }}
+                  {{
+                    newsItem?.categoriesName?.[0]?.toLowerCase() === "ai"
+                      ? newsItem.categoriesName[0].toUpperCase()
+                      : newsItem?.categoriesName?.[0]?.replace(/-/g, " ") ||
+                        "No Category"
+                  }}
                 </span>
                 <span class="text-light-gray">|</span>
                 <span class="text-light-gray">{{ newsItem?.source }}</span>
