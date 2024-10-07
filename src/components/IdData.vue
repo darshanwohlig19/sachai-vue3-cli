@@ -16,12 +16,20 @@
               <img
                 :src="newsItem?.imgixUrlHighRes || fallbackImage"
                 alt="Background"
-                class="absolute inset-0 object-cover w-full h-full filter blur-md"
+                :class="{
+                  'absolute inset-0 object-cover w-full h-full filter blur-md':
+                    newsItem?.imgixUrlHighRes,
+                  hidden: !newsItem?.imgixUrlHighRes,
+                }"
               />
 
               <!-- Gradient Overlay -->
               <div
-                class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+                :class="{
+                  'absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75':
+                    newsItem?.imgixUrlHighRes,
+                  hidden: !newsItem?.imgixUrlHighRes,
+                }"
               ></div>
 
               <!-- Foreground Image -->
@@ -34,7 +42,11 @@
                   class="relative z-10 object-contain w-full h-64 rounded-xl"
                 />
                 <div
-                  class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                  :class="{
+                    'absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]':
+                      newsItem?.imgixUrlHighRes,
+                    hidden: !newsItem?.imgixUrlHighRes,
+                  }"
                 ></div>
               </div>
             </div>
@@ -51,7 +63,12 @@
               <!-- Categories Name and Additional Info -->
               <div class="flex items-center space-x-2 mb-[5px] mt-[5px]">
                 <span class="text-neon-pink capitalize">
-                  {{ newsItem?.categoriesName[0] }}
+                  {{
+                    newsItem?.categoriesName?.[0]?.toLowerCase() === "ai"
+                      ? newsItem.categoriesName[0].toUpperCase()
+                      : newsItem?.categoriesName?.[0]?.replace(/-/g, " ") ||
+                        "No Category"
+                  }}
                 </span>
                 <span class="text-light-gray">|</span>
                 <span class="text-light-gray">{{ newsItem?.source }}</span>
