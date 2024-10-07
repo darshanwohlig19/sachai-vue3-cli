@@ -188,7 +188,7 @@
           <div class="standing_divider"></div>
         </div>
         <div
-          class="w-[100%] lg:w-[30%] md:w-[100%] lg:mt-0 mt-3 flex flex-col justify-between"
+          class="w-[100%] lg:w-[30%] md:w-[100%] lg:mt-0 mt-3 flex flex-col gap-3"
         >
           <div
             @click="navigateToTrending(blog._id)"
@@ -203,7 +203,7 @@
             /> -->
             <div class="flex-shrink-0">
               <img
-                class="h-[57px] w-[ ] object-contain rounded-[8px]"
+                class="h-[57px] object-contain rounded-[8px]"
                 :src="blog.imgixUrlHighRes || fallbackImage"
                 alt="Blog Image"
               />

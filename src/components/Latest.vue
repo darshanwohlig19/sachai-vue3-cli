@@ -91,6 +91,11 @@
                 <div class="flex justify-between items-center pl-3 pr-3 mt-2">
                   <div class="flex gap-1 text-[#676767] text-xs">
                     <div>{{ news.source }}</div>
+                    <span>
+                      <div class="text-[#676767] text-xs">
+                        | {{ formatPublishTime(news.publishTime) }}
+                      </div>
+                    </span>
                   </div>
                   <div class="flex gap-1">
                     <span
@@ -117,12 +122,12 @@
                   </a>
                 </div>
                 <div
-                  class="pl-3 pr-3 para multiline-truncate"
+                  class="pl-3 pr-3 mb-3 para multiline-truncate"
                   @click="navigateToNewsDetail(news._id)"
                 >
                   {{ news.summary }}
                 </div>
-                <div class="px-3 mb-3 mt-2 text-[12px] flex gap-1">
+                <!-- <div class="px-3 mb-3 mt-2 text-[12px] flex gap-1">
                   <span class="text-red-500 bold capitalize">
                     {{
                       news?.categories[0]?.name?.toLowerCase() === "ai"
@@ -130,12 +135,7 @@
                         : news?.categories[0]?.name?.replace(/-/g, " ")
                     }}
                   </span>
-                  <span>
-                    <div class="text-[#676767] text-xs">
-                      | {{ formatPublishTime(news.publishTime) }}
-                    </div>
-                  </span>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
