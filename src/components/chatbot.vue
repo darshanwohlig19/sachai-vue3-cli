@@ -205,7 +205,7 @@
     </div>
   </div>
   <div
-    class="!hidden lg:!block mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card flex flex-col !h-[669px] !w-[440px] md:h-[85vh] lg:h-[670px] between-644-1024:!h-[110vh] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh] !ml-[10px]"
+    class="!hidden lg:!block mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card flex flex-col !h-[669px] !w-[440px] md:h-[85vh] lg:h-[670px] between-644-1024:!h-[110vh] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh] !ml-[10px] between-1011-1200:!h-[725px]"
   >
     <div class="bg-[#320A38] text-white h-[70px]">
       <div class="text-base font-Lato leading-tight flex items-center mt-[2px]">

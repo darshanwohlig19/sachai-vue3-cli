@@ -60,7 +60,7 @@
               </div>
 
               <!-- Social Media Links and Bookmark -->
-              <div class="flex items-center space-x-2 ml-auto mt-[7px]">
+              <div class="flex items-center space-x-2 ml-auto">
                 <Button
                   @click="shareOnFacebook"
                   target="_blank"
@@ -114,9 +114,7 @@
               </div>
             </div>
 
-            <div
-              class="text-[#878787] space-y-4 font-lato text-sm ml-1 md-hidden"
-            >
+            <div class="text-[#878787] space-y-4 font-lato text-sm md-hidden">
               <p>{{ newsItem?.summary }}</p>
             </div>
           </div>
