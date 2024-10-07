@@ -12,7 +12,7 @@ const handleRequest = async (httpType, url, data, options) => {
   try {
     let response;
 
-    switch (httpType.trim().toLowerCase()) {
+    switch (httpType?.trim()?.toLowerCase()) {
       case "get":
         response = await axios.get(url, {
           headers: getAuthHeaders(),

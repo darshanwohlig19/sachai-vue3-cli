@@ -430,7 +430,7 @@ export default {
         categories.value = response.data.map((category) => ({
           ...category,
           name:
-            category.name.toLowerCase() === "ai"
+            category?.name?.toLowerCase() === "ai"
               ? category.name.toUpperCase()
               : category.name.replace(/-/g, " "),
         }));

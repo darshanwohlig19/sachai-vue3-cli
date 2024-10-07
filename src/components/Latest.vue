@@ -125,9 +125,9 @@
                 <div class="px-3 mb-3 mt-2 text-[12px] flex gap-1">
                   <span class="text-red-500 bold capitalize">
                     {{
-                      news.categories[0].name.toLowerCase() === "ai"
-                        ? news.categories[0].name.toUpperCase()
-                        : news.categories[0].name.replace(/-/g, " ")
+                      news?.categories[0]?.name?.toLowerCase() === "ai"
+                        ? news.categories[0]?.name?.toUpperCase()
+                        : news?.categories[0]?.name?.replace(/-/g, " ")
                     }}
                   </span>
                   <span>

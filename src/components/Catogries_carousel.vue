@@ -182,7 +182,7 @@ const fetchCategories = async () => {
     const categoriesData = data.slice(8, 16).map((category) => ({
       ...category,
       name:
-        category.name.toLowerCase() === "ai"
+        category?.name?.toLowerCase() === "ai"
           ? category.name.toUpperCase()
           : category.name.replace(/-/g, " "),
     }));
