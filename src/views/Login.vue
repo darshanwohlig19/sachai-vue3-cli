@@ -2,7 +2,9 @@
   <div>
     <!-- Desktop carousel -->
     <div class="flex justify-center items-center p-[100px] loginnnn">
-      <div class="w-[750px] h-[512px] flex bg-white rounded-[20px] main-login">
+      <div
+        class="w-[750px] h-[512px] h-[512px] flex bg-white rounded-[20px] main-login"
+      >
         <div class="w-[50%] p-[5%]">
           <div class="flex justify-center mt-5">
             <img
@@ -168,7 +170,7 @@
             </div>
           </div>
         </div>
-        <div class="w-[50%] login">
+        <div class="login w-[100%]">
           <Carousel
             :value="desktopProducts"
             :numVisible="1"
@@ -182,14 +184,16 @@
             <template v-slot:item="{ data }">
               <div>
                 <div class="rounded-r-[20px]">
-                  <div class="relative mx-auto h-[512px] rounded-r-[20px]">
+                  <div
+                    class="relative mx-auto h-[512px] w-full rounded-r-[20px]"
+                  >
                     <img
                       :src="
                         data.image ||
                         'https://via.placeholder.com/910x512?text=No+Image'
                       "
                       :severity="getSeverity(data.inventoryStatus)"
-                      class="w-[100%] h-[100%] object-fill"
+                      class="h-[100%]"
                     />
                   </div>
                 </div>

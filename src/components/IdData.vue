@@ -285,6 +285,10 @@ import faceBookLogo from "@/assets/svg/facebook.svg";
 import xLogo from "@/assets/svg/x.svg";
 import linkDinLogo from "@/assets/svg/linkdin.svg";
 import whatsappLogo from "@/assets/svg/whatsapp.svg";
+import fallbackImage2 from "../common/config/GlobalConstants";
+
+const fallbackImage = fallbackImage2.variables.fallbackImage;
+
 const route = useRoute();
 const newsItem = ref(null);
 const newsId = route.params.id;

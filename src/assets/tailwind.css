@@ -133,3 +133,9 @@ button.p-carousel-next.p-link {
 .p-paginator-first {
   display: none !important;
 }
+@media (max-width: 1200px) {
+  .login .p-carousel {
+    position: relative;
+    width: 100% !important;
+  }
+}
