@@ -113,7 +113,10 @@
                     (message.type === 'qnaAnswers' || message.type === 'bot')
                   "
                 >
-                  <hr class="my-2 text-[#878787]" />
+                  <hr
+                    class="my-2 text-[#878787]"
+                    v-if="message.type === 'bot'"
+                  />
                   <div
                     class="flex items-center justify-end text-sm h-[30px] space-x-1"
                     v-if="
@@ -137,9 +140,7 @@
                     </span>
 
                     <div
-                      v-if="
-                        message.type === 'bot' || message.type === 'qnaAnswers'
-                      "
+                      v-if="message.type === 'bot'"
                       class="flex space-x-2 ml-auto"
                     >
                       <button

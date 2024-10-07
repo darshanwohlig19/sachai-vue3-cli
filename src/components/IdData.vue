@@ -121,7 +121,7 @@
         </div>
 
         <div
-          class="hidden between-Laptop:!flex between-1011-1200:!flex !flex-col shadow-lg rounded-lg overflow-hidden bg-white h-[50vh]"
+          class="hidden between-Laptop:!flex between-1011-1200:!flex !flex-col shadow-lg rounded-lg overflow-hidden bg-white between-644-1024:h-[326px]"
         >
           <div class="flex flex-row">
             <div class="w-[30%] p-2 rounded-xl">

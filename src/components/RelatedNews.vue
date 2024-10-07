@@ -54,61 +54,82 @@
       <div
         v-for="news in slicedData"
         :key="news._id"
-        class="w-full lg:w-[33%] sm:w-[48%] md:w-[32%] h-[336px]"
+        class="w-full lg:w-[33%] sm:w-[48%] md:w-[32%]"
       >
         <div
-          class="flex flex-col bg-white rounded-[10px] h-full drop-shadow-sm"
+          class="flex flex-col bg-white rounded-[10px] h-full drop-shadow-sm xs:!h-[325px] xxsss:!h-[325px]"
         >
-          <div class="rounded-[10px]">
-            <img
-              :src="news.imgixUrlHighRes || fallbackImage"
-              class="relative z-10 h-[170px] w-full rounded-[10px] object-fill"
-              alt=""
-              @click="navigateToFeaturedDetail(news._id)"
-            />
-          </div>
-          <div class="flex justify-between items-center p-3 py-0 !pt-[3%]">
-            <div
-              class="flex gap-1 text-[#676767] text-xs font-medium between-644-1024:!text-[11px]"
-            >
-              <div @click="navigateToFeaturedDetail(news._id)">
-                {{ news.source }}
-              </div>
-              <div @click="navigateToFeaturedDetail(news._id)">
-                | {{ formatPublishTime(news.publishTime) }}
-              </div>
-            </div>
-            <div class="flex gap-1">
-              <span
-                class="mdi mdi-share-variant text-[19px] cursor-pointer"
-                @click.stop="showDialog(news)"
-              ></span>
-              <span
-                :class="[
-                  'mdi',
-                  news.isBookmarked
-                    ? 'mdi-bookmark-outline text-[21px]'
-                    : 'mdi-bookmark-outline text-[21px]',
-                ]"
-                class="cursor-pointer"
-                @click.stop="addBookmark(news._id)"
-              >
-              </span>
-            </div>
-          </div>
-          <div class="p-3 py-0 text-[16px] font-semibold">
-            <a
-              @click="navigateToNewsDetail(news._id)"
-              class="hover:text-current font-semibold multiline-truncate1 text-[#1E0627]"
-            >
-              {{ news?.headline }}
-            </a>
-          </div>
           <div
-            class="p-3 para multiline-truncate py-0 !pt-[2%] text-[#878787]"
-            @click="navigateToNewsDetail(news._id)"
+            class="relative h-[40%] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden w-full"
           >
-            {{ news?.summary }}
+            <div class="relative w-full h-[100%]">
+              <img
+                class="absolute inset-0 object-cover h-full w-full filter blur-md"
+                :src="news.imgixUrlHighRes || fallbackImage"
+                alt="Background"
+                @click="navigateToCampingNews(news._id)"
+              />
+              <div
+                class="absolute inset-0 bg-gradient from-transparent to-black opacity-75"
+              ></div>
+            </div>
+            <div
+              class="absolute inset-0 flex flex-col justify-between text-white"
+            >
+              <img
+                class="object-contain h-full w-full"
+                :src="news.imgixUrlHighRes || fallbackImage"
+                alt="Centered Image"
+                @click="navigateToFeaturedDetail(news._id)"
+              />
+              <!-- <div
+                      class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                    ></div> -->
+            </div>
+          </div>
+          <div class="h-[60%]">
+            <div class="flex justify-between items-center p-3 py-0 !pt-[3%]">
+              <div
+                class="flex gap-1 text-[#676767] text-xs font-medium between-644-1024:!text-[11px]"
+              >
+                <div @click="navigateToFeaturedDetail(news._id)">
+                  {{ news.source }}
+                </div>
+                <div @click="navigateToFeaturedDetail(news._id)">
+                  | {{ formatPublishTime(news.publishTime) }}
+                </div>
+              </div>
+              <div class="flex gap-1">
+                <span
+                  class="mdi mdi-share-variant text-[19px] cursor-pointer"
+                  @click.stop="showDialog(news)"
+                ></span>
+                <span
+                  :class="[
+                    'mdi',
+                    'mdi-bookmark text-[21px] cursor-pointer',
+                    getBookmarkColor(news?.isBookmarked),
+                  ]"
+                  class="cursor-pointer"
+                  @click.stop="addBookmark(news)"
+                >
+                </span>
+              </div>
+            </div>
+            <div class="p-3 py-0 text-[16px] font-semibold">
+              <a
+                @click="navigateToNewsDetail(news._id)"
+                class="hover:text-current font-semibold multiline-truncate1 text-[#1E0627]"
+              >
+                {{ news?.headline }}
+              </a>
+            </div>
+            <div
+              class="p-3 para multiline-truncate !pt-[2%] text-[#878787]"
+              @click="navigateToNewsDetail(news._id)"
+            >
+              {{ news?.summary }}
+            </div>
           </div>
         </div>
       </div>
@@ -130,6 +151,7 @@ import {
 
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
+import axios from "axios";
 import moment from "moment";
 import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
@@ -187,7 +209,34 @@ const fetchBlogs = async () => {
     isLoading.value = false; // Stop loading
   }
 };
+const getBookmarkColor = (isBookmarked) => {
+  return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
+};
 
+const addBookmark = async (news) => {
+  const token = localStorage.getItem("apiDataToken");
+  try {
+    console.log("NEWS ID:" + news.isBookmarked);
+    const currentStatus =
+      news.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
+
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${news._id}`,
+      {
+        status: currentStatus,
+      },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+    news.isBookmarked = currentStatus;
+    return response.data;
+  } catch (error) {
+    console.error("Error adding bookmark:", error);
+  }
+};
 const navigateToFeaturedDetail = (id) => {
   router.push(`/news/${id}`);
 };
