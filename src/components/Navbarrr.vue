@@ -497,13 +497,107 @@
             />
             <img v-else src="@/assets/svg/Account.svg" alt="Account Image" />
           </button>
-
           <div
             class="h-[34px] w-[34px] flex justify-center items-center lg:hidden"
-            @click="toggleCardDropdown"
+            @click="visibleRight = true"
           >
             <i class="pi pi-bars"></i>
           </div>
+          <Sidebar
+            class="w-[30%] sm-425:w-[40%] h-[100%] rounded-l-[20px] block lg:hidden"
+            v-model:visible="visibleRight"
+            position="right"
+            :closeIcon="true"
+          >
+            <div class="capitalize category-head rounded-l-lg w-[150px]">
+              <div class="flex head-navs gap-2">
+                <!-- <a href="/">Home</a> -->
+                <img
+                  v-if="route.path === '/'"
+                  src="@/assets/svg/active_home.svg"
+                  alt="Active Home Image"
+                />
+                <img v-else src="@/assets/svg/Home.svg" alt="Home Image" />
+                <RouterLink class="nav-items" active-class="active-link" to="/"
+                  >Home</RouterLink
+                >
+              </div>
+              <div class="flex head-navs gap-2" v-if="isLoggedIn">
+                <img
+                  v-if="route.path === '/Astrology'"
+                  src="@/assets/svg/active_astrology.svg"
+                  alt="Active Astrology Image"
+                />
+                <img
+                  v-else
+                  src="@/assets/svg/Astrology.svg"
+                  alt="Astrology Image"
+                />
+
+                <RouterLink
+                  class="nav-items"
+                  active-class="active-link"
+                  :to="isLoggedIn ? '/Astrology' : '/'"
+                  >Astrology</RouterLink
+                >
+                <!-- Astrology -->
+              </div>
+              <div class="flex head-navs gap-2" v-if="isLoggedIn">
+                <img
+                  v-if="route.path === '/Bookmark'"
+                  src="@/assets/svg/active_bookmark.svg"
+                  alt="Active Bookmark Image"
+                />
+                <img
+                  v-else
+                  src="@/assets/svg/Bookmark.svg"
+                  alt="Bookmark Image"
+                />
+                <RouterLink
+                  class="nav-items"
+                  active-class="active-link"
+                  :to="isLoggedIn ? '/Bookmark' : '/'"
+                  >Bookmark</RouterLink
+                >
+              </div>
+              <div class="flex head-navs gap-2" v-if="isLoggedIn">
+                <img
+                  v-if="route.path === '/Setting'"
+                  src="@/assets/svg/active_setting.svg"
+                  alt="Active Bookmark Image"
+                />
+                <img
+                  v-else
+                  src="@/assets/svg/Settings.svg"
+                  alt="Bookmark Image"
+                />
+                <RouterLink
+                  class="nav-items"
+                  active-class="active-link"
+                  :to="isLoggedIn ? '/Setting' : '/'"
+                  >Setting</RouterLink
+                >
+              </div>
+              <div class="flex head-navs gap-2" v-if="isLoggedIn">
+                <img
+                  v-if="route.path === '/Profile'"
+                  src="@/assets/svg/active_account.svg"
+                  alt="Active Bookmark Image"
+                />
+                <img
+                  v-else
+                  src="@/assets/svg/Account.svg"
+                  alt="Bookmark Image"
+                />
+                <RouterLink
+                  class="nav-items"
+                  active-class="active-link"
+                  :to="isLoggedIn ? '/Profile' : '/'"
+                  >Profile</RouterLink
+                >
+              </div>
+            </div>
+          </Sidebar>
         </div>
       </div>
     </div>
