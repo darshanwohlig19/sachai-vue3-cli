@@ -18,9 +18,8 @@
 
         <Button />
       </div>
-      <div v-if="!isLoading">Loading...</div>
+      <!-- <div v-if="!isLoading">Loading...</div> -->
       <div
-        v-else
         class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg"
       >
         <div

@@ -20,7 +20,34 @@
         <a href="/featured-news"> <Button /></a>
       </div>
     </div>
+    <div v-if="isLoading" class="flex flex-row gap-3 justify-between">
+      <div v-for="n in 4" :key="n" class="w-[33%] md-max:w-full">
+        <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
+          <!-- Skeleton Image -->
+          <Skeleton height="156px" width />
 
+          <!-- Skeleton for Source & Actions -->
+          <div class="flex justify-between items-center p-3">
+            <Skeleton width="25%" height="12px" />
+          </div>
+          <!-- Skeleton for Title -->
+          <div class="pl-3 pr-3">
+            <Skeleton width="100%" height="20px" />
+          </div>
+
+          <!-- Skeleton for Summary -->
+          <div class="pl-3 pr-3 mt-3">
+            <Skeleton width="100%" height="50px" />
+          </div>
+
+          <!-- Skeleton for Category & Time -->
+          <div class="px-3 pb-3 mt-2 mb-2 flex gap-1">
+            <Skeleton width="25%" height="12px" />
+            <Skeleton width="25%" height="12px" />
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       class="flex flex-col lg:flex-row md:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg md:h-[350px]"
     >
@@ -41,7 +68,9 @@
             />
           </div>
           <div class="flex justify-between items-center p-3 py-0 !pt-[3%]">
-            <div class="flex gap-1 text-[#676767] text-xs font-medium">
+            <div
+              class="flex gap-1 text-[#676767] text-xs font-medium between-644-1024:!text-[11px]"
+            >
               <div @click="navigateToFeaturedDetail(news._id)">
                 {{ news.source }}
               </div>
