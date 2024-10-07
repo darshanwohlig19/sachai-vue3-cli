@@ -543,10 +543,40 @@ const handleChatClick = async () => {
       `${apiConfig.CHAT_BOT_DATA}/${newsId}`,
       payload
     );
-    botDataCount.value = response?.data?.count;
 
-    const botData = response?.data;
-    const botResponse = botData.answer.answer;
+    if (response?.status === 200) {
+      botDataCount.value = response?.data?.count;
+
+      const botData = response?.data;
+      const botResponse = botData.answer.answer;
+
+      setTimeout(() => {
+        conversation.value = conversation.value.filter(
+          (message) => !message.loading
+        );
+        conversation.value.push({
+          type: "bot",
+          text: typewriterEffect(botResponse),
+        });
+        chatBotLimitData();
+        scrollToBottom();
+        scrollMobileToBottom();
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        conversation.value = conversation.value.filter(
+          (message) => !message.loading
+        );
+        conversation.value.push({
+          type: "bot",
+          text: "I'm sorry, something went wrong. Please try again.",
+        });
+        scrollToBottom();
+        scrollMobileToBottom();
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching response:", error);
 
     setTimeout(() => {
       conversation.value = conversation.value.filter(
@@ -554,14 +584,11 @@ const handleChatClick = async () => {
       );
       conversation.value.push({
         type: "bot",
-        text: typewriterEffect(botResponse),
+        text: "I'm sorry, something went wrong. Please try again.",
       });
-      chatBotLimitData();
       scrollToBottom();
       scrollMobileToBottom();
-    }, 1000);
-  } catch (error) {
-    console.error("Error fetching response:", error);
+    });
   }
 };
 
@@ -643,7 +670,7 @@ const toggleThumbsUp = (index) => {
   if (!message.thumbsUpSelected) {
     message.thumbsUpSelected = true;
     message.thumbsDownSelected = false;
-    handleFeedbackClick("positive", message.chatId); // Use message.chatId here
+    handleFeedbackClick("positive", message.chatId);
   }
 };
 
@@ -652,7 +679,7 @@ const toggleThumbsDown = (index) => {
   if (!message.thumbsDownSelected) {
     message.thumbsDownSelected = true;
     message.thumbsUpSelected = false;
-    handleFeedbackClick("negative", message.chatId); // Use message.chatId here
+    handleFeedbackClick("negative", message.chatId);
   }
 };
 
