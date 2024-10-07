@@ -52,13 +52,14 @@ module.exports = {
       },
 
       screens: {
-        xs: "350px", // Extra small mobile
+        xs: "320px",
+        "xs-max": { max: "374px" },
         xxss: "375px",
-        "xs-max": { max: "350px" },
+        "xxss-max": { max: "350px" },
         sm: "576px", // Small mobile
         "sm-max": { max: "576px" },
         "sm-425": { max: "425px" }, // Very small mobile
-        md: "769px", // Tablet
+        md: "768px", // Tablet
         "md-max": { max: "768px" },
         lg: "992px", // Laptop
         "lg-max": { max: "992px" },
@@ -78,8 +79,7 @@ module.exports = {
         "between-Laptop-small": { min: "768px", max: "859px" },
         "between-Laptop": { min: "860px", max: "1024px" },
         "between-644-1024": { min: "644px", max: "1024px" },
-        "between-1011-1200": { min: "1011px", max: "1200px" },
-
+        "between-1011-1200": { min: "1011px", max: "1427px" },
         "between-2560-1875": { min: "2560px", max: "1875px" },
       },
     },

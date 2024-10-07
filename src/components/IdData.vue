@@ -6,7 +6,7 @@
         class="flex-grow flex flex-col h-full max-w-full sm:max-w-[90%] lg:max-w-[66%]"
       >
         <div
-          class="shadow-lg rounded-lg between-Laptop:!hidden overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[16rem] bg-white"
+          class="shadow-lg rounded-lg between-Laptop:!hidden between-1011-1200:!hidden overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[16rem] bg-white"
         >
           <div class="relative w-full md:w-1/2 overflow-hidden p-2">
             <div
@@ -46,25 +46,23 @@
               {{ newsItem?.headline }}
             </span>
             <div
-              class="flex flex-wrap items-center justify-between text-xs w-full pb-2"
+              class="flex flex-wrap items-center justify-between w-full text-xs pb-2"
             >
               <!-- Categories Name and Additional Info -->
-              <div class="flex items-center mr-2 pb-2">
-                <span class="text-neon-pink mr-1 capitalize">
+              <div class="flex items-center space-x-2 mb-[5px] mt-[5px]">
+                <span class="text-neon-pink capitalize">
                   {{ newsItem?.categoriesName[0] }}
                 </span>
-                <span class="text-light-gray mr-2">|</span>
-                <span class="text-light-gray mr-2">{{ newsItem?.source }}</span>
-                <span class="text-light-gray mr-2">|</span>
-                <span class="text-light-gray mr-2">{{
-                  formattedPublishTime
-                }}</span>
+                <span class="text-light-gray">|</span>
+                <span class="text-light-gray">{{ newsItem?.source }}</span>
+                <span class="text-light-gray">|</span>
+                <span class="text-light-gray">{{ formattedPublishTime }}</span>
               </div>
 
               <!-- Social Media Links and Bookmark -->
-              <div class="ml-auto flex items-center space-x-2">
-                <a
-                  :href="newsItem?.newsLink"
+              <div class="flex items-center space-x-2 ml-auto mt-[7px]">
+                <Button
+                  @click="shareOnFacebook"
                   target="_blank"
                   class="flex items-center"
                 >
@@ -73,16 +71,16 @@
                     alt="Facebook Logo"
                     class="social-icon"
                   />
-                </a>
-                <a
-                  :href="newsItem?.newsLink"
+                </Button>
+                <Button
+                  @click="shareOnX"
                   target="_blank"
                   class="flex items-center"
                 >
                   <img :src="xLogo" alt="X Logo" class="social-icon" />
-                </a>
-                <a
-                  :href="newsItem?.newsLink"
+                </Button>
+                <Button
+                  @click="shareOnLinkedIn"
                   target="_blank"
                   class="flex items-center"
                 >
@@ -91,9 +89,9 @@
                     alt="LinkedIn Logo"
                     class="social-icon"
                   />
-                </a>
-                <a
-                  :href="newsItem?.newsLink"
+                </Button>
+                <Button
+                  @click="shareOnWhatsApp"
                   target="_blank"
                   class="flex items-center"
                 >
@@ -102,7 +100,7 @@
                     alt="WhatsApp Logo"
                     class="social-icon"
                   />
-                </a>
+                </Button>
                 <span
                   :class="[
                     'mdi',
@@ -125,25 +123,25 @@
         </div>
 
         <div
-          class="hidden between-Laptop:!flex !flex-col shadow-lg rounded-lg overflow-hidden bg-white h-[50vh]"
+          class="hidden between-Laptop:!flex between-1011-1200:!flex !flex-col shadow-lg rounded-lg overflow-hidden bg-white h-[50vh]"
         >
           <div class="flex flex-row">
-            <div class="relative w-1/2 overflow-hidden p-2">
+            <div class="relative h-[150px] w-[266px] overflow-hidden p-2">
               <img
                 :src="newsItem?.imgixUrlHighRes"
                 alt="News image"
-                class="news-image h-[150px] w-[266px] object-contain rounded-xl mx-2 my-2"
+                class="news-image object-contain rounded-xl mx-2 my-2"
               />
             </div>
-            <div class="w-1/2 p-2 flex flex-col justify-between">
+            <div class="p-2 flex-col justify-between between-Laptop:!w-[72%]">
               <!-- added flex-col and justify-between -->
               <span
-                class="text-lg font-source-serif text-secondary font-semibold pb-1"
+                class="text-lg font-source-serif text-secondary font-semibold"
               >
                 {{ newsItem?.headline }}
               </span>
               <div
-                class="flex flex-wrap items-center ml-1 text-[11px] w-full pb-2"
+                class="flex flex-wrap items-center ml-1 text-[11px] w-full mt-[5px]"
               >
                 <span class="text-neon-pink mr-1 capitalize">
                   {{ newsItem?.categoriesName[0] }}
@@ -155,9 +153,11 @@
                   formattedPublishTime
                 }}</span>
               </div>
-              <div class="ml-auto flex items-center space-x-2">
+              <div
+                class="ml-auto flex items-center justify-end space-x-2 mt-[1px]"
+              >
                 <a
-                  :href="newsItem?.newsLink"
+                  @click="shareOnFacebook"
                   target="_blank"
                   class="flex items-center"
                 >
@@ -167,26 +167,19 @@
                     class="social-icon"
                   />
                 </a>
-                <a
-                  :href="newsItem?.newsLink"
-                  target="_blank"
-                  class="flex items-center"
-                >
+                <a @click="shareOnX" target="_blank" class="flex items-center">
                   <img :src="xLogo" alt="X Logo" class="social-icon" />
                 </a>
-                <a
-                  :href="newsItem?.newsLink"
-                  target="_blank"
-                  class="flex items-center"
-                >
+                <a target="_blank" class="flex items-center">
                   <img
+                    @click="shareOnLinkedIn"
                     :src="linkDinLogo"
                     alt="LinkedIn Logo"
                     class="social-icon"
                   />
                 </a>
                 <a
-                  :href="newsItem?.newsLink"
+                  @click="shareOnWhatsApp"
                   target="_blank"
                   class="flex items-center"
                 >
@@ -209,7 +202,7 @@
               </div>
             </div>
           </div>
-          <div class="text-[#878787] space-y-4 font-lato text-sm mx-2">
+          <div class="text-[#878787] space-y-4 font-lato text-sm mx-2 mt-[2px]">
             <p>{{ newsItem?.summary }}</p>
           </div>
         </div>
@@ -222,10 +215,12 @@
       </div>
 
       <!-- ChatBot Section -->
-      <div
-        class="hidden lg:block ml-2 md:h-[85vh] lg:h-[670px] between-644-1024:!h-[110vh] between-1011-1200:!h-[110vh] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh]"
-      >
-        <ChatBot :category="newsItem" />
+      <div>
+        <ChatBot
+          :category="newsItem"
+          :isVisible="isDialogVisible"
+          @close="isDialogVisible = false"
+        />
       </div>
     </div>
   </div>
@@ -237,8 +232,8 @@
     <RelatedNewsData :category="newsItem" />
   </div>
   <div
-    class="z-10 fixed bottom-8 right-8 h-[40px] w-[40px] cursor-pointer rounded-full bg-[#320A38] block sm:hidden"
-    @click="toggleChat"
+    class="z-10 fixed bottom-8 right-8 h-[40px] w-[40px] cursor-pointer rounded-full bg-[#320A38] block lg:hidden xl:hidden xxl:hidden"
+    @click.stop="showDialog()"
   >
     <span
       class="flex h-full cursor-pointer items-center justify-center text-[25px] text-white"
@@ -251,7 +246,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, computed } from "vue";
+import { ref, onBeforeMount, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
@@ -269,32 +264,52 @@ import whatsappLogo from "@/assets/svg/whatsapp.svg";
 const route = useRoute();
 const newsItem = ref(null);
 const newsId = route.params.id;
+const isDialogVisible = ref(false); // State for dialog visibility
 
-// const position = ref({ x: 100, y: 100 });
-// let isDragging = false;
-// let offsetX = 0;
-// let offsetY = 0;
+const showDialog = () => {
+  isDialogVisible.value = true;
+};
+const shareOnFacebook = () => {
+  const link = newsItem.value?.newsLink; // Get the news link from newsItem
+  if (link) {
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      link
+    )}`;
+    window.open(facebookShareUrl, "_blank");
+  }
+};
 
-// const startDrag = (event) => {
-//   isDragging = true;
-//   offsetX = event.clientX - position.value.x;
-//   offsetY = event.clientY - position.value.y;
-//   document.addEventListener("mousemove", drag);
-//   document.addEventListener("mouseup", stopDrag);
-// };
+const shareOnWhatsApp = () => {
+  const link = newsItem.value?.newsLink; // Get the news link from newsItem
+  if (link) {
+    const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(link)}`;
+    window.open(whatsappShareUrl, "_blank");
+  }
+};
+const shareOnLinkedIn = () => {
+  const link = newsItem.value?.newsLink; // Get the news link from newsItem
+  if (link) {
+    const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      link
+    )}`;
+    window.open(linkedInShareUrl, "_blank");
+  }
+};
+const shareOnX = () => {
+  const link = newsItem.value?.newsLink; // Get the news link from newsItem
+  if (link) {
+    const xShareUrl = `https://x.com/intent/tweet?url=${encodeURIComponent(
+      link
+    )}`;
+    window.open(xShareUrl, "_blank");
+  }
+};
 
-// const drag = (event) => {
-//   if (isDragging) {
-//     position.value.x = event.clientX - offsetX;
-//     position.value.y = event.clientY - offsetY;
-//   }
-// };
-
-// const stopDrag = () => {
-//   isDragging = false;
-//   document.removeEventListener("mousemove", drag);
-//   document.removeEventListener("mouseup", stopDrag);
-// };
+const checkWindowSize = () => {
+  if (window.innerWidth >= 1024) {
+    isDialogVisible.value = false;
+  }
+};
 const formattedPublishTime = computed(() => {
   return newsItem.value?.publishTime
     ? moment(newsItem.value.publishTime).fromNow()
@@ -326,6 +341,10 @@ onBeforeMount(() => {
   if (newsId) {
     fetchNewsItem();
   }
+  window.removeEventListener("resize", checkWindowSize);
+});
+onMounted(() => {
+  window.addEventListener("resize", checkWindowSize);
 });
 </script>
 
