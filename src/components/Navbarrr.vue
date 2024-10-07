@@ -91,6 +91,7 @@
                       v-for="category in categories"
                       :key="category._id"
                       @mouseover="fetchCategoryFromLocalStorage(category._id)"
+                      @mouseleave="hoveredCategoryId = null"
                       :style="{
                         '--hover-color': '#FF0053',
                         '--hover-bg-color': '#FFF2F6',
@@ -104,7 +105,11 @@
                           <span>{{ category.name }}</span>
                           <div class="flex justify-center items-center">
                             <img
-                              src="../assets/svg/triangle_arrow.svg"
+                              :src="
+                                hoveredCategoryId === category._id
+                                  ? require('@/assets/svg/active_right_arrow.svg')
+                                  : require('@/assets/svg/triangle_arrow.svg')
+                              "
                               class="ml-1"
                             />
                           </div>
@@ -121,8 +126,8 @@
                     @click="navigateToTrending(newsItems[0]?._id)"
                   >
                     <img
-                      class="h-[100%] w-full object-cover rounded-[10px]"
-                      :src="newsItems[0]?.imgixUrlHighRes"
+                      class="h-[100%] w-full object-contain rounded-[10px]"
+                      :src="newsItems[0]?.imgixUrlHighRes || fallbackImage"
                     />
                     <div
                       class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
@@ -156,8 +161,10 @@
                       >
                         <div class="w-[20%]">
                           <img
-                            :src="newsItems[1]?.imgixUrlHighRes"
-                            class="rounded-[6px] h-[65px] w-[65px] object-cover"
+                            :src="
+                              newsItems[1]?.imgixUrlHighRes || fallbackImage
+                            "
+                            class="rounded-[6px] h-[65px] w-[65px] object-contain"
                             alt=""
                           />
                         </div>
@@ -167,11 +174,11 @@
                           >
                             {{ newsItems[1]?.headline }}
                           </div>
-                          <div
+                          <!-- <div
                             class="multiline-truncate-one-liner category-head-head w-[100%]"
                           >
                             {{ newsItems[1]?.summary }}
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -186,8 +193,10 @@
                       >
                         <div class="w-[20%]">
                           <img
-                            :src="newsItems[2]?.imgixUrlHighRes"
-                            class="rounded-[6px] h-[65px] w-[65px] object-cover"
+                            :src="
+                              newsItems[2]?.imgixUrlHighRes || fallbackImage
+                            "
+                            class="rounded-[6px] h-[65px] w-[65px] object-contain"
                             alt=""
                           />
                         </div>
@@ -197,11 +206,11 @@
                           >
                             {{ newsItems[2]?.headline }}
                           </div>
-                          <div
+                          <!-- <div
                             class="multiline-truncate-one-liner category-head-head w-[100%]"
                           >
                             {{ newsItems[2]?.summary }}
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -343,7 +352,7 @@
                     <div class="w-[15%]">
                       <img
                         :src="result.imgixUrlHighRes || fallbackImage"
-                        class="h-[54px] w-[56px] object-cover rounded-[8px]"
+                        class="h-[54px] w-[56px] object-contain rounded-[8px]"
                       />
                     </div>
                     <div
@@ -603,6 +612,7 @@ import moment from "moment"; // Import moment.js
 import { useRoute } from "vue-router";
 import fallbackImage2 from "../common/config/GlobalConstants";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
+const hoveredCategoryId = ref(null);
 // const isMenuOpen = ref(false);
 // const isDropdownOpen = ref(false);
 const route = useRoute();
@@ -789,6 +799,10 @@ const fetchCategories = async () => {
     );
     categories.value = response.data.map((category) => ({
       ...category,
+      name:
+        category.name.toLowerCase() === "ai"
+          ? category.name.toUpperCase()
+          : category.name.replace(/-/g, " "),
     }));
   } catch (error) {
     console.error("Error fetching categories:", error);

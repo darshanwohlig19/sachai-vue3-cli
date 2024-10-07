@@ -47,6 +47,7 @@
         :showNavigators="true"
         :responsiveOptions="responsiveOptions"
         class="custom-carousel w-full"
+        :autoplayInterval="2000"
       >
         <template #item="slotProps">
           <div class="category-item mx-2">
@@ -85,7 +86,7 @@
                       "
                       alt="News image"
                     />
-                    <p class="multiline-text fonttt">
+                    <p class="text-[14px] text-[#1E0627] fonttt">
                       {{ news.headline }}
                     </p>
                   </div>
@@ -242,6 +243,12 @@ onMounted(() => {
   padding: 0 !important;
 }
 .fonttt {
-  font-size: 14px;
+  font-family: "Source Serif Pro";
+  font-weight: 400;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limits text to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

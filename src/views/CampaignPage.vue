@@ -10,24 +10,24 @@
           <div class="heads1 capitalize">Campaing</div>
         </div>
         <!-- Loading message -->
-        <div v-if="loading" class="flex justify-center items-center h-[400px]">
-          <p class="text-lg font-bold">Loading...</p>
+        <div v-if="loading">
+          <Skeleton />
         </div>
 
         <!-- No News Available message -->
-        <div
+        <!-- <div
           v-else-if="paginatedNews && paginatedNews.length === 0"
           class="flex justify-center items-center h-[400px]"
         >
           <p class="text-lg font-bold">No News Available</p>
-        </div>
+        </div> -->
 
         <!-- Display news when available -->
         <div v-else>
           <div
             v-for="item in paginatedNews"
             :key="item._id"
-            class="w-full mt-3 h-[170px] bg-white drop-shadow-md flex rounded-lg"
+            class="w-full mt-3 h-[300px] sm:h-[170px] bg-white drop-shadow-md flex rounded-lg"
           >
             <!-- News item layout -->
             <div
@@ -124,6 +124,7 @@
             :totalRecords="totalRecords"
             :page="currentPage"
             @page="onPageChange"
+            :class="{ hidden: isLoading, visible: !isLoading }"
           />
         </div>
       </div>
@@ -136,6 +137,7 @@
 </template>
 
 <script setup>
+import Skeleton from "../common/config/common_skeleton.vue";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";

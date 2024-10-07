@@ -11,25 +11,32 @@
         </div>
 
         <!-- Loading Message -->
-        <div v-if="loading" class="text-center py-4 text-lg">Loading...</div>
+
+        <div v-if="loading">
+          <Skeleton />
+        </div>
 
         <!-- No News Available Message -->
-        <div
+        <!-- <div
           v-else-if="hasError || !news.length"
           class="text-center py-4 text-lg"
         >
           No News Available
-        </div>
+        </div> -->
 
         <!-- News List -->
         <div
           v-else
           v-for="(item, index) in paginatedNews"
           :key="index"
-          class="w-full mt-3 h-[170px] bg-white drop-shadow-md flex rounded-lg"
+          class="w-full mt-3 h-[300px] sm:h-[170px] bg-white drop-shadow-md flex rounded-lg"
         >
-          <div class="w-full bg-white flex gap-0 rounded-lg">
-            <div class="w-[40%] h-full items-center">
+          <div
+            class="w-full bg-white flex flex flex-col sm:flex-row gap-0 rounded-lg"
+          >
+            <div
+              class="w-[100%] sm:w-[40%] ml-0 mr-0 sm:ml-4 sm:mr-2 h-full items-center"
+            >
               <div
                 class="relative h-full bg-white rounded-lg shadow-lg overflow-hidden"
               >
@@ -52,7 +59,9 @@
                 </div>
               </div>
             </div>
-            <div class="w-[60%] ml-4 mr-2 flex flex-col justify-evenly">
+            <div
+              class="w-[100%] sm:w-[60%] ml-0 mr-0 sm:ml-4 sm:mr-2 flex flex-col justify-evenly p-2 sm:p-0"
+            >
               <div class="flex justify-between items-center mt-1">
                 <div class="flex gap-1 text-[##1E0627] medium">
                   <div class="text-[8px] lg:text-[12px] font-lato">
@@ -106,6 +115,7 @@
 
         <Paginator
           v-if="!loading && !hasError && news.length"
+          :class="{ hidden: !isLoading, visible: isLoading }"
           :rows="rowsPerPage"
           :totalRecords="totalRecords"
           :page="currentPage"
@@ -131,6 +141,7 @@ import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
 import Navbarrr from "@/components/Navbarrr.vue";
 import fallbackImage2 from "../common/config/GlobalConstants";
+import Skeleton from "../common/config/common_skeleton.vue";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
 const news = ref([]);
 const loading = ref(true);

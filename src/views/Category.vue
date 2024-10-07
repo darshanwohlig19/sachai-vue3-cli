@@ -8,13 +8,17 @@
         <div class="flex flex-row items-center gap-1">
           <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
           <div class="heads1 capitalize">
-            {{ categoryName || "Error" }}
+            {{
+              categoryName === "Breaking-News"
+                ? "Breaking News"
+                : categoryName || "Error"
+            }}
           </div>
         </div>
 
         <!-- Loading message -->
-        <div v-if="loading" class="flex justify-center items-center h-[400px]">
-          <p class="text-lg font-bold">Loading...</p>
+        <div v-if="loading">
+          <Skeleton />
         </div>
 
         <!-- No News Available message -->
@@ -30,10 +34,12 @@
           <div
             v-for="(item, index) in paginatedNews"
             :key="index"
-            class="w-full mt-3 h-[170px] bg-white drop-shadow-md flex rounded-lg"
+            class="w-full mt-3 h-[300px] sm:h-[170px] bg-white drop-shadow-md flex rounded-lg"
           >
-            <div class="w-full bg-white flex gap-0 rounded-lg">
-              <div class="w-[40%] h-full items-center">
+            <div
+              class="w-full bg-white flex flex-col sm:flex-row gap-0 rounded-lg"
+            >
+              <div class="w-[100%] sm:w-[40%] h-full items-center">
                 <div
                   class="relative h-full bg-white rounded-lg shadow-lg overflow-hidden"
                 >
@@ -56,7 +62,9 @@
                   </div>
                 </div>
               </div>
-              <div class="w-[60%] ml-4 mr-2 flex flex-col justify-evenly">
+              <div
+                class="w-[100%] sm:w-[60%] ml-0 mr-0 sm:ml-4 sm:mr-2flex flex-col justify-evenly p-2 sm:p-0"
+              >
                 <div class="flex justify-between items-center mt-1">
                   <div class="flex gap-1 text-[##1E0627] medium">
                     <div class="text-[8px] lg:text-[12px] font-lato">
@@ -121,6 +129,7 @@
             :totalRecords="totalRecords"
             :page="currentPage"
             @page="onPageChange"
+            :class="{ hidden: isLoading, visible: !isLoading }"
           />
         </div>
       </div>
@@ -133,6 +142,7 @@
 </template>
 
 <script setup>
+import Skeleton from "../common/config/common_skeleton.vue";
 import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";

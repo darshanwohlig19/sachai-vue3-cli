@@ -4,17 +4,28 @@
       <div class="bg-[#FF0053] w-[3px] h-[10px] rounded-md"></div>
       <div class="heads1">Hot Topics</div>
     </div>
-    <div v-if="loading" class="flex justify-center items-center h-[400px]">
-      <p class="text-lg font-bold">Loading...</p>
+    <div v-if="loading">
+      <div
+        class="mt-3 flex gap-4 items-center drop-shadow-lg border-1 p-2"
+        v-for="n in 12"
+        :key="n"
+      >
+        <div class="flex w-[20%] justify-center items-center">
+          <Skeleton class="rounded-md" height="30px" size="3rem"></Skeleton>
+        </div>
+        <div class="flex flex-col w-[80%] justify-between">
+          <Skeleton class="rounded-md" height="40px"></Skeleton>
+        </div>
+      </div>
     </div>
-
-    <div
+    <!-- <div
       v-else-if="!hot.length"
       class="flex justify-center items-center h-[400px]"
     >
       <p class="text-lg font-bold">No Topics Available</p>
-    </div>
+    </div> -->
     <div
+      v-else
       v-for="(item, index) in hot"
       :key="index"
       class="mt-3 flex gap-4 items-center drop-shadow-lg border-1 p-2"

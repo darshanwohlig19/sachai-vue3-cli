@@ -1,85 +1,88 @@
 <template>
-  <InviteLinkDialog
-    :isVisible="isDialogVisible"
-    :inviteLink="inviteLink"
-    @close="isDialogVisible = false"
-  />
-  <div class="p-2 lg:h-full">
-    <div class="flex justify-between items-center w-full mb-2 rounded-2xl">
-      <div class="flex items-center">
-        <span
-          class="border-l-4 border-[#FF0053] h-[13px] rounded-2xl mr-1"
-        ></span>
-        <span class="text-lg font-bold text-[#1E0627] font-Lato ml-0"
-          >Related News</span
-        >
-      </div>
-
-      <Button />
-    </div>
-
-    <div
-      class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg"
-    >
-      <div
-        v-for="(blog, index) in slicedData"
-        :key="index"
-        class="shadow-md between-Laptop-small:w-[100%] between-644-1024:!w-[100%] sm:w-[48%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px]"
-      >
-        <img
-          class="w-[106px] object-contain rounded-[8px]"
-          :src="blog.imgixUrlHighRes || fallbackImage"
-          alt="Blog Image"
-          @click="navigateToFeaturedDetail(blog._id)"
-        />
-        <div>
-          <div
-            class="flex flex-wrap items-center justify-between text-xs w-full mb-1"
+  <div>
+    <InviteLinkDialog
+      :isVisible="isDialogVisible"
+      :inviteLink="inviteLink"
+      @close="isDialogVisible = false"
+    />
+    <div class="p-2 lg:h-full">
+      <div class="flex justify-between items-center w-full mb-2 rounded-2xl">
+        <div class="flex items-center">
+          <span
+            class="border-l-4 border-[#FF0053] h-[13px] rounded-2xl mr-1"
+          ></span>
+          <span class="text-lg font-bold text-[#1E0627] font-Lato ml-0"
+            >Related News</span
           >
-            <div class="flex gap-1 mb-[1px]">
-              <span class="text-[#1E0627] capitalize font-lato">
-                {{ blog?.source }}
-              </span>
-              <span class="text-[#1E0627]"> | </span>
-              <span class="text-[#1E0627] font-lato">
-                {{ formatPublishTime(blog.publishTime) }}
-              </span>
+        </div>
+
+        <Button />
+      </div>
+      <div v-if="!isLoading">Loading...</div>
+      <div
+        v-else
+        class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg"
+      >
+        <div
+          v-for="(blog, index) in slicedData"
+          :key="index"
+          class="shadow-md between-Laptop-small:w-[100%] between-644-1024:!w-[100%] sm:w-[48%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px]"
+        >
+          <img
+            class="w-[106px] object-contain rounded-[8px]"
+            :src="blog.imgixUrlHighRes || fallbackImage"
+            alt="Blog Image"
+            @click="navigateToFeaturedDetail(blog._id)"
+          />
+          <div>
+            <div
+              class="flex flex-wrap items-center justify-between text-xs w-full mb-1"
+            >
+              <div class="flex gap-1 mb-[1px]">
+                <span class="text-[#1E0627] capitalize font-lato">
+                  {{ blog?.source }}
+                </span>
+                <span class="text-[#1E0627]"> | </span>
+                <span class="text-[#1E0627] font-lato">
+                  {{ formatPublishTime(blog.publishTime) }}
+                </span>
+              </div>
+              <div
+                class="flex-row gap-1 pt-1 ml-auto flex items-center space-x-2"
+              >
+                <div>
+                  <i
+                    class="mdi mdi-share-variant text-black rounded-[50%] text-[19px]"
+                    @click.stop="showDialog(blog)"
+                  ></i>
+                </div>
+                <div>
+                  <span
+                    :class="[
+                      'mdi',
+                      blogs && blog.bookmark
+                        ? 'mdi-bookmark text-[#FF0053] text-[21px]'
+                        : 'mdi-bookmark-outline text-[21px]',
+                    ]"
+                    class="cursor-pointer"
+                    @click.stop="addBookmark(blog._id)"
+                  ></span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="headline-tuncate font-semibold text-base font-source-serif text-[#1E0627] cursor-pointer mb-[1px]"
+              @click="navigateToFeaturedDetail(blog._id)"
+            >
+              {{ blog.headline || "-" }}
             </div>
             <div
-              class="flex-row gap-1 pt-1 ml-auto flex items-center space-x-2"
+              class="headline-truncate-single-line pt-[1px] font-normal text-base font-source-serif text-[#1E0627] cursor-pointer mb-[1px]"
+              @click="navigateToFeaturedDetail(blog._id)"
             >
-              <div>
-                <i
-                  class="mdi mdi-share-variant text-black rounded-[50%] text-[19px]"
-                  @click.stop="showDialog(blog)"
-                ></i>
-              </div>
-              <div>
-                <span
-                  :class="[
-                    'mdi',
-                    blogs && blog.bookmark
-                      ? 'mdi-bookmark text-[#FF0053] text-[21px]'
-                      : 'mdi-bookmark-outline text-[21px]',
-                  ]"
-                  class="cursor-pointer"
-                  @click.stop="addBookmark(blog._id)"
-                ></span>
-              </div>
+              {{ blog.summary || "-" }}
             </div>
-          </div>
-
-          <div
-            class="headline-tuncate font-semibold text-base font-source-serif text-[#1E0627] cursor-pointer mb-[1px]"
-            @click="navigateToFeaturedDetail(blog._id)"
-          >
-            {{ blog.headline || "-" }}
-          </div>
-          <div
-            class="headline-truncate-single-line pt-[1px] font-normal text-base font-source-serif text-[#1E0627] cursor-pointer mb-[1px]"
-            @click="navigateToFeaturedDetail(blog._id)"
-          >
-            {{ blog.summary || "-" }}
           </div>
         </div>
       </div>
@@ -109,6 +112,8 @@ const fallbackImage = fallbackImage2.variables.fallbackImage;
 const router = useRouter();
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately
+const isLoading = ref(true);
+
 const props = defineProps({
   category: {
     type: Object,
@@ -142,6 +147,8 @@ const fetchBlogs = async () => {
     }));
   } catch (error) {
     console.error("Error fetching blogs:", error);
+  } finally {
+    isLoading.value = false;
   }
 };
 const addBookmark = async (id) => {

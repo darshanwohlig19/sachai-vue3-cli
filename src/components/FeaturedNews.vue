@@ -52,7 +52,10 @@
         >
           {{ blogs[1]?.headline }}
         </div>
-        <div class="standing_divider"></div>
+        <div class="w-[1%]">
+          <div class="standing_divider"></div>
+        </div>
+
         <div
           class="font-14 multiline-truncate1"
           @click="navigateToCategory(blogs[2]?._id)"
