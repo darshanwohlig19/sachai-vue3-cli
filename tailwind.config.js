@@ -82,6 +82,7 @@ module.exports = {
         "between-644-1024": { min: "644px", max: "1024px" },
         "between-1011-1200": { min: "1011px", max: "1427px" },
         "between-2560-1875": { min: "2560px", max: "1875px" },
+        "between-md-sm": { min: "576px", max: "769px" },
       },
     },
   },
