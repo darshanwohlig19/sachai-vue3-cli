@@ -59,7 +59,7 @@ module.exports = {
         sm: "576px", // Small mobile
         "sm-max": { max: "576px" },
         "sm-425": { max: "425px" }, // Very small mobile
-        md: "768px", // Tablet
+        md: "769px", // Tablet
         "md-max": { max: "768px" },
         lg: "992px", // Laptop
         "lg-max": { max: "992px" },
