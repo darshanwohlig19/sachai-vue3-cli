@@ -49,7 +49,7 @@
       </div>
     </div>
     <div
-      class="flex flex-col lg:flex-row md:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg md:h-[350px]"
+      class="flex flex-col lg:flex-row md:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg md:h-[330px]"
     >
       <div
         v-for="news in slicedData"

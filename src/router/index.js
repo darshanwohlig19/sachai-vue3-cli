@@ -12,7 +12,7 @@ import NewsByTopics from "../views/NewsByTopics.vue";
 import SearchForMobile from "@/views/SearchForMobile.vue";
 import Campaign from "@/views/CampaignPage.vue";
 import Latest from "@/views/LatestPage.vue";
-import FeaturedNews from "@/components/RelatedNews.vue";
+import FeaturedNews from "@/views/featuredNewsPage.vue";
 
 const routes = [
   {
