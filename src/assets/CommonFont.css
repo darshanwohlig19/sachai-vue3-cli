@@ -178,3 +178,34 @@
   font-family: lato;
   color: #878787;
 }
+
+.headine-home {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20.05px;
+  font-family: "source-serif-pro";
+}
+.summary-home {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.08px;
+  font-family: "lato";
+}
+.time-date-home {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.04px;
+  font-family: "lato";
+}
+.headline-detail{
+    font-size: 18px;
+  font-weight: 600;
+  line-height: 20.05px;
+  font-family: "source-serif-pro";
+}
+.summary-detail {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 16.08px;
+  font-family: "lato";
+}
