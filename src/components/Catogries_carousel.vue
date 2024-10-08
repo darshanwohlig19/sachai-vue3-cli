@@ -47,7 +47,7 @@
         :showNavigators="true"
         :responsiveOptions="responsiveOptions"
         class="custom-carousel w-full"
-        :autoplayInterval="2000"
+        :autoplayInterval="4000"
       >
         <template #item="slotProps">
           <div class="category-item mx-2">
@@ -86,7 +86,9 @@
                       "
                       alt="News image"
                     />
-                    <p class="text-[14px] text-[#1E0627] fonttt">
+                    <p
+                      class="text-[14px] text-[#1E0627] font-semibold line-clamp-2 leading-4"
+                    >
                       {{ news.headline }}
                     </p>
                   </div>
