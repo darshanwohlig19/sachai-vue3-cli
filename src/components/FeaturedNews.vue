@@ -139,7 +139,10 @@
     </div>
 
     <!-- Third Section -->
-    <div v-if="loading" class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 md:mt-0 justify-evenly lg:mt-0 flex flex-col gap-3">
+    <div
+      v-if="loading"
+      class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 md:mt-0 justify-evenly lg:mt-0 flex flex-col gap-3"
+    >
       <div class="w-full flex flex-col gap-1">
         <Skeleton width="100%" height="30px"></Skeleton>
         <Skeleton width="100%" height="30px"></Skeleton>
