@@ -1,7 +1,7 @@
 <template>
   <div class="mt-3">
     <div
-      class="h-full w-full flex flex-col md:flex-row gap-6 md:gap-10 mob_des bg-white mt-10 p-6"
+      class="h-full w-full flex flex-col md:flex-row gap-6 md:gap-10 mob_des bg-white p-6"
     >
       <div class="info w-full md:w-[30%] mb-4">
         <div>

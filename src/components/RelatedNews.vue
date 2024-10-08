@@ -11,9 +11,7 @@
         <span
           class="border-l-4 border-[#FF0053] h-[13px] rounded-2xl mr-1"
         ></span>
-        <span class="text-lg font-bold text-[#1E0627] font-Lato ml-0"
-          >Featured News</span
-        >
+        <span class="heads1 text-[#1E0627] ml-0">Featured News</span>
       </div>
 
       <div v-if="!isLoading && featuredNewsItem.length > 0">
@@ -90,7 +88,7 @@
           <div class="h-[60%]">
             <div class="flex justify-between items-center p-3 py-0 !pt-[3%]">
               <div
-                class="flex gap-1 text-[#676767] text-xs font-medium between-644-1024:!text-[11px]"
+                class="flex gap-1 text-[#676767] time-date-home between-644-1024:!text-[11px]"
               >
                 <div @click="navigateToFeaturedDetail(news._id)">
                   {{ news.source }}
@@ -116,16 +114,16 @@
                 </span>
               </div>
             </div>
-            <div class="p-3 py-0 text-[16px] font-semibold">
+            <div class="p-3 py-0 headine-home">
               <a
                 @click="navigateToNewsDetail(news._id)"
-                class="hover:text-current font-semibold multiline-truncate1 text-[#1E0627]"
+                class="hover:text-current headine-home multiline-truncate1 text-[#1E0627]"
               >
                 {{ news?.headline }}
               </a>
             </div>
             <div
-              class="p-3 para multiline-truncate !pt-[2%] text-[#878787]"
+              class="p-3 para multiline-truncate summary-home !pt-[2%] text-[#878787]"
               @click="navigateToNewsDetail(news._id)"
             >
               {{ news?.summary }}

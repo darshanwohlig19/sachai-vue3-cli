@@ -703,7 +703,7 @@ onMounted(() => {
 }
 
 .bg-assist-card {
-  background-image: url("../assets/png/chatbotbg.png");
+  background-image: url("../assets/png/chatBg.png");
   background-size: cover;
   background-position: center;
 }

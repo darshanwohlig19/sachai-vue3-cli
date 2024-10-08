@@ -11,7 +11,7 @@
           <span
             class="border-l-4 border-[#FF0053] h-[13px] rounded-2xl mr-1"
           ></span>
-          <span class="text-lg font-bold text-[#1E0627] font-Lato ml-0"
+          <span class="heads1 text-[#1E0627] ml-0 !leading-[18px]"
             >Related News</span
           >
         </div>

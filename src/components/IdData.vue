@@ -52,9 +52,7 @@
             </div>
           </div>
           <div class="w-full md:w-1/2 p-2 flex flex-col">
-            <span
-              class="text-lg font-source-serif text-secondary font-semibold pb-[5px]"
-            >
+            <span class="headline-detail text-secondary pb-[5px]">
               {{ newsItem?.headline }}
             </span>
             <div
@@ -131,7 +129,9 @@
               </div>
             </div>
 
-            <div class="text-[#878787] space-y-4 font-lato text-sm md-hidden">
+            <div
+              class="text-[#878787] summary-detail space-y-4 font-lato md-hidden"
+            >
               <p>{{ newsItem?.summary }}</p>
             </div>
           </div>
@@ -177,12 +177,12 @@
             >
               <!-- added flex-col and justify-between -->
               <span
-                class="text-lg font-source-serif text-secondary font-semibold"
+                class="text-lg headline-detail text-secondary font-semibold"
               >
                 {{ newsItem?.headline }}
               </span>
               <div
-                class="flex flex-wrap items-center ml-1 text-[11px] w-full mt-[5px]"
+                class="time-date-home flex flex-wrap items-center ml-1 text-[11px] w-full mt-[5px]"
               >
                 <span class="text-neon-pink mr-1 capitalize">
                   {{ newsItem?.categoriesName[0] }}
@@ -243,7 +243,9 @@
               </div>
             </div>
           </div>
-          <div class="text-[#878787] space-y-4 font-lato text-sm mx-2 mt-[2px]">
+          <div
+            class="text-[#878787] summary-detail space-y-4 font-lato mx-2 mt-[2px]"
+          >
             <p>{{ newsItem?.summary }}</p>
           </div>
         </div>
@@ -266,10 +268,7 @@
     </div>
   </div>
 
-  <div
-    class="mt-1 bg-white shadow-lg rounded-lg mx-[10px]"
-    v-if="newsItem?._id"
-  >
+  <div class="mt-1 bg-white rounded-lg mx-[10px]" v-if="newsItem?._id">
     <RelatedNewsData :category="newsItem" />
   </div>
   <div
