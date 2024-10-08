@@ -47,7 +47,6 @@
         :showNavigators="true"
         :responsiveOptions="responsiveOptions"
         class="custom-carousel w-full"
-        :autoplayInterval="4000"
       >
         <template #item="slotProps">
           <div class="category-item mx-2">
@@ -70,27 +69,31 @@
               <template #content>
                 <div class="flex flex-col gap-3 cursor-pointer w-[100%] h-[]">
                   <div
-                    v-for="news in slotProps.data.news.slice(0, 5)"
-                    :key="news._id"
-                    class="flex gap-3 rounded-[4px] bg-white h-autoc p-2"
-                    style="box-shadow: 0px 0px 5px 2px #0000000f"
                     @click="navigateToCategoryDetail(news._id)"
+                    v-for="(news, index) in slotProps.data.news.slice(0, 4)"
+                    :key="index"
+                    class="!flex items-center flex p-2 rounded-[4px] gap-3"
+                    style="box-shadow: 0px 0px 5px 2px #0000000f"
                   >
-                    <img
-                      :src="news.imgixUrlHighRes || fallbackImage"
-                      class="h-[58px] w-[55px] rounded"
-                      :class="
-                        news?.imgixUrlHighRes
-                          ? 'object-cover'
-                          : 'object-contain'
-                      "
-                      alt="News image"
-                    />
-                    <p
-                      class="text-[14px] text-[#1E0627] font-semibold line-clamp-2 leading-4"
-                    >
-                      {{ news.headline }}
-                    </p>
+                    <!-- <BlogCard
+              :headline="blog.headline"
+              :image="blog.imgixUrlHighRes || fallbackImage"
+              height="57px"
+            /> -->
+                    <div class="flex-shrink-0">
+                      <img
+                        class="h-[58px] w-[55px] object-contain rounded"
+                        :src="news.imgixUrlHighRes || fallbackImage"
+                        alt="Blog Image"
+                      />
+                    </div>
+                    <div class="">
+                      <div
+                        class="headline-tuncate-right text-[14px] text-[#1E0627] font-semibold leading-4"
+                      >
+                        {{ news.headline || "headline" }}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </template>
@@ -244,12 +247,17 @@ onMounted(() => {
 .category-item .p-card-body {
   padding: 0 !important;
 }
-.fonttt {
-  font-family: "Source Serif Pro";
-  font-weight: 400;
+.headline-tuncate {
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limits text to 2 lines */
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2 !important; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.two-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }

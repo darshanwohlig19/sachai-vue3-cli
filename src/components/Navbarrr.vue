@@ -347,20 +347,13 @@
                   @click="navigateToNewsDetail(result._id)"
                 >
                   <div
-                    class="w-[100%] flex flex-row justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
+                    class="w-[100%] justify-between gap-3 shadow-custom border-custom rounded-[8px] p-2"
                     @click="navigateToNewsDetail(result._id)"
                   >
-                    <div class="w-[15%]">
-                      <img
-                        :src="result.imgixUrlHighRes || fallbackImage"
-                        class="h-[54px] w-[56px] object-contain rounded-[8px]"
-                      />
-                    </div>
-                    <div
-                      class="w-[80%] flex justify-start items-center text-start font-light font-[#1E0627] font-source-serif text-[13px] two_line"
-                    >
-                      {{ result.headline }}
-                    </div>
+                    <BlogCard
+                      :headline="result.headline"
+                      :image="result.imgixUrlHighRes || fallbackImage"
+                    />
                   </div>
                 </div>
               </div>
@@ -605,6 +598,7 @@
 <script setup>
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
+import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";

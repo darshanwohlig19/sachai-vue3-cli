@@ -58,10 +58,14 @@
         @click="navigateToNewsDetail(result._id)"
       >
         <div
-          class="w-[100%] flex flex-row justify-between items-center gap-3 shadow-custom border-custom rounded-[6px] p-2 border-1"
+          class="w-[100%] justify-between items-center gap-3 shadow-custom border-custom rounded-[6px] p-2 border-1"
           @click="navigateToNewsDetail(result._id)"
         >
-          <div class="w-[25%] xxss:w-[15%]">
+          <BlogCard
+            :headline="result.headline"
+            :image="result.imgixUrlHighRes || fallbackImage"
+          />
+          <!-- <div class="w-[25%] xxss:w-[15%]">
             <img
               :src="result.imgixUrlHighRes || fallbackImage"
               class="h-[54px] w-[100%] object-contain rounded-[8px] bg-[#454545]"
@@ -71,7 +75,7 @@
             class="w-[80%] flex justify-start items-center text-start font-light font-source-serif text-[12px] font-600 two_line"
           >
             {{ result.headline }}
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -79,12 +83,16 @@
 </template>
 <script>
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
+import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
 import { useRouter } from "vue-router";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import fallbackImage2 from "../common/config/GlobalConstants";
 import axios from "axios";
 export default {
+  components: {
+    BlogCard,
+  },
   setup() {
     const router = useRouter();
     const fallbackImage = fallbackImage2.variables.fallbackImage;
