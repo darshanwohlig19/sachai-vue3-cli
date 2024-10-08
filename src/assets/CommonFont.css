@@ -197,14 +197,14 @@
   line-height: 14.04px;
   font-family: "lato";
 }
-.headline-detail{
-    font-size: 18px;
+.headline-detail {
+  font-size: 16px;
   font-weight: 600;
   line-height: 20.05px;
   font-family: "source-serif-pro";
 }
 .summary-detail {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 16.08px;
   font-family: "lato";
