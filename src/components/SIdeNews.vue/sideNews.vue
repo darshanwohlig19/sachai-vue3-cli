@@ -1,31 +1,15 @@
 <template>
-  <div class="flex-shrink-0 flex" @click="navigateToTrending(_id)">
+  <div class="flex-shrink-0 flex gap-[15px]">
     <!-- <div class="w-[100px]"> -->
     <img
-      :style="{ height: height }"
-      class="relative w-[78px] object-contain rounded-[8px]"
+      class="w-[58px] object-contain rounded-[8px]"
+      height="56px"
+      width="58px"
       :src="image"
       alt="Blog Image"
     />
-    <!-- </div> -->
-    <!-- <div
-      class="relative w-[100px] h-[100px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden"
-    >
-      <img
-        class="object-cover h-full w-full filter blur-md"
-        :src="image"
-        alt="Background"
-      />
-      <div class="absolute inset-0 text-white">
-        <img
-          class="object-contain h-[100%] w-full"
-          :src="image"
-          alt="Centered Image"
-        />
-      </div>
-    </div> -->
-    <div class="font-14 p-2">
-      <div class="headline-tuncate-right">
+    <div class="">
+      <div class="headline-tuncate-right headine-home">
         {{ headline || "No Headline" }}
       </div>
     </div>
@@ -45,17 +29,8 @@ export default {
       required: true,
       default: "No Headline",
     },
-    height: {
-      type: String,
-      required: true,
-      default: "57px",
-    },
   },
-  methods: {
-    navigateToTrending(id) {
-      this.$router.push(`/news/${id}`);
-    },
-  },
+  methods: {},
 };
 </script>
 
