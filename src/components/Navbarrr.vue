@@ -66,7 +66,7 @@
               width="14px"
             />
             <RouterLink
-              class="nav-items hover:text-[var(--hover-color)]"
+              class="nav-items text-[14px] font-lato hover:text-[var(--hover-color)]"
               to=""
               :style="{
                 color: showDropdown ? '#FF0053' : hoverColor,
@@ -300,7 +300,7 @@
               name="fname"
               autocomplete="off"
               placeholder="Search"
-              class="pr-10 pl-3 py-2 w-full font-[#1E0627] rounded-[100px] text-[12px] font-lato border-1"
+              class="pr-10 pl-3 py-2 w-full font-[#1E0627] rounded-[100px] text-[14px] font-lato border-1"
             />
             <img
               src="../assets/svg/searchimage.svg"
@@ -481,7 +481,7 @@
               src="@/assets/svg/active_setting.svg"
               alt="Active Setting Image"
             />
-            <img v-else src="@/assets/svg/Settings.svg" alt="Setting Image" />
+            <img v-else src="@/assets/svg/setting.svg" alt="Setting Image" />
           </button>
           <button
             v-if="isLoggedIn"

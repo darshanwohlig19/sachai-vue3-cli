@@ -65,7 +65,9 @@
           <div class="headine-home text-white">
             {{ blogs[0]?.headline }}
           </div>
-          <div class="flex gap-2 text-white time-date-home mt-1">
+          <div
+            class="flex gap-2 text-white time-date-home text-[10px] md:text-[12px] mt-1"
+          >
             <div>{{ blogs[0]?.source }}</div>
             <div>|</div>
             <div>{{ formatPublishTime(blogs[0]?.publishTime) }}</div>
@@ -99,7 +101,7 @@
     </div>
 
     <!-- Second Section -->
-    <div class="w-[100%] lg:w-[30%] md:w-[100%] flex flex-col gap-3">
+    <div class="w-[100%] lg:w-[30%] md:w-[50%] flex flex-col gap-3">
       <div v-if="loading">
         <div
           v-for="b in 4"
@@ -164,7 +166,11 @@
       >
         <div class="flex flex-row gap-2" @click="navigateToCategory(item._id)">
           <div class="w-[5%] mt-2">
-            <img src="@/assets/png/Group.png" alt="" />
+            <img
+              src="@/assets/png/Group.png"
+              class="!h-[10px] !w-[10px]"
+              alt=""
+            />
           </div>
           <div class="flex flex-col w-[100%]">
             <div class="headine-home multiline-truncate3">
