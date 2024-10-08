@@ -4,13 +4,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        lato: ["Lato", "sans-serif"],
+        lato: ["Lato"],
         sourcePro: ["'Source Serif Pro Semibold'", "serif"],
         sourceSerifPro: ["Source Serif Pro"],
         "source-serif": ["Source Serif Pro", "serif"],
       },
       boxShadow: {
-        "custom-red": "0 0 50px 0 #FF00530D",
+        "custom-red": "0px 1px 3.6px 2px #FF00530D",
       },
       fontSize: {
         "16px": "16px",
@@ -24,10 +24,19 @@ module.exports = {
         "light-gray": "#676767",
         "custom-gray": "#f7f7f4",
         "Old-Burgundy": "#3E3232",
+        Charcoal: "#2A2A2A",
         Secondary: "#1E0627",
         "neon-pink": "#FF0053",
+        "soft-cloud-gray": "#EFF2F7",
         pink: {
           10: "#FF0053",
+        },
+        blue: {
+          5: "#C9E6FC",
+          10: "#3978E1",
+        },
+        purple: {
+          10: "#1E0627",
         },
         gray: {
           5: "#878787",

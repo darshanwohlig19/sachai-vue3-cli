@@ -12,11 +12,11 @@
         >
           <div class="flex items-center">
             <div
-              class="h-[38px] w-[46px] bg-white rounded-full justify-center overflow-hidden mt-[8px] ml-3"
+              class="h-[40px] w-[42px] bg-white rounded-full justify-center overflow-hidden mt-[8px] ml-3"
             >
-              <img :src="commentsImg" class="mt-[6px] ml-[10px] w-[25px]" />
+              <img :src="commentsImg" class="mt-[6px] ml-[9px] w-[25px]" />
             </div>
-            <span class="ml-2 mt-[8px] text-[20px] font-normal font-lato"
+            <span class="ml-2 mt-[8px] text-base font-normal font-lato"
               >Chat Assistant</span
             >
           </div>
@@ -39,10 +39,10 @@
           v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
           class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto mt-[3%] mb-[10px]"
         >
-          <h2 class="text-lg font-bold mb-2 text-[#1E0627] font-lato">
+          <h2 class="text-sm font-bold mb-2 text-purple-10 font-lato">
             Need any assistance with your queries?
           </h2>
-          <p class="text-[#121212] mb-2">
+          <p class="text-[#121212] mb-2 font-lato text-xs !leading-[14.4px]">
             Our AI chatbot support is always available to provide answers to any
             questions but to begin with, here are some of our most asked
             questions
@@ -68,7 +68,7 @@
             </div>
           </div>
           <div
-            class="flex justify-center font-bold font-lato text-xs mt-3 text-[#3978E1]"
+            class="flex justify-center font-semibold font-lato mt-3 text-blue-10 text-xs !leading-[18px]"
           >
             <Button variant="outline" @click="toggleQuestionsVisibility">{{
               showQuestions ? "Hide Questions" : "Show Questions"
@@ -84,7 +84,7 @@
                   v-if="
                     message.type === 'user' || message.type === 'qnaQuestion'
                   "
-                  class="bg-[#C9E6FC] text-[#1E0627] rounded-customChat flex justify-start p-2 shadow !font-normal !font-lato max-w-fit w-[286px] text-sm md:!w-[400px]"
+                  class="bg-[#C9E6FC] text-purple-10 rounded-customChat flex justify-start p-2 shadow !font-normal !font-lato max-w-fit w-[286px] text-sm md:!w-[400px]"
                   v-html="message.text"
                 ></p>
               </div>
@@ -94,7 +94,7 @@
                   (message.type === 'bot' && message.loading) ||
                   (message.type === 'qnaAnswers' && message.loading)
                 "
-                class="bg-[#EFF2F7] rounded-customAnswerChat p-3 shadow !mr-[320px] !ml-[10px] w-[75px]"
+                class="bg-soft-cloud-gray rounded-customAnswerChat p-3 shadow !mr-[320px] !ml-[10px] w-[75px]"
               >
                 <ChatLoading />
               </div>
@@ -104,7 +104,7 @@
                   !message.loading &&
                   (message.type === 'qnaAnswers' || message.type === 'bot')
                 "
-                class="bg-[#EFF2F7] text-[#1E0627] rounded-customAnswerChat p-2.5 shadow text-sm font-normal font-lato ml-[10px] mt-[10px] mb-[10px] xs:w-[286px] md:!w-[535px]"
+                class="bg-soft-cloud-gray text-purple-10 rounded-customAnswerChat p-2.5 shadow text-sm font-normal font-lato ml-[10px] mt-[10px] mb-[10px] xs:w-[286px] md:!w-[535px]"
               >
                 <p v-html="message.text"></p>
                 <div
@@ -118,7 +118,7 @@
                     v-if="message.type === 'bot'"
                   />
                   <div
-                    class="flex items-center justify-end text-sm h-[30px] space-x-1"
+                    class="flex items-center justify-end text-sm h-[20px] space-x-1"
                     v-if="
                       message.type === 'bot' || message.type === 'qnaAnswers'
                     "
@@ -182,7 +182,7 @@
         </div>
       </div>
 
-      <div class="p-2">
+      <div class="p-2 mb-0">
         <div
           class="flex items-center bg-white overflow-hidden rounded-3xl border h-[40px] border-[#eaeaea] shadow-custom-red"
         >
@@ -190,13 +190,13 @@
             type="text"
             v-model="userQuestion"
             placeholder="Ask a question about this article!"
-            class="flex-grow px-2 py-2 focus:outline-none h-full placeholder:font-normal placeholder:font-lato placeholder:text-sm"
+            class="flex-grow px-2 py-2 focus:outline-none h-full placeholder:font-normal placeholder:font-lato placeholder:text-xs !leading-[14.4px]"
             aria-label="User question input"
             @keyup.enter="handleChatClick"
           />
           <button
             @click="handleChatClick"
-            class="bg-[#320A38] text-white p-2 w-[48px] h-[32px] mr-[3px] rounded-2xl"
+            class="bg-Secondary text-white p-2 w-[48px] h-[32px] mr-[3px] rounded-2xl"
             aria-label="Submit question"
           >
             <img :src="vectorImg" alt="Submit question" class="ml-[10px]" />
@@ -208,16 +208,19 @@
   <div
     class="!hidden lg:!block mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card flex flex-col !h-[669px] !w-[440px] md:h-[85vh] lg:h-[670px] between-644-1024:!h-[110vh] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh] !ml-[10px] between-1011-1200:!h-[725px]"
   >
-    <div class="bg-[#320A38] text-white h-[70px]">
+    <div class="bg-[#320A38] text-white h-[55px]">
       <div class="text-base font-Lato leading-tight flex items-center mt-[2px]">
-        <div class="flex items-center mt-[10px]">
+        <div class="flex items-center mt-[2px]">
           <div
-            class="h-[38px] w-[46px] bg-white rounded-full justify-center overflow-hidden mt-[8px] ml-3"
+            class="h-[36px] w-[36px] bg-white rounded-full justify-center overflow-hidden mt-[8px] ml-3"
           >
-            <img :src="commentsImg" class="mt-[6px] ml-[10px] w-[25px]" />
+            <img
+              :src="commentsImg"
+              class="mt-[8px] ml-[8px] w-[20px] h-[20px]"
+            />
           </div>
-          <span class="ml-2 mt-[8px] text-[20px] font-normal font-lato"
-            >Chat Assistant</span
+          <span class="ml-2 mt-[8px] text-[16px] font-normal font-lato"
+            >Chat Assistantt</span
           >
         </div>
       </div>
@@ -231,11 +234,13 @@
         v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
         class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto mt-[3%] mb-[10px]"
       >
-        <h2 class="text-lg font-bold mb-2 text-[#1E0627] font-lato">
+        <h2
+          class="text-sm !leading-[16.8px] font-bold mb-2 text-[#1E0627] font-lato"
+        >
           Need any assistance with your queries?
         </h2>
 
-        <p class="text-[#121212] mb-2">
+        <p class="text-[#121212] mb-2 text-xs font-lato leading-[14.4px]">
           Our AI chatbot support is always available to provide answers to any
           questions but to begin with, here are some of our most asked questions
         </p>
@@ -281,7 +286,7 @@
             <div class="flex justify-end ml-5">
               <p
                 v-if="message.type === 'user' || message.type === 'qnaQuestion'"
-                class="bg-[#C9E6FC] text-[#1E0627] rounded-customChat flex justify-start p-2 shadow !font-normal !font-lato max-w-fit w-[286px] text-sm !md:w-[400px]"
+                class="bg-blue-5 text-purple-10 rounded-customChat flex justify-start p-2 shadow !font-normal !font-lato max-w-fit w-[286px] text-xs !md:w-[400px] leading-[14.4px]"
                 v-html="message.text"
               ></p>
             </div>
@@ -291,7 +296,7 @@
                 (message.type === 'bot' && message.loading) ||
                 (message.type === 'qnaAnswers' && message.loading)
               "
-              class="bg-[#EFF2F7] rounded-customAnswerChat p-3 shadow !mr-[320px] !ml-[10px] w-[75px]"
+              class="bg-soft-cloud-gray rounded-customAnswerChat p-3 shadow !mr-[320px] !ml-[10px] w-[75px]"
             >
               <ChatLoading />
             </div>
@@ -301,7 +306,7 @@
                 !message.loading &&
                 (message.type === 'qnaAnswers' || message.type === 'bot')
               "
-              class="bg-[#EFF2F7] text-[#1E0627] rounded-customAnswerChat p-2.5 shadow !text-sm !font-normal !font-lato ml-[10px] mt-[10px] mb-[10px] w-[388px]"
+              class="bg-soft-cloud-gray text-purple-10 rounded-customAnswerChat p-2.5 shadow !text-xs !font-normal !font-lato ml-[10px] mt-[10px] mb-[10px] w-[388px] !leading-[14.4px]"
             >
               <p v-html="message.text"></p>
               <div
@@ -310,13 +315,13 @@
                   (message.type === 'qnaAnswers' || message.type === 'bot')
                 "
               >
-                <hr class="my-2 text-[#878787]" />
+                <hr class="my-2 text-[#878787]" v-if="message.type === 'bot'" />
                 <div
                   class="flex items-center justify-end text-sm h-[30px] space-x-1"
                   v-if="message.type === 'bot' || message.type === 'qnaAnswers'"
                 >
                   <span
-                    class="text-[#878787] !text-sm !font-lato !font-normal mr-[5px] flex items-center"
+                    class="text-gray-5 !text-xs !font-lato !leading-[14.4px] !font-normal mr-[5px] flex items-center"
                     v-if="
                       (message.type === 'bot' && isLastBotMessage(index)) ||
                       (message.type === 'qnaAnswers' && isLastBotMessage(index))
@@ -331,28 +336,11 @@
                   </span>
 
                   <div
-                    v-if="
-                      message.type === 'bot' || message.type === 'qnaAnswers'
-                    "
+                    v-if="message.type === 'bot'"
                     class="flex space-x-2 ml-auto"
                   >
                     <button
-                      class="p-2 rounded-lg bg-blue-100 text-gray-700 hover:bg-blue-200"
-                      aria-label="Thumbs up"
-                      @click.stop="toggleThumbsUp(index)"
-                    >
-                      <img
-                        :src="
-                          message.feedback === 'positive' ||
-                          message.thumbsUpSelected
-                            ? thumbsUpSelected
-                            : thumbsUp
-                        "
-                        alt="Thumbs Up"
-                      />
-                    </button>
-                    <button
-                      class="p-2 rounded-lg bg-blue-100 text-gray-700 hover:bg-blue-200"
+                      class="p-1 rounded-lg bg-blue-5 text-gray-700 hover:bg-blue-200 h-[24px] w-[25px]"
                       aria-label="Thumbs down"
                       @click.stop="toggleThumbsDown(index)"
                     >
@@ -366,6 +354,21 @@
                         alt="Thumbs Up"
                       />
                     </button>
+                    <button
+                      class="p-1 rounded-lg bg-blue-5 text-gray-700 hover:bg-blue-200 h-[24px] w-[25px]"
+                      aria-label="Thumbs up"
+                      @click.stop="toggleThumbsUp(index)"
+                    >
+                      <img
+                        :src="
+                          message.feedback === 'positive' ||
+                          message.thumbsUpSelected
+                            ? thumbsUpSelected
+                            : thumbsUp
+                        "
+                        alt="Thumbs Up"
+                      />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -374,8 +377,7 @@
         </div>
       </div>
     </div>
-
-    <div class="p-3">
+    <div class="p-2 mb-0">
       <div
         class="flex items-center bg-white overflow-hidden rounded-3xl border h-[40px] border-[#eaeaea] shadow-custom-red"
       >
@@ -746,9 +748,9 @@ onMounted(() => {
 }
 
 .scrollable-container {
-  height: 78%; /* Adjust this as needed */
-  overflow-y: auto; /* Enable vertical scrolling */
-  scrollbar-width: thin; /* For Firefox */
+  height: 82%;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 /* For Webkit browsers (Chrome, Safari) */
@@ -758,10 +760,10 @@ onMounted(() => {
 }
 
 .scrollable-container::-webkit-scrollbar-thumb {
-  border-radius: 10px; /* Rounded corners */
+  border-radius: 10px;
 }
 
 .scrollable-container::-webkit-scrollbar-thumb:hover {
-  background-color: #5c2a5b; /* Color on hover */
+  background-color: #5c2a5b;
 }
 </style>
