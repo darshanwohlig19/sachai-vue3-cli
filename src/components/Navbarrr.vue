@@ -92,27 +92,30 @@
                     }"
                   >
                     <li
-                      class="p-2 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                      class="p-2 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)] icon-container"
                       v-for="category in categories"
                       :key="category._id"
                       @mouseover="fetchCategoryFromLocalStorage(category._id)"
-                      @mouseleave="hoveredCategoryId = null"
                     >
                       <div class="flex items-center ml-2 space-x-2">
                         <a
                           :href="`/categories/${category._id}?category=${category.name}`"
                           class="flex items-center"
                         >
-                          <span>{{ category.name }}</span>
+                          <span>{{ category.name }}</span> &nbsp;
                           <div class="flex justify-center items-center">
-                            <img
-                              :src="
-                                hoveredCategoryId === category._id
-                                  ? require('@/assets/svg/active_right_arrow.svg')
-                                  : require('@/assets/svg/triangle_arrow.svg')
-                              "
-                              class="ml-1"
-                            />
+                            <svg
+                              class="icon flex justify-center items-center"
+                              width="10"
+                              height="10"
+                              viewBox="0 0 10 10"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M6.87502 4.99998C6.87502 5.0799 6.84447 5.1599 6.78346 5.22092L3.65846 8.34592C3.53635 8.46803 3.33861 8.46803 3.21658 8.34592C3.09455 8.22381 3.09447 8.02607 3.21658 7.90404L6.12064 4.99998L3.21658 2.09592C3.09447 1.97381 3.09447 1.77607 3.21658 1.65404C3.33869 1.53201 3.53643 1.53193 3.65846 1.65404L6.78346 4.77904C6.84447 4.84006 6.87502 4.92006 6.87502 4.99998Z"
+                              />
+                            </svg>
                           </div>
                         </a>
                       </div>
@@ -607,7 +610,6 @@ import moment from "moment"; // Import moment.js
 import { useRoute } from "vue-router";
 import fallbackImage2 from "../common/config/GlobalConstants";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
-const hoveredCategoryId = ref(null);
 // const isMenuOpen = ref(false);
 // const isDropdownOpen = ref(false);
 const route = useRoute();
@@ -1008,5 +1010,8 @@ watch(searchQuery, () => {
   -webkit-line-clamp: 3; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.icon-container:hover .icon {
+  color: #ff0000; /* Change to desired hover color */
 }
 </style>
