@@ -5,7 +5,6 @@
       :inviteLink="inviteLink"
       @close="isDialogVisible = false"
     />
-
     <div
       v-if="loading"
       class="w-full md-max:!block flex sm:flex-row lg:flex-row flex-wrap justify-between relative bg-white p-3 rounded-[10px]"
@@ -14,40 +13,6 @@
         <!-- Skeleton for Trending Carousel -->
         <div class="relative w-[100%] lg:w-[30%] md:w-[48%]">
           <div class="bg-white p-2 rounded-lg shadow-md">
-
-    <div>
-      <div
-        v-if="loading"
-        class="w-full md-max:!block flex sm:flex-row lg:flex-row flex-wrap justify-between relative bg-white p-3 rounded-[10px]"
-      >
-        <div class="w-full flex flex-wrap gap-3">
-          <!-- Skeleton for Trending Carousel -->
-          <div class="relative w-[100%] lg:w-[30%] md:w-[48%]">
-            <div class="bg-white p-2 rounded-lg shadow-md">
-              <div
-                class="relative w-full h-[234px] md-max:h-[300px] rounded-lg overflow-hidden"
-              >
-                <Skeleton width="100%" height="100%"></Skeleton>
-              </div>
-            </div>
-          </div>
-
-          <!-- Skeleton for List of News -->
-          <div
-            class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 md:mt-0 lg:mt-0 flex flex-col gap-3"
-          >
-            <div v-for="n in 3" :key="n" class="flex gap-2">
-              <div class="w-full flex flex-col gap-1">
-                <Skeleton width="100%" height="30px"></Skeleton>
-                <Skeleton width="100%" height="30px"></Skeleton>
-                <Skeleton width="100%" height="1px"></Skeleton>
-              </div>
-            </div>
-          </div>
-
-          <!-- Skeleton for Blog List -->
-          <div class="w-[100%] lg:w-[30%] md:w-[100%] flex flex-col gap-3">
->>>>>>> Stashed changes
             <div
               class="relative w-full h-[234px] md-max:h-[300px] rounded-lg overflow-hidden"
             >
@@ -61,9 +26,6 @@
           class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 md:mt-0 lg:mt-0 flex flex-col gap-3"
         >
           <div v-for="n in 3" :key="n" class="flex gap-2">
-            <div class="w-[50px]">
-              <Skeleton width="50px" height="50px" shape="circle"></Skeleton>
-            </div>
             <div class="w-full flex flex-col gap-1">
               <Skeleton width="100%" height="30px"></Skeleton>
               <Skeleton width="100%" height="30px"></Skeleton>
