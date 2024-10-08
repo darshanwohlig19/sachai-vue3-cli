@@ -99,12 +99,22 @@
     </div>
 
     <!-- Second Section -->
-    <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col justify-between">
+    <div class="w-[100%] lg:w-[30%] md:w-[100%] flex flex-col gap-3">
       <div v-if="loading">
-        <Skeleton weight="100%" height="70px" />
-        <Skeleton weight="100%" height="70px" class="mt-5" />
-        <Skeleton weight="100%" height="70px" class="mt-5" />
+        <div
+          v-for="b in 4"
+          :key="b"
+          class="shadow-md flex gap-2 w-full p-2 rounded-[8px]"
+        >
+          <div class="flex-shrink-0">
+            <Skeleton width="78px" height="57px"></Skeleton>
+          </div>
+          <div class="flex justify-center flex-col w-full">
+            <Skeleton width="100%" height="25px"></Skeleton>
+          </div>
+        </div>
       </div>
+
       <div
         v-else
         v-for="blog in blogs1"
