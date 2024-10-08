@@ -12,8 +12,10 @@
             alt
           />
         </div>
-        <div class="font-24 mt-4">New Age News App Powered by AI</div>
-        <div class="font-18 mt-2">
+        <div class="text-[18px] font-bold font-lato text-[#1E0627] mt-4">
+          New Age News App Powered by AI
+        </div>
+        <div class="text-[16px] mt-2 text-[#878787]">
           Get trustworthy news in an easy-to-read format, our smart chatbot
           provides a personalized and interactive news experience for you.
         </div>
@@ -78,7 +80,7 @@
               <li class="footer-links text-[#52525B] text-[14px] pt-3">
                 <a
                   :href="`/categories/${heading._id}?category=${heading.name}`"
-                  class="capitalize"
+                  class="capitalize leading-normal"
                   >{{ heading.name }}</a
                 >
               </li>
@@ -103,7 +105,9 @@
             <ul v-for="item in hotOnTheWeb" :key="item.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a :href="`/NewsByTopics/${item}`">
-                  <div class="cursor-pointer capitalize">{{ item }}</div>
+                  <div class="cursor-pointer capitalize leading-normal">
+                    {{ item }}
+                  </div>
                 </a>
               </li>
             </ul>
@@ -136,7 +140,9 @@
                 class="footer-links text-[#52525B] text-sm pt-3"
               >
                 <a :href="`/NewsByTopics/${news}`">
-                  <div class="cursor-pointer capitalize">{{ news }}</div>
+                  <div class="cursor-pointer capitalize leading-normal">
+                    {{ news }}
+                  </div>
                 </a>
               </li>
             </ul>
@@ -179,7 +185,9 @@
             <ul v-for="topic in trendingTopics" :key="topic.id">
               <li class="footer-links text-[#52525B] text-sm pt-3">
                 <a :href="`/NewsByTopics/${topic}`">
-                  <div class="cursor-pointer capitalize">{{ topic }}</div>
+                  <div class="cursor-pointer capitalize leading-normal">
+                    {{ topic }}
+                  </div>
                 </a>
               </li>
             </ul>
@@ -200,8 +208,10 @@
             alt
           />
         </div>
-        <div class="font-24 mt-4">New Age News App Powered by AI</div>
-        <div class="font-18 mt-2">
+        <div class="text-[18px] font-bold font-lato text-[#1E0627] mt-4">
+          New Age News App Powered by AI
+        </div>
+        <div class="text-[16px] mt-2 text-[#878787]">
           Get trustworthy news in an easy-to-read format, our smart chatbot
           provides a personalized and interactive news experience for you.
         </div>
@@ -265,7 +275,7 @@
                 <li class="footer-links text-[#52525B] text-sm pt-3">
                   <a
                     :href="`/categories/${heading._id}?category=${heading.name}`"
-                    class="capitalize"
+                    class="capitalize leading-normal"
                     >{{ heading.name }}</a
                   >
                 </li>
@@ -297,7 +307,9 @@
                   class="footer-links text-[#52525B] text-sm pt-3"
                 >
                   <a :href="`/NewsByTopics/${news}`">
-                    <div class="cursor-pointer capitalize">{{ news }}</div>
+                    <div class="cursor-pointer capitalize leading-normal">
+                      {{ news }}
+                    </div>
                   </a>
                 </li>
               </ul>
@@ -339,7 +351,9 @@
                 <ul v-for="item in hotOnTheWeb" :key="item.id">
                   <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
                     <a :href="`/NewsByTopics/${item}`">
-                      <div class="cursor-pointer capitalize">{{ item }}</div>
+                      <div class="cursor-pointer capitalize leading-normal">
+                        {{ item }}
+                      </div>
                     </a>
                   </li>
                 </ul>
@@ -378,7 +392,9 @@
                 <ul v-for="item in trendingTopics" :key="item.id">
                   <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
                     <a :href="`/NewsByTopics/${item}`">
-                      <div class="cursor-pointer capitalize">{{ item }}</div>
+                      <div class="cursor-pointer capitalize leading-normal">
+                        {{ item }}
+                      </div>
                     </a>
                   </li>
                 </ul>
