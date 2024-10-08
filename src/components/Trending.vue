@@ -100,7 +100,7 @@
                     class="absolute top-4 left-4"
                   />
                   <div
-                    class="absolute top-2 right-4 p-2 text-black flex flex-row gap-2 justify-around"
+                    class="absolute top-2 right-2 p-2 text-black flex flex-row gap-2 justify-around"
                   >
                     <div>
                       <i
@@ -140,13 +140,13 @@
                       </div>
                       <div class="flex flex-row gap-3 mt-1 mb-1">
                         <div
-                          class="text-white text-[10px] sm:time-date-home md:time-date-home"
+                          class="text-white time-date-home text-[10px] md:text-[12px]"
                         >
                           {{ slotProps.data.source }}
                         </div>
                         <div class="text-[16px]">|</div>
                         <div
-                          class="text-white text-[10px] sm:time-date-home md:time-date-home"
+                          class="text-white time-date-home text-[10px] md:text-[12px]"
                         >
                           {{ formatPublishTime(slotProps.data.publishTime) }}
                         </div>
@@ -167,11 +167,12 @@
           @click="navigateToTrending(item._id)"
           v-for="(item, index) in news.slice(0, 3)"
           :key="index"
-          class="flex gap-2 mt-0 sm-max:!mt-0 cursor-pointer"
+          class="flex gap-3 mt-0 sm-max:!mt-0 cursor-pointer"
         >
-          <div class="flex w-[50px]">
-            <img class="image-small" src="../assets/png/Group.png" />
-          </div>
+          <img
+            class="image-small !h-[10px] !w-[10px]"
+            src="../assets/png/Group.png"
+          />
           <div>
             <div class="headline-tuncate headine-home">
               {{ item.headline }}
@@ -368,7 +369,7 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", handleResize);
 });
 </script>
-<style>
+<style scoped>
 .p-carousel-content {
   border-radius: 0 10px 10px 0 !important;
 }

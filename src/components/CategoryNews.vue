@@ -172,9 +172,7 @@
                           class="headine-home one-line cursor-pointer"
                           @click="navigateToCampingNews(news._id)"
                         >
-                          <a>
-                            {{ news.headline }}
-                          </a>
+                          <a> {{ news.headline }} </a>
                         </div>
                       </div>
                       <div class="mt-2">
@@ -187,7 +185,7 @@
                   <div
                     v-for="(news, index) in getDisplayedNews(category.news)"
                     :key="news._id"
-                    class="flex flex-row gap-1 w-[50%] md:w-[30%]"
+                    class="flex flex-row gap-2 w-[50%] md:w-[30%]"
                   >
                     <div
                       class="multiline-truncate1 headine-home w-[100%] cursor-pointer"
@@ -284,7 +282,7 @@ export default {
 
     const displayedNews = computed(() => {
       return (news) => {
-        return screenWidth.value > 1600 ? news.slice(1, 5) : news.slice(1, 4);
+        return screenWidth.value > 1600 ? news.slice(1, 5) : news.slice(1, 5);
       };
     });
     const navigateToCampingNews = (id) => {
@@ -377,7 +375,7 @@ export default {
 .one-line {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* Number of lines to display */
+  -webkit-line-clamp: 1; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }

@@ -72,7 +72,7 @@
                     @click="navigateToCategoryDetail(news._id)"
                     v-for="(news, index) in slotProps.data.news.slice(0, 4)"
                     :key="index"
-                    class="!flex items-center flex p-2 rounded-[4px] gap-3"
+                    class="!flex items-center p-2 rounded-[4px] gap-3"
                     style="box-shadow: 0px 0px 5px 2px #0000000f"
                   >
                     <!-- <BlogCard
@@ -89,7 +89,7 @@
                     </div>
                     <div class="">
                       <div
-                        class="headline-tuncate-right text-[14px] text-[#1E0627] font-semibold leading-4"
+                        class="headline-tuncate-right text-[#1E0627] headine-home leading-4"
                       >
                         {{ news.headline || "headline" }}
                       </div>

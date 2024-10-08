@@ -3,7 +3,7 @@
     <div class="flex justify-between w-full items-center">
       <div class="flex flex-row items-center gap-2">
         <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
-        <div class="text-[20px] font-bold font-lato">More News</div>
+        <div class="text-[18px] font-bold font-lato">More News</div>
       </div>
       <!-- Conditionally render button based on loading and error states -->
       <div v-if="!loading && !error">
@@ -107,12 +107,10 @@
           @click="navigateToMoreNews(news._id)"
         >
           <div class="flex flex-row gap-3 cursor-pointer">
-            <div class="w-[50px]">
-              <img class="small-img" src="@/assets/png/Group.png" />
-            </div>
+            <img class="small-img" src="@/assets/png/Group.png" />
             <div>
-              <div class="font-16 more_headline">{{ news.headline }}</div>
-              <div class="para summary">{{ news.summary }}</div>
+              <div class="headine-home more_headline">{{ news.headline }}</div>
+              <div class="summary-home summary">{{ news.summary }}</div>
             </div>
           </div>
           <div v-if="index < leftColumnNews.length - 1" class="mt-3">
@@ -135,12 +133,10 @@
           @click="navigateToMoreNews(news._id)"
         >
           <div class="flex flex-row gap-3 cursor-pointer">
-            <div class="w-[50px]">
-              <img class="small-img" src="@/assets/png/Group.png" />
-            </div>
+            <img class="small-img" src="@/assets/png/Group.png" />
             <div>
-              <div class="font-16 more_headline">{{ news.headline }}</div>
-              <div class="para summary">{{ news.summary }}</div>
+              <div class="headine-home more_headline">{{ news.headline }}</div>
+              <div class="summary-home summary">{{ news.summary }}</div>
             </div>
           </div>
           <div v-if="index < middleColumnNews.length - 1" class="mt-3">
@@ -163,12 +159,10 @@
           @click="navigateToMoreNews(news._id)"
         >
           <div class="flex flex-row gap-3 cursor-pointer">
-            <div class="w-[50px]">
-              <img class="small-img" src="@/assets/png/Group.png" />
-            </div>
+            <img class="small-img" src="@/assets/png/Group.png" />
             <div>
-              <div class="font-16 more_headline">{{ news.headline }}</div>
-              <div class="para summary">{{ news.summary }}</div>
+              <div class="headine-home more_headline">{{ news.headline }}</div>
+              <div class="summary-home summary">{{ news.summary }}</div>
             </div>
           </div>
           <div v-if="index < rightColumnNews.length - 1" class="mt-3">

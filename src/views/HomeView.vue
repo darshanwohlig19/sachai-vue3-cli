@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Navbarrr />
-    <div class="mx-[10px] mt-[75px]">
+    <div class="mx-[20px] mt-[85px]">
       <Trending />
       <FeaturedNews />
       <Latest />

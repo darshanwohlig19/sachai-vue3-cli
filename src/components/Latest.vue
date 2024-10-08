@@ -89,10 +89,14 @@
                   </div>
                 </div>
                 <div class="flex justify-between items-center pl-3 pr-3 mt-2">
-                  <div class="flex gap-1 text-[#676767] time-date-home">
+                  <div
+                    class="flex gap-1 text-[#676767] time-date-home text-[10px] md:text-[12px]"
+                  >
                     <div>{{ news.source }}</div>
                     <span>
-                      <div class="text-[#676767] time-date-home">
+                      <div
+                        class="text-[#676767] time-date-home text-[10px] md:text-[12px]"
+                      >
                         | {{ formatPublishTime(news.publishTime) }}
                       </div>
                     </span>
