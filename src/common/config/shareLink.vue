@@ -29,7 +29,9 @@
         </div>
       </button>
 
-      <h2 class="text-2xl font-bold font-lato text-[#121212] text-center mb-2">
+      <h2
+        class="text-xl !leading-[24px] font-semibold font-lato text-[#121212] text-center mb-2"
+      >
         Your invite link
       </h2>
 
@@ -39,18 +41,22 @@
         <Input
           :value="inviteLink"
           readOnly
-          class="w-full h-full bg-[#F8F8F8] border-none ml-[3px]"
+          class="w-full h-full bg-[#F8F8F8] border-none ml-[3px] font-lato font-normal text-sm !leading-[16.8px]"
         />
         <button
-          class="text-white p-2 w-[32px] h-[32px] bg-[#F8F8F8]"
+          class="text-white p-2 w-[32px] h-[32px] bg-[#F8F8F8] !font-lato !font-semibold text-base !leading-[19.2px]"
           @click="copyToClipboard(inviteLink)"
-          v-tooltip.top="!isCopied ? ' Copy to clipboard' : 'Copied'"
+          v-tooltip.top="!isCopied ? ' Copy my link' : 'Copied'"
         >
           <img :src="isCopied ? Copied : CopyLink" alt="Copy Link" />
         </button>
       </div>
 
-      <div class="text-center font-normal text-base text-[#757575]">Or</div>
+      <div
+        class="text-center !text-base text-[#757575] !font-lato !font-normal !leading-[20.8px]"
+      >
+        Or
+      </div>
 
       <div class="flex justify-center space-x-4 mb-2 flex-wrap">
         <Button
