@@ -77,15 +77,15 @@
             <div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
-                <!-- <div class="mt-3">
+                <div class="mt-3">
                   <hr class="mt-3 border-t border-gray-300" />
-                </div> -->
+                </div>
               </div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>
-                <!-- <div class="mt-3">
+                <div class="mt-3">
                   <hr class="mt-3 border-t border-gray-300" />
-                </div> -->
+                </div>
               </div>
               <div>
                 <Skeleton width="100%" height="5rem"></Skeleton>

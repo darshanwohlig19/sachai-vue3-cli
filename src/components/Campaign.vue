@@ -18,17 +18,19 @@
       class="w-[100%] flex flex-col lg:flex-row gap-2 sm:gap-4 mt-3"
     >
       <!-- Skeleton for Campaign News -->
-      <div class="w-[100%] sm:w-[100%] gap-4 flex justify-between">
-        <div class="w-[100%] sm:w-[100%] md-max:w-[100%] flex justify-between">
-          <Skeleton width="210px" height="100%"></Skeleton>
-          <Skeleton width="210px" height="100%"></Skeleton>
-          <Skeleton width="210px" height="100%"></Skeleton>
+      <div class="w-[100%] sm:w-[100%] gap-4 flex h-[276px] lg:h-auto justify-between">
+        <div
+          v-for="campaignNews in displayedNews(campaigns)"
+          :key="campaignNews._id"
+          class="w-[100%] sm:w-[100%] flex justify-between"
+        >
+          <Skeleton width="100%" height="100%"></Skeleton>
         </div>
       </div>
 
       <!-- Divider -->
       <div class="flex justify-center">
-        <Skeleton class="skeleton w-full h-2"></Skeleton>
+        <div class="standing_divider"></div>
       </div>
 
       <!-- Skeleton for Campaigns List -->
@@ -37,7 +39,7 @@
       >
         <div
           class="flex flex-row gap-2.5 items-center border-b border-gray-300 pb-3"
-          v-for="index in 3"
+          v-for="index in 4"
           :key="index"
         >
           <div class="w-[15px]">

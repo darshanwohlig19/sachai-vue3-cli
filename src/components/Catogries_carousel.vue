@@ -19,11 +19,7 @@
 
           <!-- Skeleton for the list of items -->
           <div class="space-y-4">
-            <div
-              v-for="n in numberOfItems"
-              :key="n"
-              class="flex items-center space-x-4"
-            >
+            <div v-for="n in 4" :key="n" class="flex items-center space-x-4">
               <!-- Skeleton for image -->
               <Skeleton width="4rem" height="4rem" borderRadius="8px" />
               <!-- Skeleton for text -->

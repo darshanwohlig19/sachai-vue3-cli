@@ -23,7 +23,7 @@
 
         <!-- Loader -->
         <div v-if="isLoading" class="flex flex-row gap-3 justify-between">
-          <div v-for="n in 4" :key="n" class="w-[33%] md-max:w-full">
+          <div v-for="n in itemsToShow" :key="n" class="w-[33%] md-max:w-full">
             <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
               <!-- Skeleton Image -->
               <Skeleton height="156px" width />
@@ -173,6 +173,18 @@ const headingText = ref("Latest News");
 const isRelatedNews = ref(false);
 const newsId = ref(route.params.id || "");
 const isLoading = ref(true); // New state for loader
+const itemsToShow = ref(4);
+
+const updateItemsToShow = () => {
+  const width = window.innerWidth;
+  if (width < 640) {
+    itemsToShow.value = 1; // 1 on mobile
+  } else if (width < 1024) {
+    itemsToShow.value = 3; // 3 on tablet
+  } else {
+    itemsToShow.value = 4; // 4 on desktop
+  }
+};
 
 const showDialog = (news) => {
   isDialogVisible.value = true;
@@ -297,6 +309,9 @@ const slicedData = computed(() => {
 });
 
 onMounted(() => {
+  updateItemsToShow();
+  window.addEventListener("resize", updateItemsToShow);
+
   checkRouteParam();
   window.addEventListener("resize", updateScreenWidth);
 });

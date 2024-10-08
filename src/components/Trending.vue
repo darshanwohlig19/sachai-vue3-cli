@@ -23,7 +23,7 @@
 
         <!-- Skeleton for List of News -->
         <div
-          class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 md:mt-0 lg:mt-0 flex flex-col gap-3"
+          class="w-[100%] lg:w-[35%] md:w-[48%] md:mt-0 lg:mt-0 justify-center flex flex-col gap-3"
         >
           <div v-for="n in 3" :key="n" class="flex gap-2">
             <div class="w-full flex flex-col gap-1">
@@ -33,9 +33,13 @@
             </div>
           </div>
         </div>
-
+        <div class="w-[1%] xl-max:!hidden flex justify-center">
+          <div class="standing_divider"></div>
+        </div>
         <!-- Skeleton for Blog List -->
-        <div class="w-[100%] lg:w-[30%] md:w-[100%] flex flex-col gap-3">
+        <div
+          class="w-[100%] lg:w-[30%] mt-3 md:mt-0 md:w-[100%] flex flex-col gap-3"
+        >
           <div
             v-for="b in 3"
             :key="b"
