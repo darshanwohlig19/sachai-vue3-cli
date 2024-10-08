@@ -127,7 +127,7 @@
                         </div>
                         <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
                           <div
-                            class="multiline-truncate1 text-[16px] sm:text-[14px] md:text-[16px] fontCustom text-white w-full md:w-auto"
+                            class="multiline-truncate1 headine-home text-white w-full md:w-auto"
                             :style="{ width: 'calc(100% - 30px)' }"
                             @click="navigateToCampingNews(news._id)"
                           >
@@ -169,7 +169,7 @@
                           <img src="@/assets/png/Group.png" alt="" />
                         </div>
                         <div
-                          class="font-14 one-line cursor-pointer"
+                          class="headine-home one-line cursor-pointer"
                           @click="navigateToCampingNews(news._id)"
                         >
                           <a>
@@ -190,7 +190,7 @@
                     class="flex flex-row gap-1 w-[50%] md:w-[30%]"
                   >
                     <div
-                      class="multiline-truncate1 font-14 w-[100%] cursor-pointer"
+                      class="multiline-truncate1 headine-home w-[100%] cursor-pointer"
                       @click="navigateToCampingNews(news._id)"
                     >
                       {{ news.headline }}
@@ -211,19 +211,13 @@
             >
               <div v-for="news in category.news.slice(9, 13)" :key="news._id">
                 <div
-                  class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                  class="gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
                   @click="navigateToCampingNews(news._id)"
                 >
-                  <div class="">
-                    <img
-                      class="rounded-[6px] h-[47px]"
-                      :src="news.imgixUrlHighRes || fallbackImage"
-                      alt=""
-                    />
-                  </div>
-                  <div class="font-14 w-[70%] two-line">
-                    {{ news.headline }}
-                  </div>
+                  <BlogCard
+                    :headline="news.headline"
+                    :image="news.imgixUrlHighRes || fallbackImage"
+                  />
                 </div>
               </div>
             </div>
@@ -238,6 +232,7 @@ import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import Button from "./ViewAll.vue";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
+import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
 import { useRouter } from "vue-router";
 import fallbackImage2 from "../common/config/GlobalConstants";
 
@@ -257,6 +252,7 @@ export default {
 
   components: {
     Button,
+    BlogCard,
   },
 
   setup() {

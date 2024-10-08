@@ -89,10 +89,10 @@
                   </div>
                 </div>
                 <div class="flex justify-between items-center pl-3 pr-3 mt-2">
-                  <div class="flex gap-1 text-[#676767] text-xs">
+                  <div class="flex gap-1 text-[#676767] time-date-home">
                     <div>{{ news.source }}</div>
                     <span>
-                      <div class="text-[#676767] text-xs">
+                      <div class="text-[#676767] time-date-home">
                         | {{ formatPublishTime(news.publishTime) }}
                       </div>
                     </span>
@@ -117,12 +117,14 @@
                   class="pl-3 pr-3 text-[16px] font-semibold"
                   @click="navigateToNewsDetail(news._id)"
                 >
-                  <a class="hover:text-current font-16 multiline-truncate1">
+                  <a
+                    class="hover:text-current headine-home multiline-truncate1"
+                  >
                     {{ news.headline }}
                   </a>
                 </div>
                 <div
-                  class="pl-3 pr-3 mb-3 para multiline-truncate"
+                  class="pl-3 pr-3 mb-3 summary-home text-gray-5 multiline-truncate"
                   @click="navigateToNewsDetail(news._id)"
                 >
                   {{ news.summary }}

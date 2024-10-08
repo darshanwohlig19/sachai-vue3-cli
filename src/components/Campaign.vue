@@ -91,7 +91,7 @@
 
             <div class="p-2 shadow-lg rounded-b-[8px]">
               <div
-                class="font-16 lines2 cursor-pointer"
+                class="headine-home lines2 cursor-pointer"
                 @click="navigateToCampingNews(campaignNews._id)"
               >
                 {{ campaignNews.headline || "No Headline" }}
@@ -124,7 +124,7 @@
             <img src="@/assets/png/Group.png" alt="" />
           </div>
           <div
-            class="font-14 lines2 cursor-pointer"
+            class="headine-home lines2 cursor-pointer"
             @click="navigateToCampingNews(item._id)"
           >
             {{ item.headline || "No Headline" }}

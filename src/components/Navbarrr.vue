@@ -85,19 +85,20 @@
                 <div
                   class="shadow-[2px_0px_5px_rgba(240,0,0,0.2)] capitalize category-head rounded-r-lg w-[150px]"
                 >
-                  <ul>
+                  <ul
+                    :style="{
+                      '--hover-color': '#FF0053',
+                      '--hover-bg-color': '#FFF2F6',
+                    }"
+                  >
                     <li
-                      class="mt-1 p-2 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+                      class="p-2 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
                       v-for="category in categories"
                       :key="category._id"
                       @mouseover="fetchCategoryFromLocalStorage(category._id)"
                       @mouseleave="hoveredCategoryId = null"
-                      :style="{
-                        '--hover-color': '#FF0053',
-                        '--hover-bg-color': '#FFF2F6',
-                      }"
                     >
-                      <div class="flex items-center space-x-2">
+                      <div class="flex items-center ml-2 space-x-2">
                         <a
                           :href="`/categories/${category._id}?category=${category.name}`"
                           class="flex items-center"

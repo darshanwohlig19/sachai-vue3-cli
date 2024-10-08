@@ -62,14 +62,10 @@
           class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
         ></div>
         <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
-          <div
-            class="text-[14px] sm:text-[16px] md:text-[16px] fontCustom text-white"
-          >
+          <div class="headine-home text-white">
             {{ blogs[0]?.headline }}
           </div>
-          <div
-            class="flex gap-2 text-white text-[10px] sm:text-[12px] md:text-[12px] font-lato"
-          >
+          <div class="flex gap-2 text-white time-date-home mt-1">
             <div>{{ blogs[0]?.source }}</div>
             <div>|</div>
             <div>{{ formatPublishTime(blogs[0]?.publishTime) }}</div>
@@ -84,7 +80,7 @@
       </div>
       <div v-else class="flex flex-row gap-10 mt-5 cursor-pointer">
         <div
-          class="font-14 multiline-truncate1"
+          class="headine-home multiline-truncate1"
           @click="navigateToCategory(blogs[1]?._id)"
         >
           {{ blogs[1]?.headline }}
@@ -94,7 +90,7 @@
         </div>
 
         <div
-          class="font-14 multiline-truncate1"
+          class="headine-home multiline-truncate1"
           @click="navigateToCategory(blogs[2]?._id)"
         >
           {{ blogs[2]?.headline }}
@@ -116,19 +112,13 @@
         class="between-md-sm:mt-4"
       >
         <div
-          class="flex flex-row gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+          class="gap-4 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
           @click="navigateToCategory(blog._id)"
         >
-          <div class="w-[20%]">
-            <img
-              class="rounded-[6px] h-[47px]"
-              :src="blog.imgixUrlHighRes || fallbackImage"
-              alt=""
-            />
-          </div>
-          <div class="font-14 w-[70%] multiline-truncate">
-            {{ blog.headline }}
-          </div>
+          <BlogCard
+            :headline="blog.headline"
+            :image="blog.imgixUrlHighRes || fallbackImage"
+          />
         </div>
       </div>
     </div>
@@ -144,7 +134,7 @@
       <Skeleton weight="100%" height="70px" class="mt-5" />
       <Skeleton weight="100%" height="70px" class="mt-5" />
     </div>
-    <div v-else class="w-[100%] lg:w-[35%] flex flex-col justify-between">
+    <div v-else class="w-[100%] lg:w-[35%] flex flex-col justify-around">
       <div
         v-for="(item, index) in blogs2"
         :key="item._id"
@@ -155,13 +145,17 @@
             <img src="@/assets/png/Group.png" alt="" />
           </div>
           <div class="flex flex-col w-[100%]">
-            <div class="font-16 multiline-truncate3">{{ item.headline }}</div>
-            <div class="para multiline-truncate1">{{ item.summary }}</div>
+            <div class="headine-home multiline-truncate3">
+              {{ item.headline }}
+            </div>
+            <div class="summary-home text-gray-5 multiline-truncate1">
+              {{ item.summary }}
+            </div>
           </div>
         </div>
         <hr
           v-if="index < blogs2.length - 1"
-          class="mt-3 border-t border-gray-300"
+          class="mt-4 border-t border-gray-300"
         />
       </div>
     </div>
@@ -175,6 +169,8 @@ import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRouter } from "vue-router";
 import fallbackImage2 from "../common/config/GlobalConstants";
+import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
+
 const fallbackImage = fallbackImage2.variables.fallbackImage;
 
 const blogs = ref([]);
