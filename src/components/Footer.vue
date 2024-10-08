@@ -15,7 +15,7 @@
         <div class="text-[18px] font-bold font-lato text-[#1E0627] mt-4">
           New Age News App Powered by AI
         </div>
-        <div class="text-[16px] mt-2 text-[#878787]">
+        <div class="text-[18px] mt-2 text-[#878787]">
           Get trustworthy news in an easy-to-read format, our smart chatbot
           provides a personalized and interactive news experience for you.
         </div>
@@ -211,7 +211,7 @@
         <div class="text-[18px] font-bold font-lato text-[#1E0627] mt-4">
           New Age News App Powered by AI
         </div>
-        <div class="text-[16px] mt-2 text-[#878787]">
+        <div class="text-[18px] mt-2 text-[#878787]">
           Get trustworthy news in an easy-to-read format, our smart chatbot
           provides a personalized and interactive news experience for you.
         </div>
