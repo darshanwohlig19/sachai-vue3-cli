@@ -97,7 +97,7 @@
       </div>
 
       <Button
-        class="w-full max-w-[194px] h-[40px] font-bold font-lato text-base justify-center bg-[#1E0627] hover:[#1E0627] text-[#FFFFFF]"
+        class="w-full max-w-[194px] h-[40px] !font-semibold !font-lato text-base justify-center bg-[#1E0627] hover:[#1E0627] !text-[#FFFFFF] !leading-[19.2px]"
         @click="copyToLink(inviteLink)"
       >
         <span v-if="!isCopiedLink">Copy invite link</span>
@@ -112,7 +112,7 @@
 
       <div class="text-center">
         <button
-          class="text-[#1E0627] font-semibold text-lg font-lato"
+          class="text-[#1E0627] !font-semibold text-lg font-lato"
           @click="$emit('close')"
         >
           Cancel
