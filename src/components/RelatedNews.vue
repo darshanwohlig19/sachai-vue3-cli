@@ -88,7 +88,7 @@
           <div class="h-[60%]">
             <div class="flex justify-between items-center p-3 py-0 !pt-[3%]">
               <div
-                class="flex gap-1 text-[#676767] time-date-home between-644-1024:!text-[11px]"
+                class="flex gap-1 text-[#676767] time-date-home between-644-1024:!text-[11px] text-xs"
               >
                 <div @click="navigateToFeaturedDetail(news._id)">
                   {{ news.source }}
@@ -99,7 +99,7 @@
               </div>
               <div class="flex gap-1">
                 <span
-                  class="mdi mdi-share-variant text-[19px] cursor-pointer"
+                  class="mdi mdi-share-variant text-[19px] cursor-pointer text-[#1E0627]"
                   @click.stop="showDialog(news)"
                 ></span>
                 <span
@@ -117,7 +117,7 @@
             <div class="p-3 py-0 headine-home">
               <a
                 @click="navigateToNewsDetail(news._id)"
-                class="hover:text-current headine-home multiline-truncate1 text-[#1E0627]"
+                class="hover:text-current headine-home multiline-truncate1 !text-[#1E0627]"
               >
                 {{ news?.headline }}
               </a>

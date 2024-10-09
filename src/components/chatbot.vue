@@ -16,7 +16,8 @@
             >
               <img :src="commentsImg" class="mt-[6px] ml-[9px] w-[25px]" />
             </div>
-            <span class="ml-2 mt-[8px] text-base font-normal font-lato"
+            <span
+              class="ml-2 mt-[8px] text-base font-normal font-lato !text-[#ffffff]"
               >Chat Assistant</span
             >
           </div>
@@ -37,12 +38,14 @@
       >
         <div
           v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
-          class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto mt-[3%] mb-[10px]"
+          class="p-3 bg-soft-cloud-gray rounded-lg shadow-md w-[95%] mx-auto mt-[3%] mb-[10px]"
         >
-          <h2 class="text-sm font-bold mb-2 text-purple-10 font-lato">
+          <h2
+            class="text-sm font-bold mb-2 text-purple-10 font-lato !leading-[16.8px]"
+          >
             Need any assistance with your queries?
           </h2>
-          <p class="text-[#121212] mb-2 font-lato text-xs !leading-[14.4px]">
+          <p class="text-[#121212] mb-2 font-lato text-xs !leading-[15.6px]">
             Our AI chatbot support is always available to provide answers to any
             questions but to begin with, here are some of our most asked
             questions
@@ -135,7 +138,7 @@
                       <img
                         :src="exclamatory"
                         alt="exclamatory"
-                        class="ml-[5px]"
+                        class="ml-[8px]"
                       />
                     </span>
 
@@ -219,7 +222,8 @@
               class="mt-[8px] ml-[8px] w-[20px] h-[20px]"
             />
           </div>
-          <span class="ml-2 mt-[8px] text-[16px] font-normal font-lato"
+          <span
+            class="ml-2 mt-[8px] text-[16px] !text-[#ffffff] font-normal font-lato"
             >Chat Assistantt</span
           >
         </div>
@@ -232,7 +236,7 @@
     >
       <div
         v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
-        class="p-3 bg-gray-100 rounded-lg shadow-md w-[95%] mx-auto mt-[3%] mb-[10px]"
+        class="p-3 bg-soft-cloud-gray rounded-lg shadow-md w-[95%] mx-auto mt-[3%] mb-[10px]"
       >
         <h2
           class="text-sm !leading-[16.8px] font-bold mb-2 text-[#1E0627] font-lato"
@@ -240,7 +244,7 @@
           Need any assistance with your queries?
         </h2>
 
-        <p class="text-[#121212] mb-2 text-xs font-lato leading-[14.4px]">
+        <p class="text-[#121212] mb-2 text-xs font-lato !leading-[15.6px]">
           Our AI chatbot support is always available to provide answers to any
           questions but to begin with, here are some of our most asked questions
         </p>
@@ -331,7 +335,7 @@
                     <img
                       :src="exclamatory"
                       alt="exclamatory"
-                      class="ml-[5px]"
+                      class="ml-[8px]"
                     />
                   </span>
 

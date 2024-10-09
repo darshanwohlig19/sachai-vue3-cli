@@ -18,7 +18,9 @@
       class="w-[100%] flex flex-col lg:flex-row gap-2 sm:gap-4 mt-3"
     >
       <!-- Skeleton for Campaign News -->
-      <div class="w-[100%] sm:w-[100%] gap-4 flex h-[276px] lg:h-auto justify-between">
+      <div
+        class="w-[100%] sm:w-[100%] gap-4 flex h-[276px] lg:h-auto justify-between"
+      >
         <div
           v-for="campaignNews in displayedNews(campaigns)"
           :key="campaignNews._id"

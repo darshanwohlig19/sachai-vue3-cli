@@ -59,7 +59,9 @@
               class="flex flex-wrap items-center justify-between w-full text-xs pb-2"
             >
               <!-- Categories Name and Additional Info -->
-              <div class="flex items-center space-x-2 mb-[5px] mt-[5px]">
+              <div
+                class="time-date-home flex items-center space-x-2 mb-[5px] mt-[5px]"
+              >
                 <span class="text-neon-pink capitalize">
                   {{
                     newsItem?.categoriesName?.[0]?.toLowerCase() === "ai"
@@ -68,10 +70,10 @@
                         "No Category"
                   }}
                 </span>
-                <span class="text-light-gray">|</span>
-                <span class="text-light-gray">{{ newsItem?.source }}</span>
-                <span class="text-light-gray">|</span>
-                <span class="text-light-gray">{{ formattedPublishTime }}</span>
+                <span class="text-[#2A2A2A]">|</span>
+                <span class="text-[#1E0627]">{{ newsItem?.source }}</span>
+                <span class="text-[#2A2A2A]">|</span>
+                <span class="text-[#1E0627]">{{ formattedPublishTime }}</span>
               </div>
 
               <!-- Social Media Links and Bookmark -->
