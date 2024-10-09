@@ -272,4 +272,14 @@ onMounted(() => {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.p-paginator .p-highlight {
+  background-color: #ff0053ed !important; /* Set background color to red */
+  color: white !important; /* Ensure text color is visible */
+  border-radius: 100px !important; /* Add rounded corners */
+  padding: 5px 10px; /* Optional: Add some padding for better visual appearance */
+}
+
+.p-paginator .p-highlight a {
+  color: white !important; /* Ensure the link text is white for contrast */
+}
 </style>
