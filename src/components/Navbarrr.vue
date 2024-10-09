@@ -139,13 +139,13 @@
                     <div
                       class="absolute top-0 bottom-0 w-full h-full flex items-end justify-start"
                     >
-                      <div class="text-white p-2 rounded-md w-[100%]">
+                      <div class="text-white p-3 rounded-md w-[100%]">
                         <div
-                          class="sub_category_head multiline-truncate-tow-tow-liner"
+                          class="headine-home multiline-truncate-tow-tow-liner"
                         >
                           {{ newsItems[0]?.headline }}
                         </div>
-                        <div class="flex flex-row gap-2 sub_category_summary">
+                        <div class="flex flex-row mt-2 gap-2 time-date-home">
                           <div>{{ newsItems[0]?.source }}</div>
                           <div>|</div>
                           <div>
@@ -161,29 +161,12 @@
                   >
                     <div class="mt-3">
                       <div
-                        class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                        class="gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
                       >
-                        <div class="w-[20%]">
-                          <img
-                            :src="
-                              newsItems[1]?.imgixUrlHighRes || fallbackImage
-                            "
-                            class="rounded-[6px] h-[65px] w-[65px] object-contain"
-                            alt=""
-                          />
-                        </div>
-                        <div class="flex flex-col w-[70%]">
-                          <div
-                            class="category-heading w-[100%] multiline-truncate-tow-tow-liner"
-                          >
-                            {{ newsItems[1]?.headline }}
-                          </div>
-                          <!-- <div
-                            class="multiline-truncate-one-liner category-head-head w-[100%]"
-                          >
-                            {{ newsItems[1]?.summary }}
-                          </div> -->
-                        </div>
+                        <BlogCard
+                          :headline="newsItems[1].headline"
+                          :image="newsItems[1].imgixUrlHighRes || fallbackImage"
+                        />
                       </div>
                     </div>
                   </div>
@@ -193,29 +176,12 @@
                   >
                     <div class="mt-3">
                       <div
-                        class="flex flex-row gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
+                        class="gap-3 p-2.5 drop-shadow-md border-1 rounded-[8px] items-center cursor-pointer"
                       >
-                        <div class="w-[20%]">
-                          <img
-                            :src="
-                              newsItems[2]?.imgixUrlHighRes || fallbackImage
-                            "
-                            class="rounded-[6px] h-[65px] w-[65px] object-contain"
-                            alt=""
-                          />
-                        </div>
-                        <div class="flex flex-col w-[70%]">
-                          <div
-                            class="category-heading w-[100%] multiline-truncate-tow-tow-liner"
-                          >
-                            {{ newsItems[2]?.headline }}
-                          </div>
-                          <!-- <div
-                            class="multiline-truncate-one-liner category-head-head w-[100%]"
-                          >
-                            {{ newsItems[2]?.summary }}
-                          </div> -->
-                        </div>
+                        <BlogCard
+                          :headline="newsItems[2].headline"
+                          :image="newsItems[2].imgixUrlHighRes || fallbackImage"
+                        />
                       </div>
                     </div>
                   </div>
@@ -229,10 +195,12 @@
                           <img src="../assets/png/Group.png" alt="" />
                         </div>
                         <div class="flex flex-col w-[100%]">
-                          <div class="font-16 multi-line-2">
+                          <div class="headine-home text-[#1E0627] multi-line-2">
                             {{ newsItems[3]?.headline }}
                           </div>
-                          <div class="para multiline-truncate-tow-tow-liner">
+                          <div
+                            class="summary-home mt-1 text-[#878787] multiline-truncate-tow-tow-liner"
+                          >
                             {{ newsItems[3]?.summary }}
                           </div>
                         </div>
@@ -249,10 +217,12 @@
                           <img src="../assets/png/Group.png" alt="" />
                         </div>
                         <div class="flex flex-col w-[100%]">
-                          <div class="font-16 multi-line-2">
+                          <div class="headine-home text-[#1E0627] multi-line-2">
                             {{ newsItems[4]?.headline }}
                           </div>
-                          <div class="para multiline-truncate-tow-tow-liner">
+                          <div
+                            class="summary-home mt-1 text-[#878787] multiline-truncate-tow-tow-liner"
+                          >
                             {{ newsItems[4]?.summary }}
                           </div>
                         </div>
