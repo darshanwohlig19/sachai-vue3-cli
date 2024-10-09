@@ -193,7 +193,7 @@
             type="text"
             v-model="userQuestion"
             placeholder="Ask a question about this article!"
-            class="flex-grow px-2 py-2 focus:outline-none h-full placeholder:font-normal placeholder:font-lato placeholder:text-xs !leading-[14.4px]"
+            class="flex-grow px-2 py-2 !font-lato !text-xs focus:outline-none h-full placeholder:font-normal placeholder:font-lato placeholder:text-xs !leading-[14.4px]"
             aria-label="User question input"
             @keyup.enter="handleChatClick"
           />
@@ -389,7 +389,7 @@
           type="text"
           v-model="userQuestion"
           placeholder="Ask a question about this article!"
-          class="flex-grow px-2 py-2 focus:outline-none h-full placeholder:font-normal placeholder:font-lato placeholder:text-sm"
+          class="flex-grow px-2 py-2 !font-lato !text-xs focus:outline-none h-full placeholder:font-normal placeholder:font-lato placeholder:text-sm"
           aria-label="User question input"
           @keyup.enter="handleChatClick"
         />
