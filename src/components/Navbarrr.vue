@@ -12,7 +12,7 @@
         </a>
       </div>
       <div class="w-[80%] between-992-max-md-1025:w-[90%]">
-        <div class="flex gap-1 sm:gap-3 items-center justify-end">
+        <div class="flex gap-2 sm:gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
             <!-- <a href="/">Home</a> -->
             <img
