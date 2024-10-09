@@ -38,7 +38,7 @@
       >
         <div
           v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
-          class="p-3 bg-soft-cloud-gray rounded-lg shadow-md w-[95%] mx-auto mt-[3%] mb-[10px]"
+          class="p-3 bg-soft-cloud-gray rounded-lg w-[95%] mx-auto mt-[3%] mb-[10px]"
         >
           <h2
             class="text-sm font-bold mb-2 text-purple-10 font-lato !leading-[16.8px]"
@@ -185,7 +185,7 @@
         </div>
       </div>
 
-      <div class="p-2 mb-0">
+      <div class="m-[10px]">
         <div
           class="flex items-center bg-white overflow-hidden rounded-3xl border h-[40px] border-[#eaeaea] shadow-custom-red"
         >
@@ -209,7 +209,7 @@
     </div>
   </div>
   <div
-    class="!hidden lg:!block mx-auto bg-white rounded-lg overflow-hidden shadow-lg bg-assist-card flex flex-col !h-[669px] !w-[440px] md:h-[85vh] lg:h-[670px] between-644-1024:!h-[110vh] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh] !ml-[10px] between-1011-1200:!h-[725px]"
+    class="!hidden lg:!block mx-auto bg-white rounded-lg overflow-hidden bg-assist-card flex flex-col !h-[669px] !w-[440px] md:h-[85vh] lg:h-[670px] between-644-1024:!h-[110vh] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh] !ml-[10px] between-1011-1200:!h-[725px]"
   >
     <div class="bg-[#320A38] text-white h-[55px]">
       <div class="text-base font-Lato leading-tight flex items-center mt-[2px]">
@@ -236,7 +236,7 @@
     >
       <div
         v-if="category?.suggestedQnA && category.suggestedQnA.length > 0"
-        class="p-3 bg-soft-cloud-gray rounded-lg shadow-md w-[95%] mx-auto mt-[3%] mb-[10px]"
+        class="p-3 bg-soft-cloud-gray rounded-lg w-[95%] mx-auto mt-[3%] mb-[10px]"
       >
         <h2
           class="text-sm !leading-[16.8px] font-bold mb-2 text-[#1E0627] font-lato"
@@ -290,7 +290,7 @@
             <div class="flex justify-end ml-5">
               <p
                 v-if="message.type === 'user' || message.type === 'qnaQuestion'"
-                class="bg-blue-5 text-purple-10 rounded-customChat flex justify-start p-2 shadow !font-normal !font-lato max-w-fit w-[286px] text-xs !md:w-[400px] leading-[14.4px]"
+                class="bg-blue-5 text-purple-10 rounded-customChat flex justify-start p-2 !font-normal !font-lato max-w-fit w-[286px] text-xs !md:w-[400px] leading-[14.4px]"
                 v-html="message.text"
               ></p>
             </div>
@@ -300,7 +300,7 @@
                 (message.type === 'bot' && message.loading) ||
                 (message.type === 'qnaAnswers' && message.loading)
               "
-              class="bg-soft-cloud-gray rounded-customAnswerChat p-3 shadow !mr-[320px] !ml-[10px] w-[75px]"
+              class="bg-soft-cloud-gray rounded-customAnswerChat p-3 !mr-[320px] !ml-[10px] w-[75px]"
             >
               <ChatLoading />
             </div>
@@ -310,7 +310,7 @@
                 !message.loading &&
                 (message.type === 'qnaAnswers' || message.type === 'bot')
               "
-              class="bg-soft-cloud-gray text-purple-10 rounded-customAnswerChat p-2.5 shadow !text-xs !font-normal !font-lato ml-[10px] mt-[10px] mb-[10px] w-[388px] !leading-[14.4px]"
+              class="bg-soft-cloud-gray text-purple-10 rounded-customAnswerChat p-2.5 !text-xs !font-normal !font-lato ml-[10px] mt-[10px] mb-[10px] w-[388px] !leading-[14.4px]"
             >
               <p v-html="message.text"></p>
               <div
@@ -321,7 +321,7 @@
               >
                 <hr class="my-2 text-[#878787]" v-if="message.type === 'bot'" />
                 <div
-                  class="flex items-center justify-end text-sm h-[30px] space-x-1"
+                  class="flex items-center justify-end text-sm h-[23px] space-x-1"
                   v-if="message.type === 'bot' || message.type === 'qnaAnswers'"
                 >
                   <span
@@ -381,7 +381,7 @@
         </div>
       </div>
     </div>
-    <div class="p-2 mb-0">
+    <div class="m-[10px]">
       <div
         class="flex items-center bg-white overflow-hidden rounded-3xl border h-[40px] border-[#eaeaea] shadow-custom-red"
       >

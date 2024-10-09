@@ -7,7 +7,7 @@
     />
     <div class="p-2 lg:h-full">
       <div class="flex justify-between items-center w-full mb-2 rounded-2xl">
-        <div class="flex items-center">
+        <div class="flex items-center mx-[15px]">
           <span
             class="border-l-4 border-[#FF0053] h-[13px] rounded-2xl mr-1"
           ></span>
@@ -16,7 +16,9 @@
           >
         </div>
 
-        <Button />
+        <div v-if="!isLoading && blogs.length > 0" class="mx-[15px]">
+          <a href="/featured-news"> <Button /></a>
+        </div>
       </div>
       <!-- <div v-if="!isLoading">Loading...</div> -->
       <div

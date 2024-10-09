@@ -1,12 +1,12 @@
 <template>
   <Navbarrr />
-  <div class="mx-[10px] mt-3">
+  <div class="mx-[20px] mt-[85px]">
     <div class="flex flex-col lg:flex-row mt-[75px]">
       <div
         class="flex-grow flex flex-col h-full max-w-full sm:max-w-[90%] lg:max-w-[66%]"
       >
         <div
-          class="shadow-lg rounded-lg between-Laptop:!hidden between-1011-1200:!hidden overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[16rem] bg-white"
+          class="rounded-xl between-Laptop:!hidden between-1011-1200:!hidden overflow-hidden flex-grow flex flex-col md:flex-row h-auto md:h-[16rem] bg-white"
         >
           <div class="relative w-full md:w-1/2 overflow-hidden p-2">
             <div
@@ -60,7 +60,7 @@
             >
               <!-- Categories Name and Additional Info -->
               <div
-                class="time-date-home flex items-center space-x-2 mb-[5px] mt-[5px]"
+                class="time-date-home flex items-center space-x-2 mb-[5px] mt-[5px] xs:!mb-[10px]"
               >
                 <span class="text-neon-pink capitalize">
                   {{
@@ -77,7 +77,7 @@
               </div>
 
               <!-- Social Media Links and Bookmark -->
-              <div class="flex items-center space-x-2 ml-auto">
+              <div class="flex items-center space-x-2">
                 <Button
                   @click="shareOnFacebook"
                   target="_blank"
@@ -140,7 +140,7 @@
         </div>
 
         <div
-          class="hidden between-Laptop:!flex between-1011-1200:!flex !flex-col shadow-lg rounded-lg overflow-hidden bg-white between-644-1024:h-[326px]"
+          class="hidden between-Laptop:!flex between-1011-1200:!flex !flex-col shadow-lg rounded-lg overflow-hidden bg-white between-644-1024:h-[326px] !h-[327px]"
         >
           <div class="flex flex-row">
             <div class="w-[30%] p-2 rounded-xl">
@@ -253,7 +253,7 @@
         </div>
 
         <div
-          class="bg-white shadow-lg rounded-lg overflow-hidden mt-2 sm:h-[390px] lg:h-[390px] md:h-[390px]"
+          class="bg-white rounded-xl overflow-hidden mt-2 sm:h-[390px] lg:h-[390px] md:h-[390px]"
         >
           <FeatureNews />
         </div>
@@ -270,7 +270,10 @@
     </div>
   </div>
 
-  <div class="mt-1 bg-white rounded-lg mx-[10px]" v-if="newsItem?._id">
+  <div
+    class="mt-1 bg-white mx-[20px] my-[15px] rounded-xl"
+    v-if="newsItem?._id"
+  >
     <RelatedNewsData :category="newsItem" />
   </div>
   <div

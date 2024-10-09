@@ -7,14 +7,16 @@
     />
 
     <div class="flex justify-between items-center w-full mb-2 rounded-2xl">
-      <div class="flex items-center">
+      <div class="flex items-center mx-[15px]">
         <span
           class="border-l-4 border-[#FF0053] h-[13px] rounded-2xl mr-1"
         ></span>
-        <span class="heads1 text-[#1E0627] ml-0">Featured News</span>
+        <span class="heads1 xs:!text-[17px] text-[#1E0627] ml-0 !leading-[18px]"
+          >Featured News</span
+        >
       </div>
 
-      <div v-if="!isLoading && featuredNewsItem.length > 0">
+      <div v-if="!isLoading && featuredNewsItem.length > 0" class="mx-[15px]">
         <a href="/featured-news"> <Button /></a>
       </div>
     </div>
@@ -47,7 +49,7 @@
       </div>
     </div>
     <div
-      class="flex flex-col lg:flex-row md:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg md:h-[330px]"
+      class="flex flex-col lg:flex-row md:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg md:h-[330px] mx-[15px]"
     >
       <div
         v-for="news in slicedData"
