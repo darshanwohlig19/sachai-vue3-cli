@@ -1,9 +1,14 @@
 <template>
   <Navbarrr />
-  <div class="mx-[10px] mt-[75px]">
+  <InviteLinkDialog
+    :isVisible="isDialogVisible"
+    :inviteLink="inviteLink"
+    @close="isDialogVisible = false"
+  />
+  <div class="mx-[20px] mt-[85px]">
     <div class="flex flex-col lg:flex-row gap-3 mt-3">
       <div
-        class="w-[100%] lg:w-[62%] flex flex-col bg-white rounded-[10px] p-3"
+        class="w-[100%] lg:w-[65%] flex flex-col bg-white rounded-[10px] px-3 py-3"
       >
         <div class="flex flex-row items-center gap-1">
           <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
@@ -63,25 +68,26 @@
                 </div>
               </div>
               <div
-                class="w-[100%] sm:w-[60%] ml-0 mr-0 sm:ml-4 sm:mr-2flex flex-col justify-evenly p-2 sm:p-0"
+                class="w-[100%] sm:w-[60%] sm:ml-3 sm:mr-2 px-3 sm:px-0 flex flex-col sm:justify-around"
               >
-                <div class="flex justify-between items-center mt-1">
-                  <div class="flex gap-1 text-[##1E0627] medium">
-                    <div class="text-[8px] lg:text-[12px] font-lato">
-                      {{ item?.source || "No source" }}
+                <div class="flex justify-between items-center mt-2">
+                  <div class="flex gap-1 text-[#1E0627] time-date-home">
+                    <div class="">
+                      {{ item.source || "No source" }}
                     </div>
-                    <div class="text-[8px] lg:text-[12px]">
-                      | {{ moment(item?.publishTime || new Date()).fromNow() }}
+                    <div class="">
+                      | {{ moment(item.publishTime || new Date()).fromNow() }}
                     </div>
                   </div>
                   <div class="flex gap-1">
                     <span
-                      class="mdi mdi-share-variant text-[11px] lg:text-[17px]"
+                      class="mdi mdi-share-variant text-[18px]"
+                      @click.stop="showDialog(item)"
                     ></span>
                     <span
                       :class="[
                         'mdi',
-                        'mdi-bookmark text-[11px] lg:text-[17px] cursor-pointer',
+                        'mdi-bookmark text-[18px] cursor-pointer',
                         getBookmarkColor(item.isBookmarked),
                       ]"
                       @click="addBookmark(item)"
@@ -90,35 +96,31 @@
                   </div>
                 </div>
                 <div
-                  class="text-[12px] lg:text-[16px] fontCustom leading-1 bold mr-1 mt-1"
+                  class="headine-home multiline-truncate1 mr-1 cursor-pointer mt-1"
+                  @click="navigateToMoreNews(item._id)"
                 >
-                  <div
-                    @click="navigateToMoreNews(item._id)"
-                    class="cursor-pointer multiline-truncate1"
-                  >
-                    {{ item?.headline || "No Headline" }}
-                  </div>
+                  {{ item.headline || "No Headline" }}
                 </div>
                 <div
-                  class="text-[10px] lg:text-[12px] text-[#878787] font-lato leading-1 mr-1 mt-1 mb-1"
+                  class="cursor-pointer multiline-truncate leading-1 mr-1 mt-1 mb-1 summary-home text-[#878787]"
+                  @click="navigateToNewsDetail(item.newsId)"
                 >
-                  <div
-                    @click="navigateToMoreNews(item._id)"
-                    class="cursor-pointer multiline-truncate"
-                  >
-                    {{ item?.summary || "No summary" }}
-                  </div>
+                  {{ item.summary || "No summary" }}
                 </div>
-                <div class="text-[8px] lg:text-[12px] flex gap-3 mb-3">
-                  <span class="text-red-500 capitalize">
-                    {{
-                      item.categories &&
-                      item.categories.length > 0 &&
-                      item.categories[0].name
-                        ? item.categories[0].name.replace(/-/g, " ")
-                        : item.categories.name
-                    }}
-                  </span>
+                <div class="flex justify-between mt-2 mb-2 items-end">
+                  <div
+                    class="flex h-full mb-1 items-center justify-between gap-2 time-date-home"
+                  >
+                    <span class="text-red-500 capitalize">
+                      {{
+                        item.categories &&
+                        item.categories.length > 0 &&
+                        item.categories[0].name
+                          ? item.categories[0].name.replace(/-/g, " ")
+                          : item.categories.name
+                      }}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,7 +135,7 @@
           />
         </div>
       </div>
-      <div class="w-[100%] lg:w-[38%]">
+      <div class="w-[100%] lg:w-[35%]">
         <HotTopics />
       </div>
     </div>
@@ -156,6 +158,8 @@ import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import { useToast } from "primevue/usetoast";
 import fallbackImage2 from "../common/config/GlobalConstants";
+import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
+
 const fallbackImage = fallbackImage2.variables.fallbackImage;
 const news = ref([]);
 const loading = ref(true); // Add loading state
@@ -166,6 +170,8 @@ const router = useRouter();
 const categoryId = route.params.slugOrId;
 const categoryName = route.query.category;
 const toast = useToast();
+const isDialogVisible = ref(false); // State for dialog visibility
+const inviteLink = ref(""); // Link to share, set this appropriately
 const navigateToMoreNews = (id) => {
   router.push(`/news/${id}`);
 };
@@ -207,6 +213,10 @@ const fetchNews = async () => {
   } finally {
     loading.value = false; // Set loading to false after fetching is complete
   }
+};
+const showDialog = (item) => {
+  isDialogVisible.value = true;
+  inviteLink.value = item.newsLink;
 };
 
 const getBookmarkColor = (isBookmarked) => {

@@ -28,27 +28,12 @@
       v-else
       v-for="(item, index) in hot"
       :key="index"
-      class="mt-3 flex gap-4 items-center drop-shadow-lg border-1 p-2"
+      class="mt-3 gap-4 items-center shadow-md rounded-[8px] p-2"
     >
-      <div
-        class="flex w-[20%] justify-center items-center"
-        @click="navigateToNewsDetail(item._id)"
-      >
-        <img
-          class="h-[51px] w-[51px] rounded-md"
-          :class="item?.imgixUrlHighRes ? 'object-cover' : 'object-contain'"
-          :src="item?.imgixUrlHighRes || fallbackImage"
-          alt=""
-        />
-      </div>
-      <div class="flex flex-col w-[80%] justify-between">
-        <div
-          class="text-[14px] mt-1 fontCustom"
-          @click="navigateToNewsDetail(item._id)"
-        >
-          {{ item?.headline || "No Headline" }}
-        </div>
-      </div>
+      <BlogCard
+        :headline="item.headline"
+        :image="item.imgixUrlHighRes || fallbackImage"
+      />
     </div>
   </div>
 </template>
@@ -57,6 +42,8 @@ import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import moment from "moment"; // Import moment;
 import fallbackImage from "../common/config/GlobalConstants";
+import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
+
 export default {
   data() {
     return {
@@ -67,7 +54,9 @@ export default {
       fallbackImage: fallbackImage.variables.fallbackImage,
     };
   },
-
+  components: {
+    BlogCard,
+  },
   methods: {
     async fetchBlogs() {
       const payload = {
@@ -85,7 +74,7 @@ export default {
         //   "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
 
         // );
-        this.hot = response.data.slice(0, 12); // Assign the fetched blogs to 'hot'
+        this.hot = response.data.slice(0, 15); // Assign the fetched blogs to 'hot'
       } catch (error) {
         console.error("Error fetching blogs:", error);
         this.hot = []; // Set hot to empty array in case of an error

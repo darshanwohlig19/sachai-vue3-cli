@@ -4,7 +4,7 @@
     <div class="w-[100%] flex justify-between">
       <div class="flex flex-row items-center gap-2">
         <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
-        <div class="heads">Campaign</div>
+        <div class="text-[18px] font-bold font-lato">Campaign</div>
       </div>
       <!-- Conditionally render button based on loading state -->
       <div v-if="!isLoading && campaigns.length > 0 && campaigns1.length > 0">

@@ -9,7 +9,7 @@
       alt="Blog Image"
     />
     <div class="">
-      <div class="headline-tuncate-right headine-home">
+      <div class="headline-tuncate-right flex items-center headine-home">
         {{ headline || "No Headline" }}
       </div>
     </div>

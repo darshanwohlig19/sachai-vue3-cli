@@ -7,10 +7,12 @@
     />
     <div>
       <Navbarrr />
-      <div class="mx-[10px] mt-[75px] min-h-screen flex flex-col">
-        <div class="flex flex-col gap-2 bg-white rounded-[10px] p-3 flex-grow">
-          <div class="flex flex-row items-center gap-2">
-            <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
+      <div class="mx-[20px] mt-[85px] min-h-screen flex flex-col">
+        <div
+          class="flex flex-col gap-2 bg-white rounded-[10px] px-3 py-2 flex-grow"
+        >
+          <div class="flex flex-row items-center gap-1">
+            <div class="bg-[#FF0053] w-[4px] h-[13px] rounded-md"></div>
             <div class="text-[18px] font-lato font-[700] text-[#1E0627]">
               Bookmarks
             </div>
@@ -19,9 +21,9 @@
           <div v-if="paginatedData.length > 0" class="flex flex-col gap-3">
             <div v-for="item in paginatedData" :key="item._id">
               <div
-                class="w-full h-[300px] sm:h-[170px] bg-white flex rounded-lg border-1 drop-shadow-md"
+                class="w-full h-[300px] sm:h-[170px] bg-white flex flex-col sm:flex-row rounded-lg border-1 drop-shadow-md"
               >
-                <div class="w-[25%] h-full items-center">
+                <div class="w-[100%] sm:w-[25%] h-full items-center">
                   <div
                     class="relative h-full bg-white rounded-lg shadow-lg overflow-hidden"
                   >
@@ -46,42 +48,55 @@
                     </div>
                   </div>
                 </div>
-                <div class="w-[80%] ml-3 mr-3 flex flex-col justify-around">
-                  <div class="flex justify-between items-center mt-3">
-                    <div class="flex gap-1 text-[#1E0627] time-date-home">
-                      <div class="xs-max:text-[9px] text-[12px] font-lato">
-                        {{ item.source || "No source" }}
+                <div
+                  class="w-[100%] sm:w-[80%] sm:ml-3 sm:mr-3 sm:py-2 flex flex-col sm:justify-between"
+                >
+                  <div class="">
+                    <div class="flex justify-between items-center">
+                      <div class="flex gap-1 text-[#1E0627] time-date-home">
+                        <div class="">
+                          {{ item.source || "No source" }}
+                        </div>
+                        <div class="">
+                          |
+                          {{ moment(item.publishTime || new Date()).fromNow() }}
+                        </div>
                       </div>
-                      <div class="xs-max:text-[9px] text-[12px]">
-                        | {{ moment(item.publishTime || new Date()).fromNow() }}
+                      <div class="flex gap-1">
+                        <span
+                          class="mdi mdi-share-variant text-[18px]"
+                          @click.stop="showDialog(item)"
+                        ></span>
                       </div>
                     </div>
-                    <div class="flex gap-1">
-                      <span
-                        class="mdi mdi-share-variant text-[19px]"
-                        @click.stop="showDialog(item)"
-                      ></span>
+                    <div class="mt-2 flex flex-col gap-1 w-[85%]">
+                      <div
+                        class="headine-home title-md-multiline-truncate mr-1 cursor-pointer"
+                        @click="navigateToNewsDetail(item._id)"
+                      >
+                        {{ item.headline || "No Headline" }}
+                      </div>
+                      <div
+                        class="multiline-truncate leading-1 mr-1 cursor-pointer summary-home text-[#878787]"
+                        @click="navigateToNewsDetail(item.newsId)"
+                      >
+                        {{ item.summary || "No summary" }}
+                      </div>
                     </div>
                   </div>
-                  <div
-                    class="headine-home title-md-multiline-truncate mr-1 cursor-pointer mt-1"
-                    @click="navigateToNewsDetail(item._id)"
-                  >
-                    {{ item.headline || "No Headline" }}
-                  </div>
-                  <div
-                    class="md-multiline-truncate lg:multiline-truncate leading-1 mr-1 mt-1 mb-1 cursor-pointer summary-home text-[#878787]"
-                    @click="navigateToNewsDetail(item.newsId)"
-                  >
-                    {{ item.summary || "No summary" }}
-                  </div>
-                  <div class="flex justify-between mt-2 mb-2 items-end">
+                  <div class="flex justify-between items-end">
                     <div
-                      class="h-[15px] items-center flex gap-2 time-date-home"
+                      class="flex h-full items-center justify-between gap-2 time-date-home"
                     >
-                      <span class="text-red-500">Politics</span>
-                      <span>|</span>
-                      <span>4 min read</span>
+                      <span class="text-red-500 capitalize">
+                        {{
+                          item.categories &&
+                          item.categories.length > 0 &&
+                          item.categories[0]
+                            ? item.categories[0].replace(/-/g, " ")
+                            : item.categories
+                        }}
+                      </span>
                     </div>
                     <div class="font-12">
                       <div
