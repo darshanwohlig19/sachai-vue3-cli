@@ -4,7 +4,7 @@
     <div class="w-[100%] flex justify-between">
       <div class="flex flex-row items-center gap-2">
         <div class="bg-[#FF0053] w-[4px] h-[10px] rounded-md"></div>
-        <div class="heads">Campaign</div>
+        <div class="text-[18px] font-bold font-lato">Campaign</div>
       </div>
       <!-- Conditionally render button based on loading state -->
       <div v-if="!isLoading && campaigns.length > 0 && campaigns1.length > 0">
@@ -55,9 +55,9 @@
     <!-- News Content -->
     <div
       v-if="!isLoading && (campaigns.length > 0 || campaigns1.length > 0)"
-      class="w-[100%] flex flex-col lg:flex-row gap-2 sm:gap-4 mt-3"
+      class="w-[100%] flex flex-col lg:flex-row gap-2 sm:gap-2 lg:gap-4 mt-3"
     >
-      <div class="w-[100%] sm:w-[100%] gap-4 flex justify-between">
+      <div class="w-[100%] sm:w-[100%] lg:w-[65%] gap-4 flex justify-between">
         <div
           v-for="campaignNews in displayedNews(campaigns)"
           :key="campaignNews._id"
@@ -112,7 +112,7 @@
 
       <!-- Campaigns List -->
       <div
-        class="w-[100%] sm:w-[100%] sm:gap-2 md-max:w-[100%] flex flex-col justify-between md-max:gap-5"
+        class="w-[100%] sm:w-[100%] lg:w-[35%] sm:gap-2 md-max:w-[100%] flex flex-col justify-evenly md-max:gap-5"
       >
         <div
           v-for="(item, index) in campaigns1"
@@ -128,7 +128,7 @@
             <img src="@/assets/png/Group.png" alt="" />
           </div>
           <div
-            class="headine-home lines2 cursor-pointer"
+            class="headine-home lines22222 cursor-pointer"
             @click="navigateToCampingNews(item._id)"
           >
             {{ item.headline || "No Headline" }}
@@ -173,7 +173,7 @@ export default {
           payload
         );
         campaigns.value = response.data.slice(0, 3);
-        campaigns1.value = response.data.slice(3, 8);
+        campaigns1.value = response.data.slice(3, 9);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       } finally {
@@ -230,6 +230,13 @@ export default {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lines22222 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }

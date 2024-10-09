@@ -33,7 +33,7 @@
                   @click="loginWithGoogle"
                 >
                   <img
-                    src="https://ik.imagekit.io/553gmaygy/Group%20(1).png?updatedAt=1724069687283"
+                    src="../assets/svg/Goggle.svg"
                     class="text-[34px] cursor-pointer"
                   />
                 </div>
@@ -42,7 +42,7 @@
                   @click="signInWithApple"
                 >
                   <img
-                    src="https://ik.imagekit.io/553gmaygy/Capa_1%20(1).png?updatedAt=1724069687282"
+                    src="@/assets/svg/apple.svg"
                     class="text-[34px] cursor-pointer"
                   />
                 </div>
@@ -51,7 +51,7 @@
                   @click="startPhoneVerification"
                 >
                   <img
-                    src="https://ik.imagekit.io/553gmaygy/fa6-solid_phone-flip.png?updatedAt=1724069817849"
+                    src="../assets/svg/Phone.svg"
                     class="text-[34px] cursor-pointer"
                   />
                 </div>

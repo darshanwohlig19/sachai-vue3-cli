@@ -165,13 +165,13 @@
       </div>
 
       <div
-        class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 sm-max:mt-3 md:mt-0 lg:mt-0 flex flex-col justify-evenly gap-3"
+        class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 lg:mt-0 flex flex-col between-md-sm:mt-2 justify-evenly gap-3"
       >
         <div
           @click="navigateToTrending(item._id)"
           v-for="(item, index) in news.slice(0, 3)"
           :key="index"
-          class="flex gap-3 mt-0 sm-max:!mt-0 cursor-pointer"
+          class="flex gap-3 mt-0 between-md-sm:mt-2 cursor-pointer"
         >
           <img
             class="image-small !h-[10px] !w-[10px]"

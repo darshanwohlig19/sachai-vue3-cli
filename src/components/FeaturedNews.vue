@@ -101,7 +101,8 @@
     </div>
 
     <!-- Second Section -->
-    <div class="w-[100%] lg:w-[30%] md:w-[50%] flex flex-col gap-3">
+
+    <div class="w-[100%] lg:w-[30%] md:w-[50%] flex flex-col justify-between">
       <div v-if="loading">
         <div
           v-for="b in 4"
