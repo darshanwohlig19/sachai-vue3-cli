@@ -208,3 +208,16 @@
   line-height: 18px;
   font-family: "lato";
 }
+.pagination-detail {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.2px;
+  font-family: "lato";
+}
+.Button-detail {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.4px;
+  font-family: "lato";
+  border-radius: 4px;
+}

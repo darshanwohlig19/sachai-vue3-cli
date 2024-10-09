@@ -48,7 +48,7 @@
                 </div>
                 <div class="w-[80%] ml-3 mr-3 flex flex-col justify-around">
                   <div class="flex justify-between items-center mt-3">
-                    <div class="flex gap-1 text-[#1E0627] medium">
+                    <div class="flex gap-1 text-[#1E0627] time-date-home">
                       <div class="xs-max:text-[9px] text-[12px] font-lato">
                         {{ item.source || "No source" }}
                       </div>
@@ -64,20 +64,20 @@
                     </div>
                   </div>
                   <div
-                    class="text-[14px] md:text-[20px] fontCustom title-md-multiline-truncate leading-1 bold mr-1 cursor-pointer mt-1"
+                    class="headine-home title-md-multiline-truncate mr-1 cursor-pointer mt-1"
                     @click="navigateToNewsDetail(item._id)"
                   >
                     {{ item.headline || "No Headline" }}
                   </div>
                   <div
-                    class="text-[12px] md:text-[14px] text-[#878787] md-multiline-truncate lg:multiline-truncate font-lato leading-1 mr-1 mt-1 mb-1 cursor-pointer"
+                    class="md-multiline-truncate lg:multiline-truncate leading-1 mr-1 mt-1 mb-1 cursor-pointer summary-home text-[#878787]"
                     @click="navigateToNewsDetail(item.newsId)"
                   >
                     {{ item.summary || "No summary" }}
                   </div>
                   <div class="flex justify-between mt-2 mb-2 items-end">
                     <div
-                      class="xs-max:text-[9px] text-[12px] h-[100%] items-center flex gap-2"
+                      class="h-[100%] items-center flex gap-2 time-date-home"
                     >
                       <span class="text-red-500">Politics</span>
                       <span>|</span>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="font-12">
                       <div
-                        class="text-[#FF0053] h-[28px] items-center flex justify-between gap-1 font-bold bg-[#FF00530F] cursor-pointer rounded-[4px] xs-max:text-[9px] text-[12px] p-2"
+                        class="text-[#FF0053] h-[28px] items-center flex justify-between gap-1 bg-[#FF00530F] cursor-pointer rounded-[4px] xs-max:text-[9px] Button-detail p-2"
                       >
                         <div @click="removeBookmark(item.newsId)">Remove</div>
                       </div>
