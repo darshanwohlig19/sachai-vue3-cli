@@ -39,7 +39,7 @@
                 <img
                   :src="newsItem?.imgixUrlHighRes || fallbackImage"
                   alt="News image"
-                  class="relative z-10 object-contain w-full h-64 rounded-xl"
+                  class="relative object-contain w-full h-64 rounded-xl"
                 />
                 <div
                   :class="{
