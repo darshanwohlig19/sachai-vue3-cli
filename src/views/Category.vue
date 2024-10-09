@@ -1,146 +1,148 @@
 <template>
-  <Navbarrr />
-  <InviteLinkDialog
-    :isVisible="isDialogVisible"
-    :inviteLink="inviteLink"
-    @close="isDialogVisible = false"
-  />
-  <div class="mx-[20px] mt-[85px]">
-    <div class="flex flex-col lg:flex-row gap-3 mt-3">
-      <div
-        class="w-[100%] lg:w-[65%] flex flex-col bg-white rounded-[10px] px-3 py-3"
-      >
-        <div class="flex flex-row items-center gap-1">
-          <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
-          <div class="heads1 capitalize">
-            {{
-              categoryName === "Breaking-News"
-                ? "Breaking News"
-                : categoryName || "Error"
-            }}
-          </div>
-        </div>
-
-        <!-- Loading message -->
-        <div v-if="loading">
-          <Skeleton />
-        </div>
-
-        <!-- No News Available message -->
+  <div>
+    <Navbarrr />
+    <InviteLinkDialog
+      :isVisible="isDialogVisible"
+      :inviteLink="inviteLink"
+      @close="isDialogVisible = false"
+    />
+    <div class="mx-[20px] mt-[85px]">
+      <div class="flex flex-col lg:flex-row gap-3 mt-3">
         <div
-          v-else-if="!news.length"
-          class="flex justify-center items-center h-[400px]"
+          class="w-[100%] lg:w-[65%] flex flex-col bg-white rounded-[10px] px-3 py-3"
         >
-          <p class="text-lg font-bold">No News Available</p>
-        </div>
+          <div class="flex flex-row items-center gap-1">
+            <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
+            <div class="heads1 capitalize">
+              {{
+                categoryName === "Breaking-News"
+                  ? "Breaking News"
+                  : categoryName || "Error"
+              }}
+            </div>
+          </div>
 
-        <!-- Display news when available -->
-        <div>
+          <!-- Loading message -->
+          <div v-if="loading">
+            <Skeleton />
+          </div>
+
+          <!-- No News Available message -->
           <div
-            v-for="(item, index) in paginatedNews"
-            :key="index"
-            class="w-full mt-3 h-[300px] sm:h-[170px] bg-white drop-shadow-md flex rounded-lg"
+            v-else-if="!news.length"
+            class="flex justify-center items-center h-[400px]"
           >
+            <p class="text-lg font-bold">No News Available</p>
+          </div>
+
+          <!-- Display news when available -->
+          <div>
             <div
-              class="w-full bg-white flex flex-col sm:flex-row gap-0 rounded-lg"
+              v-for="(item, index) in paginatedNews"
+              :key="index"
+              class="w-full mt-3 h-[300px] sm:h-[170px] bg-white drop-shadow-md flex rounded-lg"
             >
-              <div class="w-[100%] sm:w-[40%] h-full items-center">
-                <div
-                  class="relative h-full bg-white rounded-lg shadow-lg overflow-hidden"
-                >
-                  <div class="relative w-[100%] h-[100%]">
-                    <img
-                      class="absolute inset-0 object-cover h-full w-full filter blur-sm"
-                      :src="item?.imgixUrlHighRes || fallbackImage"
-                    />
-                    <div
-                      class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
-                    ></div>
-                  </div>
-                  <div
-                    class="absolute inset-0 flex flex-col justify-between text-white"
-                  >
-                    <img
-                      class="object-contain h-full w-[100%]"
-                      :src="item?.imgixUrlHighRes || fallbackImage"
-                    />
-                  </div>
-                </div>
-              </div>
               <div
-                class="w-[100%] sm:w-[60%] sm:ml-3 sm:mr-2 px-3 sm:px-0 flex flex-col sm:justify-around"
+                class="w-full bg-white flex flex-col sm:flex-row gap-0 rounded-lg"
               >
-                <div class="flex justify-between items-center mt-2">
-                  <div class="flex gap-1 text-[#1E0627] time-date-home">
-                    <div class="">
-                      {{ item.source || "No source" }}
-                    </div>
-                    <div class="">
-                      | {{ moment(item.publishTime || new Date()).fromNow() }}
-                    </div>
-                  </div>
-                  <div class="flex gap-1">
-                    <span
-                      class="mdi mdi-share-variant text-[18px]"
-                      @click.stop="showDialog(item)"
-                    ></span>
-                    <span
-                      :class="[
-                        'mdi',
-                        'mdi-bookmark text-[18px] cursor-pointer',
-                        getBookmarkColor(item.isBookmarked),
-                      ]"
-                      @click="addBookmark(item)"
-                    >
-                    </span>
-                  </div>
-                </div>
-                <div
-                  class="headine-home multiline-truncate1 mr-1 cursor-pointer mt-1"
-                  @click="navigateToMoreNews(item._id)"
-                >
-                  {{ item.headline || "No Headline" }}
-                </div>
-                <div
-                  class="cursor-pointer multiline-truncate leading-1 mr-1 mt-1 mb-1 summary-home text-[#878787]"
-                  @click="navigateToNewsDetail(item.newsId)"
-                >
-                  {{ item.summary || "No summary" }}
-                </div>
-                <div class="flex justify-between mt-2 mb-2 items-end">
+                <div class="w-[100%] sm:w-[40%] h-full items-center">
                   <div
-                    class="flex h-full mb-1 items-center justify-between gap-2 time-date-home"
+                    class="relative h-full bg-white rounded-lg shadow-lg overflow-hidden"
                   >
-                    <span class="text-red-500 capitalize">
-                      {{
-                        item.categories &&
-                        item.categories.length > 0 &&
-                        item.categories[0].name
-                          ? item.categories[0].name.replace(/-/g, " ")
-                          : item.categories.name
-                      }}
-                    </span>
+                    <div class="relative w-[100%] h-[100%]">
+                      <img
+                        class="absolute inset-0 object-cover h-full w-full filter blur-sm"
+                        :src="item?.imgixUrlHighRes || fallbackImage"
+                      />
+                      <div
+                        class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+                      ></div>
+                    </div>
+                    <div
+                      class="absolute inset-0 flex flex-col justify-between text-white"
+                    >
+                      <img
+                        class="object-contain h-full w-[100%]"
+                        :src="item?.imgixUrlHighRes || fallbackImage"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="w-[100%] sm:w-[60%] sm:ml-3 sm:mr-2 px-3 sm:px-0 flex flex-col sm:justify-around"
+                >
+                  <div class="flex justify-between items-center mt-2">
+                    <div class="flex gap-1 text-[#1E0627] time-date-home">
+                      <div class="">
+                        {{ item.source || "No source" }}
+                      </div>
+                      <div class="">
+                        | {{ moment(item.publishTime || new Date()).fromNow() }}
+                      </div>
+                    </div>
+                    <div class="flex gap-1">
+                      <span
+                        class="mdi mdi-share-variant text-[18px]"
+                        @click.stop="showDialog(item)"
+                      ></span>
+                      <span
+                        :class="[
+                          'mdi',
+                          'mdi-bookmark text-[18px] cursor-pointer',
+                          getBookmarkColor(item.isBookmarked),
+                        ]"
+                        @click="addBookmark(item)"
+                      >
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="headine-home multiline-truncate1 mr-1 cursor-pointer mt-1"
+                    @click="navigateToMoreNews(item._id)"
+                  >
+                    {{ item.headline || "No Headline" }}
+                  </div>
+                  <div
+                    class="cursor-pointer multiline-truncate leading-1 mr-1 mt-1 mb-1 summary-home text-[#878787]"
+                    @click="navigateToNewsDetail(item.newsId)"
+                  >
+                    {{ item.summary || "No summary" }}
+                  </div>
+                  <div class="flex justify-between mt-2 mb-2 items-end">
+                    <div
+                      class="flex h-full mb-1 items-center justify-between gap-2 time-date-home"
+                    >
+                      <span class="text-red-500 capitalize">
+                        {{
+                          item.categories &&
+                          item.categories.length > 0 &&
+                          item.categories[0].name
+                            ? item.categories[0].name.replace(/-/g, " ")
+                            : item.categories.name
+                        }}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <Paginator
-            :rows="rowsPerPage"
-            :totalRecords="totalRecords"
-            :page="currentPage"
-            @page="onPageChange"
-            :class="{ hidden: isLoading, visible: !isLoading }"
-          />
+            <Paginator
+              :rows="rowsPerPage"
+              :totalRecords="totalRecords"
+              :page="currentPage"
+              @page="onPageChange"
+              :class="{ hidden: isLoading, visible: !isLoading }"
+            />
+          </div>
+        </div>
+        <div class="w-[100%] lg:w-[35%]">
+          <HotTopics />
         </div>
       </div>
-      <div class="w-[100%] lg:w-[35%]">
-        <HotTopics />
-      </div>
     </div>
+    <Footer />
   </div>
-  <Footer />
 </template>
 
 <script setup>
