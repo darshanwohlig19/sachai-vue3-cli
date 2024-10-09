@@ -77,7 +77,7 @@
                   </div>
                   <div class="flex justify-between mt-2 mb-2 items-end">
                     <div
-                      class="h-[100%] items-center flex gap-2 time-date-home"
+                      class="h-[15px] items-center flex gap-2 time-date-home"
                     >
                       <span class="text-red-500">Politics</span>
                       <span>|</span>
