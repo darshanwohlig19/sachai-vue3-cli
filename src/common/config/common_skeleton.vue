@@ -21,16 +21,16 @@
         >
           <!-- Source and Time Skeleton -->
           <div class="flex justify-between items-center gap-3 mt-1 w-full">
-            <div class="w-[80%] flex gap-2">
+            <div class="w-[75%] sm:w-[90%] flex gap-2">
               <Skeleton class="h-[12px]" width="70px" shape="rectangle" />
               <div class="w-[1%] xl-max:!hidden flex justify-center">
                 <div class="standing_divider"></div>
               </div>
               <Skeleton class="h-[12px]" width="70px" shape="rectangle" />
             </div>
-            <div class="flex gap-2 w-[20%]">
-              <Skeleton shape="circle" size="2rem" />
-              <Skeleton shape="circle" size="2rem" />
+            <div class="flex gap-2 w-[25%] justify-end sm:w-[10%] mr-[5px]">
+              <Skeleton shape="circle" size="20px" />
+              <Skeleton shape="circle" size="20px" />
             </div>
           </div>
 
@@ -51,7 +51,7 @@
           </div>
 
           <!-- Categories Skeleton -->
-          <div class="text-[8px] lg:text-[12px] flex gap-3 mb-3">
+          <div class="text-[8px] lg:text-[12px] flex gap-3 mt-2 sm:mt-0">
             <Skeleton height="12px" width="70px" shape="rectangle" />
           </div>
         </div>

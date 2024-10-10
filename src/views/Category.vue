@@ -23,7 +23,7 @@
           </div>
 
           <!-- Loading message -->
-          <div v-if="loading">
+          <div v-if="!loading">
             <Skeleton />
           </div>
 
@@ -36,7 +36,7 @@
           </div>
 
           <!-- Display news when available -->
-          <div>
+          <div v-else>
             <div
               v-for="(item, index) in paginatedNews"
               :key="index"

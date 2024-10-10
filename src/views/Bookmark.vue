@@ -17,8 +17,10 @@
               Bookmarks
             </div>
           </div>
-
-          <div v-if="paginatedData.length > 0" class="flex flex-col gap-3">
+          <div v-if="!loading">
+            <Skeleton />
+          </div>
+          <div v-else-if="paginatedData.length > 0" class="flex flex-col gap-3">
             <div v-for="item in paginatedData" :key="item._id">
               <div
                 class="w-full h-[300px] sm:h-[170px] bg-white flex flex-col sm:flex-row rounded-lg border-1 drop-shadow-md"
@@ -134,6 +136,7 @@
 </template>
 
 <script setup>
+import Skeleton from "../common/config/Bookmark_loader.vue";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import { ref, onMounted } from "vue";
@@ -145,7 +148,7 @@ import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dial
 import { useToast } from "primevue/usetoast"; // Import the toast composable
 import fallbackImage2 from "../common/config/GlobalConstants";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
-
+const loading = ref(true); // Add loading state
 const router = useRouter();
 const toast = useToast(); // Create a toast instance
 const BookmarkData = ref([]);
@@ -184,6 +187,8 @@ const Bookmark = async () => {
     updatePaginatedData();
   } catch (error) {
     console.error("Error fetching bookmarks:", error);
+  } finally {
+    loading.value = false; // Set loading to false after fetching is complete
   }
 };
 const totalPages = Math.ceil(BookmarkData.value.length / rowsPerPage);

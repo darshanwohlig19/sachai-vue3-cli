@@ -4,9 +4,9 @@
       <div class="bg-[#FF0053] w-[3px] h-[10px] rounded-md"></div>
       <div class="heads1">Hot Topics</div>
     </div>
-    <div v-if="loading">
+    <div v-if="!loading">
       <div
-        class="mt-3 flex gap-4 items-center drop-shadow-lg border-1 p-2"
+        class="flex items-center drop-shadow-lg border-1 p-2 mt-3 gap-4 sm:gap-0"
         v-for="n in 12"
         :key="n"
       >
@@ -14,7 +14,8 @@
           <Skeleton class="rounded-md" height="30px" size="3rem"></Skeleton>
         </div>
         <div class="flex flex-col w-[80%] justify-between">
-          <Skeleton class="rounded-md" height="40px"></Skeleton>
+          <Skeleton class="rounded-md" height="20px"></Skeleton>
+          <Skeleton class="rounded-md mt-2" height="12px"></Skeleton>
         </div>
       </div>
     </div>

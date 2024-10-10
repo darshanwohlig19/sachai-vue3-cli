@@ -42,6 +42,7 @@
         :showIndicators="true"
         :showNavigators="true"
         :responsiveOptions="responsiveOptions"
+        :autoplayInterval="3000"
         class="custom-carousel w-full"
       >
         <template #item="slotProps">
