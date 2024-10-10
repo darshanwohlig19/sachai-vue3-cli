@@ -6,7 +6,9 @@
       @close="isDialogVisible = false"
     />
     <div class="p-2 lg:h-full">
-      <div class="flex justify-between items-center w-full mb-2 rounded-2xl">
+      <div
+        class="flex justify-between items-center w-full mb-2 rounded-2xl mt-[5px]"
+      >
         <div class="flex items-center mx-[15px]">
           <span
             class="border-l-4 border-[#FF0053] h-[13px] rounded-2xl mr-1"
@@ -15,14 +17,10 @@
             >Related News</span
           >
         </div>
-
-        <div v-if="!isLoading && blogs.length > 0" class="mx-[15px]">
-          <a href="/featured-news"> <Button /></a>
-        </div>
       </div>
       <!-- <div v-if="!isLoading">Loading...</div> -->
       <div
-        class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg"
+        class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg mx-[15px] mt-[20px]"
       >
         <div
           v-for="(blog, index) in slicedData"
@@ -39,12 +37,12 @@
             <div
               class="flex flex-wrap items-center justify-between text-xs w-full mb-1"
             >
-              <div class="flex gap-1 mb-[1px]">
-                <span class="text-[#1E0627] capitalize font-lato">
+              <div class="flex gap-1 mb-[1px] time-date-home">
+                <span class="text-[#1E0627] capitalize">
                   {{ blog?.source }}
                 </span>
                 <span class="text-[#1E0627]"> | </span>
-                <span class="text-[#1E0627] font-lato">
+                <span class="text-[#1E0627]">
                   {{ formatPublishTime(blog.publishTime) }}
                 </span>
               </div>
@@ -61,25 +59,24 @@
                   <span
                     :class="[
                       'mdi',
-                      blogs && blog.bookmark
-                        ? 'mdi-bookmark text-[#FF0053] text-[21px]'
-                        : 'mdi-bookmark-outline text-[21px]',
+                      'mdi-bookmark text-[21px] cursor-pointer',
+                      getBookmarkColor(blog?.isBookmarked),
                     ]"
                     class="cursor-pointer"
-                    @click.stop="addBookmark(blog._id)"
+                    @click.stop="addBookmark(blog)"
                   ></span>
                 </div>
               </div>
             </div>
 
             <div
-              class="headline-tuncate font-semibold text-base font-source-serif text-[#1E0627] cursor-pointer mb-[1px]"
+              class="headline-tuncate headine-home text-[#1E0627] cursor-pointer mb-[1px]"
               @click="navigateToFeaturedDetail(blog._id)"
             >
               {{ blog.headline || "-" }}
             </div>
             <div
-              class="headline-truncate-single-line pt-[1px] font-normal text-base font-source-serif text-[#1E0627] cursor-pointer mb-[1px]"
+              class="headline-truncate-single-line pt-[1px] summary-home text-[#878787] cursor-pointer mb-[1px]"
               @click="navigateToFeaturedDetail(blog._id)"
             >
               {{ blog.summary || "-" }}
@@ -100,12 +97,10 @@ import {
   computed,
 } from "vue";
 import axios from "axios";
-import apiService from "@/services/apiServices";
-import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 // import { useRoute, useRouter } from "vue-router";
 import { useRoute, useRouter } from "vue-router";
-import Button from "./ViewAll.vue";
+// import Button from "./ViewAll.vue";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
 
 import fallbackImage2 from "../common/config/GlobalConstants";
@@ -152,16 +147,6 @@ const fetchBlogs = async () => {
     isLoading.value = false;
   }
 };
-const addBookmark = async (id) => {
-  const newStatus = blogs.value.bookmark ? "Disabled" : "Enabled";
-  const payload = { status: newStatus };
-  try {
-    await apiService.apiCall("post", `${apiConfig.BOOKMARK}/${id}`, payload);
-    blogs.value.bookmark = !blogs.value.bookmark;
-  } catch (error) {
-    console.error("Error fetching response:", error);
-  }
-};
 
 const formatPublishTime = (publishTime) => {
   return moment(publishTime).fromNow();
@@ -177,7 +162,30 @@ const navigateToFeaturedDetail = (id) => {
 const checkRouteParam = () => {
   newsId.value = route.params.id || "";
 };
+const addBookmark = async (blog) => {
+  const token = localStorage.getItem("apiDataToken");
+  try {
+    console.log("NEWS ID:" + blog);
+    const currentStatus =
+      blog.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
 
+    const response = await axios.post(
+      `https://api-uat.newsshield.io/bookmark/addBookmark/${blog._id}`,
+      {
+        status: currentStatus,
+      },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+    blog.isBookmarked = currentStatus;
+    return response.data;
+  } catch (error) {
+    console.error("Error adding bookmark:", error);
+  }
+};
 const slicedData = computed(() => {
   if (screenWidth.value < 640) {
     // Mobile devices
@@ -196,12 +204,16 @@ const slicedData = computed(() => {
     return blogs.value.slice(0, 4);
   } else if (screenWidth.value >= 1400 && screenWidth.value <= 1600) {
     // Tablets
-    return blogs.value.slice(0, 8);
+    return blogs.value.slice(0, 4);
   } else {
     // Desktop and larger devices
     return blogs.value.slice(0, 8);
   }
 });
+const getBookmarkColor = (isBookmarked) => {
+  return isBookmarked === "Enabled" ? "text-[#FF0053]" : "mdi-bookmark-outline";
+};
+
 onBeforeMount(() => {
   fetchBlogs();
   checkRouteParam();
@@ -224,7 +236,7 @@ onBeforeUnmount(() => {
 .headline-truncate-single-line {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2 !important; /* Number of lines to display */
+  -webkit-line-clamp: 3 !important; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }
