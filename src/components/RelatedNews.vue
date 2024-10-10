@@ -21,7 +21,10 @@
       </div>
     </div>
     <!-- Loader -->
-    <div v-if="!isLoading" class="flex flex-row gap-3 justify-between mt-3 mx-[15px] mb-3 sm:mb-0">
+    <div
+      v-if="!isLoading"
+      class="flex flex-row gap-3 justify-between mt-3 mx-[15px] mb-3 sm:mb-0"
+    >
       <div v-for="n in itemsToShow" :key="n" class="w-[33%] md-max:w-full">
         <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
           <!-- Skeleton Image -->
