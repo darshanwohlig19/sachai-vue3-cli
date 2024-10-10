@@ -25,10 +25,10 @@
         <div
           v-for="(blog, index) in slicedData"
           :key="index"
-          class="shadow-md between-Laptop-small:w-[100%] between-644-1024:!w-[100%] sm:w-[48%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px]"
+          class="shadow-md between-Laptop-small:w-[100%] between-644-1024:!w-[100%] sm:w-[48%] flex flex-col md:flex-row sm:flex-row lg:flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px] xs:!h-[100%]"
         >
           <img
-            class="w-[106px] object-contain rounded-[8px]"
+            class="lg:!w-[106px] between-644-1024:w-[104px] md:!w-[106px] xxl:!w-[106px] object-contain rounded-[8px]"
             :src="blog.imgixUrlHighRes || fallbackImage"
             alt="Blog Image"
             @click="navigateToFeaturedDetail(blog._id)"
@@ -98,6 +98,8 @@ import {
 } from "vue";
 import axios from "axios";
 import moment from "moment";
+import apiService from "@/services/apiServices";
+import apiConfig from "@/common/config/apiConfig";
 // import { useRoute, useRouter } from "vue-router";
 import { useRoute, useRouter } from "vue-router";
 // import Button from "./ViewAll.vue";
@@ -122,7 +124,6 @@ const route = useRoute();
 // const router = useRouter();
 
 const blogs = ref([]);
-console.log("blogs", blogs);
 const screenWidth = ref(window.innerWidth);
 const newsId = ref(route.params.id || "");
 
@@ -132,14 +133,17 @@ const showDialog = (blog) => {
 };
 const fetchBlogs = async () => {
   try {
-    const languageId = "6421a32aa020a23deacecf92";
-    const response = await axios.post(
-      `https://api-uat.newsshield.io/pinecone/getRelatedNews/${newsId.value}`,
-      { languageId: languageId }
+    const payload = {
+      language: "6421a32aa020a23deacecf92",
+    };
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.GET_RELATED_NEWS}/${newsId.value}`,
+      payload
     );
     blogs.value = response.data.map((news) => ({
       ...news,
-      bookmarked: false, // Initialize with 'false'
+      bookmarked: false,
     }));
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -195,10 +199,10 @@ const slicedData = computed(() => {
     return blogs.value.slice(0, 4);
   } else if (screenWidth.value >= 640 && screenWidth.value < 1025) {
     // Width between 640 and 1024
-    return blogs.value.slice(0, 2);
+    return blogs.value.slice(0, 4);
   } else if (screenWidth.value >= 1024 && screenWidth.value < 860) {
     // Tablets
-    return blogs.value.slice(0, 3);
+    return blogs.value.slice(0, 4);
   } else if (screenWidth.value >= 1024 && screenWidth.value <= 1400) {
     // Tablets
     return blogs.value.slice(0, 4);
