@@ -515,8 +515,9 @@
       <!-- Profile info at the top -->
       <div class="flex items-center">
         <img
+          src="@/assets/svg/sachaiFrame.svg"
           alt="Profile picture"
-          class="w-[35px] h-[35px] rounded-full mr-4"
+          class="w-[35px] h-[35px] rounded-full mr-2"
         />
         <div>
           <h2
@@ -536,7 +537,7 @@
         <div class="grid grid-cols-3 text-center py-4 items-center">
           <div class="flex flex-col items-center pr-2">
             <p
-              class="!text-xs !font-bold !text-Secondary !font-lato !leading-[12px]"
+              class="!text-xs !font-bold !text-Secondary !font-lato !leading-[12px] pb-[5px]"
             >
               {{ chatsCount?.limit }}
             </p>
@@ -549,7 +550,7 @@
             class="flex flex-col items-center px-2 border-l border-r border-[#F3F3F3]"
           >
             <p
-              class="!text-xs !font-bold !text-Secondary !font-lato !leading-[12px]"
+              class="!text-xs !font-bold !text-Secondary !font-lato !leading-[12px] pb-[5px]"
             >
               {{ chatsCount.count }}
             </p>
@@ -559,7 +560,9 @@
           </div>
 
           <div class="flex flex-col items-center pl-2">
-            <p class="t!text-xs !font-bold !text-Secondary !font-lato">
+            <p
+              class="!text-xs !font-bold !text-Secondary !font-lato !leading-[12px] pb-[5px]"
+            >
               {{ chatsCount.limit - chatsCount.count }}
             </p>
             <p class="text-xs text-[#878787] font-lato !leading-[12px]">
