@@ -543,7 +543,7 @@
           </div>
 
           <div
-            class="flex flex-col items-center px-2 border-l border-r border-red-500"
+            class="flex flex-col items-center px-2 border-l border-r border-[#F3F3F3]"
           >
             <p class="text-xs font-bold text-Secondary font-lato">
               {{ chatsCount.count }}
