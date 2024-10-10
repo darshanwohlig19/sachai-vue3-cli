@@ -455,6 +455,7 @@
           </button>
           <button
             v-if="isLoggedIn"
+            @click="profileCardDropdown"
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
           >
             <img
@@ -507,6 +508,66 @@
         </a>
       </div>
     </div>
+    <div
+      v-if="isProfileCardDropdownOpen"
+      class="right-0 lg:!w-[310px] !h-[205px] bg-white rounded-md shadow-lg z-10 fixed mr-[21px] p-3 flex flex-col justify-between xs:![280px]"
+    >
+      <!-- Profile info at the top -->
+      <div class="flex items-center">
+        <img
+          src="/placeholder.svg?height=80&width=80"
+          alt="Profile picture"
+          class="w-[34px] h-[34px] rounded-full mr-4"
+        />
+        <div>
+          <h2
+            class="text-xs font-lato font-semibold !leading-[14.4px] text-Secondary"
+          >
+            {{ isAuthUser?.name }}
+          </h2>
+          <p class="!text-[10px] font-lato font-normal text-[#878787]">
+            {{ isAuthUser?.email }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-[#FFFFFF] drop-shadow-lg rounded-md p-3 mt-3 !h-[10px] flex-grow flex justify-center items-center"
+      >
+        <div class="grid grid-cols-3 text-center py-4 items-center">
+          <div class="flex flex-col items-center pr-2">
+            <p class="text-xs font-bold text-Secondary font-lato">
+              {{ chatsCount?.limit }}
+            </p>
+            <p class="text-xs text-[#878787] font-lato">Total Credits</p>
+          </div>
+
+          <div
+            class="flex flex-col items-center px-2 border-l border-r border-red-500"
+          >
+            <p class="text-xs font-bold text-Secondary font-lato">
+              {{ chatsCount.count }}
+            </p>
+            <p class="text-xs text-[#878787] font-lato">Credits left</p>
+          </div>
+
+          <div class="flex flex-col items-center pl-2">
+            <p class="text-xs font-bold text-Secondary font-lato">
+              {{ chatsCount.limit - chatsCount.count }}
+            </p>
+            <p class="text-xs text-[#878787] font-lato">Credits used</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center mt-4" @click="handleLogout">
+        <button
+          class="bg-Secondary font-lato text-white !h-[28px] !w-[153px] rounded py-2 px-4 flex items-center justify-center text-xs font-semibold hover:[#1E0627] transition-colors duration-300"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
     <!-- <div
       class="w-full h-[67px] mt-1 flex justify-between bg-white items-center relative lg:overflow-x-hidden"
     >
@@ -534,14 +595,46 @@
           </a>
         </div>
       </div>
-
+      <div className="bg-white rounded-3xl shadow-lg p-8 max-w-md mx-auto">
+      <div className="flex items-center mb-6">
+        <img
+          src="/placeholder.svg?height=80&width=80"
+          alt="Profile picture"
+          className="w-20 h-20 rounded-full mr-4"
+        />
+        <div>
+          <h2 className="text-3xl font-bold text-gray-800">John Doe</h2>
+          <p className="text-xl text-gray-500">johndoe@gmail.com</p>
+        </div>
+      </div>
+      <div className="bg-gray-100 rounded-2xl p-6 mb-6">
+        <div className="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <p className="text-4xl font-bold text-gray-800">45</p>
+            <p className="text-lg text-gray-500">Total Credits</p>
+          </div>
+          <div>
+            <p className="text-4xl font-bold text-gray-800">35</p>
+            <p className="text-lg text-gray-500">Credits left</p>
+          </div>
+          <div>
+            <p className="text-4xl font-bold text-gray-800">10</p>
+            <p className="text-lg text-gray-500">Credits used</p>
+          </div>
+        </div>
+      </div>
+      <button
+        className="w-full bg-white border-2 border-red-500 text-red-500 rounded-full py-2 px-4 flex items-center justify-center text-lg font-semibold hover:bg-red-50 transition-colors duration-300"
+      >
+        <Power className="w-5 h-5 mr-2" />
+        Logout
+      </button>
+    </div>
       <i
         class="pi pi-angle-right mr-2 cursor-pointer block md:hidden"
         @click="scrollRight"
       ></i>
     </div> -->
-
-    <!-- Popup Confirmation -->
     <div
       v-if="isPopupVisible"
       class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50 bg-[#000000b0]"
@@ -589,6 +682,10 @@ const newsItems = ref([]);
 const categoryWise = ref([]);
 console.log("hiiǐ", categoryWise);
 const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
+const auth0User = localStorage.getItem("auth0User");
+const isAuthUser = ref(auth0User ? JSON.parse(auth0User) : null);
+console.log("isAuthUserisAuthUser", isAuthUser);
+
 // const showBookmarkLink = ref(true);
 const isPopupVisible = ref(false);
 const isExpanded = ref(false);
@@ -604,7 +701,9 @@ const categoryId = "63d90f8aaabaf4bf0169c2b0";
 // const isInputVisible = ref(false);
 const searchQuery = ref("");
 const searchResults = ref([]);
-
+const chatsCount = ref("");
+console.log("chatsCount", chatsCount);
+const isProfileCardDropdownOpen = ref(false);
 const showDropdown = ref(false);
 let timeout = null;
 
@@ -620,7 +719,17 @@ const hideDropdown = () => {
   }, 10);
 };
 const toggleCardDropdown = () => {
+  if (isProfileCardDropdownOpen.value) {
+    isProfileCardDropdownOpen.value = false;
+  }
   isCardDropdownOpen.value = !isCardDropdownOpen.value;
+};
+
+const profileCardDropdown = () => {
+  if (isCardDropdownOpen.value) {
+    isCardDropdownOpen.value = false;
+  }
+  isProfileCardDropdownOpen.value = !isProfileCardDropdownOpen.value;
 };
 const formatPublishTime = (publishTime) => {
   return moment(publishTime).fromNow();
@@ -700,8 +809,10 @@ const handleLogout = async () => {
       if (response.status === 200) {
         console.log(`BEFORE ${localStorage.getItem("news-")}`);
         localStorage.removeItem("apiDataToken");
+        localStorage.removeItem("auth0User");
         localStorage.setItem("logoutSuccess", "true");
         isLoggedIn.value = false;
+        isProfileCardDropdownOpen.value = false;
         router.push("/");
         toast.add({
           severity: "success",
@@ -728,6 +839,18 @@ const handleLogout = async () => {
     isLoggingOut.value = false;
     hidePopup();
     toggleCardDropdown();
+  }
+};
+const fetchChatsCount = async () => {
+  try {
+    const response = await apiService.apiCall(
+      "get",
+      `${apiConfig.CHAT_BOT_LIMIT}`
+    );
+    chatsCount.value = response.data;
+    console.log("chatsCount", chatsCount);
+  } catch (error) {
+    return [];
   }
 };
 const fetchNavbarCategory = async () => {
@@ -847,6 +970,7 @@ const collapseInput = (event) => {
 };
 
 onMounted(() => {
+  fetchChatsCount();
   fetchCategories();
   document.addEventListener("mousedown", collapseInput);
   fetchNavbarCategory();

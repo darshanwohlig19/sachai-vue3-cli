@@ -793,7 +793,10 @@ const sendUserDataToApi = async (name, email, id, mobile, type) => {
     }
     const responseData = await response.json();
     const token = responseData.data;
+    const auth0User = responseData.auth0;
     localStorage.setItem("apiDataToken", token);
+    localStorage.setItem("auth0User", JSON.stringify(auth0User));
+
     setTimeout(() => {
       router.push("/");
     }, 0);
