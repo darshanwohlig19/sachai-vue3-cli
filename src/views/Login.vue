@@ -178,8 +178,8 @@
             class="carousel login-carousal"
             showIndicators
             circular
-            :responsiveOptions="responsiveOptions"
             :autoplayInterval="2000"
+            :responsiveOptions="responsiveOptions"
           >
             <template v-slot:item="{ data }">
               <div>
@@ -401,7 +401,7 @@
                 'https://via.placeholder.com/910x512?text=No+Image'
               "
               :severity="getSeverity(data.inventoryStatus)"
-              class="w-full object-cover"
+              class="w-full h-[100vh] object-contain"
             />
           </div>
         </template>
@@ -922,5 +922,8 @@ const sendUserDataToApi = async (name, email, id, mobile, type) => {
   .mobile .absolute {
     top: 70%;
   }
+}
+.gooo {
+  background-image: url("../assets/svg/login-background.png");
 }
 </style>
