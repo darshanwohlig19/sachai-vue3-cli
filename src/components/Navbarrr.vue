@@ -81,7 +81,7 @@
               class="absolute mt-4 bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
             >
               <div class="w-[100%] flex">
-                <!--  First Div  -->
+                <!-- First Div -->
                 <div
                   class="shadow-[2px_0px_5px_rgba(240,0,0,0.2)] capitalize category-head rounded-r-lg w-[150px]"
                 >
@@ -122,7 +122,7 @@
                     </li>
                   </ul>
                 </div>
-                <!--   Second Div  -->
+                <!-- Second Div -->
 
                 <div v-if="newsItems.length > 0" class="p-3 w-[385px]">
                   <div
@@ -333,11 +333,11 @@
             </div>
           </div>
           <!-- <AutoComplete
-            v-model="searchQuery"
-            :suggestions="searchResults"
-            @complete="handleSearch"
-            class="w-[200px] border-1 h-[full]"
-          /> -->
+ v-model="searchQuery"
+ :suggestions="searchResults"
+ @complete="handleSearch"
+ class="w-[200px] border-1 h-[full]"
+ /> -->
           <router-link
             class="md:hidden sm-max:block"
             to="/search"
@@ -385,53 +385,53 @@
               </div>
             </Sidebar>
             <!-- <div
-              class="relative flex gap-2 cursor-pointer"
-              @mouseover="showDropdown = true"
-              @mouseleave="hideDropdown"
-            >
-              <div
-                class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
-              >
-                <img src="../assets/svg/category.svg" />
-              </div>
+ class="relative flex gap-2 cursor-pointer"
+ @mouseover="showDropdown = true"
+ @mouseleave="hideDropdown"
+ >
+ <div
+ class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
+ >
+ <img src="../assets/svg/category.svg" />
+ </div>
 
-              <div
-                v-if="showDropdown"
-                @mouseover="showDropdown = true"
-                @mouseleave="hideDropdown"
-                class="absolute mt-5 flex justify-end bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
-              >
-                <div class="w-[100%] flex">
-                  <div class="capitalize category-head rounded-l-lg w-[150px]">
-                    <ul>
-                      <li
-                        class="mt-3 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
-                        v-for="category in categories"
-                        :key="category._id"
-                        @mouseover="fetchCategoryFromLocalStorage(category._id)"
-                        :style="{
-                          '--hover-color': '#FF0053',
-                          '--hover-bg-color': '#FF005333',
-                        }"
-                      >
-                        <div class="flex items-center space-x-2">
-                          <a
-                            :href="`/categories/${category._id}?category=${category.name}`"
-                            class="flex items-center"
-                          >
-                            <span>{{ category.name }}</span>
-                            <img
-                              src="../assets/svg/triangle_arrow.svg"
-                              class="ml-1"
-                            />
-                          </a>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div> -->
+ <div
+ v-if="showDropdown"
+ @mouseover="showDropdown = true"
+ @mouseleave="hideDropdown"
+ class="absolute mt-5 flex justify-end bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
+ >
+ <div class="w-[100%] flex">
+ <div class="capitalize category-head rounded-l-lg w-[150px]">
+ <ul>
+ <li
+ class="mt-3 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
+ v-for="category in categories"
+ :key="category._id"
+ @mouseover="fetchCategoryFromLocalStorage(category._id)"
+ :style="{
+ '--hover-color': '#FF0053',
+ '--hover-bg-color': '#FF005333',
+ }"
+ >
+ <div class="flex items-center space-x-2">
+ <a
+ :href="`/categories/${category._id}?category=${category.name}`"
+ class="flex items-center"
+ >
+ <span>{{ category.name }}</span>
+ <img
+ src="../assets/svg/triangle_arrow.svg"
+ class="ml-1"
+ />
+ </a>
+ </div>
+ </li>
+ </ul>
+ </div>
+ </div>
+ </div>
+ </div> -->
           </a>
           <button class="lg:hidden block" @click="$router.push('/search')">
             <div
@@ -508,38 +508,38 @@
       </div>
     </div>
     <!-- <div
-      class="w-full h-[67px] mt-1 flex justify-between bg-white items-center relative lg:overflow-x-hidden"
-    >
-      <i
-        class="pi pi-angle-left ml-2 cursor-pointer block md:hidden"
-        @click="scrollLeft"
-      ></i>
-      <div
-        class="flex items-center justify-between space-x-3 px-2 py-0 flex-1 overflow-x-auto custom-scrollbar lg:overflow-x-hidden whitespace-nowrap"
-        ref="categoriesContainer"
-      >
-        <div
-          v-for="heading in categories"
-          :key="heading._id"
-          class="flex-shrink-0"
-        >
-          <a
-            :href="`/categories/${heading._id}?category=${heading.name}`"
-            class="no-underline"
-          >
-            <Chip
-              class="bg-transparent border-1 border-[#D4D4D4] capitalize head-cat"
-              :label="heading.name"
-            />
-          </a>
-        </div>
-      </div>
+ class="w-full h-[67px] mt-1 flex justify-between bg-white items-center relative lg:overflow-x-hidden"
+ >
+ <i
+ class="pi pi-angle-left ml-2 cursor-pointer block md:hidden"
+ @click="scrollLeft"
+ ></i>
+ <div
+ class="flex items-center justify-between space-x-3 px-2 py-0 flex-1 overflow-x-auto custom-scrollbar lg:overflow-x-hidden whitespace-nowrap"
+ ref="categoriesContainer"
+ >
+ <div
+ v-for="heading in categories"
+ :key="heading._id"
+ class="flex-shrink-0"
+ >
+ <a
+ :href="`/categories/${heading._id}?category=${heading.name}`"
+ class="no-underline"
+ >
+ <Chip
+ class="bg-transparent border-1 border-[#D4D4D4] capitalize head-cat"
+ :label="heading.name"
+ />
+ </a>
+ </div>
+ </div>
 
-      <i
-        class="pi pi-angle-right mr-2 cursor-pointer block md:hidden"
-        @click="scrollRight"
-      ></i>
-    </div> -->
+ <i
+ class="pi pi-angle-right mr-2 cursor-pointer block md:hidden"
+ @click="scrollRight"
+ ></i>
+ </div> -->
 
     <!-- Popup Confirmation -->
     <div
@@ -626,29 +626,29 @@ const formatPublishTime = (publishTime) => {
   return moment(publishTime).fromNow();
 };
 // const scrollLeft = () => {
-//   if (categoriesContainer.value) {
-//     categoriesContainer.value.scrollBy({
-//       left: -100,
-//       behavior: "smooth",
-//     });
-//   }
+// if (categoriesContainer.value) {
+// categoriesContainer.value.scrollBy({
+// left: -100,
+// behavior: "smooth",
+// });
+// }
 // };
 
 // const scrollRight = () => {
-//   if (categoriesContainer.value) {
-//     categoriesContainer.value.scrollBy({
-//       left: 100,
-//       behavior: "smooth",
-//     });
-//   }
+// if (categoriesContainer.value) {
+// categoriesContainer.value.scrollBy({
+// left: 100,
+// behavior: "smooth",
+// });
+// }
 // };
 
 // const toggleMenu = () => {
-//   isMenuOpen.value = !isMenuOpen.value;
+// isMenuOpen.value = !isMenuOpen.value;
 // };
 
 // const toggleDropdown = () => {
-//   isDropdownOpen.value = !isDropdownOpen.value;
+// isDropdownOpen.value = !isDropdownOpen.value;
 // };
 
 const handleBackgroundClick = () => {
@@ -691,11 +691,11 @@ const handleLogout = async () => {
         `${apiConfig.LOGOUT_EVENT}`
       );
       // const response = await axios.post(
-      //   "https://api-uat.newsshield.io/user/logoutEvent",
-      //   {},
-      //   {
-      //     headers: { Authorization: `${apiDataToken}` },
-      //   }
+      // "https://api-uat.newsshield.io/user/logoutEvent",
+      // {},
+      // {
+      // headers: { Authorization: `${apiDataToken}` },
+      // }
       // );
       if (response.status === 200) {
         console.log(`BEFORE ${localStorage.getItem("news-")}`);
@@ -741,8 +741,8 @@ const fetchNavbarCategory = async () => {
       payload
     );
     // const res = await axios.post(
-    //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-    //   { categoryId }
+    // "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
+    // { categoryId }
     // );
     categoryWise.value = res.data;
   } catch (error) {
@@ -756,8 +756,8 @@ const fetchCategories = async () => {
   };
   try {
     // const response = await axios.post(
-    //   "https://api-uat.newsshield.io/category/getAllCat",
-    //   {}
+    // "https://api-uat.newsshield.io/category/getAllCat",
+    // {}
     // );
     const response = await apiService.apiCall(
       "post",
@@ -777,7 +777,7 @@ const fetchCategories = async () => {
 };
 
 // const toggleSearchInput = () => {
-//   isInputVisible.value = !isInputVisible.value;
+// isInputVisible.value = !isInputVisible.value;
 // };
 
 // Debounced input handler
@@ -799,8 +799,8 @@ const onStopTyping = () => {
 
 const handleSearch = async () => {
   // if (
-  //   searchQuery.value.trim().length >= 4 &&
-  //   searchQuery.value.trim().length % 4 === 0
+  // searchQuery.value.trim().length >= 4 &&
+  // searchQuery.value.trim().length % 4 === 0
   // ) {
   try {
     console.log("API CALLED");
@@ -815,7 +815,7 @@ const handleSearch = async () => {
       payload
     );
     // const response = await axios.post(
-    //   "https://api-uat.newsshield.io/news/searchNewsFromWeb"
+    // "https://api-uat.newsshield.io/news/searchNewsFromWeb"
     // );
     searchResults.value = response.data;
     loading.value = false;
@@ -825,12 +825,12 @@ const handleSearch = async () => {
     loading.value = false;
   }
   // } else if (searchQuery.value.trim().length < 4) {
-  //   searchResults.value = [];
+  // searchResults.value = [];
   // }
 };
 
 // const expandInput = () => {
-//   isExpanded.value = true;
+// isExpanded.value = true;
 // };
 
 const collapseInput = (event) => {
@@ -854,13 +854,13 @@ onMounted(() => {
   // const storedNews = localStorage.getItem(`news-${categoryId}`);
 
   // if (storedNews) {
-  //   newsItems.value = JSON.parse(storedNews);
-  //   console.log("Fetched news items:", newsItems.value);
+  // newsItems.value = JSON.parse(storedNews);
+  // console.log("Fetched news items:", newsItems.value);
   // } else {
-  //   console.log(
-  //     "No news found in local storage for category:",
-  //     "news-" + categoryId
-  //   );
+  // console.log(
+  // "No news found in local storage for category:",
+  // "news-" + categoryId
+  // );
   // }
 });
 const navigateToTrending = (id) => {
@@ -880,8 +880,8 @@ const fetchCategoryFromLocalStorage = (categoryId) => {
     console.log("INSIDE ELSE");
 
     // console.log(
-    //   "No news found in local storage for category:",
-    //   `news-${categoryId}`
+    // "No news found in local storage for category:",
+    // `news-${categoryId}`
     // );
   }
 };
@@ -900,7 +900,7 @@ watch(searchQuery, () => {
   // if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
   onInput();
   // } else if (newValue.trim().length < 4) {
-  //   searchResults.value = [];
+  // searchResults.value = [];
   // }
 });
 </script>
