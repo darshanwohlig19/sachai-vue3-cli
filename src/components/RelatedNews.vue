@@ -16,19 +16,27 @@
         >
       </div>
 
-      <div v-if="!isLoading && featuredNewsItem.length > 0" class="mx-[15px]">
+      <div v-if="isLoading && featuredNewsItem.length > 0" class="mx-[15px]">
         <a href="/featured-news"> <Button /></a>
       </div>
     </div>
-    <div v-if="isLoading" class="flex flex-row gap-3 justify-between">
-      <div v-for="n in 4" :key="n" class="w-[33%] md-max:w-full">
+    <!-- Loader -->
+    <div v-if="!isLoading" class="flex flex-row gap-3 justify-between mt-3 mx-[15px] mb-3 sm:mb-0">
+      <div v-for="n in itemsToShow" :key="n" class="w-[33%] md-max:w-full">
         <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
           <!-- Skeleton Image -->
           <Skeleton height="156px" width />
 
-          <!-- Skeleton for Source & Actions -->
-          <div class="flex justify-between items-center p-3">
-            <Skeleton width="25%" height="12px" />
+          <!-- Skeleton for Category & Time -->
+          <div class="px-3 pb-3 mt-2 flex gap-1 w-[100%]">
+            <div class="flex gap-1 w-[85%]">
+              <Skeleton width="25%" height="12px" />
+              <Skeleton width="25%" height="12px" />
+            </div>
+            <div class="flex gap-1 w-[15%]">
+              <Skeleton shape="circle" size="20px" />
+              <Skeleton shape="circle" size="20px" />
+            </div>
           </div>
           <!-- Skeleton for Title -->
           <div class="pl-3 pr-3">
@@ -36,19 +44,14 @@
           </div>
 
           <!-- Skeleton for Summary -->
-          <div class="pl-3 pr-3 mt-3">
+          <div class="pl-3 pr-3 mt-3 mb-2">
             <Skeleton width="100%" height="50px" />
-          </div>
-
-          <!-- Skeleton for Category & Time -->
-          <div class="px-3 pb-3 mt-2 mb-2 flex gap-1">
-            <Skeleton width="25%" height="12px" />
-            <Skeleton width="25%" height="12px" />
           </div>
         </div>
       </div>
     </div>
     <div
+      v-else
       class="flex flex-col lg:flex-row md:flex-row gap-3 justify-between cursor-pointer drop-shadow-lg md:h-[330px] mx-[15px]"
     >
       <div
@@ -163,6 +166,7 @@ const router = useRouter();
 const featuredNewsItem = ref([]);
 const isLoading = ref(true); // New state for loader
 console.log("featuredNewsItem", featuredNewsItem);
+const itemsToShow = ref(4);
 
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately
@@ -175,6 +179,16 @@ const props = defineProps(
   // }
 );
 
+const updateItemsToShow = () => {
+  const width = window.innerWidth;
+  if (width < 640) {
+    itemsToShow.value = 1; // 1 on mobile
+  } else if (width < 1024) {
+    itemsToShow.value = 3; // 3 on tablet
+  } else {
+    itemsToShow.value = 4; // 4 on desktop
+  }
+};
 const categoryId = computed(() => {
   console.log("props---", props.value);
   console.log("props?.category--", props?.category);
@@ -290,7 +304,10 @@ onMounted(async () => {
   await fetchBlogs();
   window.addEventListener("resize", updateScreenWidth);
 });
-
+onMounted(() => {
+  updateItemsToShow();
+  window.addEventListener("resize", updateItemsToShow);
+});
 onBeforeUnmount(() => {
   window.removeEventListener("resize", updateScreenWidth);
 });

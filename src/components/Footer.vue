@@ -45,17 +45,17 @@
         </div>
         <div class="flex mt-4 gap-3">
           <a href=""
-            ><i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i
+            ><i class="mdi mdi-twitter text-[#878787] text-[19px]"></i
           ></a>
           <a href=""
-            ><i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i
+            ><i class="mdi mdi-facebook text-[#878787] text-[19px]"></i
           ></a>
           <a
             href="https://www.instagram.com/sachai.io/?igshid=MzRlODBiNWFlZA%3D%3D"
-            ><i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i
+            ><i class="mdi mdi-instagram text-[#878787] text-[19px]"></i
           ></a>
           <a href=""
-            ><i class="mdi mdi-github text-[#52525B] text-[19px]"></i
+            ><i class="mdi mdi-github text-[#878787] text-[19px]"></i
           ></a>
         </div>
       </div>
@@ -63,12 +63,12 @@
         <div>
           <div class="footer-heads ml-[-10px] text-sm">Popular Categories</div>
           <div v-if="loading">
-            <p class="footer-links text-[#52525B] text-[14px] pt-3">
+            <p class="footer-links text-[#878787] text-[14px] pt-3">
               Loading...
             </p>
           </div>
           <div v-else-if="categories.length == 0">
-            <p class="footer-links text-[#52525B] text-[14px] pt-3">
+            <p class="footer-links text-[#878787] text-[14px] pt-3">
               No Catogries Availabe
             </p>
           </div>
@@ -77,7 +77,7 @@
             style="column-gap: 17px"
           >
             <ul v-for="heading in categories.slice(0, 16)" :key="heading._id">
-              <li class="footer-links text-[#52525B] text-[14px] pt-3">
+              <li class="footer-links text-[#878787] text-[14px] pt-3">
                 <a
                   :href="`/categories/${heading._id}?category=${heading.name}`"
                   class="capitalize leading-normal"
@@ -91,19 +91,19 @@
           <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
           <div>
             <div v-if="loading">
-              <p class="footer-links text-[#52525B] text-[14px] pt-3">
+              <p class="footer-links text-[#878787] text-[14px] pt-3">
                 Loading...
               </p>
             </div>
             <div v-else-if="hotOnTheWeb.length == 0">
-              <p class="footer-links text-[#52525B] text-[14px] pt-3">
+              <p class="footer-links text-[#878787] text-[14px] pt-3">
                 No Headline Availabe
               </p>
             </div>
           </div>
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="item in hotOnTheWeb" :key="item.id">
-              <li class="footer-links text-[#52525B] text-sm pt-3">
+              <li class="footer-links text-[#878787] text-sm pt-3">
                 <a :href="`/NewsByTopics/${item}`">
                   <div class="cursor-pointer capitalize leading-normal">
                     {{ item }}
@@ -123,12 +123,12 @@
             <div class="footer-heads text-sm">Latest News</div>
             <div>
               <div v-if="loading">
-                <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                <p class="footer-links text-[#878787] text-[14px] pt-3">
                   Loading...
                 </p>
               </div>
               <div v-else-if="latestNews.length == 0">
-                <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                <p class="footer-links text-[#878787] text-[14px] pt-3">
                   No Headline Availabe
                 </p>
               </div>
@@ -137,7 +137,7 @@
               <li
                 v-for="news in latestNews"
                 :key="news.id"
-                class="footer-links text-[#52525B] text-sm pt-3"
+                class="footer-links text-[#878787] text-sm pt-3"
               >
                 <a :href="`/NewsByTopics/${news}`">
                   <div class="cursor-pointer capitalize leading-normal">
@@ -151,16 +151,16 @@
           <div class="hlp w-full md:w-auto">
             <div class="footer-heads text-sm">Help</div>
             <ul>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
+              <li class="footer-links text-[#878787] text-sm pt-3">
                 <a href="/AboutUs" class="capitalize">About us</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
+              <li class="footer-links text-[#878787] text-sm pt-3">
                 <a class="capitalize line">Customer Support</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
+              <li class="footer-links text-[#878787] text-sm pt-3">
                 <a class="capitalize line">Terms & Conditions</a>
               </li>
-              <li class="footer-links text-[#52525B] text-sm pt-3">
+              <li class="footer-links text-[#878787] text-sm pt-3">
                 <a class="capitalize">Privacy Policy</a>
               </li>
             </ul>
@@ -171,19 +171,19 @@
           <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
           <div>
             <div v-if="loading">
-              <p class="footer-links text-[#52525B] text-[14px] pt-3">
+              <p class="footer-links text-[#878787] text-[14px] pt-3">
                 Loading...
               </p>
             </div>
             <div v-else-if="trendingTopics.length == 0">
-              <p class="footer-links text-[#52525B] text-[14px] pt-3">
+              <p class="footer-links text-[#878787] text-[14px] pt-3">
                 No Headline Availabe
               </p>
             </div>
           </div>
           <div class="grid grid-cols-2 xl:grid-cols-2 md:grid-cols-3 pt-2">
             <ul v-for="topic in trendingTopics" :key="topic.id">
-              <li class="footer-links text-[#52525B] text-sm pt-3">
+              <li class="footer-links text-[#878787] text-sm pt-3">
                 <a :href="`/NewsByTopics/${topic}`">
                   <div class="cursor-pointer capitalize leading-normal">
                     {{ topic }}
@@ -241,27 +241,27 @@
         </div>
         <div class="flex mt-4 gap-3">
           <a href=""
-            ><i class="mdi mdi-twitter text-[#52525B] text-[19px]"></i
+            ><i class="mdi mdi-twitter text-[#878787] text-[19px]"></i
           ></a>
           <a href=""
-            ><i class="mdi mdi-facebook text-[#52525B] text-[19px]"></i
+            ><i class="mdi mdi-facebook text-[#878787] text-[19px]"></i
           ></a>
           <a
             href="https://www.instagram.com/sachai.io/?igshid=MzRlODBiNWFlZA%3D%3D"
-            ><i class="mdi mdi-instagram text-[#52525B] text-[19px]"></i
+            ><i class="mdi mdi-instagram text-[#878787] text-[19px]"></i
           ></a>
           <a href=""
-            ><i class="mdi mdi-github text-[#52525B] text-[19px]"></i
+            ><i class="mdi mdi-github text-[#878787] text-[19px]"></i
           ></a>
         </div>
       </div>
 
       <div class="">
         <div v-if="loading">
-          <p class="footer-links text-[#52525B] text-[14px] pt-3">Loading...</p>
+          <p class="footer-links text-[#878787] text-[14px] pt-3">Loading...</p>
         </div>
         <div v-else-if="categories.length == 0">
-          <p class="footer-links text-[#52525B] text-[14px] pt-3">
+          <p class="footer-links text-[#878787] text-[14px] pt-3">
             No Catogries Availabe
           </p>
         </div>
@@ -272,7 +272,7 @@
             </div>
             <div class="grid grid-cols-4 pt-2">
               <ul v-for="heading in categories.slice(0, 16)" :key="heading._id">
-                <li class="footer-links text-[#52525B] text-sm pt-3">
+                <li class="footer-links text-[#878787] text-sm pt-3">
                   <a
                     :href="`/categories/${heading._id}?category=${heading.name}`"
                     class="capitalize leading-normal"
@@ -289,12 +289,12 @@
             <div class="let">
               <div>
                 <div v-if="loading">
-                  <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                  <p class="footer-links text-[#878787] text-[14px] pt-3">
                     Loading...
                   </p>
                 </div>
                 <div v-else-if="latestNews.length == 0">
-                  <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                  <p class="footer-links text-[#878787] text-[14px] pt-3">
                     No Headline Availabe
                   </p>
                 </div>
@@ -304,7 +304,7 @@
                 <li
                   v-for="news in latestNews"
                   :key="news.id"
-                  class="footer-links text-[#52525B] text-sm pt-3"
+                  class="footer-links text-[#878787] text-sm pt-3"
                 >
                   <a :href="`/NewsByTopics/${news}`">
                     <div class="cursor-pointer capitalize leading-normal">
@@ -318,28 +318,28 @@
             <div class="hlp">
               <div class="footer-heads text-sm">Help</div>
               <ul>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
+                <li class="footer-links text-[#878787] text-sm pt-3">
                   <a class="capitalize" href="/About-us">About us</a>
                 </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
+                <li class="footer-links text-[#878787] text-sm pt-3">
                   <a class="capitalize">Customer Support</a>
                 </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
+                <li class="footer-links text-[#878787] text-sm pt-3">
                   <a class="capitalize">Terms & Conditions</a>
                 </li>
-                <li class="footer-links text-[#52525B] text-sm pt-3">
+                <li class="footer-links text-[#878787] text-sm pt-3">
                   <a class="capitalize">Privacy Policy</a>
                 </li>
               </ul>
             </div>
             <div>
               <div v-if="loading">
-                <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                <p class="footer-links text-[#878787] text-[14px] pt-3">
                   Loading...
                 </p>
               </div>
               <div v-else-if="hotOnTheWeb.length == 0">
-                <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                <p class="footer-links text-[#878787] text-[14px] pt-3">
                   No Headline Availabe
                 </p>
               </div>
@@ -349,7 +349,7 @@
               <div class="footer-heads ml-[-10px] text-sm">Hot on the Web</div>
               <div class="grid grid-cols-2 pt-2">
                 <ul v-for="item in hotOnTheWeb" :key="item.id">
-                  <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
+                  <li class="footer-links text-[#878787] text-sm pt-3 mr-6">
                     <a :href="`/NewsByTopics/${item}`">
                       <div class="cursor-pointer capitalize leading-normal">
                         {{ item }}
@@ -366,7 +366,7 @@
             <div class="grid grid-cols-2 pt-2">
               <div>
                 <ul v-for="topic in trendingTopics" :key="topic.id">
-                  <li class="footer-links text-[#52525B] text-sm pt-3">
+                  <li class="footer-links text-[#878787] text-sm pt-3">
                     <a class="capitalize">{{ topic }}</a>
                   </li>
                 </ul>
@@ -378,19 +378,19 @@
               <div class="footer-heads ml-[-10px] text-sm">Trending Topics</div>
               <div>
                 <div v-if="loading">
-                  <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                  <p class="footer-links text-[#878787] text-[14px] pt-3">
                     Loading...
                   </p>
                 </div>
                 <div v-if="trendingTopics.length == 0">
-                  <p class="footer-links text-[#52525B] text-[14px] pt-3">
+                  <p class="footer-links text-[#878787] text-[14px] pt-3">
                     No Headline Availabe
                   </p>
                 </div>
               </div>
               <div class="grid grid-cols-2 pt-2">
                 <ul v-for="item in trendingTopics" :key="item.id">
-                  <li class="footer-links text-[#52525B] text-sm pt-3 mr-6">
+                  <li class="footer-links text-[#878787] text-sm pt-3 mr-6">
                     <a :href="`/NewsByTopics/${item}`">
                       <div class="cursor-pointer capitalize leading-normal">
                         {{ item }}
@@ -405,7 +405,7 @@
       </div>
     </div>
     <div
-      class="bg-[#fff] text-[#52525B] text-lato text-[15px] text-center py-4 px-4 md:px-6"
+      class="bg-[#fff] text-[#878787] text-lato text-[15px] text-center py-4 px-4 md:px-6"
     >
       <div class="flex flex-col text-center md:flex-row justify-center">
         <div>© 2024, All Rights Reserved</div>

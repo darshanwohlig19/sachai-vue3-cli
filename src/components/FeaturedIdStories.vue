@@ -18,7 +18,26 @@
           >
         </div>
       </div>
-      <!-- <div v-if="!isLoading">Loading...</div> -->
+      <!-- Loader -->
+      <div v-if="isLoading" class="flex flex-row gap-3 justify-between">
+        <div
+          v-for="n in 2"
+          :key="n"
+          class="shadow-md between-Laptop-small:w-[48%] between-644-1024:w-[100%] sm:w-[100%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px]"
+        >
+          <Skeleton width="106px" height="106px" class="rounded-[8px]" />
+          <div class="flex-1">
+            <div
+              class="flex flex-wrap items-center justify-between text-xs w-full mb-1"
+            >
+              <Skeleton width="120px" height="16px" />
+              <Skeleton width="40px" height="16px" />
+            </div>
+            <Skeleton width="180px" height="20px" class="mb-1" />
+            <Skeleton width="200px" height="20px" />
+          </div>
+        </div>
+      </div>
       <div
         class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg mx-[15px] mt-[20px]"
       >
@@ -103,6 +122,7 @@ import {
   onBeforeMount,
   onBeforeUnmount,
   defineProps,
+  onMounted,
   computed,
 } from "vue";
 import axios from "axios";
@@ -120,6 +140,18 @@ const router = useRouter();
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately
 const isLoading = ref(true);
+const itemsToShow = ref(4);
+
+const updateItemsToShow = () => {
+  const width = window.innerWidth;
+  if (width < 640) {
+    itemsToShow.value = 1; // 1 on mobile
+  } else if (width < 1024) {
+    itemsToShow.value = 3; // 3 on tablet
+  } else {
+    itemsToShow.value = 4; // 4 on desktop
+  }
+};
 
 const props = defineProps({
   category: {
@@ -232,7 +264,10 @@ onBeforeMount(() => {
   checkRouteParam();
   window.addEventListener("resize", updateScreenWidth);
 });
-
+onMounted(() => {
+  updateItemsToShow();
+  window.addEventListener("resize", updateItemsToShow);
+});
 onBeforeUnmount(() => {
   window.removeEventListener("resize", updateScreenWidth);
 });
