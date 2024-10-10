@@ -118,13 +118,12 @@
                 >
                   <hr
                     class="my-2 text-[#878787]"
-                    v-if="message.type === 'bot'"
-                  />
-                  <div
-                    class="flex items-center justify-end text-sm h-[20px] space-x-1"
                     v-if="
                       message.type === 'bot' || message.type === 'qnaAnswers'
                     "
+                  />
+                  <div
+                    class="flex items-center justify-end text-sm h-[20px] space-x-1"
                   >
                     <span
                       class="text-[#878787] !text-sm !font-lato !font-normal mr-[5px] flex items-center"
@@ -209,7 +208,7 @@
     </div>
   </div>
   <div
-    class="!hidden lg:!block mx-auto bg-white rounded-lg overflow-hidden bg-assist-card flex flex-col !h-[669px] !w-[440px] md:h-[85vh] lg:h-[670px] between-644-1024:!h-[110vh] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh] !ml-[10px] between-1011-1200:!h-[725px]"
+    class="!hidden lg:!block mx-auto bg-white rounded-lg overflow-hidden bg-assist-card flex flex-col !h-[669px] !w-[440px] md:h-[85vh] lg:h-[670px] between-644-1024:!h-[83vh] between-Laptop:!h-[95.5vh] between-2560-187:!h-[35.5vh] !ml-[10px] between-1011-1200:!h-[725px]"
   >
     <div class="bg-[#320A38] text-white h-[55px]">
       <div class="text-base font-Lato leading-tight flex items-center mt-[2px]">
@@ -319,7 +318,13 @@
                   (message.type === 'qnaAnswers' || message.type === 'bot')
                 "
               >
-                <hr class="my-2 text-[#878787]" v-if="message.type === 'bot'" />
+                <hr
+                  class="my-2 text-[#878787]"
+                  v-if="
+                    message.type === 'bot' ||
+                    (message.type === 'qnaAnswers' && isLastBotMessage(index))
+                  "
+                />
                 <div
                   class="flex items-center justify-end text-sm h-[23px] space-x-1"
                   v-if="message.type === 'bot' || message.type === 'qnaAnswers'"
@@ -449,9 +454,6 @@ const chatBodyRef = ref(null);
 const chatMobileBodyRef = ref(null);
 const loading = ref(false);
 const botDataCount = ref("");
-// const htmlContent = ref(
-//   "Ravichandran Ashwin praises Gautam Gambhir's relaxed coaching style.\\nAshwin's performance included a century and six wickets in the Chennai Test.\\nIndia won the Test against Bangladesh by 280 runs.\\nAshwin compares Gambhir's style to former coach Rahul Dravid's regimented approach.\\nRohit Sharma's leadership is also commended by Ashwin.\\nIndia will play Bangladesh in the second Test on October 27."
-// );
 
 const remainingQuestions = computed(() => {
   const limit = chatsLimitData.value?.limit;
@@ -522,7 +524,7 @@ const handleQnAClick = async (question, index) => {
   } finally {
     setTimeout(() => {
       loading.value = false;
-    }, 10000);
+    }, 100);
   }
 };
 
@@ -537,7 +539,6 @@ const handleChatClick = async () => {
   userQuestion.value = "";
   scrollToBottom();
   scrollMobileToBottom();
-  // Show loading spinner
   conversation.value.push({ type: "bot", loading: true });
   await nextTick();
   scrollToBottom();
@@ -568,7 +569,7 @@ const handleChatClick = async () => {
         chatBotLimitData();
         scrollToBottom();
         scrollMobileToBottom();
-      }, 1000);
+      }, 100);
     } else {
       setTimeout(() => {
         conversation.value = conversation.value.filter(
@@ -653,7 +654,7 @@ const chatBotLimitData = async () => {
   }
 };
 
-const typewriterEffect = (text, delay = 50) => {
+const typewriterEffect = (text, delay = 30) => {
   const message = ref("");
   let index = 0;
 

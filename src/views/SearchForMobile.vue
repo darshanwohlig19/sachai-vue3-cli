@@ -123,7 +123,6 @@ export default {
 
     // Called when the user stops typing
     const onStopTyping = () => {
-      console.log("User stopped typing. Final input:");
       handleSearch();
       // Handle your logic here, such as making an API call
     };

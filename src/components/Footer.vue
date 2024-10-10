@@ -457,7 +457,6 @@ export default {
         loading.value = false;
       }
     };
-    console.log("Catogries", categories.value);
 
     const fetchNewsTopics = async () => {
       // const payload = {
@@ -483,8 +482,6 @@ export default {
         loading.value = false;
       }
     };
-
-    console.log("trending topics", trendingTopics);
 
     const LatestNews = () => {
       console.log("News", latestNews);

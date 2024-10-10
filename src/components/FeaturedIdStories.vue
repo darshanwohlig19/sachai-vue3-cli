@@ -25,10 +25,10 @@
         <div
           v-for="(blog, index) in slicedData"
           :key="index"
-          class="shadow-md between-Laptop-small:w-[100%] between-644-1024:!w-[100%] sm:w-[48%] flex flex-col md:flex-row sm:flex-row lg:flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px] xs:!h-[100%]"
+          class="shadow-md between-Laptop-small:w-[100%] between-644-1024:!w-[100%] sm:w-[48%] flex flex-col md:flex-row sm:flex-row lg:flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px] xs:!h-[100%] between-md-max-sm-max:!w-[100%]"
         >
           <img
-            class="lg:!w-[106px] between-644-1024:w-[104px] md:!w-[106px] xxl:!w-[106px] object-contain rounded-[8px]"
+            class="lg:!w-[106px] between-644-1024:w-[104px] between-md-max-sm-max:w-[104px] md:!w-[106px] xxl:!w-[106px] object-contain rounded-[8px]"
             :src="blog.imgixUrlHighRes || fallbackImage"
             alt="Blog Image"
             @click="navigateToFeaturedDetail(blog._id)"
@@ -37,7 +37,9 @@
             <div
               class="flex flex-wrap items-center justify-between text-xs w-full mb-1"
             >
-              <div class="flex gap-1 mb-[1px] time-date-home">
+              <div
+                class="flex gap-1 mb-[1px] time-date-home between-1023-1148:!text-[8px]"
+              >
                 <span class="text-[#1E0627] capitalize">
                   {{ blog?.source }}
                 </span>
@@ -46,9 +48,7 @@
                   {{ formatPublishTime(blog.publishTime) }}
                 </span>
               </div>
-              <div
-                class="flex-row gap-1 pt-1 ml-auto flex items-center space-x-2"
-              >
+              <div class="flex-row gap-1 pt-1 ml-auto flex items-center">
                 <div>
                   <i
                     class="mdi mdi-share-variant text-black rounded-[50%] text-[19px]"
@@ -59,7 +59,7 @@
                   <span
                     :class="[
                       'mdi',
-                      'mdi-bookmark text-[21px] cursor-pointer',
+                      'mdi-bookmark text-[19px] cursor-pointer',
                       getBookmarkColor(blog?.isBookmarked),
                     ]"
                     class="cursor-pointer"
@@ -80,6 +80,15 @@
               @click="navigateToFeaturedDetail(blog._id)"
             >
               {{ blog.summary || "-" }}
+            </div>
+            <div class="flex gap-1 mt-[8px] time-date-home">
+              <span class="text-neon-pink mr-1 capitalize">
+                {{ blog?.category[0].name }}
+              </span>
+              <!-- <span class="text-[#1E0627]"> | </span> -->
+              <!-- <span class="text-[#1E0627]">
+                {{ formatPublishTime(blog.publishTime) }}
+              </span> -->
             </div>
           </div>
         </div>
@@ -196,7 +205,7 @@ const slicedData = computed(() => {
     return blogs.value.slice(0, 2);
   } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
     // Tablets
-    return blogs.value.slice(0, 4);
+    return blogs.value.slice(0, 2);
   } else if (screenWidth.value >= 640 && screenWidth.value < 1025) {
     // Width between 640 and 1024
     return blogs.value.slice(0, 4);
@@ -211,7 +220,7 @@ const slicedData = computed(() => {
     return blogs.value.slice(0, 4);
   } else {
     // Desktop and larger devices
-    return blogs.value.slice(0, 8);
+    return blogs.value.slice(0, 4);
   }
 });
 const getBookmarkColor = (isBookmarked) => {

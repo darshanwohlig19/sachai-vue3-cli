@@ -32,6 +32,8 @@ config.GET_CATEGORY_WISE_NEWS_FOR_WEB =
 //Featured
 config.GET_TRENDING_NEWS = config.PORT_IP.LOGIN + "/news/getTrendingNews";
 
+config.GET_RELATED_NEWS = config.PORT_IP.LOGIN + "/pinecone/getRelatedNews";
+
 //Latest
 config.GET_ALL_BLOGS_FOR_WEB = config.PORT_IP.LOGIN + "/news/getAllBlogsForWeb";
 config.ADD_BOOKMARK = config.PORT_IP.LOGIN + "/bookmark/addBookmark/";

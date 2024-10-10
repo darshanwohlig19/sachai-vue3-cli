@@ -248,7 +248,6 @@ import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
 
 const blogs = ref([]);
-console.log("opp", blogs);
 const news = ref([]);
 // const products = ref([]);
 // const languageId = "6421a32aa020a23deacecf92";

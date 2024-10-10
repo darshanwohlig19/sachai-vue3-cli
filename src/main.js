@@ -8,9 +8,9 @@ import { createApp } from "vue";
 import { auth } from "@/firebaseConfig";
 auth.onAuthStateChanged((user) => {
   if (user) {
-    console.log("User is logged in:", user);
+    // console.log("User is logged in:", user);
   } else {
-    console.log("User is logged out");
+    // console.log("User is logged out");
   }
 });
 import { checkLocalStorage } from "./utils/globalState";
