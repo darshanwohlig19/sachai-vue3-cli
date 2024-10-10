@@ -61,7 +61,7 @@
             >
               <div class="flex flex-col bg-white rounded-[10px] shadow-lg">
                 <div
-                  class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden w-full"
+                  class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg overflow-hidden w-full"
                 >
                   <div class="relative w-full h-[100%]">
                     <img

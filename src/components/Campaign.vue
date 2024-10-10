@@ -65,7 +65,7 @@
         >
           <div>
             <div
-              class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden"
+              class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg overflow-hidden"
             >
               <div class="relative w-full h-[100%]">
                 <img
