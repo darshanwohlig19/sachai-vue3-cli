@@ -515,17 +515,16 @@
       <!-- Profile info at the top -->
       <div class="flex items-center">
         <img
-          src="/placeholder.svg?height=80&width=80"
           alt="Profile picture"
-          class="w-[34px] h-[34px] rounded-full mr-4"
+          class="w-[35px] h-[35px] rounded-full mr-4"
         />
         <div>
           <h2
-            class="text-xs font-lato font-semibold !leading-[14.4px] text-Secondary"
+            class="!text-[12px] !font-lato !font-semibold !leading-[14.4px] text-Secondary"
           >
             {{ isAuthUser?.name }}
           </h2>
-          <p class="!text-[10px] font-lato font-normal text-[#878787]">
+          <p class="!text-[10px] !font-lato font-normal text-[#878787]">
             {{ isAuthUser?.email }}
           </p>
         </div>
@@ -536,26 +535,36 @@
       >
         <div class="grid grid-cols-3 text-center py-4 items-center">
           <div class="flex flex-col items-center pr-2">
-            <p class="text-xs font-bold text-Secondary font-lato">
+            <p
+              class="!text-xs !font-bold !text-Secondary !font-lato !leading-[12px]"
+            >
               {{ chatsCount?.limit }}
             </p>
-            <p class="text-xs text-[#878787] font-lato">Total Credits</p>
+            <p class="!text-xs !text-[#878787] !font-lato !leading-[12px]">
+              Total Credits
+            </p>
           </div>
 
           <div
             class="flex flex-col items-center px-2 border-l border-r border-[#F3F3F3]"
           >
-            <p class="text-xs font-bold text-Secondary font-lato">
+            <p
+              class="!text-xs !font-bold !text-Secondary !font-lato !leading-[12px]"
+            >
               {{ chatsCount.count }}
             </p>
-            <p class="text-xs text-[#878787] font-lato">Credits left</p>
+            <p class="!text-xs !text-[#878787] !font-lato !leading-[12px]">
+              Credits left
+            </p>
           </div>
 
           <div class="flex flex-col items-center pl-2">
-            <p class="text-xs font-bold text-Secondary font-lato">
+            <p class="t!text-xs !font-bold !text-Secondary !font-lato">
               {{ chatsCount.limit - chatsCount.count }}
             </p>
-            <p class="text-xs text-[#878787] font-lato">Credits used</p>
+            <p class="text-xs text-[#878787] font-lato !leading-[12px]">
+              Credits used
+            </p>
           </div>
         </div>
       </div>

@@ -404,13 +404,11 @@
           class="flex-grow px-2 py-2 !font-lato !text-xs focus:outline-none h-full placeholder:font-normal placeholder:font-lato placeholder:text-sm"
           aria-label="User question input"
           @keyup.enter="handleChatClick"
-          :disabled="!isTokenAvailable"
         />
         <button
           @click="handleChatClick"
           class="bg-[#320A38] text-white p-2 w-[48px] h-[32px] mr-[3px] rounded-2xl"
           aria-label="Submit question"
-          :disabled="!isTokenAvailable"
         >
           <img :src="vectorImg" alt="Submit question" class="ml-[10px]" />
         </button>
@@ -422,7 +420,7 @@
 <script setup>
 import { defineProps, ref, onMounted, nextTick, computed } from "vue";
 import commentsImg from "@/assets/svg/chatComments.svg";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import vectorImg from "@/assets/svg/chatVector.svg";
@@ -432,6 +430,8 @@ import thumbsUp from "@/assets/svg/thumbsUp.svg";
 import thumbsDown from "@/assets/svg/thumbsDown.svg";
 import thumbsUpSelected from "@/assets/svg/thumbsUpSelected.svg";
 import thumbsDownSelected from "@/assets/svg/thumbsDownSelected.svg";
+import { useToast } from "primevue/usetoast";
+
 const props = defineProps({
   isVisible: {
     type: Boolean,
@@ -448,6 +448,8 @@ const props = defineProps({
 });
 
 const route = useRoute();
+const router = useRouter();
+
 const chatsData = ref([]);
 console.log("chatsData", chatsData);
 const chatsLimitData = ref([]);
@@ -461,7 +463,7 @@ const selectedQuestionIndex = ref(null);
 console.log("selectedQuestionIndex", selectedQuestionIndex);
 const selectedQuestionAnswers = ref([]);
 console.log("selectedQuestionAnswers", selectedQuestionAnswers);
-
+const toast = useToast();
 const newsId = route.params.id;
 const chatBodyRef = ref(null);
 const chatMobileBodyRef = ref(null);
@@ -544,6 +546,21 @@ const handleQnAClick = async (question, index) => {
 };
 
 const handleChatClick = async () => {
+  const tokenAvailable = localStorage.getItem("apiDataToken");
+  if (!tokenAvailable) {
+    toast.add({
+      severity: "warn",
+      summary: "Login Required",
+      summary2:
+        "Please log in to start chatting and enjoy seamless communication.",
+      group: "warn",
+      life: 3000,
+    });
+    router.push("/");
+    return;
+  }
+
+  // Proceed with handling the chat input
   if (!userQuestion.value.trim()) return;
 
   conversation.value.push({ type: "user", text: userQuestion.value });
@@ -552,8 +569,8 @@ const handleChatClick = async () => {
   scrollMobileToBottom();
   const question = userQuestion.value;
   userQuestion.value = "";
-  scrollToBottom();
-  scrollMobileToBottom();
+
+  // Indicate loading status for bot response
   conversation.value.push({ type: "bot", loading: true });
   await nextTick();
   scrollToBottom();
@@ -574,6 +591,7 @@ const handleChatClick = async () => {
       const botResponse = botData.answer.answer;
 
       setTimeout(() => {
+        // Remove loading status from messages
         conversation.value = conversation.value.filter(
           (message) => !message.loading
         );
@@ -587,6 +605,7 @@ const handleChatClick = async () => {
       }, 100);
     } else {
       setTimeout(() => {
+        // Handle error in response
         conversation.value = conversation.value.filter(
           (message) => !message.loading
         );
@@ -596,12 +615,13 @@ const handleChatClick = async () => {
         });
         scrollToBottom();
         scrollMobileToBottom();
-      });
+      }, 100);
     }
   } catch (error) {
     console.error("Error fetching response:", error);
 
     setTimeout(() => {
+      // Handle error during the API call
       conversation.value = conversation.value.filter(
         (message) => !message.loading
       );
@@ -611,7 +631,7 @@ const handleChatClick = async () => {
       });
       scrollToBottom();
       scrollMobileToBottom();
-    });
+    }, 100);
   }
 };
 
