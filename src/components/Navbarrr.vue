@@ -141,7 +141,7 @@
                     >
                       <div class="text-white p-3 rounded-md w-[100%]">
                         <div
-                          class="headine-home multiline-truncate-tow-tow-liner"
+                          class="headine-home text-white multiline-truncate-tow-tow-liner"
                         >
                           {{ newsItems[0]?.headline }}
                         </div>
