@@ -62,6 +62,7 @@
               :key="index"
               @click="handleQnAClick(item.question, index)"
               class="bg-white p-2 rounded-lg shadow cursor-pointer"
+              :class="!isTokenAvailable ? 'opacity-50 cursor-not-allowed' : ''"
             >
               <p
                 class="text-[#121212] font-medium text-center text-sm font-lato"
@@ -257,8 +258,14 @@
           <div
             v-for="(item, index) in category?.suggestedQnA"
             :key="index"
-            @click="handleQnAClick(item.question, index)"
             class="bg-white p-2 rounded-lg shadow cursor-pointer"
+            :class="{
+              'opacity-50 cursor-not-allowed': !isTokenAvailable,
+              'cursor-pointer': isTokenAvailable,
+            }"
+            @click="
+              isTokenAvailable ? handleQnAClick(item.question, index) : null
+            "
           >
             <p class="text-[#121212] font-medium text-center text-sm font-lato">
               {{ item.question }}
@@ -397,11 +404,13 @@
           class="flex-grow px-2 py-2 !font-lato !text-xs focus:outline-none h-full placeholder:font-normal placeholder:font-lato placeholder:text-sm"
           aria-label="User question input"
           @keyup.enter="handleChatClick"
+          :disabled="!isTokenAvailable"
         />
         <button
           @click="handleChatClick"
           class="bg-[#320A38] text-white p-2 w-[48px] h-[32px] mr-[3px] rounded-2xl"
           aria-label="Submit question"
+          :disabled="!isTokenAvailable"
         >
           <img :src="vectorImg" alt="Submit question" class="ml-[10px]" />
         </button>
@@ -432,6 +441,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  isTokenAvailable: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const route = useRoute();
@@ -454,7 +467,9 @@ const chatBodyRef = ref(null);
 const chatMobileBodyRef = ref(null);
 const loading = ref(false);
 const botDataCount = ref("");
-
+const isTokenAvailable = computed(() => {
+  return !!localStorage.getItem("apiDataToken");
+});
 const remainingQuestions = computed(() => {
   const limit = chatsLimitData.value?.limit;
   console.log("limit", limit);
