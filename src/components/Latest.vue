@@ -301,7 +301,9 @@ const checkRouteParam = () => {
 const slicedData = computed(() => {
   if (screenWidth.value < 640) {
     return blogs.value.slice(0, 1);
-  } else if (screenWidth.value >= 640 && screenWidth.value < 1024) {
+  } else if (screenWidth.value >= 640 && screenWidth.value < 768) {
+    return blogs.value.slice(0, 2);
+  } else if (screenWidth.value >= 767 && screenWidth.value < 1024) {
     return blogs.value.slice(0, 3);
   } else {
     return blogs.value.slice(0, 4);
