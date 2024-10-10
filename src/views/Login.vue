@@ -391,7 +391,6 @@
         showIndicators
         circular
         :responsiveOptions="responsiveOptions"
-        :autoplayInterval="2000"
       >
         <template v-slot:item="{ data }">
           <div class="w-full">
@@ -923,7 +922,7 @@ const sendUserDataToApi = async (name, email, id, mobile, type) => {
     top: 70%;
   }
 }
-.gooo {
+/* .gooo {
   background-image: url("../assets/svg/login-background.png");
-}
+} */
 </style>
