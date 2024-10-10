@@ -1,5 +1,5 @@
 <template>
-  <div class="backgroundddd">
+  <div class="backgroundddd pt-[55px]">
     <div class="hidden sm:block relative z-1">
       <Navbarrr />
     </div>
