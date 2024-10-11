@@ -19,22 +19,26 @@
         </div>
       </div>
       <!-- Loader -->
-      <div v-if="!isLoading">
-        <div v-for="n in itemsToShow" :key="n" class="flex w-full">
+      <div v-if="isLoading">
+        <div
+          v-for="n in itemsToShow"
+          :key="n"
+          class="flex w-full justify-center items-center"
+        >
           <div
             v-for="n in itemsToShow1"
             :key="n"
-            class="m-2 items-center shadow-md rounded-[8px] p-2 w-full"
+            class="m-2 flex flex-col items-center justify-center shadow-md rounded-[8px] p-2 w-full h-[153px]"
           >
-            <div class="flex flex-col sm:flex-row gap-2">
+            <div class="flex flex-col sm:flex-row gap-2 w-full h-[153px]">
               <!-- Skeleton for Image Section -->
               <div
-                class="relative sm:mx-[3px] sm:my-[3px] bg-white rounded-lg overflow-hidden w-[100%] sm:w-[25%] h-[100px] sm:h-auto"
+                class="relative sm:mx-[3px] sm:my-[3px] bg-white rounded-lg overflow-hidden w-[100%] sm:w-[25%] h-[100px] sm:h-auto flex items-center justify-center"
               >
                 <div class="relative w-full h-[100%]">
                   <!-- Background Skeleton -->
                   <div class="absolute inset-0">
-                    <Skeleton class="w-full" />
+                    <Skeleton class="w-full h-full" />
                   </div>
                 </div>
               </div>
@@ -242,7 +246,9 @@ const fetchBlogs = async () => {
   } catch (error) {
     console.error("Error fetching blogs:", error);
   } finally {
-    isLoading.value = false;
+    setTimeout(() => {
+      isLoading.value = false; // Move to false once data is loaded
+    }, 500);
   }
 };
 
