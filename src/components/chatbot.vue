@@ -493,6 +493,17 @@ const isLastBotMessage = (index) => {
 const toggleQuestionsVisibility = () => {
   showQuestions.value = !showQuestions.value;
 };
+const scrollToEnd = () => {
+  if (chatBodyRef.value) {
+    chatBodyRef.value.scrollTop = chatBodyRef.value.scrollHeight;
+  }
+};
+
+const scrollMobileToEnd = () => {
+  if (chatMobileBodyRef.value) {
+    chatMobileBodyRef.value.scrollTop = chatMobileBodyRef.value.scrollHeight;
+  }
+};
 
 const scrollToBottom = () => {
   requestAnimationFrame(() => {
@@ -511,11 +522,11 @@ const scrollMobileToBottom = () => {
   });
 };
 watch(
-  () => conversation.value.length, // Watch the length of the conversation array
+  () => conversation.value.length,
   () => {
     nextTick(() => {
-      scrollToBottom();
-      scrollMobileToBottom();
+      scrollToEnd();
+      scrollMobileToEnd();
     });
   }
 );
