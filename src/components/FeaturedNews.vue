@@ -80,7 +80,7 @@
           <Skeleton width="45%" height="20px" />
         </div>
       </div>
-      <div v-else class="flex flex-row gap-10 mt-5 cursor-pointer">
+      <div v-else class="flex flex-row gap-10 mt-3 md:mt-5 cursor-pointer">
         <div
           class="headine-home multiline-truncate1"
           @click="navigateToCategory(blogs[1]?._id)"
@@ -102,7 +102,7 @@
 
     <!-- Second Section -->
     <div
-      class="w-[100%] lg:w-[30%] md:w-[50%] flex flex-col justify-between gap-3"
+      class="w-[100%] lg:w-[30%] md:w-[50%] flex flex-col justify-between gap-3 sm:gap-0"
     >
       <div v-if="loading">
         <div
