@@ -19,7 +19,7 @@
         </div>
       </div>
       <!-- Loader -->
-      <div v-if="isLoading">
+      <div v-if="!isLoading">
         <div v-for="n in itemsToShow" :key="n" class="flex w-full">
           <div
             v-for="n in itemsToShow1"
@@ -29,17 +29,17 @@
             <div class="flex flex-col sm:flex-row gap-2">
               <!-- Skeleton for Image Section -->
               <div
-                class="relative sm:mx-[3px] sm:my-[3px] bg-white rounded-lg overflow-hidden w-[100%] sm:w-[25%] h-[130px] sm:h-auto"
+                class="relative sm:mx-[3px] sm:my-[3px] bg-white rounded-lg overflow-hidden w-[100%] sm:w-[25%] h-[100px] sm:h-auto"
               >
                 <div class="relative w-full h-[100%]">
                   <!-- Background Skeleton -->
                   <div class="absolute inset-0">
-                    <Skeleton class="w-full h-full" />
+                    <Skeleton class="w-full" />
                   </div>
                 </div>
               </div>
               <!-- Skeleton for Text Section -->
-              <div class="w-[100%] sm:w-[75%]">
+              <div class="w-[100%] sm:w-[75%] flex flex-col justify-center">
                 <div class="flex flex-row justify-between">
                   <div class="flex flex-row gap-1 time-date-home items-center">
                     <Skeleton width="50px" />
