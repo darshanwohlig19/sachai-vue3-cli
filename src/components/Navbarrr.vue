@@ -467,7 +467,7 @@
           </button>
 
           <div
-            class="h-[34px] w-[34px] flex justify-center items-center lg:hidden"
+            class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md lg:hidden"
             @click="toggleCardDropdown"
           >
             <i class="pi pi-bars"></i>
@@ -477,6 +477,7 @@
     </div>
     <div
       v-if="isCardDropdownOpen"
+      ref="dropdown"
       class="right-0 w-[192px] bg-white rounded-md shadow-lg z-10 h-full fixed position: fixed; height: 100%; width: 100%; left: 0px; top: 0px; display: flex; justify-content: flex-end; align-items: center; z-index: 1101; rounded-l-[20px]"
     >
       <div class="py-1">
@@ -705,6 +706,7 @@ const searchInput = ref(null);
 const searchResultsDropdown = ref(null);
 const router = useRouter();
 const loading = ref(false);
+const dropdown = ref(null);
 const toast = useToast();
 // const categoriesContainer = ref(null);
 const isLoggingOut = ref(false);
@@ -735,6 +737,16 @@ const toggleCardDropdown = () => {
     isProfileCardDropdownOpen.value = false;
   }
   isCardDropdownOpen.value = !isCardDropdownOpen.value;
+};
+const handleClickOutside = (event) => {
+  // Check if the clicked target is not the dropdown or the icon
+  if (
+    dropdown.value &&
+    !dropdown.value.contains(event.target) &&
+    !event.target.closest(".pi.pi-bars") // Check if clicked outside the icon
+  ) {
+    isCardDropdownOpen.value = false;
+  }
 };
 
 const profileCardDropdown = () => {
@@ -985,6 +997,7 @@ onMounted(() => {
   fetchChatsCount();
   fetchCategories();
   document.addEventListener("mousedown", collapseInput);
+  document.addEventListener("click", handleClickOutside);
   fetchNavbarCategory();
   // const categoryId = "63d90e4098d783ac0cbe2310";
   // const storedNews = localStorage.getItem(`news-${categoryId}`);
@@ -1024,6 +1037,7 @@ const fetchCategoryFromLocalStorage = (categoryId) => {
 
 onBeforeUnmount(() => {
   document.removeEventListener("mousedown", collapseInput);
+  document.removeEventListener("click", handleClickOutside);
 });
 
 const inputClass = computed(() =>

@@ -418,7 +418,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted, nextTick, computed } from "vue";
+import { defineProps, ref, onMounted, nextTick, computed, watch } from "vue";
 import commentsImg from "@/assets/svg/chatComments.svg";
 import { useRoute, useRouter } from "vue-router";
 import apiService from "@/services/apiServices";
@@ -510,6 +510,15 @@ const scrollMobileToBottom = () => {
     });
   });
 };
+watch(
+  () => conversation.value.length, // Watch the length of the conversation array
+  () => {
+    nextTick(() => {
+      scrollToBottom();
+      scrollMobileToBottom();
+    });
+  }
+);
 const handleQnAClick = async (question, index) => {
   selectedQuestionIndex.value = index;
   conversation.value.push({ type: "qnaQuestion", text: question });
@@ -741,7 +750,6 @@ onMounted(() => {
 .h-assist-card {
   height: 390px;
 }
-
 .bg-assist-card {
   background-image: url("../assets/png/chatBg.png");
   background-size: cover;
