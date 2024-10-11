@@ -9,7 +9,7 @@
     <div class="mx-[20px] mt-[85px]">
       <div class="flex flex-col lg:flex-row gap-3 mt-3">
         <div
-          class="w-[100%] lg:w-[65%] flex flex-col bg-white rounded-[10px] px-3 py-3"
+          class="w-[100%] lg:w-[65%] flex flex-col bg-white rounded-[10px] px-3 py-2"
         >
           <div class="flex flex-row items-center gap-1">
             <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
@@ -23,7 +23,7 @@
           </div>
 
           <!-- Loading message -->
-          <div v-if="!loading">
+          <div v-if="loading">
             <Skeleton />
           </div>
 

@@ -17,7 +17,7 @@
               Bookmarks
             </div>
           </div>
-          <div v-if="!loading">
+          <div v-if="loading">
             <Skeleton />
           </div>
           <div v-else-if="paginatedData.length > 0" class="flex flex-col gap-3">
@@ -51,7 +51,7 @@
                   </div>
                 </div>
                 <div
-                  class="w-[100%] sm:w-[80%] sm:ml-3 sm:mr-3 sm:py-2 flex flex-col sm:justify-between"
+                  class="w-[100%] sm:w-[80%] sm:ml-3 sm:mr-3 py-2 sm:py-2 px-3 sm:px-0 sm:p-0 flex flex-col sm:justify-between"
                 >
                   <div class="">
                     <div class="flex justify-between items-center">
@@ -86,7 +86,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="flex justify-between items-end">
+                  <div class="flex justify-between items-end sm:mb-2">
                     <div
                       class="flex h-full items-center justify-between gap-2 time-date-home"
                     >

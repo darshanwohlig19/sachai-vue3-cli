@@ -52,64 +52,61 @@ b
                       <img
                         class="object-contain h-full w-[100%]"
                         :src="item?.imgixUrlHighRes || fallbackImage"
-                        @error="(event) => (event.target.src = fallbackImage)"
                       />
                     </div>
                   </div>
                 </div>
                 <div
-                  class="w-[100%] sm:w-[60%] ml-0 mr-0 sm:ml-4 sm:mr-2 flex flex-col justify-evenly p-2 sm:p-0"
+                  class="w-[100%] sm:w-[60%] sm:ml-3 sm:mr-2 px-3 sm:px-0 flex flex-col sm:justify-around"
                 >
-                  <div class="flex justify-between items-center mt-1">
-                    <div class="flex gap-1 text-[#1E0627] medium">
-                      <div class="text-[8px] lg:text-[12px] font-lato">
-                        {{ item?.source || "No source" }}
+                  <div class="flex justify-between items-center mt-2">
+                    <div class="flex gap-1 text-[#1E0627] time-date-home">
+                      <div class="">
+                        {{ item.source || "No source" }}
                       </div>
-                      <div class="text-[8px] lg:text-[12px]">
-                        |
-                        {{ moment(item?.publishTime || new Date()).fromNow() }}
+                      <div class="">
+                        | {{ moment(item.publishTime || new Date()).fromNow() }}
                       </div>
                     </div>
                     <div class="flex gap-1">
                       <span
-                        class="mdi mdi-share-variant text-[11px] lg:text-[17px]"
+                        class="mdi mdi-share-variant text-[18px]"
+                        @click.stop="showDialog(item)"
                       ></span>
                       <span
                         :class="[
                           'mdi',
-                          'mdi-bookmark text-[11px] lg:text-[17px] cursor-pointer',
+                          'mdi-bookmark text-[18px] cursor-pointer',
                           getBookmarkColor(item.isBookmarked),
                         ]"
                         @click="addBookmark(item)"
-                      ></span>
-                    </div>
-                  </div>
-
-                  <!-- Re-added Block for Item Name -->
-                  <div class="text-[8px] lg:text-[12px] flex gap-3 mb-3">
-                    <span class="text-red-500 capitalize">
-                      {{ item.name }}
-                    </span>
-                  </div>
-
-                  <div
-                    class="text-[12px] lg:text-[16px] fontCustom leading-1 bold mr-1 mt-1"
-                  >
-                    <div
-                      @click="navigateToMoreNews(item._id)"
-                      class="cursor-pointer multiline-truncate1"
-                    >
-                      {{ item?.headline || "No Headline" }}
+                      >
+                      </span>
                     </div>
                   </div>
                   <div
-                    class="text-[10px] lg:text-[12px] text-[#878787] font-lato leading-1 mr-1 mt-1 mb-1"
+                    class="headine-home multiline-truncate1 mr-1 cursor-pointer mt-1"
+                    @click="navigateToMoreNews(item._id)"
                   >
+                    {{ item.headline || "No Headline" }}
+                  </div>
+                  <div
+                    class="cursor-pointer multiline-truncate leading-1 mr-1 mt-1 mb-1 summary-home text-[#878787]"
+                    @click="navigateToNewsDetail(item.newsId)"
+                  >
+                    {{ item.summary || "No summary" }}
+                  </div>
+                  <div class="flex justify-between mt-2 mb-2 items-end">
                     <div
-                      @click="navigateToMoreNews(item._id)"
-                      class="cursor-pointer multiline-truncate"
+                      class="flex h-full mb-1 items-center justify-between gap-2 time-date-home"
                     >
-                      {{ item?.summary || "No summary" }}
+                      <span class="text-red-500 capitalize">
+                        {{
+                          item.categories && item.categories.length > 0
+                            ? item.categories[0].replace(/-/g, " ")
+                            : ""
+                        }}
+                      </span>
                     </div>
                   </div>
                 </div>

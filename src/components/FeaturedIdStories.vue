@@ -39,20 +39,39 @@
         </div>
       </div>
       <div
-        class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg mx-[15px] mt-[20px]"
+        class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg mx-[5px] mt-[20px]"
       >
         <div
           v-for="(blog, index) in slicedData"
           :key="index"
           class="shadow-md between-Laptop-small:w-[100%] between-644-1024:!w-[100%] sm:w-[48%] flex flex-col md:flex-row sm:flex-row lg:flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px] xs:!h-[100%] between-md-max-sm-max:!w-[100%]"
         >
-          <img
-            class="lg:!w-[106px] between-644-1024:w-[104px] between-md-max-sm-max:w-[104px] md:!w-[106px] xxl:!w-[106px] object-contain rounded-[8px]"
-            :src="blog.imgixUrlHighRes || fallbackImage"
-            alt="Blog Image"
-            @click="navigateToFeaturedDetail(blog._id)"
-          />
-          <div>
+          <div
+            class="relative sm:mx-[3px] sm:my-[3px] bg-white rounded-lg overflow-hidden w-[100%] sm:w-[30%] h-[130px] sm:h-auto"
+          >
+            <div class="relative w-full h-[100%]">
+              <img
+                class="absolute inset-0 object-cover h-full w-full filter blur-md"
+                :src="blog.imgixUrlHighRes || fallbackImage"
+                alt="Background"
+                @click="navigateToCampingNews(blog._id)"
+              />
+              <div
+                class="absolute inset-0 bg-gradient from-transparent to-black opacity-75"
+              ></div>
+            </div>
+            <div
+              class="absolute inset-0 flex flex-col justify-between text-white"
+            >
+              <img
+                class="object-contain h-full w-full"
+                :src="blog.imgixUrlHighRes || fallbackImage"
+                alt="Centered Image"
+                @click="navigateToCampingNews(blog._id)"
+              />
+            </div>
+          </div>
+          <div class="w-[100%] sm:w-[65%]">
             <div
               class="flex flex-wrap items-center justify-between text-xs w-full mb-1"
             >
