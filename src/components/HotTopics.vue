@@ -12,15 +12,47 @@
       </div>
       <div v-if="loading">
         <div
-          class="mt-3 flex gap-4 items-center drop-shadow-lg border-1 p-2"
-          v-for="n in 12"
+          v-for="n in 5"
           :key="n"
+          class="mt-2 items-center shadow-md rounded-[8px] p-2"
         >
-          <div class="flex w-[20%] justify-center items-center">
-            <Skeleton class="rounded-md" height="30px" size="3rem"></Skeleton>
-          </div>
-          <div class="flex flex-col w-[80%] justify-between">
-            <Skeleton class="rounded-md" height="40px"></Skeleton>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <!-- Skeleton for Image Section -->
+            <div
+              class="relative sm:mx-[3px] sm:my-[3px] bg-white rounded-lg overflow-hidden w-[100%] sm:w-[25%] h-[130px] sm:h-auto"
+            >
+              <div class="relative w-full h-[100%]">
+                <!-- Background Skeleton -->
+                <div class="absolute inset-0">
+                  <Skeleton class="w-full h-full" />
+                </div>
+              </div>
+            </div>
+            <!-- Skeleton for Text Section -->
+            <div class="w-[100%] sm:w-[75%]">
+              <div class="flex flex-row justify-between">
+                <div class="flex flex-row gap-1 time-date-home items-center">
+                  <Skeleton width="50px" />
+                  <div class="text-[#EFF2F4]">|</div>
+                  <Skeleton width="100px" />
+                </div>
+                <div class="flex gap-1">
+                  <Skeleton shape="circle" size="24px" />
+                  <Skeleton shape="circle" size="24px" />
+                </div>
+              </div>
+              <div class="mt-1">
+                <div class="headline-tuncate-right flex gap-1 items-center">
+                  <Skeleton width="80%" height="20px" />
+                </div>
+                <div class="headline-tuncate summary-home mt-1 text-gray-5">
+                  <Skeleton width="80%" height="16px" />
+                </div>
+              </div>
+              <div class="time-date-home text-[#FF0053] mt-2">
+                <Skeleton width="70px" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

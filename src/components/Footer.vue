@@ -405,15 +405,7 @@
       </div>
     </div>
     <div
-<<<<<<< Updated upstream
       class="bg-[#fff] text-[#878787] text-lato text-[15px] text-center py-4 px-4 md:px-6"
-=======
-<<<<<<< Updated upstream
-      class="bg-[#fff] text-[#1E0627] font-lato text-[14px] text-center pb-4 px-4 md:px-6"
-=======
-      class="bg-[#fff] text-[#878787] text-lato text-[15px] text-center py-4 px-4 md:px-6"
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     >
       <div class="flex flex-col text-center md:flex-row justify-center">
         <div>© 2024, All Rights Reserved</div>
