@@ -123,8 +123,12 @@
                 {{ item?.summary || "No summary" }}
               </div>
             </div>
-            <div class="time-date-home text-[#FF0053] mt-2">
-              {{ item.categories[0] }}
+            <div class="time-date-home text-[#FF0053] mt-2 capitalize">
+              {{
+                item?.category[0]?.name?.toLowerCase() === "ai"
+                  ? item.category[0].name?.toUpperCase()
+                  : item?.category[0].name?.replace(/-/g, " ")
+              }}
             </div>
           </div>
         </div>
