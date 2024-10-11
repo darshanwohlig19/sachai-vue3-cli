@@ -250,6 +250,7 @@
           </div>
           <div>
             <a
+              v-if="!isLoggedIn"
               href="#"
               class="nav-items hidden lg:flex head-navs gap-2"
               @click="handleAuthAction"
