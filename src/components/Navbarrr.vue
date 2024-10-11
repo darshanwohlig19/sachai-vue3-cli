@@ -14,7 +14,6 @@
       <div class="w-[80%] between-992-max-md-1025:w-[90%]">
         <div class="flex gap-2 sm:gap-3 items-center justify-end">
           <div class="hidden lg:flex head-navs gap-2">
-            <!-- <a href="/">Home</a> -->
             <img
               v-if="route.path === '/'"
               src="@/assets/svg/active_home.svg"
@@ -43,7 +42,6 @@
               :to="isLoggedIn ? '/Astrology' : '/'"
               >Astrology</RouterLink
             >
-            <!-- Astrology -->
           </div>
 
           <div
@@ -694,13 +692,9 @@ const categories = ref([]);
 const visibleRight = ref(false);
 const newsItems = ref([]);
 const categoryWise = ref([]);
-console.log("hiiǐ", categoryWise);
 const isLoggedIn = ref(!!localStorage.getItem("apiDataToken"));
 const auth0User = localStorage.getItem("auth0User");
 const isAuthUser = ref(auth0User ? JSON.parse(auth0User) : null);
-console.log("isAuthUserisAuthUser", isAuthUser);
-
-// const showBookmarkLink = ref(true);
 const isPopupVisible = ref(false);
 const isExpanded = ref(false);
 const searchInput = ref(null);
@@ -709,15 +703,12 @@ const router = useRouter();
 const loading = ref(false);
 const dropdown = ref(null);
 const toast = useToast();
-// const categoriesContainer = ref(null);
 const isLoggingOut = ref(false);
 const isCardDropdownOpen = ref(false);
 const categoryId = "63d90f8aaabaf4bf0169c2b0";
-// const isInputVisible = ref(false);
 const searchQuery = ref("");
 const searchResults = ref([]);
 const chatsCount = ref("");
-console.log("chatsCount", chatsCount);
 const isProfileCardDropdownOpen = ref(false);
 const showDropdown = ref(false);
 let timeout = null;
@@ -740,11 +731,10 @@ const toggleCardDropdown = () => {
   isCardDropdownOpen.value = !isCardDropdownOpen.value;
 };
 const handleClickOutside = (event) => {
-  // Check if the clicked target is not the dropdown or the icon
   if (
     dropdown.value &&
     !dropdown.value.contains(event.target) &&
-    !event.target.closest(".pi.pi-bars") // Check if clicked outside the icon
+    !event.target.closest(".pi.pi-bars")
   ) {
     isCardDropdownOpen.value = false;
   }
@@ -759,31 +749,6 @@ const profileCardDropdown = () => {
 const formatPublishTime = (publishTime) => {
   return moment(publishTime).fromNow();
 };
-// const scrollLeft = () => {
-// if (categoriesContainer.value) {
-// categoriesContainer.value.scrollBy({
-// left: -100,
-// behavior: "smooth",
-// });
-// }
-// };
-
-// const scrollRight = () => {
-// if (categoriesContainer.value) {
-// categoriesContainer.value.scrollBy({
-// left: 100,
-// behavior: "smooth",
-// });
-// }
-// };
-
-// const toggleMenu = () => {
-// isMenuOpen.value = !isMenuOpen.value;
-// };
-
-// const toggleDropdown = () => {
-// isDropdownOpen.value = !isDropdownOpen.value;
-// };
 
 const handleBackgroundClick = () => {
   hidePopup();
@@ -824,13 +789,6 @@ const handleLogout = async () => {
         "post",
         `${apiConfig.LOGOUT_EVENT}`
       );
-      // const response = await axios.post(
-      // "https://api-uat.newsshield.io/user/logoutEvent",
-      // {},
-      // {
-      // headers: { Authorization: `${apiDataToken}` },
-      // }
-      // );
       if (response.status === 200) {
         console.log(`BEFORE ${localStorage.getItem("news-")}`);
         localStorage.removeItem("apiDataToken");
@@ -888,10 +846,6 @@ const fetchNavbarCategory = async () => {
       `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
       payload
     );
-    // const res = await axios.post(
-    // "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/",
-    // { categoryId }
-    // );
     categoryWise.value = res.data;
   } catch (error) {
     return [];
@@ -903,10 +857,6 @@ const fetchCategories = async () => {
     langauge: languageId,
   };
   try {
-    // const response = await axios.post(
-    // "https://api-uat.newsshield.io/category/getAllCat",
-    // {}
-    // );
     const response = await apiService.apiCall(
       "post",
       `${apiConfig.GET_ALL_CATEGORY}`,
@@ -924,32 +874,19 @@ const fetchCategories = async () => {
   }
 };
 
-// const toggleSearchInput = () => {
-// isInputVisible.value = !isInputVisible.value;
-// };
-
-// Debounced input handler
 const onInput = () => {
-  clearTimeout(timeout); // Clear any existing timeout
-
-  // Set a new timeout to detect when the user stops typing (500ms)
+  clearTimeout(timeout);
   timeout = setTimeout(() => {
     onStopTyping();
   }, 500);
 };
 
-// Called when the user stops typing
 const onStopTyping = () => {
   console.log("User stopped typing. Final input:");
   handleSearch();
-  // Handle your logic here, such as making an API call
 };
 
 const handleSearch = async () => {
-  // if (
-  // searchQuery.value.trim().length >= 4 &&
-  // searchQuery.value.trim().length % 4 === 0
-  // ) {
   try {
     console.log("API CALLED");
     loading.value = true;
@@ -962,9 +899,6 @@ const handleSearch = async () => {
       `${apiConfig.SEARCH_NEWS_FROM_WEB}`,
       payload
     );
-    // const response = await axios.post(
-    // "https://api-uat.newsshield.io/news/searchNewsFromWeb"
-    // );
     searchResults.value = response.data;
     loading.value = false;
   } catch (error) {
@@ -972,14 +906,7 @@ const handleSearch = async () => {
   } finally {
     loading.value = false;
   }
-  // } else if (searchQuery.value.trim().length < 4) {
-  // searchResults.value = [];
-  // }
 };
-
-// const expandInput = () => {
-// isExpanded.value = true;
-// };
 
 const collapseInput = (event) => {
   if (
@@ -1000,18 +927,6 @@ onMounted(() => {
   document.addEventListener("mousedown", collapseInput);
   document.addEventListener("click", handleClickOutside);
   fetchNavbarCategory();
-  // const categoryId = "63d90e4098d783ac0cbe2310";
-  // const storedNews = localStorage.getItem(`news-${categoryId}`);
-
-  // if (storedNews) {
-  // newsItems.value = JSON.parse(storedNews);
-  // console.log("Fetched news items:", newsItems.value);
-  // } else {
-  // console.log(
-  // "No news found in local storage for category:",
-  // "news-" + categoryId
-  // );
-  // }
 });
 const navigateToTrending = (id) => {
   console.log("Navigating to trending with ID:", id);
@@ -1028,11 +943,6 @@ const fetchCategoryFromLocalStorage = (categoryId) => {
     console.log("Fetched news items:", newsItems.value); // Verify the fetched items
   } else {
     console.log("INSIDE ELSE");
-
-    // console.log(
-    // "No news found in local storage for category:",
-    // `news-${categoryId}`
-    // );
   }
 };
 
@@ -1048,21 +958,17 @@ const inputClass = computed(() =>
 );
 
 watch(searchQuery, () => {
-  // if (newValue.trim().length >= 4 && newValue.trim().length % 4 === 0) {
   onInput();
-  // } else if (newValue.trim().length < 4) {
-  // searchResults.value = [];
-  // }
 });
 </script>
 
 <style scoped>
 .nav-items.active-link {
-  color: #ff0053; /* Color for active navigation item */
+  color: #ff0053;
 }
 
 .nav-items:active {
-  color: #ff0053; /* Color for active state */
+  color: #ff0053;
 }
 .card-dropdown {
   position: absolute;
@@ -1088,7 +994,7 @@ watch(searchQuery, () => {
 .two_line {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2 !important; /* Number of lines to display */
+  -webkit-line-clamp: 2 !important;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -1114,25 +1020,25 @@ watch(searchQuery, () => {
 .multi-line-2 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* Number of lines to display */
+  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .multiline-truncate-one-liner {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* Number of lines to display */
+  -webkit-line-clamp: 1;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .multiline-truncate-tow-tow-liner {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Number of lines to display */
+  -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .icon-container:hover .icon {
-  color: #ff0000; /* Change to desired hover color */
+  color: #ff0000;
 }
 </style>
