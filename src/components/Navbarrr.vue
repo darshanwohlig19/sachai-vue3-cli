@@ -684,8 +684,6 @@ import moment from "moment"; // Import moment.js
 import { useRoute } from "vue-router";
 import fallbackImage2 from "../common/config/GlobalConstants";
 const fallbackImage = fallbackImage2.variables.fallbackImage;
-// const isMenuOpen = ref(false);
-// const isDropdownOpen = ref(false);
 const route = useRoute();
 const categories = ref([]);
 const visibleRight = ref(false);
