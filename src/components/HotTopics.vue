@@ -12,7 +12,7 @@
       </div>
       <div v-if="loading">
         <div
-          v-for="n in 5"
+          v-for="n in 8"
           :key="n"
           class="mt-2 items-center shadow-md rounded-[8px] p-2"
         >
