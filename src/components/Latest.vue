@@ -128,20 +128,20 @@
                   </a>
                 </div>
                 <div
-                  class="pl-3 pr-3 mb-3 summary-home text-gray-5 multiline-truncate"
+                  class="pl-3 pr-3 summary-home text-gray-5 multiline-truncate"
                   @click="navigateToNewsDetail(news._id)"
                 >
                   {{ news.summary }}
                 </div>
-                <!-- <div class="px-3 mb-3 mt-2 text-[12px] flex gap-1">
+                <div class="px-3 mb-3 mt-2 time-date-home flex gap-1">
                   <span class="text-red-500 bold capitalize">
                     {{
-                      news?.categories[0]?.name?.toLowerCase() === "ai"
-                        ? news.categories[0]?.name?.toUpperCase()
-                        : news?.categories[0]?.name?.replace(/-/g, " ")
+                      news?.category[0]?.name?.toLowerCase() === "ai"
+                        ? news.category[0].name?.toUpperCase()
+                        : news?.category[0].name?.replace(/-/g, " ")
                     }}
                   </span>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
@@ -209,7 +209,7 @@ const fetchBlogs = async () => {
       ...news,
       bookmarked: localStorage.getItem(`bookmark_${news._id}`) === "Enabled",
     }));
-    console.log("latest", response.data[0].categories[0].name);
+    console.log("latest", response.data);
   } catch (error) {
     console.error("Error fetching blogs:", error);
   } finally {

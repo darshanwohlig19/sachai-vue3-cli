@@ -47,7 +47,7 @@
                     ></div>
                   </div>
                   <div
-                    class="absolute inset-0 flex flex-col justify-between text-white"
+                    class="absolute inset-0 flex flex-col w-full justify-between text-white"
                   >
                     <img
                       class="object-contain h-full w-[100%]"

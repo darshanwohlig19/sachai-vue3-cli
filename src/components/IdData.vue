@@ -41,13 +41,13 @@
                   alt="News image"
                   class="relative object-contain w-full h-64 rounded-xl"
                 />
-                <div
+                <!-- <div
                   :class="{
                     'absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]':
                       newsItem?.imgixUrlHighRes,
                     hidden: !newsItem?.imgixUrlHighRes,
                   }"
-                ></div>
+                ></div> -->
               </div>
             </div>
           </div>

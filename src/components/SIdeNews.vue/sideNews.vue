@@ -8,10 +8,8 @@
       :src="image"
       alt="Blog Image"
     />
-    <div class="">
-      <div class="headline-tuncate-right flex items-center headine-home">
-        {{ headline || "No Headline" }}
-      </div>
+    <div class="headline-tuncate-right items-center headine-home">
+      {{ headline || "No Headline" }}
     </div>
   </div>
 </template>
