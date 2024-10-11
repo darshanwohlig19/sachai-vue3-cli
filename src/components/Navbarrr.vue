@@ -712,10 +712,7 @@ let timeout = null;
 
 const hideDropdown = () => {
   setTimeout(() => {
-    if (
-      // !document.querySelector(".relative:hover") &&
-      !document.querySelector(".absolute:hover")
-    ) {
+    if (!document.querySelector(".absolute:hover")) {
       showDropdown.value = false;
       newsItems.value = [];
     }
