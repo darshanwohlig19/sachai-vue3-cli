@@ -512,7 +512,6 @@
       v-if="isProfileCardDropdownOpen"
       class="right-0 lg:!w-[310px] !h-[205px] bg-white rounded-md shadow-lg z-10 fixed mr-[21px] p-3 flex flex-col justify-between xs:![280px]"
     >
-      <!-- Profile info at the top -->
       <div class="flex items-center">
         <img
           src="@/assets/svg/sachaiFrame.svg"
