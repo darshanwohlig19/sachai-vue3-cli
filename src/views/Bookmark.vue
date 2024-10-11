@@ -17,6 +17,7 @@
               Bookmarks
             </div>
           </div>
+
           <div v-if="loading">
             <Skeleton />
           </div>

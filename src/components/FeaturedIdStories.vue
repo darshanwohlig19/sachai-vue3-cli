@@ -19,27 +19,57 @@
         </div>
       </div>
       <!-- Loader -->
-      <div v-if="isLoading" class="flex flex-row gap-3 justify-between">
-        <div
-          v-for="n in 2"
-          :key="n"
-          class="shadow-md between-Laptop-small:w-[48%] between-644-1024:w-[100%] sm:w-[100%] flex flex-row gap-2 border-1 p-2 rounded-[8px] cursor-pointer flex-grow h-[156px]"
-        >
-          <Skeleton width="106px" height="106px" class="rounded-[8px]" />
-          <div class="flex-1">
-            <div
-              class="flex flex-wrap items-center justify-between text-xs w-full mb-1"
-            >
-              <Skeleton width="120px" height="16px" />
-              <Skeleton width="40px" height="16px" />
+      <div v-if="isLoading">
+        <div v-for="n in itemsToShow" :key="n" class="flex w-full">
+          <div
+            v-for="n in itemsToShow1"
+            :key="n"
+            class="m-2 items-center shadow-md rounded-[8px] p-2 w-full"
+          >
+            <div class="flex flex-col sm:flex-row gap-2">
+              <!-- Skeleton for Image Section -->
+              <div
+                class="relative sm:mx-[3px] sm:my-[3px] bg-white rounded-lg overflow-hidden w-[100%] sm:w-[25%] h-[130px] sm:h-auto"
+              >
+                <div class="relative w-full h-[100%]">
+                  <!-- Background Skeleton -->
+                  <div class="absolute inset-0">
+                    <Skeleton class="w-full h-full" />
+                  </div>
+                </div>
+              </div>
+              <!-- Skeleton for Text Section -->
+              <div class="w-[100%] sm:w-[75%]">
+                <div class="flex flex-row justify-between">
+                  <div class="flex flex-row gap-1 time-date-home items-center">
+                    <Skeleton width="50px" />
+                    <div class="text-[#E9ECEF]">|</div>
+                    <Skeleton width="80px" />
+                  </div>
+                  <div class="flex gap-1">
+                    <Skeleton shape="circle" size="24px" />
+                    <Skeleton shape="circle" size="24px" />
+                  </div>
+                </div>
+                <div class="mt-1">
+                  <div class="headline-tuncate-right flex gap-1 items-center">
+                    <Skeleton width="80%" height="20px" />
+                  </div>
+                  <div class="headline-tuncate summary-home mt-1 text-gray-5">
+                    <Skeleton width="80%" height="16px" />
+                  </div>
+                </div>
+                <div class="time-date-home text-[#FF0053] mt-2">
+                  <Skeleton width="70px" />
+                </div>
+              </div>
             </div>
-            <Skeleton width="180px" height="20px" class="mb-1" />
-            <Skeleton width="200px" height="20px" />
           </div>
         </div>
       </div>
       <div
-        class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg mx-[5px] mt-[20px]"
+        v-else
+        class="flex flex-wrap lg:flex-row md:flex-row gap-3 justify-around cursor-pointer drop-shadow-lg mx-[15px] mt-[20px]"
       >
         <div
           v-for="(blog, index) in slicedData"
@@ -159,16 +189,20 @@ const router = useRouter();
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately
 const isLoading = ref(true);
-const itemsToShow = ref(4);
+const itemsToShow = ref(2);
+const itemsToShow1 = ref(2);
 
 const updateItemsToShow = () => {
   const width = window.innerWidth;
   if (width < 640) {
     itemsToShow.value = 1; // 1 on mobile
-  } else if (width < 1024) {
-    itemsToShow.value = 3; // 3 on tablet
+    itemsToShow1.value = 1; // 1 on mobile
+  } else if (width <= 1024) {
+    itemsToShow.value = 2; // 3 on tablet
+    itemsToShow1.value = 1; // 3 on tablet
   } else {
-    itemsToShow.value = 4; // 4 on desktop
+    itemsToShow.value = 2; // 4 on desktop
+    itemsToShow1.value = 2; // 4 on desktop
   }
 };
 

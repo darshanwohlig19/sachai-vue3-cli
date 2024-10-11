@@ -1,99 +1,99 @@
 <template>
-  <InviteLinkDialog
-    :isVisible="isDialogVisible"
-    :inviteLink="inviteLink"
-    @close="isDialogVisible = false"
-  />
-  <div class="bg-white rounded-xl p-3">
-    <div class="flex flex-row items-center gap-1">
-      <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
-      <div class="heads1">Hot Topics</div>
-    </div>
-    <div v-if="loading">
-      <div
-        class="mt-3 flex gap-4 items-center drop-shadow-lg border-1 p-2"
-        v-for="n in 12"
-        :key="n"
-      >
-        <div class="flex w-[20%] justify-center items-center">
-          <Skeleton class="rounded-md" height="30px" size="3rem"></Skeleton>
-        </div>
-        <div class="flex flex-col w-[80%] justify-between">
-          <Skeleton class="rounded-md" height="40px"></Skeleton>
+  <div>
+    <InviteLinkDialog
+      :isVisible="isDialogVisible"
+      :inviteLink="inviteLink"
+      @close="isDialogVisible = false"
+    />
+    <div class="bg-white rounded-xl p-3">
+      <div class="flex flex-row items-center gap-1">
+        <div class="bg-[#FF0053] w-[4px] h-[12px] rounded-md"></div>
+        <div class="heads1">Hot Topics</div>
+      </div>
+      <div v-if="loading">
+        <div
+          class="mt-3 flex gap-4 items-center drop-shadow-lg border-1 p-2"
+          v-for="n in 12"
+          :key="n"
+        >
+          <div class="flex w-[20%] justify-center items-center">
+            <Skeleton class="rounded-md" height="30px" size="3rem"></Skeleton>
+          </div>
+          <div class="flex flex-col w-[80%] justify-between">
+            <Skeleton class="rounded-md" height="40px"></Skeleton>
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      v-else
-      v-for="(item, index) in hot"
-      :key="index"
-      class="mt-2 items-center shadow-md rounded-[8px] p-2"
-    >
-      <div class="flex flex-col sm:flex-row gap-2">
-        <div
-          class="relative sm:mx-[3px] sm:my-[3px] bg-white rounded-lg overflow-hidden w-[100%] sm:w-[25%] h-[130px] sm:h-auto"
-        >
-          <div class="relative w-full h-[100%]">
-            <img
-              class="absolute inset-0 object-cover h-full w-full filter blur-md"
-              :src="item.imgixUrlHighRes || fallbackImage"
-              alt="Background"
-              @click="navigateToNewsDetail(item._id)"
-            />
-            <div
-              class="absolute inset-0 bg-gradient from-transparent to-black opacity-75"
-            ></div>
-          </div>
+      <div
+        v-else
+        v-for="(item, index) in hot"
+        :key="index"
+        class="mt-2 items-center shadow-md rounded-[8px] p-2"
+      >
+        <div class="flex flex-col sm:flex-row gap-2">
           <div
-            class="absolute inset-0 flex flex-col justify-between text-white"
+            class="relative sm:mx-[3px] sm:my-[3px] bg-white rounded-lg overflow-hidden w-[100%] sm:w-[25%] h-[130px] sm:h-auto"
           >
-            <img
-              class="object-contain h-full w-full"
-              :src="item.imgixUrlHighRes || fallbackImage"
-              alt="Centered Image"
-              @click="navigateToNewsDetail(item._id)"
-            />
-          </div>
-        </div>
-        <div class="w-[100%] sm:w-[75%]">
-          <div class="flex flex-row justify-between">
-            <div class="flex flex-row gap-1 time-date-home items-center">
-              <div>{{ item?.source }}</div>
-              <div>|</div>
-              <div>{{ moment(item?.publishTime || new Date()).fromNow() }}</div>
+            <div class="relative w-full h-[100%]">
+              <img
+                class="absolute inset-0 object-cover h-full w-full filter blur-md"
+                :src="item.imgixUrlHighRes || fallbackImage"
+                alt="Background"
+                @click="navigateToNewsDetail(item._id)"
+              />
+              <div
+                class="absolute inset-0 bg-gradient from-transparent to-black opacity-75"
+              ></div>
             </div>
-            <div class="flex gap-1">
-              <span
-                class="mdi mdi-share-variant text-[18px]"
-                @click.stop="showDialog(item)"
-              ></span>
-              <span
-                :class="[
-                  'mdi',
-                  'mdi-bookmark text-[18px] cursor-pointer',
-                  getBookmarkColor(item?.isBookmarked),
-                ]"
-                @click="addBookmark(item)"
-              >
-              </span>
-            </div>
-          </div>
-          <div class="mt-1">
             <div
-              class="headline-tuncate-right flex gap-1 items-center headine-home"
+              class="absolute inset-0 flex flex-col justify-between text-white"
             >
-              {{ item?.headline || "No Headline" }}
-            </div>
-            <div class="headline-tuncate summary-home mt-1 text-gray-5">
-              {{ item?.summary || "No summary" }}
+              <img
+                class="object-contain h-full w-full"
+                :src="item.imgixUrlHighRes || fallbackImage"
+                alt="Centered Image"
+                @click="navigateToNewsDetail(item._id)"
+              />
             </div>
           </div>
-          <div class="time-date-home text-[#FF0053] mt-2 capitalize">
-            {{
-              item?.category[0]?.name?.toLowerCase() === "ai"
-                ? item.category[0].name?.toUpperCase()
-                : item?.category[0].name?.replace(/-/g, " ")
-            }}
+          <div class="w-[100%] sm:w-[75%]">
+            <div class="flex flex-row justify-between">
+              <div class="flex flex-row gap-1 time-date-home items-center">
+                <div>{{ item?.source }}</div>
+                <div>|</div>
+                <div>
+                  {{ moment(item?.publishTime || new Date()).fromNow() }}
+                </div>
+              </div>
+              <div class="flex gap-1">
+                <span
+                  class="mdi mdi-share-variant text-[18px]"
+                  @click.stop="showDialog(item)"
+                ></span>
+                <span
+                  :class="[
+                    'mdi',
+                    'mdi-bookmark text-[18px] cursor-pointer',
+                    getBookmarkColor(item?.isBookmarked),
+                  ]"
+                  @click="addBookmark(item)"
+                >
+                </span>
+              </div>
+            </div>
+            <div class="mt-1">
+              <div
+                class="headline-tuncate-right flex gap-1 items-center headine-home"
+              >
+                {{ item?.headline || "No Headline" }}
+              </div>
+              <div class="headline-tuncate summary-home mt-1 text-gray-5">
+                {{ item?.summary || "No summary" }}
+              </div>
+            </div>
+            <div class="time-date-home text-[#FF0053] mt-2">
+              {{ item.categories[0] }}
+            </div>
           </div>
         </div>
       </div>
