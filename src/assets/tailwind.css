@@ -118,10 +118,13 @@ button.p-carousel-next.p-link {
 
 .standing_divider {
   height: 100%;
-  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
+  background-color: #f3f3f3; /* This is a light gray color, you can adjust as needed */
   width: 1px;
 }
 .sleeping_divider {
+  height: 1px;
+  background-color: #f3f3f3 !important; /* This is a light gray color, you can adjust as needed */
+  width: 100%;
 }
 .p-paginator-last,
 .p-paginator-first {

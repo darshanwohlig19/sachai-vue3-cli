@@ -2,7 +2,7 @@
   <!-- No News Message -->
   <!-- Main Content -->
   <div
-    class="flex flex-col gap-4 sm:gap-0 sm:flex-row lg:flex-row flex-wrap p-3 mt-3 justify-between bg-white rounded-[10px]"
+    class="flex flex-col sm:flex-row lg:flex-row sm:gap-0 between-xs-max-sm-max:gap-0 flex-wrap p-3 mt-3 justify-between bg-white rounded-[10px]"
   >
     <!-- First Section -->
     <div class="w-[100%] md:w-[48%] lg:w-[30%] flex flex-col cursor-pointer">
@@ -66,7 +66,7 @@
             {{ blogs[0]?.headline }}
           </div>
           <div
-            class="flex gap-2 text-white time-date-home text-[10px] md:text-[12px] mt-1"
+            class="flex gap-2 text-white time-date-home text-[10px] md:text-[12px] mt-2"
           >
             <div>{{ blogs[0]?.source }}</div>
             <div>|</div>
@@ -80,7 +80,10 @@
           <Skeleton width="45%" height="20px" />
         </div>
       </div>
-      <div v-else class="flex flex-row gap-10 mt-5 cursor-pointer">
+      <div
+        v-else
+        class="flex flex-row between-xs-max-sm-max:mb-3 gap-10 mt-3 cursor-pointer"
+      >
         <div
           class="headine-home multiline-truncate1"
           @click="navigateToCategory(blogs[1]?._id)"
@@ -102,7 +105,7 @@
 
     <!-- Second Section -->
     <div
-      class="w-[100%] lg:w-[30%] md:w-[50%] flex flex-col justify-between gap-3"
+      class="w-[100%] lg:w-[30%] md:w-[50%] flex flex-col justify-evenly gap-3 lg:gap-3"
     >
       <div v-if="loading">
         <div
@@ -160,11 +163,11 @@
         <Skeleton width="100%" height="30px"></Skeleton>
       </div>
     </div>
-    <div v-else class="w-[100%] lg:w-[35%] flex flex-col justify-around">
+    <div v-else class="w-[100%] mt-0 lg:w-[35%] flex flex-col justify-around">
       <div
         v-for="(item, index) in blogs2"
         :key="item._id"
-        class="mt-4 md:mt-4 lg:mt-0 cursor-pointer"
+        class="between-xs-max-sm-max:mt-3 sm:mt-4 md:mt-4 lg:mt-0 cursor-pointer"
       >
         <div class="flex flex-row gap-2" @click="navigateToCategory(item._id)">
           <div class="w-[5%] mt-2">
@@ -178,15 +181,15 @@
             <div class="headine-home multiline-truncate3">
               {{ item.headline }}
             </div>
-            <div class="summary-home text-gray-5 multiline-truncate1">
+            <div class="summary-home mt-1 text-gray-5 multiline-truncate1">
               {{ item.summary }}
             </div>
           </div>
         </div>
-        <hr
+        <div
           v-if="index < blogs2.length - 1"
-          class="mt-4 border-t border-gray-300"
-        />
+          class="sleeping_divider mt-3"
+        ></div>
       </div>
     </div>
   </div>
@@ -284,10 +287,5 @@ onMounted(() => {
   -webkit-line-clamp: 1; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.standing_divider {
-  height: 100%;
-  background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */
-  width: 1px;
 }
 </style>

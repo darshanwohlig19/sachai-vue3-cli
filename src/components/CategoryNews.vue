@@ -89,11 +89,13 @@
               <Button />
             </a>
           </div>
-          <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
+          <div class="flex flex-col lg:flex-row gap-2.5 sm:gap-2.5 lg:gap-4">
             <div class="w-[100%] lg:w-[65%]">
-              <div class="flex flex-col gap-5">
+              <div class="flex flex-col gap-4">
                 <div class="flex sm:flex-row flex-col gap-3 h-[100%]">
-                  <div class="md:w-[70%] w-[100%] cursor-pointer">
+                  <div
+                    class="md:w-[70%] w-[50%] between-xs-max-sm-max:w-[100%] cursor-pointer"
+                  >
                     <div
                       v-for="news in category.news.slice(0, 1)"
                       :key="news._id"
@@ -157,7 +159,7 @@
                   </div>
 
                   <div
-                    class="sm:w-[70%] w-[100%] flex flex-col justify-between gap-3 sm:gap-0"
+                    class="sm:w-[50%] w-[100%] flex flex-col justify-around gap-3 sm:gap-0"
                   >
                     <div
                       v-for="news in displayedNews(category.news)"
@@ -175,13 +177,14 @@
                           <a> {{ news.headline }} </a>
                         </div>
                       </div>
-                      <div class="mt-2">
+                      <div class="sleeping_divider mt-3"></div>
+                      <!-- <div class="mt-2">
                         <hr class="mt-3 border-t border-gray-300" />
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
-                <div class="flex flex-row h-[10%] gap-3">
+                <div class="flex flex-row h-[10%] gap-4">
                   <div
                     v-for="(news, index) in getDisplayedNews(category.news)"
                     :key="news._id"

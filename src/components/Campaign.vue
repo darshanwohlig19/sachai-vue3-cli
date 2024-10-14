@@ -118,21 +118,26 @@
           v-for="(item, index) in campaigns1"
           :key="item._id"
           :class="[
-            'flex flex-row gap-2.5 items-center',
-            index < campaigns1.length - 1
-              ? 'border-b border-gray-300 pb-3'
-              : '',
+            'flex flex-col',
+            // index < campaigns1.length - 1
+            //   ? 'border-b pb-3 font-[#f3f3f3] divider'
+            //   : '',
           ]"
         >
-          <div class="w-[15px]">
-            <img src="@/assets/png/Group.png" alt="" />
+          <div class="flex flex-row gap-2.5 items-center">
+            <div class="w-[15px]">
+              <img src="@/assets/png/Group.png" alt="" />
+            </div>
+            <div
+              class="headine-home lines22222 cursor-pointer"
+              @click="navigateToCampingNews(item._id)"
+            >
+              <div>
+                {{ item.headline || "No Headline" }}
+              </div>
+            </div>
           </div>
-          <div
-            class="headine-home lines22222 cursor-pointer"
-            @click="navigateToCampingNews(item._id)"
-          >
-            {{ item.headline || "No Headline" }}
-          </div>
+          <div v-if="index < 5" class="mt-3 sleeping_divider"></div>
         </div>
       </div>
     </div>

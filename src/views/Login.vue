@@ -393,7 +393,7 @@
         :responsiveOptions="responsiveOptions"
       >
         <template v-slot:item="{ data }">
-          <div class="w-full">
+          <div class="w-full gooo">
             <img
               :src="
                 data.image ||
@@ -922,7 +922,7 @@ const sendUserDataToApi = async (name, email, id, mobile, type) => {
     top: 70%;
   }
 }
-/* .gooo {
-  background-image: url("../assets/svg/login-background.png");
-} */
+.gooo {
+  background-image: url("../assets/svg/login--background.png");
+}
 </style>

@@ -144,7 +144,6 @@ import {
   onMounted,
   computed,
 } from "vue";
-import axios from "axios";
 import moment from "moment";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
@@ -229,21 +228,30 @@ const checkRouteParam = () => {
 const addBookmark = async (blog) => {
   const token = localStorage.getItem("apiDataToken");
   try {
+    const payload = {
+      status: currentStatus,
+    };
     console.log("NEWS ID:" + blog);
     const currentStatus =
       blog.isBookmarked === "Enabled" ? "Disabled" : "Enabled";
-
-    const response = await axios.post(
-      `https://api-uat.newsshield.io/bookmark/addBookmark/${blog._id}`,
-      {
-        status: currentStatus,
-      },
+    const response = await apiService.apiCall(
+      "post",
+      `${apiConfig.ADD_BOOKMARK}/${blog._id}`,
+      payload,
       {
         headers: {
           Authorization: `${token}`,
         },
       }
     );
+    // const response = await axios.post(
+    //   `https://api-uat.newsshield.io/bookmark/addBookmark/${blog._id}`,
+    //   {
+    //     headers: {
+    //       Authorization: `${token}`,
+    //     },
+    //   }
+    // );
     blog.isBookmarked = currentStatus;
     return response.data;
   } catch (error) {

@@ -75,34 +75,48 @@
             >
               <template #item="slotProps">
                 <div
-                  class="relative rounded-[10px] overflow-hidden h-[100%] md-max:h-[300px] bg-gradient-to-t from-black via-black/60"
+                  class="relative rounded-[10px] overflow-hidden h-[100%] md-max:h-[300px] bg-gradient-to-t from-black via-black/60 to-transparent"
                 >
                   <div
                     class="relative bg-white rounded-lg shadow-lg overflow-hidden"
                   >
                     <div class="relative h-[234px] w-[100%]">
+                      <!-- Blurred background image -->
                       <img
                         class="absolute inset-0 object-cover h-full w-full filter blur-sm"
                         :src="slotProps.data.imgixUrlHighRes || fallbackImage"
+                        alt="Background"
                       />
+                      <!-- Gradient overlay for background -->
                       <div
                         class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
                       ></div>
                     </div>
+
+                    <!-- Centered image with gradient -->
                     <div
                       class="absolute inset-0 flex flex-col justify-between text-white"
                     >
                       <img
-                        class="object-contain h-full w-[100%]"
+                        class="object-contain h-full w-full"
                         :src="slotProps.data.imgixUrlHighRes || fallbackImage"
+                        alt="Centered Image"
                       />
+                      <!-- Gradient overlay on top of centered image -->
+                      <div
+                        class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
+                      ></div>
                     </div>
                   </div>
+
+                  <!-- Tag for inventory status -->
                   <Tag
                     :value="slotProps.data.inventoryStatus"
                     :severity="getSeverity(slotProps.data.inventoryStatus)"
                     class="absolute top-4 left-4"
                   />
+
+                  <!-- Share and bookmark icons -->
                   <div
                     class="absolute top-2 right-2 p-2 text-black flex flex-row gap-2 justify-around"
                   >
@@ -129,10 +143,12 @@
                       </div>
                     </div>
                   </div>
+
+                  <!-- Headline and Details -->
                   <div
                     class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black via-black/60 to-transparent text-white"
                   >
-                    <div class="gap-1 text-white text-xs ml-3 mb-2">
+                    <div class="gap-1 text-white text-xs ml-2 mb-2">
                       <div class="leading-3 sm:w-full md:w-full">
                         <a
                           @click="navigateToTrending(slotProps.data._id)"
@@ -142,7 +158,7 @@
                           {{ slotProps.data.headline }}
                         </a>
                       </div>
-                      <div class="flex flex-row gap-3 mt-1 mb-1">
+                      <div class="flex flex-row gap-2 mt-2 mb-1">
                         <div
                           class="text-white time-date-home text-[10px] md:text-[12px]"
                         >
@@ -165,7 +181,7 @@
       </div>
 
       <div
-        class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 lg:mt-0 flex flex-col between-md-sm:mt-2 justify-evenly gap-3"
+        class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 lg:mt-1 flex flex-col between-md-sm:mt-2 justify-evenly gap-3"
       >
         <div
           @click="navigateToTrending(item._id)"
@@ -181,11 +197,12 @@
             <div class="headline-tuncate headine-home">
               {{ item.headline }}
             </div>
-            <div class="summary-home text-gray-5 summary-tuncate">
+            <div class="summary-home mt-1 text-gray-5 summary-tuncate">
               {{ item.summary }}
             </div>
             <!-- <div v-if="index < 2" class="border_11 sm-max:mt-3 mt-2"></div> -->
-            <hr v-if="index < 2" class="mt-3 border-t border-gray-300" />
+            <!-- <hr v-if="index < 2" class="mt-3 border-t border-gray-300" /> -->
+            <div v-if="index < 2" class="sleeping_divider mt-3"></div>
           </div>
         </div>
       </div>
@@ -193,7 +210,7 @@
         <div class="standing_divider"></div>
       </div>
       <div
-        class="w-[100%] lg:w-[30%] md:w-[100%] lg:mt-0 mt-3 flex flex-col justify-evenly gap-3"
+        class="w-[100%] lg:w-[30%] md:w-[100%] lg:mt-0 mt-4 flex flex-col justify-evenly gap-3"
       >
         <div
           @click="navigateToTrending(blog._id)"

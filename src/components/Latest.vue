@@ -118,7 +118,7 @@
                   </div>
                 </div>
                 <div
-                  class="pl-3 pr-3 text-[16px] font-semibold"
+                  class="pl-3 pr-3 mt-1 text-[16px] font-semibold"
                   @click="navigateToNewsDetail(news._id)"
                 >
                   <a
@@ -128,7 +128,7 @@
                   </a>
                 </div>
                 <div
-                  class="pl-3 pr-3 summary-home text-gray-5 multiline-truncate"
+                  class="pl-3 pr-3 mt-1 summary-home text-gray-5 multiline-truncate"
                   @click="navigateToNewsDetail(news._id)"
                 >
                   {{ news.summary }}

@@ -110,18 +110,19 @@
             <img class="small-img" src="@/assets/png/Group.png" />
             <div>
               <div class="headine-home more_headline">{{ news.headline }}</div>
-              <div class="summary-home summary">{{ news.summary }}</div>
+              <div class="summary-home mt-2 summary">{{ news.summary }}</div>
             </div>
           </div>
-          <div v-if="index < leftColumnNews.length - 1" class="mt-3">
-            <hr class="mt-3 border-t border-gray-300" />
-          </div>
+          <div
+            v-if="index < leftColumnNews.length - 1"
+            class="sleeping_divider mt-3"
+          ></div>
         </div>
       </div>
 
       <!-- Divider Column -->
       <div class="w-[3%] flex justify-center sm-425:hidden">
-        <div class="divider1 sm-425:hidden"></div>
+        <div class="standing_divider sm-425:hidden"></div>
       </div>
 
       <!-- Second Column -->
@@ -136,18 +137,19 @@
             <img class="small-img" src="@/assets/png/Group.png" />
             <div>
               <div class="headine-home more_headline">{{ news.headline }}</div>
-              <div class="summary-home summary">{{ news.summary }}</div>
+              <div class="summary-home mt-2 summary">{{ news.summary }}</div>
             </div>
           </div>
-          <div v-if="index < middleColumnNews.length - 1" class="mt-3">
-            <hr class="mt-3 border-t border-gray-300" />
-          </div>
+          <div
+            v-if="index < middleColumnNews.length - 1"
+            class="sleeping_divider mt-3"
+          ></div>
         </div>
       </div>
 
       <!-- Divider Column -->
       <div class="w-[3%] flex justify-center">
-        <div class="divider1 sm-max:hidden"></div>
+        <div class="standing_divider sm-max:hidden"></div>
       </div>
 
       <!-- Third Column -->
@@ -162,12 +164,16 @@
             <img class="small-img" src="@/assets/png/Group.png" />
             <div>
               <div class="headine-home more_headline">{{ news.headline }}</div>
-              <div class="summary-home summary">{{ news.summary }}</div>
+              <div class="summary-home mt-2 summary">{{ news.summary }}</div>
             </div>
           </div>
-          <div v-if="index < rightColumnNews.length - 1" class="mt-3">
+          <div
+            v-if="index < rightColumnNews.length - 1"
+            class="sleeping_divider mt-3"
+          ></div>
+          <!-- <div v-if="index < rightColumnNews.length - 1" class="mt-3">
             <hr class="mt-3 border-t border-gray-300" />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
