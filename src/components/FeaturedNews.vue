@@ -77,6 +77,9 @@
       <div v-if="loading" class="mt-5">
         <div class="flex justify-between gap-3">
           <Skeleton width="45%" height="20px" />
+          <div class="w-[1%]">
+            <div class="standing_divider"></div>
+          </div>
           <Skeleton width="45%" height="20px" />
         </div>
       </div>
