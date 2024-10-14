@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, RecaptchaVerifier } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBbC6Q-gPdFtYk6jmQ0ju_U9OfvtBIc7Zs",
-  authDomain: "askus-4055a.firebaseapp.com",
-  projectId: "askus-4055a",
-  storageBucket: "askus-4055a.appspot.com",
-  messagingSenderId: "920776112657",
-  appId: "1:920776112657:web:e7ed40a77acbd3b3454fb0",
-  measurementId: "G-QC5E3WXVH5",
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_FIREBASE_APP_ID,
+  measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
