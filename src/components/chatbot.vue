@@ -88,7 +88,7 @@
                   v-if="
                     message.type === 'user' || message.type === 'qnaQuestion'
                   "
-                  class="bg-[#C9E6FC] text-purple-10 rounded-customChat flex justify-start p-2 shadow !font-normal !font-lato max-w-fit w-[286px] text-sm md:!w-[400px]"
+                  class="bg-[#C9E6FC] text-purple-10 rounded-customChat flex justify-start p-2 shadow !font-normal !font-lato max-w-fit w-[286px] text-sm md:!w-[400px] between-lg-max-md-max:!mr-[10px]"
                   v-html="message.text"
                 ></p>
               </div>
@@ -108,7 +108,7 @@
                   !message.loading &&
                   (message.type === 'qnaAnswers' || message.type === 'bot')
                 "
-                class="bg-soft-cloud-gray text-purple-10 rounded-customAnswerChat p-2.5 shadow text-sm font-normal font-lato ml-[10px] mt-[10px] mb-[10px] xs:w-[286px] md:!w-[535px]"
+                class="bg-soft-cloud-gray text-purple-10 rounded-customAnswerChat p-2.5 shadow text-sm font-normal font-lato ml-[10px] mt-[10px] mb-[10px] xs:w-[286px] md:!w-[535px] between-lg-max-md-max:!w-[465px]"
               >
                 <p v-html="message.text"></p>
                 <div
