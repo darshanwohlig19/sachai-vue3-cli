@@ -20,7 +20,7 @@ config.GET_CATEGORY_WISE_NEWS_FOR_WEB =
 
 //chatbot
 config.ADD_QA_DATA = config.PORT_IP.LOGIN + "/chats/saveClickedSuggestedQnA";
-config.CHAT_BOT_DATA = config.PORT_IP.LOGIN + "/chats/addQnA";
+config.CHAT_BOT_DATA = config.PORT_IP.LOGIN + "/chats/addQnAV2";
 config.GET_CHAT_BOT_DATA = config.PORT_IP.LOGIN + "/chats/getChatsperUser";
 config.CHAT_BOT_Feedback = config.PORT_IP.LOGIN + "/chats/answerFeedback";
 config.CHAT_BOT_LIMIT = config.PORT_IP.LOGIN + "/chats/questionLimitV2";
