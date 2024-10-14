@@ -454,7 +454,8 @@
           </button>
           <button
             v-if="isLoggedIn"
-            @click="profileCardDropdown"
+            @click="toggleProfileCountDropdown"
+            ref="profileDown"
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
           >
             <img
@@ -509,7 +510,8 @@
       </div>
     </div>
     <div
-      v-if="isProfileCardDropdownOpen"
+      v-if="isProfileCardCountDropdownOpen"
+      ref="cardDropdown"
       class="right-0 lg:!w-[310px] !h-[205px] bg-white rounded-md shadow-lg z-10 fixed mr-[21px] p-3 flex flex-col justify-between xs:![280px]"
     >
       <div class="flex items-center">
@@ -579,96 +581,6 @@
         </button>
       </div>
     </div>
-    <!-- <div
-      class="w-full h-[67px] mt-1 flex justify-between bg-white items-center relative lg:overflow-x-hidden"
-    >
-      <i
-        class="pi pi-angle-left ml-2 cursor-pointer block md:hidden"
-        @click="scrollLeft"
-      ></i>
-      <div
-        class="flex items-center justify-between space-x-3 px-2 py-0 flex-1 overflow-x-auto custom-scrollbar lg:overflow-x-hidden whitespace-nowrap"
-        ref="categoriesContainer"
-      >
-        <div
-          v-for="heading in categories"
-          :key="heading._id"
-          class="flex-shrink-0"
-        >
-          <a
-            :href="`/categories/${heading._id}?category=${heading.name}`"
-            class="no-underline"
-          >
-            <Chip
-              class="bg-transparent border-1 border-[#D4D4D4] capitalize head-cat"
-              :label="heading.name"
-            />
-          </a>
-        </div>
-      </div>
-      <div className="bg-white rounded-3xl shadow-lg p-8 max-w-md mx-auto">
-      <div className="flex items-center mb-6">
-        <img
-          src="/placeholder.svg?height=80&width=80"
-          alt="Profile picture"
-          className="w-20 h-20 rounded-full mr-4"
-        />
-        <div>
-          <h2 className="text-3xl font-bold text-gray-800">John Doe</h2>
-          <p className="text-xl text-gray-500">johndoe@gmail.com</p>
-        </div>
-      </div>
-      <div className="bg-gray-100 rounded-2xl p-6 mb-6">
-        <div className="grid grid-cols-3 gap-4 text-center">
-          <div>
-            <p className="text-4xl font-bold text-gray-800">45</p>
-            <p className="text-lg text-gray-500">Total Credits</p>
-          </div>
-          <div>
-            <p className="text-4xl font-bold text-gray-800">35</p>
-            <p className="text-lg text-gray-500">Credits left</p>
-          </div>
-          <div>
-            <p className="text-4xl font-bold text-gray-800">10</p>
-            <p className="text-lg text-gray-500">Credits used</p>
-          </div>
-        </div>
-      </div>
-      <button
-        className="w-full bg-white border-2 border-red-500 text-red-500 rounded-full py-2 px-4 flex items-center justify-center text-lg font-semibold hover:bg-red-50 transition-colors duration-300"
-      >
-        <Power className="w-5 h-5 mr-2" />
-        Logout
-      </button>
-    </div>
-      <i
-        class="pi pi-angle-right mr-2 cursor-pointer block md:hidden"
-        @click="scrollRight"
-      ></i>
-    </div> -->
-    <div
-      v-if="isPopupVisible"
-      class="fixed inset-0 flex items-center justify-center pop-up-confirm bg-opacity-50 z-50 bg-[#000000b0]"
-      @click="handleBackgroundClick"
-    >
-      <div class="bg-white p-5 sm:p-6 rounded-[18px] shadow-lg" @click.stop>
-        <p class="mt-2 text-[#121212] font-lato font-bold font-[24px]">
-          Are you sure you want to logout?
-        </p>
-        <div class="flex flex-col gap-3 justify-center mt-4">
-          <div class="flex justify-center items-center">
-            <button
-              :disabled="isLoggingOut"
-              @click="handleLogout"
-              class="bg-[#1E0627] font-lato text-white px-4 h-[52px] w-[200px] py-2 rounded-[18px]"
-            >
-              Yes, Logout
-            </button>
-          </div>
-          <button @click="hidePopup" class="text-#000 font-lato">Cancel</button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -705,8 +617,12 @@ const searchQuery = ref("");
 const searchResults = ref([]);
 const chatsCount = ref("");
 const dropdown = ref(null);
+const cardDropdown = ref(null);
+const profileDown = ref(null);
 const isCardDropdownOpen = ref(false);
 const isProfileCardDropdownOpen = ref(false);
+const isProfileCardCountDropdownOpen = ref(false);
+const isProfileCardBoxDropdownOpen = ref(false);
 const showDropdown = ref(false);
 let timeout = null;
 
@@ -724,6 +640,12 @@ const toggleCardDropdown = () => {
   }
   isCardDropdownOpen.value = !isCardDropdownOpen.value;
 };
+const toggleProfileCountDropdown = () => {
+  if (isProfileCardBoxDropdownOpen.value) {
+    isProfileCardBoxDropdownOpen.value = false;
+  }
+  isProfileCardCountDropdownOpen.value = !isProfileCardCountDropdownOpen.value;
+};
 const handleClickOutside = (event) => {
   if (
     dropdown.value &&
@@ -734,19 +656,23 @@ const handleClickOutside = (event) => {
   }
 };
 
-const profileCardDropdown = () => {
-  if (isCardDropdownOpen.value) {
-    isCardDropdownOpen.value = false;
+const handleClickOutsideProfileDropdown = (event) => {
+  if (
+    isProfileCardCountDropdownOpen.value &&
+    cardDropdown.value &&
+    !cardDropdown.value.contains(event.target) &&
+    !event.target.closest("button") // Assuming the toggle button has a specific class or id
+  ) {
+    isProfileCardCountDropdownOpen.value = false;
   }
-  isProfileCardDropdownOpen.value = !isProfileCardDropdownOpen.value;
 };
 const formatPublishTime = (publishTime) => {
   return moment(publishTime).fromNow();
 };
 
-const handleBackgroundClick = () => {
-  hidePopup();
-};
+// const handleBackgroundClick = () => {
+//   hidePopup();
+// };
 
 const handleAuthAction = async () => {
   if (isLoggedIn.value) {
@@ -920,6 +846,7 @@ onMounted(() => {
   fetchCategories();
   document.addEventListener("mousedown", collapseInput);
   document.addEventListener("click", handleClickOutside);
+  document.addEventListener("click", handleClickOutsideProfileDropdown);
   fetchNavbarCategory();
 });
 const navigateToTrending = (id) => {
@@ -943,6 +870,7 @@ const fetchCategoryFromLocalStorage = (categoryId) => {
 onBeforeUnmount(() => {
   document.removeEventListener("mousedown", collapseInput);
   document.removeEventListener("click", handleClickOutside);
+  document.removeEventListener("click", handleClickOutsideProfileDropdown);
 });
 
 const inputClass = computed(() =>
