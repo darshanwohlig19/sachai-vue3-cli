@@ -1,10 +1,7 @@
 const config = {
-  PORT: 3000,
-  PROTOCOL: "https",
-  HOST: "api-uat.newsshield.io",
-  // HOST: "dev-api.newsshield.io",
-  // PROTOCOL: "http",
-  // HOST: "localhost",
+  PORT: process.env.VUE_APP_PORT,
+  PROTOCOL: process.env.VUE_APP_PROTOCOL,
+  HOST: process.env.VUE_APP_HOST,
 };
 config.PROTOCOL = `${config.PROTOCOL}://${config.HOST}`;
 // config.PROTOCOL_STR = `${config.PROTOCOL}://${config.HOST}:${config.PORT}`;
