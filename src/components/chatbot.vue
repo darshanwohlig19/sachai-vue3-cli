@@ -296,7 +296,7 @@
             <div class="flex justify-end ml-5">
               <p
                 v-if="message.type === 'user' || message.type === 'qnaQuestion'"
-                class="bg-blue-5 text-purple-10 rounded-customChat flex justify-start p-2 !font-normal !font-lato max-w-fit w-[286px] text-xs !md:w-[400px] leading-[14.4px]"
+                class="bg-blue-5 text-purple-10 rounded-customChat flex justify-start p-2 !font-normal !font-lato max-w-fit w-[286px] text-xs !md:w-[400px] leading-[14.4px] !mr-[10px]"
                 v-html="message.text"
               ></p>
             </div>
@@ -333,7 +333,7 @@
                   "
                 />
                 <div
-                  class="flex items-center justify-end text-sm h-[23px] space-x-1"
+                  class="flex items-center justify-end text-sm h-auto space-x-1"
                   v-if="message.type === 'bot' || message.type === 'qnaAnswers'"
                 >
                   <span
