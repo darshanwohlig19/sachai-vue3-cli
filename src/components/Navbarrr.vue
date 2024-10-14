@@ -454,7 +454,7 @@
           </button>
           <button
             v-if="isLoggedIn"
-            @click="toggleProfileCountDropdown"
+            @click="handleProfileButtonClick"
             ref="profileDown"
             class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
           >
@@ -626,6 +626,10 @@ const isProfileCardBoxDropdownOpen = ref(false);
 const showDropdown = ref(false);
 let timeout = null;
 
+const handleProfileButtonClick = () => {
+  fetchChatsCount();
+  toggleProfileCountDropdown();
+};
 const hideDropdown = () => {
   setTimeout(() => {
     if (!document.querySelector(".absolute:hover")) {
