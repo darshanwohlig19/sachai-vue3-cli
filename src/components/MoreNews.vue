@@ -100,23 +100,16 @@
       <div
         class="w-[30%] sm-425:w-[100%] sm-max:w-[50%] between-sm-md:w-[50%] below-sm:w-[100%]"
       >
-        <div
-          v-for="(news, index) in leftColumnNews"
-          :key="'news-left-' + index"
+        <NewsCard
+          v-for="(item, index) in leftColumnNews"
           class="mt-3"
-          @click="navigateToMoreNews(news._id)"
-        >
-          <div class="flex flex-row gap-3 cursor-pointer">
-            <img class="small-img" src="@/assets/png/Group.png" />
-            <div>
-              <div class="headine-home more_headline">{{ news.headline }}</div>
-              <div class="summary-home summary">{{ news.summary }}</div>
-            </div>
-          </div>
-          <div v-if="index < leftColumnNews.length - 1" class="mt-3">
-            <hr class="mt-3 border-t border-gray-300" />
-          </div>
-        </div>
+          :key="index"
+          :item="item"
+          :show-divider="index < 2"
+          headline-Class="line-clamp-2"
+          summaryClass="line-clamp-3"
+          @navigate="navigateToMoreNews"
+        />
       </div>
 
       <!-- Divider Column -->
@@ -126,23 +119,16 @@
 
       <!-- Second Column -->
       <div class="w-[30%] sm-max:w-[50%] between-sm-md:w-[50%] sm-425:hidden">
-        <div
-          v-for="(news, index) in middleColumnNews"
-          :key="'news-middle-' + index"
+        <NewsCard
+          v-for="(item, index) in middleColumnNews"
           class="mt-3"
-          @click="navigateToMoreNews(news._id)"
-        >
-          <div class="flex flex-row gap-3 cursor-pointer">
-            <img class="small-img" src="@/assets/png/Group.png" />
-            <div>
-              <div class="headine-home more_headline">{{ news.headline }}</div>
-              <div class="summary-home summary">{{ news.summary }}</div>
-            </div>
-          </div>
-          <div v-if="index < middleColumnNews.length - 1" class="mt-3">
-            <hr class="mt-3 border-t border-gray-300" />
-          </div>
-        </div>
+          :key="index"
+          :item="item"
+          :show-divider="index < 2"
+          headline-Class="line-clamp-2"
+          summaryClass="line-clamp-3"
+          @navigate="navigateToMoreNews"
+        />
       </div>
 
       <!-- Divider Column -->
@@ -152,23 +138,16 @@
 
       <!-- Third Column -->
       <div class="w-[30%] sm-max:hidden">
-        <div
-          v-for="(news, index) in rightColumnNews"
-          :key="'news-right-' + index"
+        <NewsCard
+          v-for="(item, index) in rightColumnNews"
           class="mt-3"
-          @click="navigateToMoreNews(news._id)"
-        >
-          <div class="flex flex-row gap-3 cursor-pointer">
-            <img class="small-img" src="@/assets/png/Group.png" />
-            <div>
-              <div class="headine-home more_headline">{{ news.headline }}</div>
-              <div class="summary-home summary">{{ news.summary }}</div>
-            </div>
-          </div>
-          <div v-if="index < rightColumnNews.length - 1" class="mt-3">
-            <hr class="mt-3 border-t border-gray-300" />
-          </div>
-        </div>
+          :key="index"
+          :item="item"
+          :show-divider="index < 2"
+          headline-Class="line-clamp-2"
+          summaryClass="line-clamp-3"
+          @navigate="navigateToMoreNews"
+        />
       </div>
     </div>
   </div>

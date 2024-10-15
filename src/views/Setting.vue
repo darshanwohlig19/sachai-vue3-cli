@@ -98,7 +98,7 @@
 import { ref } from "vue";
 import { Button } from "primevue/button";
 import { Checkbox } from "primevue/checkbox";
-import Navbarrr from "@/components/Navbarrr.vue";
+import Navbarrr from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 import Lang1 from "@/assets/svg/settinglang1.svg";
 import Lang2 from "@/assets/svg/settinglang2.svg";

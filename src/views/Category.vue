@@ -128,11 +128,10 @@
             </div>
 
             <Paginator
-              :rows="rowsPerPage"
               :totalRecords="totalRecords"
+              :rows="rowsPerPage"
               :page="currentPage"
               @page="onPageChange"
-              :class="{ hidden: isLoading, visible: !isLoading }"
             />
           </div>
         </div>
@@ -155,7 +154,7 @@ import moment from "moment";
 import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
-import Navbarrr from "@/components/Navbarrr.vue";
+import Navbarrr from "@/components/Navbar.vue";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import { useToast } from "primevue/usetoast";
@@ -182,6 +181,8 @@ const navigateToMoreNews = (id) => {
 const fetchNews = async () => {
   const payload = {
     categoryId,
+    limit: 5,
+    pageKey: 1,
   };
   try {
     loading.value = true; // Set loading to true before fetching news
@@ -267,7 +268,8 @@ const addBookmark = async (news) => {
 // Computed property for paginated news
 const paginatedNews = computed(() => {
   const start = currentPage.value * rowsPerPage.value;
-  return news.value.slice(start, start + rowsPerPage.value);
+  const end = start + rowsPerPage.value;
+  return news.value.slice(start, end);
 });
 
 // Computed property for total number of records
@@ -275,8 +277,7 @@ const totalRecords = computed(() => news.value.length);
 
 // Method to handle page change
 const onPageChange = (event) => {
-  currentPage.value = event.page;
-  rowsPerPage.value = event.rows;
+  currentPage.value = event.page; // Update the current page when the user clicks on a page number
 };
 
 // Fetch news when the component is mounted

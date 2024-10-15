@@ -98,43 +98,13 @@
                       v-for="news in category.news.slice(0, 1)"
                       :key="news._id"
                     >
-                      <div
-                        class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden"
-                      >
-                        <div class="relative w-full h-[100%]">
-                          <img
-                            class="absolute inset-0 object-cover h-full w-full filter blur-sm"
-                            :src="news.imgixUrlHighRes || fallbackImage"
-                            alt="Background"
-                            @click="navigateToCampingNews(news._id)"
-                          />
-                          <div
-                            class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
-                          ></div>
-                        </div>
-                        <div
-                          class="absolute inset-0 flex flex-col justify-between text-white"
-                        >
-                          <img
-                            class="object-contain h-full w-full"
-                            :src="news.imgixUrlHighRes || fallbackImage"
-                            alt="Centered Image"
-                            @click="navigateToCampingNews(news._id)"
-                          />
-                          <div
-                            class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
-                          ></div>
-                        </div>
-                        <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
-                          <div
-                            class="multiline-truncate1 headine-home text-white w-full md:w-auto"
-                            :style="{ width: 'calc(100% - 30px)' }"
-                            @click="navigateToCampingNews(news._id)"
-                          >
-                            {{ news.headline || "No Headline" }}
-                          </div>
-                        </div>
-                      </div>
+                      <Image
+                        :blog="news"
+                        :headline="news?.headline"
+                        :newsId="news?._id"
+                        :image="news?.imgixUrlHighRes || fallbackImage"
+                        @navigate="navigateToCategory"
+                      />
                       <!-- <div class="relative drop-shadow-lg">
                         <img
                           :src="news.imgixUrlHighRes || fallbackImage"
@@ -164,17 +134,12 @@
                       :key="news._id"
                       class=""
                     >
-                      <div class="flex flex-row gap-2 items-center">
-                        <div class="w-[15px]">
-                          <img src="@/assets/png/Group.png" alt="" />
-                        </div>
-                        <div
-                          class="headine-home one-line cursor-pointer"
-                          @click="navigateToCampingNews(news._id)"
-                        >
-                          <a> {{ news.headline }} </a>
-                        </div>
-                      </div>
+                      <HeadlineNews
+                        :headline="news.headline"
+                        :newsId="news._id"
+                        @navigate="navigateToCampingNews"
+                        headlineStyle="line-clamp-1"
+                      />
                       <div class="mt-2">
                         <hr class="mt-3 border-t border-gray-300" />
                       </div>
@@ -187,12 +152,12 @@
                     :key="news._id"
                     class="flex flex-row gap-2 w-[50%] md:w-[30%]"
                   >
-                    <div
-                      class="multiline-truncate1 headine-home w-[100%] cursor-pointer"
-                      @click="navigateToCampingNews(news._id)"
-                    >
-                      {{ news.headline }}
-                    </div>
+                    <BottomNews
+                      :headline="news.headline"
+                      :newsId="news._id"
+                      @navigate="navigateToCampingNews"
+                    />
+
                     <div
                       v-if="index < getDisplayedNews(category.news).length - 1"
                       class="standing_divider"
@@ -230,7 +195,7 @@ import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import Button from "./ViewAll.vue";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
-import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
+import BlogCard from "./BlogCard.vue";
 import { useRouter } from "vue-router";
 import fallbackImage2 from "../common/config/GlobalConstants";
 

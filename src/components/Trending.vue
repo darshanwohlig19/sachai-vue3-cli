@@ -167,27 +167,15 @@
       <div
         class="w-[100%] lg:w-[35%] md:w-[48%] mt-3 lg:mt-0 flex flex-col between-md-sm:mt-2 justify-evenly gap-3"
       >
-        <div
-          @click="navigateToTrending(item._id)"
+        <NewsCard
           v-for="(item, index) in news.slice(0, 3)"
           :key="index"
-          class="flex gap-3 mt-0 between-md-sm:mt-2 cursor-pointer"
-        >
-          <img
-            class="image-small !h-[10px] !w-[10px]"
-            src="../assets/png/Group.png"
-          />
-          <div>
-            <div class="headline-tuncate headine-home">
-              {{ item.headline }}
-            </div>
-            <div class="summary-home text-gray-5 summary-tuncate">
-              {{ item.summary }}
-            </div>
-            <!-- <div v-if="index < 2" class="border_11 sm-max:mt-3 mt-2"></div> -->
-            <hr v-if="index < 2" class="mt-3 border-t border-gray-300" />
-          </div>
-        </div>
+          :item="item"
+          :show-divider="index < 2"
+          headline-Class="line-clamp-1"
+          summaryClass="line-clamp-2"
+          @navigate="navigateToTrending"
+        />
       </div>
       <div class="w-[1%] xl-max:!hidden flex justify-center">
         <div class="standing_divider"></div>
@@ -230,6 +218,7 @@
 </template>
 
 <script setup>
+// import NewsCard from "./NewsCard.vue";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import { ref, onMounted, onBeforeUnmount } from "vue";
@@ -241,9 +230,9 @@ import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dial
 const isDialogVisible = ref(false); // State for dialog visibility
 const inviteLink = ref(""); // Link to share, set this appropriately
 import fallbackImage2 from "../common/config/GlobalConstants";
-import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
+import BlogCard from "./BlogCard.vue";
 
-// import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
+// import BlogCard from "../components/SIdeNews.vue/SideNews.vue";
 
 const fallbackImage = fallbackImage2.variables.fallbackImage;
 

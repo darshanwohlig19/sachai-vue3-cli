@@ -124,15 +124,12 @@
               : '',
           ]"
         >
-          <div class="w-[15px]">
-            <img src="@/assets/png/Group.png" alt="" />
-          </div>
-          <div
-            class="headine-home lines22222 cursor-pointer"
-            @click="navigateToCampingNews(item._id)"
-          >
-            {{ item.headline || "No Headline" }}
-          </div>
+          <HeadlineNews
+            :headline="item.headline"
+            :newsId="item._id"
+            @navigate="navigateToCampingNews"
+            headlineStyle="line-clamp-1"
+          />
         </div>
       </div>
     </div>
@@ -147,10 +144,12 @@ import { computed, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
 import fallbackImage2 from "../common/config/GlobalConstants";
+import HeadlineNews from "./HeadlineNews.vue";
 
 export default {
   components: {
     Button,
+    HeadlineNews,
   },
   setup() {
     const screenWidth = ref(window.innerWidth);
