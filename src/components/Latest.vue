@@ -160,6 +160,8 @@ import { useRoute, useRouter } from "vue-router";
 import Button from "./ViewAll.vue";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
 import axios from "axios";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const route = useRoute();
 const router = useRouter();
 const isDialogVisible = ref(false); // State for dialog visibility
@@ -278,6 +280,21 @@ const addBookmark = async (news) => {
         },
       }
     );
+    if (currentStatus === "Enabled") {
+      toast.add({
+        severity: "success",
+        summary: "Bookmark Added",
+        group: "success",
+        life: 3000,
+      });
+    } else {
+      toast.add({
+        severity: "success",
+        summary: "Bookmark Removed",
+        group: "success",
+        life: 3000,
+      });
+    }
     news.isBookmarked = currentStatus;
     return response.data;
   } catch (error) {

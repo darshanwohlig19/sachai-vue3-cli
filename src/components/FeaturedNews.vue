@@ -9,70 +9,16 @@
       <div v-if="loading">
         <Skeleton width="100%" height="233px" />
       </div>
-      <div
-        v-else
-        class="relative drop-shadow-lg"
-        @click="navigateToCategory(blogs[0]?._id)"
-      >
-        <div>
-          <!-- <img
-            :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
-            class="rounded-[8px] h-[234px] w-full"
-            alt=""
-          /> -->
-          <div
-            class="relative sm:h-[220px] h-[180px] max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden"
-          >
-            <div class="relative w-[100%] h-[100%]">
-              <img
-                class="absolute inset-0 object-cover h-full filter blur-sm"
-                :src="blogs[1]?.imgixUrlHighRes || fallbackImage"
-                alt="Background"
-                @click="navigateToCampingNews(news._id)"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
-              ></div>
-            </div>
-            <div
-              class="absolute inset-0 flex flex-col justify-between text-white"
-            >
-              <img
-                class="object-contain h-full w-full"
-                :src="blogs[0]?.imgixUrlHighRes || fallbackImage"
-                alt="Centered Image"
-                @click="navigateToCampingNews(news._id)"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75 rounded-[10px]"
-              ></div>
-            </div>
-            <!-- <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
-              <div
-                class="multiline-truncate1 text-[16px] sm:text-[14px] md:text-[16px] fontCustom text-white w-full md:w-auto"
-                :style="{ width: 'calc(100% - 30px)' }"
-                @click="navigateToCampingNews(news._id)"
-              >
-                {{ news.headline || "No Headline" }}
-              </div>
-            </div> -->
-          </div>
-        </div>
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[8px]"
-        ></div>
-        <div class="absolute bottom-0 p-3 w-full md:w-[405px]">
-          <div class="headine-home text-white">
-            {{ blogs[0]?.headline }}
-          </div>
-          <div
-            class="flex gap-2 text-white time-date-home text-[10px] md:text-[12px] mt-1"
-          >
-            <div>{{ blogs[0]?.source }}</div>
-            <div>|</div>
-            <div>{{ formatPublishTime(blogs[0]?.publishTime) }}</div>
-          </div>
-        </div>
+      <div v-else>
+        <Image
+          :blog="blogs[0]"
+          :headline="blogs[0]?.headline"
+          :newsId="blogs[0]?._id"
+          :publishTime="formatPublishTime(blogs[0]?.publishTime)"
+          :image="blogs[0]?.imgixUrlHighRes || fallbackImage"
+          :source="blogs[0]?.source"
+          @navigate="navigateToCategory"
+        />
       </div>
       <div v-if="loading" class="mt-5">
         <div class="flex justify-between gap-3">
@@ -84,21 +30,14 @@
         </div>
       </div>
       <div v-else class="flex flex-row gap-10 mt-3 md:mt-5 cursor-pointer">
-        <div
-          class="headine-home multiline-truncate1"
-          @click="navigateToCategory(blogs[1]?._id)"
-        >
-          {{ blogs[1]?.headline }}
-        </div>
-        <div class="w-[1%]">
-          <div class="standing_divider"></div>
-        </div>
+        <div v-for="blog in blogs.slice(1, 3)" :key="blog._id">
+          <BottomNews
+            :headline="blog.headline"
+            :newsId="blog._id"
+            @navigate="navigateToCategory"
+          />
 
-        <div
-          class="headine-home multiline-truncate1"
-          @click="navigateToCategory(blogs[2]?._id)"
-        >
-          {{ blogs[2]?.headline }}
+          <div v-if="index === 0" class="standing_divider"></div>
         </div>
       </div>
     </div>
@@ -169,27 +108,18 @@
         :key="item._id"
         class="mt-4 md:mt-4 lg:mt-0 cursor-pointer"
       >
-        <div class="flex flex-row gap-2" @click="navigateToCategory(item._id)">
-          <div class="w-[5%] mt-2">
-            <img
-              src="@/assets/png/Group.png"
-              class="!h-[10px] !w-[10px]"
-              alt=""
-            />
-          </div>
-          <div class="flex flex-col w-[100%]">
-            <div class="headine-home multiline-truncate3">
-              {{ item.headline }}
-            </div>
-            <div class="summary-home text-gray-5 multiline-truncate1">
-              {{ item.summary }}
-            </div>
-          </div>
-        </div>
-        <hr
+        <NewsCard
+          :key="index"
+          :item="item"
+          @navigate="navigateToCategory"
+          :show-divider="index < 2"
+          headline-Class="line-clamp-1"
+          summaryClass="line-clamp-3"
+        />
+        <!-- <hr
           v-if="index < blogs2.length - 1"
           class="mt-4 border-t border-gray-300"
-        />
+        /> -->
       </div>
     </div>
   </div>
@@ -202,7 +132,7 @@ import apiConfig from "@/common/config/apiConfig";
 import moment from "moment";
 import { useRouter } from "vue-router";
 import fallbackImage2 from "../common/config/GlobalConstants";
-import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
+import BlogCard from "./BlogCard.vue";
 
 const fallbackImage = fallbackImage2.variables.fallbackImage;
 

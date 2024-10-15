@@ -144,7 +144,7 @@ import axios from "axios";
 import moment from "moment";
 import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
-import Navbarrr from "@/components/Navbarrr.vue";
+import Navbarrr from "@/components/Navbar.vue";
 import Paginator from "primevue/paginator"; // Ensure PrimeVue paginator is imported
 import { useToast } from "primevue/usetoast";
 import fallbackImage2 from "../common/config/GlobalConstants";

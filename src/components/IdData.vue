@@ -298,10 +298,10 @@ import apiConfig from "@/common/config/apiConfig";
 import axios from "axios";
 import moment from "moment"; // Import moment
 import Footer from "@/components/Footer.vue";
-import Navbarrr from "@/components/Navbarrr.vue";
+import Navbarrr from "@/components/Navbar.vue";
 import FeatureNews from "@/components/FeaturedIdStories.vue";
 import RelatedNewsData from "@/components/RelatedNews.vue";
-import ChatBot from "@/components/chatbot.vue";
+import ChatBot from "@/components/ChatBot.vue";
 import faceBookLogo from "@/assets/svg/facebook.svg";
 import xLogo from "@/assets/svg/x.svg";
 import linkDinLogo from "@/assets/svg/linkdin.svg";

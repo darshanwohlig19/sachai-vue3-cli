@@ -136,7 +136,7 @@
   </div>
 </template>
 <script>
-import Navbarrr from "@/components/Navbarrr.vue";
+import Navbarrr from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 export default {
   name: "Astrology",

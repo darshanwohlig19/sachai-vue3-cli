@@ -182,12 +182,14 @@ import axios from "axios";
 import moment from "moment";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
+import { useToast } from "primevue/usetoast";
 // import { useRoute, useRouter } from "vue-router";
 import { useRoute, useRouter } from "vue-router";
 // import Button from "./ViewAll.vue";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
 
 import fallbackImage2 from "../common/config/GlobalConstants";
+const toast = useToast();
 const fallbackImage = fallbackImage2.variables.fallbackImage;
 const router = useRouter();
 const isDialogVisible = ref(false); // State for dialog visibility
@@ -284,6 +286,21 @@ const addBookmark = async (blog) => {
         },
       }
     );
+    if (currentStatus === "Enabled") {
+      toast.add({
+        severity: "success",
+        summary: "Bookmark Added",
+        group: "success",
+        life: 3000,
+      });
+    } else {
+      toast.add({
+        severity: "success",
+        summary: "Bookmark Removed",
+        group: "success",
+        life: 3000,
+      });
+    }
     blog.isBookmarked = currentStatus;
     return response.data;
   } catch (error) {

@@ -139,7 +139,7 @@ import apiConfig from "@/common/config/apiConfig";
 import Footer from "@/components/Footer.vue";
 import HotTopics from "@/components/HotTopics.vue";
 import Paginator from "primevue/paginator";
-import Navbarrr from "@/components/Navbarrr.vue";
+import Navbarrr from "@/components/Navbar.vue";
 import fallbackImage2 from "../common/config/GlobalConstants";
 import Skeleton from "../common/config/common_skeleton.vue";
 const fallbackImage = fallbackImage2.variables.fallbackImage;

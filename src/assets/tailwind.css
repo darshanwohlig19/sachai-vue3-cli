@@ -108,14 +108,34 @@ button.p-carousel-next.p-link {
   padding: 0.5rem;
 }
 
-.multiline-text {
+.line-clamp-1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* Adjust this based on your needs */
+  -webkit-line-clamp: 1; /* Number of lines to display */
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4; /* Number of lines to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .standing_divider {
   height: 100%;
   background-color: #e5e7eb; /* This is a light gray color, you can adjust as needed */

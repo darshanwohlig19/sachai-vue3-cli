@@ -71,7 +71,6 @@
               }"
               >Category</RouterLink
             >
-            <!-- <div class="nav-items" active-class="active-link">Category</div> -->
             <div
               v-if="showDropdown"
               @mouseover="showDropdown = true"
@@ -79,7 +78,6 @@
               class="absolute mt-4 bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
             >
               <div class="w-[100%] flex">
-                <!-- First Div -->
                 <div
                   class="shadow-[2px_0px_5px_rgba(240,0,0,0.2)] capitalize category-head rounded-r-lg w-[150px]"
                 >
@@ -258,7 +256,6 @@
             </a>
           </div>
           <div class="w-[421px] relative block lg-max:!hidden">
-            <!-- @click="expandInput" -->
             <input
               type="text"
               id="fname"
@@ -331,12 +328,6 @@
               </div>
             </div>
           </div>
-          <!-- <AutoComplete
- v-model="searchQuery"
- :suggestions="searchResults"
- @complete="handleSearch"
- class="w-[200px] border-1 h-[full]"
- /> -->
           <router-link
             class="md:hidden sm-max:block"
             to="/search"
@@ -383,54 +374,6 @@
                 </ul>
               </div>
             </Sidebar>
-            <!-- <div
- class="relative flex gap-2 cursor-pointer"
- @mouseover="showDropdown = true"
- @mouseleave="hideDropdown"
- >
- <div
- class="h-[34px] w-[34px] rounded-full flex justify-center items-center shadow-md"
- >
- <img src="../assets/svg/category.svg" />
- </div>
-
- <div
- v-if="showDropdown"
- @mouseover="showDropdown = true"
- @mouseleave="hideDropdown"
- class="absolute mt-5 flex justify-end bg-white border h-auto border-gray-300 rounded shadow-lg z-3"
- >
- <div class="w-[100%] flex">
- <div class="capitalize category-head rounded-l-lg w-[150px]">
- <ul>
- <li
- class="mt-3 ml-3 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)]"
- v-for="category in categories"
- :key="category._id"
- @mouseover="fetchCategoryFromLocalStorage(category._id)"
- :style="{
- '--hover-color': '#FF0053',
- '--hover-bg-color': '#FF005333',
- }"
- >
- <div class="flex items-center space-x-2">
- <a
- :href="`/categories/${category._id}?category=${category.name}`"
- class="flex items-center"
- >
- <span>{{ category.name }}</span>
- <img
- src="../assets/svg/triangle_arrow.svg"
- class="ml-1"
- />
- </a>
- </div>
- </li>
- </ul>
- </div>
- </div>
- </div>
- </div> -->
           </a>
           <button class="lg:hidden block" @click="$router.push('/search')">
             <div
@@ -587,7 +530,7 @@
 <script setup>
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
-import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
+import BlogCard from "./BlogCard.vue";
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signOut } from "firebase/auth";
@@ -665,7 +608,7 @@ const handleClickOutsideProfileDropdown = (event) => {
     isProfileCardCountDropdownOpen.value &&
     cardDropdown.value &&
     !cardDropdown.value.contains(event.target) &&
-    !event.target.closest("button") // Assuming the toggle button has a specific class or id
+    !event.target.closest("button")
   ) {
     isProfileCardCountDropdownOpen.value = false;
   }
@@ -673,10 +616,6 @@ const handleClickOutsideProfileDropdown = (event) => {
 const formatPublishTime = (publishTime) => {
   return moment(publishTime).fromNow();
 };
-
-// const handleBackgroundClick = () => {
-//   hidePopup();
-// };
 
 const handleAuthAction = async () => {
   if (isLoggedIn.value) {

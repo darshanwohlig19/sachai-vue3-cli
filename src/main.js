@@ -6,6 +6,12 @@ import "primeicons/primeicons.css"; //icons
 import "primeflex/primeflex.css";
 import { createApp } from "vue";
 import { auth } from "@/firebaseConfig";
+//components
+import NewsCard from "./components/NewsCard.vue";
+import HeadlineNews from "./components/HeadlineNews.vue";
+import BottomNews from "./components/BottomNews.vue";
+import Image from "./components/Image.vue";
+//
 auth.onAuthStateChanged((user) => {
   if (user) {
     // console.log("User is logged in:", user);
@@ -124,6 +130,10 @@ app.component("PanelMenu", PanelMenu);
 app.component("Badge", Badge);
 app.component("Password", Password);
 app.component("Skeleton", Skeleton);
+app.component("NewsCard", NewsCard);
+app.component("BottomNews", BottomNews);
+app.component("HeadlineNews", HeadlineNews);
+app.component("Image", Image);
 app.directive("badge", BadgeDirective);
 app.directive("tooltip", Tooltip);
 

@@ -83,7 +83,7 @@
 </template>
 <script>
 import { onBeforeUnmount, onMounted, ref, computed, watch } from "vue";
-import BlogCard from "../components/SIdeNews.vue/sideNews.vue";
+import BlogCard from "../components/BlogCard.vue";
 import { useRouter } from "vue-router";
 import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";

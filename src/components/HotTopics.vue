@@ -145,8 +145,9 @@ import moment from "moment";
 import fallbackImage from "../common/config/GlobalConstants";
 import axios from "axios";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
-
+import { useToast } from "primevue/usetoast";
 // Refs for reactive data
+const toast = useToast();
 const hot = ref([]);
 const loading = ref(true);
 const languageId = "6421a32aa020a23deacecf92";
@@ -201,6 +202,21 @@ const addBookmark = async (news) => {
         },
       }
     );
+    if (currentStatus === "Enabled") {
+      toast.add({
+        severity: "success",
+        summary: "Bookmark Added",
+        group: "success",
+        life: 3000,
+      });
+    } else {
+      toast.add({
+        severity: "success",
+        summary: "Bookmark Removed",
+        group: "success",
+        life: 3000,
+      });
+    }
     news.isBookmarked = currentStatus;
     return response.data;
   } catch (error) {

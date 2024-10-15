@@ -137,7 +137,7 @@
   </div>
 </template>
 <script setup>
-import Navbarrr from "@/components/Navbarrr.vue";
+import Navbarrr from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 </script>
 <style scoped>

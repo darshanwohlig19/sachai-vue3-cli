@@ -142,7 +142,7 @@ import apiService from "@/services/apiServices";
 import apiConfig from "@/common/config/apiConfig";
 import { ref, onMounted } from "vue";
 import moment from "moment";
-import Navbarrr from "@/components/Navbarrr.vue";
+import Navbarrr from "@/components/Navbar.vue";
 import { useRouter } from "vue-router";
 import Paginator from "primevue/paginator";
 import InviteLinkDialog from "@/common/config/shareLink.vue"; // Import the dialog component
