@@ -509,7 +509,6 @@ const loginWithPhone = async () => {
         toast.add({
           severity: "success",
           summary: "OTP Sent",
-
           group: "success",
           life: 3000,
         });
@@ -606,9 +605,9 @@ const verifyOtp = async () => {
       // console.log(user);
 
       toast.add({
-        severity: "success ",
-        summary: "login Successfull",
-
+        severity: "success",
+        summary: "Logged in successfully!",
+        summary2: "Welcome back!",
         group: "success",
         life: 3000,
       });
