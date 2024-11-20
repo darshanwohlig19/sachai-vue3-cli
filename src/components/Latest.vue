@@ -115,6 +115,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .multiline-truncate {
   display: -webkit-box;
@@ -131,3 +132,4 @@ export default {
   text-overflow: ellipsis;
 }
 </style>
+
