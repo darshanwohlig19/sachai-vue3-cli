@@ -88,7 +88,7 @@
                     }"
                   >
                     <li
-                      class="p-2 hover:text-[var(--hover-color)] hover:bg-[var(--hover-bg-color)] icon-container"
+                      class="p-2 hover:text-[var(--hover-color)] icon-container"
                       v-for="category in categories"
                       :key="category._id"
                       @mouseover="fetchCategoryFromLocalStorage(category._id)"
@@ -709,7 +709,7 @@ const fetchNavbarCategory = async () => {
       `${apiConfig.GET_CATEGORY_WISE_NEWS_FOR_WEB}`,
       payload
     );
-    categoryWise.value = res.data;
+    categoryWise.value = res?.data;
   } catch (error) {
     return [];
   }

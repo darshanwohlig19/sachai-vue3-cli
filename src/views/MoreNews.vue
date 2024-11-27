@@ -187,8 +187,8 @@ const fetchNews = async () => {
     }
 
     // Check if the response has news data
-    if (response.data && response.data.length > 0) {
-      news.value = response.data;
+    if (response?.data && response?.data?.length > 0) {
+      news.value = response?.data?.data;
     } else {
       hasError.value = true;
     }

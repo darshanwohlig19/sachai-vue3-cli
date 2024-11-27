@@ -67,7 +67,10 @@
                 <div class="flex flex-col gap-3 cursor-pointer w-[100%] h-[]">
                   <div
                     @click="navigateToCategoryDetail(news._id)"
-                    v-for="(news, index) in slotProps.data.news.slice(0, 4)"
+                    v-for="(news, index) in (slotProps?.data?.news || []).slice(
+                      0,
+                      4
+                    )"
                     :key="index"
                     class="!flex items-center p-2 rounded-[4px] gap-3"
                     style="box-shadow: 0px 0px 5px 2px #0000000f"

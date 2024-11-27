@@ -3,15 +3,11 @@
     <div v-if="loading">
       <div v-for="n in 3" :key="n" class="mt-3">
         <div class="bg-white p-3 rounded-[10px] mb-3">
-          <!-- Main Content -->
           <div class="flex flex-col lg:flex-row gap-3 lg:gap-4">
-            <!-- Left Section (Main Image and Headlines) -->
             <div class="w-[100%] lg:w-[65%]">
               <div class="flex flex-col gap-5">
-                <!-- Image and Headlines -->
                 <div class="flex sm:flex-row flex-col gap-3 h-[100%]">
                   <div class="md:w-[70%] w-[100%]">
-                    <!-- Main Image -->
                     <Skeleton
                       shape="rectangle"
                       width="100%"
@@ -226,6 +222,7 @@ export default {
     const loading = ref(true); // Add loading state
     const fallbackImage = fallbackImage2.variables.fallbackImage;
     const fetchNewsForCategory = async (categoryId) => {
+      console.log("Fetching news for categoryId:", categoryId);
       const payload = {
         categoryId,
       };
@@ -238,7 +235,7 @@ export default {
         // const response = await axios.post(
         //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb/"
         // );
-        return response.data;
+        return response?.data?.data;
       } catch (error) {
         console.error(`Error fetching news for category ${categoryId}:`, error);
         return [];
@@ -265,16 +262,9 @@ export default {
           `${apiConfig.GET_ALL_CATEGORY}`,
           payload
         );
-        // const response = await axios.post(
-        //   "https://api-uat.newsshield.io/category/getAllCat",
-        //   { langauge: languageId }
-        // );
         const categoriesData = response.data.slice(0, 16).map((category) => ({
           ...category,
-          name:
-            category?.name?.toLowerCase() === "ai"
-              ? category.name.toUpperCase()
-              : category.name.replace(/-/g, " "),
+          name: category.name.replace(/-/g, " "),
         }));
 
         for (let category of categoriesData) {

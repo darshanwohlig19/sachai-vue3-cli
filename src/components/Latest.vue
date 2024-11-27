@@ -204,10 +204,7 @@ const fetchBlogs = async () => {
       `${apiConfig.GET_ALL_BLOGS_FOR_WEB}`,
       payload
     );
-    // const response = await axios.post(
-    //   "https://api-uat.newsshield.io/news/getAllBlogsForWeb",
-    // );
-    blogs.value = response.data.map((news) => ({
+    blogs.value = response?.data?.map((news) => ({
       ...news,
       bookmarked: localStorage.getItem(`bookmark_${news._id}`) === "Enabled",
     }));

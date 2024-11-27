@@ -193,13 +193,9 @@ const updateItemsToShow = () => {
   }
 };
 const categoryId = computed(() => {
-  console.log("props---", props.value);
-  console.log("props?.category--", props?.category);
-  console.log("props?.category?.categoriesId", props?.category?.categoriesId);
   return props?.category?.categoriesId[0];
 });
 const blogs = ref([]);
-console.log("blogs", blogs);
 const screenWidth = ref(window.innerWidth);
 const newsId = ref(route.params.id || "");
 

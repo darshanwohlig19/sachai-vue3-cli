@@ -3,9 +3,7 @@
     <nav>
       <router-link to="/"></router-link>
     </nav>
-
     <router-view :key="routeKey" />
-
     <Toast
       position="top-right"
       group="success"
@@ -20,7 +18,7 @@
             ></div>
           </div>
           <div class="flex justify-center items-center">
-            <img src="../src/assets/svg/success.svg" alt="" />
+            <img src="../src/assets/svg/success.svg" alt="Success " />
           </div>
           <div class="flex flex-col justify-center" style="flex: 1">
             <div class="font-bold font-lato !text-[#1E0627] my-1 text-[16px]">
@@ -33,7 +31,6 @@
         </div>
       </template>
     </Toast>
-
     <Toast
       position="top-right"
       group="error"

@@ -188,7 +188,7 @@ const fetchNews = async () => {
     //   "https://api-uat.newsshield.io/news/getCategoryWiseNewsForWeb",
 
     // );
-    allNews.value = response.data.slice(0, 9);
+    allNews.value = response?.data?.data?.slice(0, 9);
     error.value = allNews.value.length === 0;
   } catch (e) {
     console.error("Error fetching news:", e);

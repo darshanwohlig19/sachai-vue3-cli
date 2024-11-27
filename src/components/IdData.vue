@@ -421,7 +421,7 @@ const fetchNewsItem = async () => {
     const response = await axios.get(
       `https://api-uat.newsshield.io/news/getOneNewsForWeb/${newsId}`
     );
-    newsItem.value = response.data[0];
+    newsItem.value = response?.data?.data[0];
   } catch (error) {
     console.error("Error fetching news item:", error);
   } finally {
